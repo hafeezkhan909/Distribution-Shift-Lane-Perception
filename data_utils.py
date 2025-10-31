@@ -7,7 +7,7 @@ import scipy.io
 from math import ceil
 
 from keras.datasets import mnist, cifar10, cifar100, boston_housing, fashion_mnist
-from keras.preprocessing.image import ImageDataGenerator
+from keras.src.legacy.preprocessing.image import ImageDataGenerator
 
 
 # -------------------------------------------------
