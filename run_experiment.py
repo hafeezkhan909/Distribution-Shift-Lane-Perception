@@ -11,8 +11,54 @@ from mmd_test import mmd_test
 
 
 # =========================================================
-# Dataset
+# Datasets
 # =========================================================
+
+class ShiftedLaneImageDataset(LaneImageDataset):
+    """A Shifted Lane Image Dataset."""
+    def __init__(self, root_dir, split="train", image_size=512):
+        # Run the parent __init__
+        super.__init__(root_dir, split, image_size)
+
+        # Reparse the list file to avoid editing the parent class
+        if "Curvelanes" in root_dir:
+            list_path = os.path.join(root_dir, split, f"{split}.txt")
+        else:
+            list_path = os.path.join(root_dir, "list", f"{split}.txt")
+
+        self.labels = []
+
+        with open(list_path, "r") as f:
+            for line in f.readlines():
+                line = line.strip()
+                if line:
+                    parts = line.split()
+                    # Assuming the order matches self.image_paths
+                    self.labels.append(int(parts[1]))
+
+        # Verify the consistency of length
+        if len(self.image_paths) != len(self.labels):
+            raise ValueError("Mismatch in number of images and labels")
+
+    def __getitem__(self, index):
+        """
+        This method overrides the __getitem__ method of the LaneImageDataset class.
+        """
+        # Get path and label from self
+        rel_path = self.image_paths[index].lstrip("/")
+        label = self.labels[index]
+
+        if "Curvelanes" in self.root_dir:
+            img_path = os.path.join(self.root_dir, self.split, rel_path)
+        else:
+            img_path = os.path.join(self.root_dir, rel_path)
+
+        img = Image.open(img_path).convert("RGB")
+
+        # Apply the transform inherited from the parent
+        return self.transform(img), label
+
+
 class LaneImageDataset(Dataset):
     """Generic dataset for lane images given a root path and list file."""
     def __init__(self, root_dir, split="train", image_size=512):
