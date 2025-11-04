@@ -52,8 +52,8 @@ class LaneImageDataset(Dataset):
         return self.transform(img)
 
 
-class ShiftedLaneImageDataset(LaneImageDataset):
-    """A Shifted Lane Image Dataset."""
+class LaneImageDatasetWithLabels(LaneImageDataset):
+    """A Lane Image Dataset with Labels."""
     def __init__(self, root_dir, split="train", image_size=512):
         # Run the parent __init__
         super.__init__(root_dir, split, image_size)
