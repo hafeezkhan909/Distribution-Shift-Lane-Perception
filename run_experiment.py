@@ -6,6 +6,8 @@ from tqdm import tqdm, trange
 import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import transforms
+
+import data_utils
 from autoencoder import ConvAutoencoderFC
 from mmd_test import mmd_test
 
@@ -29,8 +31,15 @@ class LaneImageDataset(Dataset):
         if not os.path.exists(list_path):
             raise FileNotFoundError(f"List file not found: {list_path}")
 
+        self.labels = []
         with open(list_path, "r") as f:
-            self.image_paths = [line.strip() for line in f.readlines() if line.strip()]
+            for line in f.readlines():
+                line = line.strip()
+                if line:
+                    parts = line.split()
+                    self.image_paths.append(parts[0])
+                    self.labels.append(int(parts[1]))
+
 
         self.transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
@@ -48,12 +57,43 @@ class LaneImageDataset(Dataset):
             img_path = os.path.join(self.root_dir, rel_path)
 
         img = Image.open(img_path).convert("RGB")
-        return self.transform(img)
+        label = self.labels[idx]
+        return self.transform(img), label
 
 
 # =========================================================
 # Dataloader helpers
 # =========================================================
+def create_shifted_collate_fn(shift, original_dimensions, dataset):
+    def collate_fn(batch):
+        tensors, labels = zip(*batch)
+
+        stack = torch.stack(batch)
+        image_batch_numpy = stack.permute(0, 2, 3, 1).cpu().numpy()
+        image_batch_numpy = (image_batch_numpy * 255.0).astype(np.uint8)
+
+        original_shape = image_batch_numpy.shape
+        image_flattened = np.reshape(original_shape[0], -1)
+
+        label_batch_numpy = np.array(labels)
+
+        image_flattened, label_batch_numpy = data_utils.apply_shift(
+
+        )
+
+
+
+def get_shifted_dataloader(dataset_name, split, batch_size, image_size, num_samples, block_idx=0):
+    root = f"datasets/{dataset_name}"
+    ds = LaneImageDataset(root, split, image_size)
+    start, end = block_idx * num_samples, min((block_idx + 1) * num_samples, len(ds))
+    subset = Subset(ds, list(range(start, end)))
+    print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
+
+    collate_fn = create_shifted_collate_fn()
+
+    return DataLoader(subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True, collate_fn=collate_fn)
+
 def get_dataloader(dataset_name, split, batch_size, image_size, num_samples, block_idx=0):
     root = f"datasets/{dataset_name}"
     ds = LaneImageDataset(root, split, image_size)
@@ -80,7 +120,7 @@ def extract_features(model, loader, device):
     model.eval()
     feats = []
     with torch.no_grad():
-        for imgs in tqdm(loader, desc="Extracting features"):
+        for imgs, labels in tqdm(loader, desc="Extracting features"):
             imgs = imgs.to(device, non_blocking=True)
             z = model.encode(imgs)
             if z.dim() > 2:
@@ -182,6 +222,10 @@ def main():
     print(f"TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
     np.save("features/mmd_curvelanes_100runs.npy", np.array(mmd_values))
     np.save("features/tpr_curvelanes_100runs.npy", np.array(tpr_list))
+
+    # =========================================================
+    # Noise tests (Gaussian, Knockout Shift, and Adversarial)
+    # =========================================================
 
 
 if __name__ == "__main__":
