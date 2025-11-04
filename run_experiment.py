@@ -119,6 +119,25 @@ def get_seeded_random_dataloader(dataset_name, split, batch_size, image_size, nu
     return DataLoader(subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
 
 
+def get_dataloader_with_labels(dataset_name, split, batch_size, image_size, num_samples, block_idx=0):
+    root = f"datasets/{dataset_name}"
+    ds = LaneImageDatasetWithLabels(root, split, image_size)
+    start, end = block_idx * num_samples, min((block_idx + 1) * num_samples, len(ds))
+    subset = Subset(ds, list(range(start, end)))
+    print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
+    return DataLoader(subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
+
+
+def get_seeded_random_dataloader_with_labels(dataset_name, split, batch_size, image_size, num_samples, seed):
+    root = f"datasets/{dataset_name}"
+    ds = LaneImageDatasetWithLabels(root, split, image_size)
+    random.seed(seed)
+    chosen = random.sample(range(len(ds)), min(num_samples, len(ds)))
+    subset = Subset(ds, chosen)
+    print(f"[INFO] {dataset_name} ({split}) → Random {len(chosen)} samples (seed={seed})")
+    return DataLoader(subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
+
+
 # =========================================================
 # Feature extraction
 # =========================================================
