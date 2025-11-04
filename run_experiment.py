@@ -14,6 +14,44 @@ from mmd_test import mmd_test
 # Datasets
 # =========================================================
 
+class LaneImageDataset(Dataset):
+    """Generic dataset for lane images given a root path and list file."""
+    def __init__(self, root_dir, split="train", image_size=512):
+        self.root_dir = root_dir
+        self.split = split
+        self.image_size = image_size
+
+        # list file logic
+        if "Curvelanes" in root_dir:
+            list_path = os.path.join(root_dir, split, f"{split}.txt")
+        else:
+            list_path = os.path.join(root_dir, "list", f"{split}.txt")
+
+        if not os.path.exists(list_path):
+            raise FileNotFoundError(f"List file not found: {list_path}")
+
+        with open(list_path, "r") as f:
+            self.image_paths = [line.strip() for line in f.readlines() if line.strip()]
+
+        self.transform = transforms.Compose([
+            transforms.Resize((image_size, image_size)),
+            transforms.ToTensor()
+        ])
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        rel_path = self.image_paths[idx].lstrip("/")
+        if "Curvelanes" in self.root_dir:
+            img_path = os.path.join(self.root_dir, self.split, rel_path)
+        else:
+            img_path = os.path.join(self.root_dir, rel_path)
+
+        img = Image.open(img_path).convert("RGB")
+        return self.transform(img)
+
+
 class ShiftedLaneImageDataset(LaneImageDataset):
     """A Shifted Lane Image Dataset."""
     def __init__(self, root_dir, split="train", image_size=512):
@@ -57,44 +95,6 @@ class ShiftedLaneImageDataset(LaneImageDataset):
 
         # Apply the transform inherited from the parent
         return self.transform(img), label
-
-
-class LaneImageDataset(Dataset):
-    """Generic dataset for lane images given a root path and list file."""
-    def __init__(self, root_dir, split="train", image_size=512):
-        self.root_dir = root_dir
-        self.split = split
-        self.image_size = image_size
-
-        # list file logic
-        if "Curvelanes" in root_dir:
-            list_path = os.path.join(root_dir, split, f"{split}.txt")
-        else:
-            list_path = os.path.join(root_dir, "list", f"{split}.txt")
-
-        if not os.path.exists(list_path):
-            raise FileNotFoundError(f"List file not found: {list_path}")
-
-        with open(list_path, "r") as f:
-            self.image_paths = [line.strip() for line in f.readlines() if line.strip()]
-
-        self.transform = transforms.Compose([
-            transforms.Resize((image_size, image_size)),
-            transforms.ToTensor()
-        ])
-
-    def __len__(self):
-        return len(self.image_paths)
-
-    def __getitem__(self, idx):
-        rel_path = self.image_paths[idx].lstrip("/")
-        if "Curvelanes" in self.root_dir:
-            img_path = os.path.join(self.root_dir, self.split, rel_path)
-        else:
-            img_path = os.path.join(self.root_dir, rel_path)
-
-        img = Image.open(img_path).convert("RGB")
-        return self.transform(img)
 
 
 # =========================================================
