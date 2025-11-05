@@ -17,7 +17,7 @@ from enum import Enum
 # -------------------------------------------------
 
 
-def apply_shift(X_te_orig, y_te_orig, shift, orig_dims, datset):
+def apply_shift(X_te_orig, y_te_orig, shift, orig_dims, dataset):
     X_te_1 = None
     y_te_1 = None
 
