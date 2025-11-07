@@ -67,19 +67,6 @@ def mmd_test(X_src, X_tgt):
 
 The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
 
-Example:
-
-```bash
-python mmd_test.py
-```
-
-Output:
-
-```
-MMD statistic: 0.5123, p-value: 0.000001
-✅ Significant shift detected.
-```
-
 ---
 
 ## Running the Experiment
