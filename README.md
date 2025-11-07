@@ -42,7 +42,7 @@ To measure stability, the script repeats the cross-domain test for 100 different
 
 Main experiment pipeline.
 
-* Loads a pretrained convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
+* Loads a pretrained (ResNet) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
 * Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
 * Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
 * Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
