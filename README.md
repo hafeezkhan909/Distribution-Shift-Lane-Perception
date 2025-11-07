@@ -47,7 +47,7 @@ Main experiment pipeline.
 * Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
 * Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
 
-You can replace `"CULane"` in the config with any dataset or perturbed version (e.g., brightness-shifted Curvelanes, Gaussian-noised Curvelanes) to evaluate different types of domain shifts.
+You can later modularize the code to enable entering inputs through command line for any dataset to calibrate and evaluate different types of shifts.
 
 ### `mmd_test.py`
 
