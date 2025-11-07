@@ -77,7 +77,7 @@ The kernel bandwidth is set using the median pairwise distance heuristic (1 / me
    ```bash
    python run_experiment.py
    ```
-3. The script automatically:
+3. The script:
 
    * Extracts and saves features
    * Calibrates the null MMD distribution
