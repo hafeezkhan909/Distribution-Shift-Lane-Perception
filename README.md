@@ -13,8 +13,6 @@ All other files or helper scripts can be ignored.
 
 The pipeline estimates an empirical MMD threshold (`τ`) using *same-domain calibration*, and then tests whether samples from another dataset (or perturbed version of the same dataset) come from a statistically different distribution.
 
-It is based on the methodology used in *ShiftTester: Multi-dimensional Two-Sample Testing for Detecting Distribution Shifts*.
-
 ---
 
 ## How It Works
