@@ -87,7 +87,7 @@ The kernel bandwidth is set using the median pairwise distance heuristic (1 / me
 
 ## Example Configuration
 
-Inside `run_experiment.py`:
+Inside current `run_experiment.py`:
 
 ```python
 source = "Curvelanes"     # Calibration dataset
