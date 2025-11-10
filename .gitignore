@@ -5,9 +5,13 @@
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/Distribution-Shift-Lane-Perception.iml
 .idea/deployment.xml
+<<<<<<< Updated upstream
 .idea/Distribution-Shift-Lane-Perception.iml
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
 /.idea
+=======
+torch-two-sample
+>>>>>>> Stashed changes
