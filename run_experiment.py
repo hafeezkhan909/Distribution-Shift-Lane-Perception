@@ -149,12 +149,17 @@ def create_shifted_collate_function(shift_name, original_dimentions, _dataset):
     """
     def collate_with_shift(batch):
         # Unzip the batch of (tensor, label) tuples
-        tensors, labels = zip(*batch)
+        tensors, labels, *_ = zip(*batch)
 
         # Stacking the tensors
         stacked_tensors = torch.stack(tensors)
 
         # Converting the tensors to NumPy [N, H, W, C] in the [0, 255] range
+        if stacked_tensors.dim() == 3:
+            # Add a channel dimension at index 1
+            # Shape becomes (BatchSize, 1, Height, Width)
+            stacked_tensors = stacked_tensors.unsqueeze(1)
+        
         numpy_tensor_batch = stacked_tensors.permute(0, 2, 3, 1).cpu().numpy()
         numpy_label_batch = (numpy_tensor_batch * 255.0).astype(np.uint8)
 
@@ -258,7 +263,7 @@ def main():
     src_split = "train"
     tgt_split = "train"
     src_samples = 1000
-    tgt_samples = 50
+    tgt_samples = 100
     block_idx = 0
     batch_size = 16
     image_size = 512
@@ -313,34 +318,34 @@ def main():
     # =========================================================
     # NEW SECTION: Cross-domain test (CULane → Curvelanes)
     # =========================================================
-    print("\n[STEP] Cross-domain test: CULane → Curvelanes using same τ")
-    target_cross = "CULane"
+    # print("\n[STEP] Cross-domain test: CULane → Curvelanes using same τ")
+    # target_cross = "CULane"
 
-    # ---- Run 100 random seeds ----
-    num_runs = 100
-    tpr_list = []
-    mmd_values = []
+    # # ---- Run 100 random seeds ----
+    # num_runs = 100
+    # tpr_list = []
+    # mmd_values = []
 
-    for run in trange(num_runs, desc="Cross-domain seeds"):
-        seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
-        tgt_loader_cross = get_seeded_random_dataloader(
-            target_cross, tgt_split, batch_size, image_size, tgt_samples, seed_cross
-        )
-        tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
-        mmd_cross, _ = mmd_test(src_feats, tgt_feats_cross)
-        mmd_values.append(mmd_cross)
-        detected = mmd_cross > tau
-        tpr_list.append(int(detected))
+    # for run in trange(num_runs, desc="Cross-domain seeds"):
+    #     seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
+    #     tgt_loader_cross = get_seeded_random_dataloader(
+    #         target_cross, tgt_split, batch_size, image_size, tgt_samples, seed_cross
+    #     )
+    #     tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
+    #     mmd_cross, _ = mmd_test(src_feats, tgt_feats_cross)
+    #     mmd_values.append(mmd_cross)
+    #     detected = mmd_cross > tau
+    #     tpr_list.append(int(detected))
 
-        print(f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
+    #     print(f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
 
-    # ---- Summarize results ----
-    tpr = np.mean(tpr_list)
-    print("\n[RESULTS] Cross-domain detection summary")
-    print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-    print(f"TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
-    np.save("features/mmd_curvelanes_100runs.npy", np.array(mmd_values))
-    np.save("features/tpr_curvelanes_100runs.npy", np.array(tpr_list))
+    # # ---- Summarize results ----
+    # tpr = np.mean(tpr_list)
+    # print("\n[RESULTS] Cross-domain detection summary")
+    # print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
+    # print(f"TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
+    # np.save("features/mmd_curvelanes_100runs.npy", np.array(mmd_values))
+    # np.save("features/tpr_curvelanes_100runs.npy", np.array(tpr_list))
 
     # =======================================
     # Noise Tests (Gaussian, Knockout Shift, and Adversarial)
@@ -371,7 +376,7 @@ def main():
         tpr_list = []
         mmd_values = []
 
-        for run in trange(num_runs, desc=f"Shifted Domain Testing: {shift_name}"):
+        for run in trange(shift_runs, desc=f"Shifted Domain Testing: {shift_name}"):
             # Use a new seed range
             seed_shift = seed_base + 1000 + run
 
@@ -412,7 +417,7 @@ def main():
         results[shift_name] = {'tpr': tpr, 'mmd_mean': np.mean(mmd_values), 'mmd_std': np.std(mmd_values)}
         print(f"\n[RESULT: {shift_name}]")
         print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-        print(f"TPR over {num_runs} runs: {tpr*100:.2f}%")
+        print(f"TPR over {shift_runs} runs: {tpr*100:.2f}%")
 
     # ----- Final Summary -----
     print(f"\n[FINAL RESULTS] Shift Detection summary")
