@@ -58,7 +58,7 @@ class LaneImageDatasetWithLabels(LaneImageDataset):
     """A Lane Image Dataset with Labels."""
     def __init__(self, root_dir, split="train", image_size=512):
         # Run the parent __init__
-        super.__init__(root_dir, split, image_size)
+        super().__init__(root_dir, split, image_size)
 
         # Reparse the list file to avoid editing the parent class
         if "Curvelanes" in root_dir:
@@ -199,7 +199,7 @@ def get_shifted_dataloader(dataset_name, split, batch_size, image_size, num_samp
     """
     assert shift_name is not None
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size)
+    ds = LaneImageDatasetWithLabels(root, split, image_size)
     random.seed(seed)
     chosen = random.sample(range(len(ds)), min(num_samples, len(ds)))
     subset = Subset(ds, chosen)
@@ -393,7 +393,7 @@ def main():
 
             # Extract the features from the shifted data
             try:
-                tgt_feats_shifted = extract_features(model, tgt_loader_shifted, device)
+                tgt_feats_shifted = extract_features_with_labels(model, tgt_loader_shifted, device)
             except Exception as e:
                 print(f"\n[ERROR] Failed to extract features for shift '{shift_name}'")
                 print(f"\nError: {e}")
