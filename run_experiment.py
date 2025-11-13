@@ -186,8 +186,6 @@ def main():
     num_calib = 100
     alpha = 0.05
     seed_base = 42
-    
-    MODEL_PATH = "autoencoder.pth" # <-- Ensure this points to your model file
     # -------------------------------------
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -195,20 +193,7 @@ def main():
 
     # ------------------ Model ------------------
     print("\nInitializing autoencoder...")
-    model = ConvAutoencoderFC(latent_dim=512, pretrained=False) # Instantiate model
-    
-    try:
-        model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
-        print(f"[INFO] Loaded model weights from {MODEL_PATH}")
-    except FileNotFoundError:
-        print(f"[ERROR] Model file not found: {MODEL_PATH}")
-        print("Please set the MODEL_PATH variable in the config section.")
-        return
-    except Exception as e:
-        print(f"[ERROR] Could not load model weights: {e}")
-        return
-        
-    model.to(device)
+    model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(device)
     model.eval() # Set model to evaluation mode
 
     # ------------------ Source ------------------
