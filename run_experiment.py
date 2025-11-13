@@ -186,41 +186,56 @@ def main():
     num_calib = 100
     alpha = 0.05
     seed_base = 42
-    # -------------------
+    
+    MODEL_PATH = "autoencoder.pth" # <-- Ensure this points to your model file
+    # -------------------------------------
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     os.makedirs("features", exist_ok=True)
 
     # ------------------ Model ------------------
     print("\nInitializing autoencoder...")
-    model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(device)
+    model = ConvAutoencoderFC(latent_dim=512, pretrained=False) # Instantiate model
+    
+    try:
+        model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
+        print(f"[INFO] Loaded model weights from {MODEL_PATH}")
+    except FileNotFoundError:
+        print(f"[ERROR] Model file not found: {MODEL_PATH}")
+        print("Please set the MODEL_PATH variable in the config section.")
+        return
+    except Exception as e:
+        print(f"[ERROR] Could not load model weights: {e}")
+        return
+        
+    model.to(device)
+    model.eval() # Set model to evaluation mode
 
-    # # ------------------ Source ------------------
-    # src_path = f"features/{source}_{src_split}_{src_samples}_{block_idx}.npy"
-    # if os.path.exists(src_path):
-    #     src_feats = np.load(src_path)
-    #     print(f"[INFO] Loaded source features → {src_path}")
-    # else:
-    #     src_loader = get_dataloader(source, src_split, batch_size, image_size, src_samples, block_idx)
-    #     src_feats = extract_features(model, src_loader, device)
-    #     np.save(src_path, src_feats)
-    #     print(f"[SAVED] {src_path} ({src_feats.shape})")
+    # ------------------ Source ------------------
+    print("\n[STEP] Loading pre-computed source features...")
+    src_path = f"features/{source}_{src_split}_{src_samples}_{block_idx}.npy"
+    try:
+        src_feats = np.load(src_path)
+        print(f"[INFO] Loaded source features → {src_path} ({src_feats.shape})")
+    except FileNotFoundError:
+        print(f"[ERROR] Source features not found: {src_path}")
+        print("Please generate this file first by running the source extraction block.")
+        return
 
-    # # ------------------ Calibration ------------------
-    # print("\n[STEP] Calibration: same-domain (no shift)")
-    # null_stats = []
-    # for i in trange(num_calib, desc="Calibrating"):
-    #     seed = seed_base + i
-    #     tgt_loader = get_seeded_random_dataloader(source, src_split, batch_size, image_size, tgt_samples, seed)
-    #     tgt_feats = extract_features(model, tgt_loader, device)
-    #     t_stat, _ = mmd_test(src_feats, tgt_feats)
-    #     null_stats.append(t_stat)
+    # ------------------ Calibration ------------------
+    print("\n[STEP] Loading pre-computed calibration stats...")
+    calib_path = "features/calibration_null_mmd.npy"
+    try:
+        null_stats = np.load(calib_path)
+        print(f"[INFO] Loaded calibration stats → {calib_path} ({null_stats.shape})")
+    except FileNotFoundError:
+        print(f"[ERROR] Calibration file not found: {calib_path}")
+        print("Please generate this file first by running the calibration block.")
+        return
 
-    # null_stats = np.array(null_stats)
-    # tau = np.percentile(null_stats, 100 * (1 - alpha))
-    # print(f"\n[RESULT] τ({1 - alpha:.2f}) = {tau:.6f}")
-    # print(f"[RESULT] Mean MMD (no shift): {null_stats.mean():.6f} ± {null_stats.std():.6f}")
-    # np.save("features/calibration_null_mmd.npy", null_stats)
+    tau = np.percentile(null_stats, 100 * (1 - alpha))
+    print(f"\n[RESULT] Using loaded τ({1 - alpha:.2f}) = {tau:.6f}")
+    print(f"[RESULT] Mean MMD (no shift): {null_stats.mean():.6f} ± {null_stats.std():.6f}")
 
     # # ------------------ Sanity Check ------------------
     # print("\n[STEP] Sanity Check: CULane→CULane")
@@ -231,9 +246,9 @@ def main():
     # print(f"[CHECK] MMD(CULane→CULane) = {mmd_val:.6f}, τ = {tau:.6f}")
     # print("✅ No shift detected (expected same-domain match)." if mmd_val <= tau else "❌ Unexpected shift.")
 
-    # # =========================================================
-    # # NEW SECTION: Cross-domain test (CULane → Curvelanes)
-    # # =========================================================
+    # =========================================================
+    # NEW SECTION: Cross-domain test (CULane → Curvelanes)
+    # =========================================================
     # print("\n[STEP] Cross-domain test: CULane → Curvelanes using same τ")
     # target_cross = "CULane"
 
