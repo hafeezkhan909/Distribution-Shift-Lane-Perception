@@ -72,7 +72,7 @@ def apply_shift(X_te_orig, y_te_orig, shift, orig_dims, dataset):
         y_te_1 = y_te_orig.copy()
     elif shift == 'adversarial_shift_1.0':
         print('Large adversarial shift')
-        adv_samples, true_labels = adversarial_samples(datset)
+        adv_samples, true_labels = adversarial_samples(dataset)
         X_te_1, y_te_1, _ = data_subset(X_te_orig, y_te_orig, adv_samples, true_labels, delta=1.0)
     elif shift == 'adversarial_shift_0.5':
         print('Medium adversarial Shift')
