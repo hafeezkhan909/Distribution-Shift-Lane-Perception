@@ -113,8 +113,8 @@ def create_shifted_collate_function(shift_name, original_dimentions, _dataset):
         shifted_numpy_tensor_batch = shifted_numpy_tensor_batch_flattened.reshape(original_shape)
 
         # Convert back to the Tensor Format [N, C, H, W] in [0.0, 1.0]
-        shifted_numpy_tensor_batch = torch.from_numpy(shifted_numpy_tensor_batch).permute(0, 3, 1, 2)
-        shifted_numpy_tensor_batch = shifted_numpy_tensor_batch.float() / 255.0
+        shifted_numpy_tensor_batch = torch.from_numpy(shifted_numpy_tensor_batch).permute(0, 3, 1, 2).contiguous()
+        shifted_numpy_tensor_batch = shifted_numpy_tensor_batch.float()
 
         # Return ONLY the images
         return shifted_numpy_tensor_batch
@@ -164,7 +164,7 @@ def extract_features(model, loader, device):
             imgs = imgs.to(device, non_blocking=True)
             z = model.encode(imgs)
             if z.dim() > 2:
-                z = z.view(z.size(0), -1)
+                z = z.reshape(z.size(0), -1)
             feats.append(z.cpu().numpy())
     return np.concatenate(feats, axis=0)
 
@@ -279,7 +279,7 @@ def main():
     ]
 
     # Number of runs per shift
-    shift_runs = 50 
+    shift_runs = 500
     results = {}
 
     for shift_name in shifts_to_test:
@@ -337,7 +337,11 @@ def main():
     print(f"{'ShiftName':<35} | {'TPR':<7} | {'Mean MMD':<15}")
     print("------------------------------------------------------------")
     for shift_name, result in results.items():
-        print(f"{shift_name:<35} | {result['tpr']*100:6.2f}% | {result['mmd_mean']:.6f} ± {result['mmd_std']:.6f}")
+        # CHECK MEAN MMD AGAINST TAU
+        is_detected = result['mmd_mean'] > tau
+        detected_str = "✅ YES" if is_detected else "❌ NO"
+        mmd_str = f"{result['mmd_mean']:.6f} ± {result['mmd_std']:.6f}"
+        print(f"{shift_name:<35} | {detected_str:<9} |  {result['tpr']*100:6.2f}% | {result['mmd_mean']:.6f} ± {result['mmd_std']:.6f}")
 
 
 if __name__ == "__main__":
