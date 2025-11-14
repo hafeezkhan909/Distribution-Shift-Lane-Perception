@@ -7,20 +7,8 @@ import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import transforms
 from autoencoder import ConvAutoencoderFC
-from data_utils import ShiftTypes, apply_shift
+from data_utils import ShiftTypes, apply_shift, DataShift
 from mmd_test import mmd_test
-
-
-# =========================================================
-# Data Shift Definition
-# =========================================================
-class DataShift:
-    def __init__(self, type: ShiftTypes, amount: float):
-        self.type = type
-        self.amount = amount
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type}, Amount: {self.amount})"
 
 
 # =========================================================

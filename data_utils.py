@@ -18,7 +18,85 @@ from abc import ABC, abstractmethod
 # -------------------------------------------------
 class ShiftTypes(Enum):
     GAUSSIAN = "Gaussian"
-    IMAGE_GENERATOR = "Image Generator"
+    ROTATION = "Rotation"
+    TRANSLATION = "Translation"
+    SHEAR = "Shear"
+    ZOOM = "Zoom"
+    FLIP_HORIZ = "Flip Horizontally"
+    FLIP_VERT = "Flip Vertically"
+
+
+# =========================================================
+# Data Shift Definitions
+# =========================================================
+class DataShift(ABC):
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def __str__(self):
+        pass
+
+
+class GaussianShift(DataShift):
+    def __init__(self, std: float = 0, mean: float = 1):
+        self.type = ShiftTypes.GAUSSIAN
+        self.std = std
+        self.mean = mean
+
+    def __str__(self):
+        return f"DataShift: (Type: {self.type}, Standard Deviation: {self.std}, Mean: {self.mean})"
+
+
+class RotationShift(DataShift):
+    def __init__(self, rotation: float = 90):
+        self.type = ShiftTypes.ROTATION
+        self.rotation = rotation
+
+    def __str__(self):
+        return f"DataShift: (Type: {self.type}, Rotation: {self.rotation})"
+
+
+class TranslationShift(DataShift):
+    """
+    A deterministic horizontal and vertical shift based on fractions.
+
+    :param width_shift_frac: Fraction of total width to shift.
+                             Positive values shift right, negative values shift left.
+    :param height_shift_frac: Fraction of total height to shift.
+                              Positive values shift down, negative values shift up.
+    """
+    def __init__(self, width_shift_frac: float, height_shift_frac: float):
+        self.type = ShiftTypes.TRANSLATION
+        self.height_shift_frac = height_shift_frac
+        self.width_shift_frac = width_shift_frac
+
+    def __str__(self):
+        return f"DataShift: (Type: {self.type}, Height: {self.height_shift_frac}, Width: {self.width_shift_frac})"
+
+
+class ShearShift(DataShift):
+    """
+    Applies a deterministic zoom by a specific factor.
+    
+    :param zoom_factor: The scaling factor. 1.0 is no zoom.
+                        > 1.0 zooms in, < 1.0 zooms out.
+    """
+    def __init__(self, zoom_range: float):
+        self.type = ShiftTypes.SHEAR
+        self.zoom_range = zoom_range
+
+    def __str__(self):
+        return f"DataShift: (Type: {self.type}, Zoom: {self.zoom_range})"
+
+
+class Shift(DataShift):
+    def __init__(self):
+        self.type = ShiftTypes
+
+    def __str__(self):
+        return f"DataShift: (Type: {self.type})"
 
 
 # -------------------------------------------------
@@ -26,15 +104,23 @@ class ShiftTypes(Enum):
 # -------------------------------------------------
 
 
-def apply_shift(image, shift, mean, std):
-    if shift == ShiftTypes.GAUSSIAN:
-        # amount: 100, 10, 1
-        print(f"GN shift: (Mean: {mean}, Std:{std})")
-        return add_gaussian_noise(image, mean, std)
-    # elif shift == ShiftTypes.IMAGE_GENERATOR:
-    #     # amount: 10, 40, 90
-    #     print(f'GN shift: (Mean: {mean}, Std:{std})')
-    #     return image_generator(image, mean, std)
+def apply_shift(image, dataShift: DataShift):
+    print(dataShift)
+    if dataShift.shift == ShiftTypes.GAUSSIAN:
+        return add_gaussian_noise(pil_img=image, mean=dataShift.mean, std=dataShift.std)
+    elif dataShift.shift == ShiftTypes.ROTATION:
+        return apply_rotation(pil_img=image, angle=dataShift.rotation)
+    elif dataShift.shift == ShiftTypes.TRANSLATION:
+        return apply_translation(
+            pil_img=image,
+            width_shift_frac=dataShift.width_shift_frac,
+            height_shift_frac=dataShift.height_shift_frac,
+        )
+    elif dataShift.shift == ShiftTypes.SHEAR:
+        return apply_shear(
+            pil_img=image,
+            shear_range=dataShift.shear_range
+        )
 
 
 # -------------------------------------------------
@@ -42,28 +128,45 @@ def apply_shift(image, shift, mean, std):
 # -------------------------------------------------
 
 
-# --- 1. Rotation ---
-def apply_rotation(pil_img: Image.Image, rot_range: float) -> Image.Image:
-    """Applies a random rotation between [-rot_range, +rot_range] degrees."""
-    if rot_range == 0.0:
+# --- 1. Rotation (Angle) ---
+def apply_rotation(pil_img: Image.Image, angle: float) -> Image.Image:
+    """Applies a specific rotation by a given angle in degrees."""
+    if angle == 0.0:
         return pil_img
-    # fill=0 sets the background to black
-    transformer = transforms.RandomRotation(degrees=(-rot_range, rot_range), fill=0)
-    return transformer(pil_img)
+    return F.rotate(pil_img, angle=angle, fill=0)  # fill=0 sets the background to black
 
 
 # --- 2. Translation (Width/Height Shift) ---
 def apply_translation(
-    pil_img: Image.Image, width_range: float, height_range: float
+    pil_img: Image.Image, width_shift_frac: float, height_shift_frac: float
 ) -> Image.Image:
-    """Applies a random horizontal and vertical shift."""
-    if width_range == 0.0 and height_range == 0.0:
+    """
+    Applies a deterministic horizontal and vertical shift based on fractions.
+
+    :param pil_img: The PIL.Image object.
+    :param width_shift_frac: Fraction of total width to shift.
+                             Positive values shift right, negative values shift left.
+    :param height_shift_frac: Fraction of total height to shift.
+                              Positive values shift down, negative values shift up.
+    :return: A new PIL.Image object with the shift.
+    """
+    if width_shift_frac == 0.0 and height_shift_frac == 0.0:
         return pil_img
-    # translate wants a (width_fraction, height_fraction) tuple
-    transformer = transforms.RandomAffine(
-        degrees=0, translate=(width_range, height_range), fill=0
+
+    # F.affine expects pixel values, not fractions.
+    # We must calculate them.
+    width, height = pil_img.size
+
+    # Calculate pixel shifts. F.affine wants [tx, ty]
+    # tx is horizontal (right is positive)
+    # ty is vertical (down is positive)
+    tx = int(width * width_shift_frac)
+    ty = int(height * height_shift_frac)
+
+    # Use F.affine for a transform
+    return F.affine(
+        pil_img, angle=0.0, translate=[tx, ty], scale=1.0, shear=[0.0, 0.0], fill=0
     )
-    return transformer(pil_img)
 
 
 # --- 3. Shear ---
@@ -78,13 +181,27 @@ def apply_shear(pil_img: Image.Image, shear_range: float) -> Image.Image:
 
 
 # --- 4. Zoom ---
-def apply_zoom(pil_img: Image.Image, zoom_range: float) -> Image.Image:
-    """Applies a random zoom. zoom_range=0.2 means 80% to 120% zoom."""
-    if zoom_range == 0.0:
+def apply_zoom(pil_img: Image.Image, zoom_factor: float) -> Image.Image:
+    """
+    Applies a deterministic zoom by a specific factor.
+    
+    :param pil_img: The PIL.Image object.
+    :param zoom_factor: The scaling factor. 1.0 is no zoom.
+                        > 1.0 zooms in, < 1.0 zooms out.
+    :return: A new PIL.Image object with the zoom.
+    """
+    if zoom_factor == 1.0:
         return pil_img
-    scale_param = (1.0 - zoom_range, 1.0 + zoom_range)
-    transformer = transforms.RandomAffine(degrees=0, scale=scale_param, fill=0)
-    return transformer(pil_img)
+    
+    # Use F.affine for a deterministic transform
+    return F.affine(
+        pil_img,
+        angle=0.0,
+        translate=[0, 0],
+        scale=zoom_factor,
+        shear=[0.0, 0.0],
+        fill=0
+    )
 
 
 # --- 5. Horizontal Flip ---
