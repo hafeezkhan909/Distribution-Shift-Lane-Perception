@@ -1,0 +1,85 @@
+[STEP] Calibration: same-domain (no shift)
+
+[RESULTS] Cross-domain detection summary
+Average MMD: 0.640656 ± 0.000000
+TPR (true positive rate) over 1 runs: 100.00%
+
+[STEP] Shifted-Data test: CULane → Shifted CULane using same τ
+Text for Sanity: With Noise
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 1)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 1)
+    Average MMD: 0.615433 ± 0.004559
+    TPR (true positive rate) over 200 runs: 3.50%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 10)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 10)
+    Average MMD: 0.614785 ± 0.004606
+    TPR (true positive rate) over 200 runs: 3.50%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 20)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 20)
+    Average MMD: 0.615733 ± 0.004640
+    TPR (true positive rate) over 200 runs: 4.50%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 30)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 30)
+    Average MMD: 0.617683 ± 0.004780
+    TPR (true positive rate) over 200 runs: 11.00%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 40)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 40)
+    Average MMD: 0.620158 ± 0.004796
+    TPR (true positive rate) over 200 runs: 25.00%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 50)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 50)
+    Average MMD: 0.623235 ± 0.004781
+    TPR (true positive rate) over 200 runs: 48.50%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 60)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 60)
+    Average MMD: 0.626636 ± 0.005011
+    TPR (true positive rate) over 200 runs: 75.50%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 70)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 70)
+    Average MMD: 0.630611 ± 0.004943
+    TPR (true positive rate) over 200 runs: 90.50%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 80)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 80)
+    Average MMD: 0.634856 ± 0.004966
+    TPR (true positive rate) over 200 runs: 99.00%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 90)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 90)
+    Average MMD: 0.639469 ± 0.004913
+    TPR (true positive rate) over 200 runs: 100.00%
+
+[STEP] Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 100)
+
+[RESULTS] Shifted-Data detection summary
+    Shifted-Data test: DataShift: (Type: ShiftTypes.GAUSSIAN, Amount: 100)
+    Average MMD: 0.644460 ± 0.004983
+    TPR (true positive rate) over 200 runs: 100.00%

@@ -1,0 +1,14 @@
+# A CPU-only alternative environment
+name: lane_env_cpu
+channels:
+  - pytorch
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pytorch
+  - torchvision
+  - cpuonly # This flag ensures a CPU-only build
+  - numpy
+  - pillow
+  - tqdm
+  - pip
