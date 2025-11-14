@@ -62,7 +62,6 @@ class LaneImageDataset(Dataset):
 
         img = Image.open(img_path).convert("RGB")
         if self.shift is not None:
-            print(f"[INFO] Returning shifted image...")
             return self.transform(apply_shift(img, shift=self.shift.type, mean=0, std=self.shift.amount))
         else:
             return self.transform(img)
@@ -206,15 +205,25 @@ def main():
     # NEW SECTION: Shifted-Data test (CULane → Shifted CULane)
     # =========================================================
     print("\n[STEP] Shifted-Data test: CULane → Shifted CULane using same τ")
-    target_cross = "CULane"
+    target_cross = "Curvelanes"
 
-    # ---- Run 5 random seeds per shift ----
-    num_runs = 5
+    # ---- Run 200 random seeds per shift ----
+    num_runs = 200
     shifts_list = [
         DataShift(ShiftTypes.GAUSSIAN, 1),
         DataShift(ShiftTypes.GAUSSIAN, 10),
+        DataShift(ShiftTypes.GAUSSIAN, 20),
+        DataShift(ShiftTypes.GAUSSIAN, 30),
+        DataShift(ShiftTypes.GAUSSIAN, 40),
+        DataShift(ShiftTypes.GAUSSIAN, 50),
+        DataShift(ShiftTypes.GAUSSIAN, 60),
+        DataShift(ShiftTypes.GAUSSIAN, 70),
+        DataShift(ShiftTypes.GAUSSIAN, 80),
+        DataShift(ShiftTypes.GAUSSIAN, 90),
         DataShift(ShiftTypes.GAUSSIAN, 100)
     ]
+
+    print("Text for Sanity: With Noise")
 
     for shift in shifts_list:
         print(f"\n[STEP] Shifted-Data test: {shift}")
@@ -238,8 +247,8 @@ def main():
         tpr = np.mean(tpr_list)
         print("\n[RESULTS] Shifted-Data detection summary")
         print(f"    Shifted-Data test: {shift}")
-        print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-        print(f"TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
+        print(f"    Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
+        print(f"    TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
 
 
 if __name__ == "__main__":

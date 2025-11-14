@@ -2,7 +2,7 @@
 import numpy as np
 import torch
 from scipy.spatial import distance
-from torch_two_sample import MMDStatistic # install this library
+from torch_two_sample import MMDStatistic
 
 
 def mmd_test(X_src, X_tgt):
