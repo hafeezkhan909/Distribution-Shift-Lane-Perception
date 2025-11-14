@@ -7,7 +7,20 @@ import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import transforms
 from autoencoder import ConvAutoencoderFC
-from data_utils import ShiftTypes, apply_shift, DataShift
+
+# Import the new, specific shift classes from data_utils
+from data_utils import (
+    ShiftTypes,
+    apply_shift,
+    DataShift,
+    GaussianShift,
+    RotationShift,
+    TranslationShift,
+    ShearShift,
+    ZoomShift,
+    HorizontalFlipShift,
+    VerticalFlipShift,
+)
 from mmd_test import mmd_test
 
 
@@ -51,9 +64,8 @@ class LaneImageDataset(Dataset):
 
         img = Image.open(img_path).convert("RGB")
         if self.shift is not None:
-            return self.transform(
-                apply_shift(img, shift=self.shift.type, mean=0, std=self.shift.amount)
-            )
+            img_shifted = apply_shift(img, self.shift)
+            return self.transform(img_shifted)
         else:
             return self.transform(img)
 
@@ -62,10 +74,10 @@ class LaneImageDataset(Dataset):
 # Dataloader helpers
 # =========================================================
 def get_dataloader(
-    dataset_name, split, batch_size, image_size, num_samples, block_idx=0, shift=None
+    dataset_name, split, batch_size, image_size, num_samples, block_idx=0
 ):
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, shift=None)
+    ds = LaneImageDataset(root, split, image_size, dataShift=None)
     start, end = block_idx * num_samples, min((block_idx + 1) * num_samples, len(ds))
     subset = Subset(ds, list(range(start, end)))
     print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
@@ -153,7 +165,7 @@ def main():
     for i in trange(num_calib, desc="Calibrating"):
         seed = seed_base + i
         tgt_loader = get_seeded_random_dataloader(
-            source, src_split, batch_size, image_size, tgt_samples, seed
+            source, src_split, batch_size, image_size, tgt_samples, seed, shift=None
         )
         tgt_feats = extract_features(model, tgt_loader, device)
         t_stat, _ = mmd_test(src_feats, tgt_feats)
@@ -171,7 +183,7 @@ def main():
     print("\n[STEP] Sanity Check: CULane→CULane")
     seed_match = seed_base + 1
     tgt_loader = get_seeded_random_dataloader(
-        target, tgt_split, batch_size, image_size, tgt_samples, seed_match
+        target, tgt_split, batch_size, image_size, tgt_samples, seed_match, shift=None
     )
     tgt_feats = extract_features(model, tgt_loader, device)
     mmd_val, _ = mmd_test(src_feats, tgt_feats)
@@ -196,7 +208,13 @@ def main():
     for run in trange(num_runs, desc="Cross-domain seeds"):
         seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
         tgt_loader_cross = get_seeded_random_dataloader(
-            target_cross, tgt_split, batch_size, image_size, tgt_samples, seed_cross
+            target_cross,
+            tgt_split,
+            batch_size,
+            image_size,
+            tgt_samples,
+            seed_cross,
+            shift=None,
         )
         tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
         mmd_cross, _ = mmd_test(src_feats, tgt_feats_cross)
@@ -222,29 +240,33 @@ def main():
 
     # ---- Run 200 random seeds per shift ----
     num_runs = 200
+
+    # Use the new DataShift subclasses from data_utils.py
     shifts_list = [
-        DataShift(ShiftTypes.GAUSSIAN, 1),
-        DataShift(ShiftTypes.GAUSSIAN, 10),
-        DataShift(ShiftTypes.GAUSSIAN, 20),
-        DataShift(ShiftTypes.GAUSSIAN, 30),
-        DataShift(ShiftTypes.GAUSSIAN, 40),
-        DataShift(ShiftTypes.GAUSSIAN, 50),
-        DataShift(ShiftTypes.GAUSSIAN, 60),
-        DataShift(ShiftTypes.GAUSSIAN, 70),
-        DataShift(ShiftTypes.GAUSSIAN, 80),
-        DataShift(ShiftTypes.GAUSSIAN, 90),
-        DataShift(ShiftTypes.GAUSSIAN, 100),
+        GaussianShift(std=1),
+        GaussianShift(std=10),
+        GaussianShift(std=20),
+        GaussianShift(std=30),
+        GaussianShift(std=40),
+        GaussianShift(std=50),
+        GaussianShift(std=60),
+        GaussianShift(std=70),
+        GaussianShift(std=80),
+        GaussianShift(std=90),
+        GaussianShift(std=100),
     ]
 
     print("Text for Sanity: With Noise")
 
-    for shift in shifts_list:
-        print(f"\n[STEP] Shifted-Data test: {shift}")
+    for shift_object in shifts_list:
+        print(f"\n[STEP] Shifted-Data test: {shift_object}")
         tpr_list = []
         mmd_values = []
 
         for run in trange(num_runs, desc="Random CULane seeds"):
             seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
+
+            # Pass the entire shift_object to the dataloader
             tgt_loader_cross = get_seeded_random_dataloader(
                 target_cross,
                 tgt_split,
@@ -252,7 +274,7 @@ def main():
                 image_size,
                 tgt_samples,
                 seed_cross,
-                shift=shift,
+                shift=shift_object,
             )
             tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
             mmd_cross, _ = mmd_test(src_feats, tgt_feats_cross)
@@ -260,12 +282,15 @@ def main():
             detected = mmd_cross > tau
             tpr_list.append(int(detected))
 
-            print(f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
+            # This print is noisy, you might want to comment it out
+            print(
+                f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅ Shift Detected' if detected else '❌ Shift not Detected'}"
+            )
 
         # ---- Summarize results ----
         tpr = np.mean(tpr_list)
         print("\n[RESULTS] Shifted-Data detection summary")
-        print(f"    Shifted-Data test: {shift}")
+        print(f"    Shifted-Data test: {shift_object}")
         print(f"    Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
         print(f"    TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
 
