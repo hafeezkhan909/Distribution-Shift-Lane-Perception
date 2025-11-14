@@ -23,9 +23,9 @@ def mmd_test(X_src, X_tgt):
     X_tgt = X_tgt.astype(np.float32)
 
     # Compute median pairwise distance as kernel bandwidth heuristic
-    all_dist = distance.cdist(X_src, X_tgt, 'euclidean')
+    all_dist = distance.cdist(X_src, X_tgt, "euclidean")
     median_dist = np.median(all_dist)
-    alpha = 1 / (median_dist + 1e-8)   # same as paper code (not 1/(2σ²))
+    alpha = 1 / (median_dist + 1e-8)  # same as paper code (not 1/(2σ²))
 
     # Convert to torch Variables
     X_src_t = torch.autograd.Variable(torch.tensor(X_src))
@@ -42,6 +42,7 @@ def mmd_test(X_src, X_tgt):
 
     # Return both the test statistic and p-value
     return t_stat.item(), p_val
+
 
 if __name__ == "__main__":
     # Toy data: source ~ N(0,1), target ~ N(1,1)

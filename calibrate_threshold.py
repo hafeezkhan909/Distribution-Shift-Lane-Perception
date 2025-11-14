@@ -16,6 +16,7 @@ from feature_extractor import (
 # Calibration: Estimate empirical MMD threshold
 # --------------------------------------------------------
 
+
 def calibrate_threshold(
     dataset_name="CULane",
     src_split="train",
@@ -85,7 +86,9 @@ def calibrate_threshold(
     # ----------------------------
     tau_alpha = np.percentile(null_stats, 100 * (1 - alpha))
     print(f"\n[RESULT] Empirical threshold τ({1 - alpha:.2f}) = {tau_alpha:.6f}")
-    print(f"[RESULT] Mean MMD (no shift): {null_stats.mean():.6f} ± {null_stats.std():.6f}")
+    print(
+        f"[RESULT] Mean MMD (no shift): {null_stats.mean():.6f} ± {null_stats.std():.6f}"
+    )
 
     np.save("features/calibration_null_mmd.npy", null_stats)
     print("[SAVED] Null MMD statistics → features/calibration_null_mmd.npy")
@@ -98,17 +101,38 @@ def calibrate_threshold(
 # --------------------------------------------------------
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Empirical MMD threshold calibration (same pipeline as feature_extractor).")
+    parser = argparse.ArgumentParser(
+        description="Empirical MMD threshold calibration (same pipeline as feature_extractor)."
+    )
 
-    parser.add_argument("--dataset_name", type=str, default="CULane", help="Dataset name (e.g., CULane, Curvelanes)")
-    parser.add_argument("--src_split", type=str, default="train", help="Source split (train/test/valid)")
-    parser.add_argument("--src_samples", type=int, default=1000, help="Number of source samples")
-    parser.add_argument("--block_idx", type=int, default=0, help="Subset index (0 → first 1k)")
-    parser.add_argument("--tgt_samples", type=int, default=50, help="Target samples per iteration")
-    parser.add_argument("--num_calib", type=int, default=10, help="Number of calibration iterations")
-    parser.add_argument("--alpha", type=float, default=0.05, help="False positive rate for threshold")
+    parser.add_argument(
+        "--dataset_name",
+        type=str,
+        default="CULane",
+        help="Dataset name (e.g., CULane, Curvelanes)",
+    )
+    parser.add_argument(
+        "--src_split", type=str, default="train", help="Source split (train/test/valid)"
+    )
+    parser.add_argument(
+        "--src_samples", type=int, default=1000, help="Number of source samples"
+    )
+    parser.add_argument(
+        "--block_idx", type=int, default=0, help="Subset index (0 → first 1k)"
+    )
+    parser.add_argument(
+        "--tgt_samples", type=int, default=50, help="Target samples per iteration"
+    )
+    parser.add_argument(
+        "--num_calib", type=int, default=10, help="Number of calibration iterations"
+    )
+    parser.add_argument(
+        "--alpha", type=float, default=0.05, help="False positive rate for threshold"
+    )
     parser.add_argument("--batch_size", type=int, default=16, help="Batch size")
-    parser.add_argument("--image_size", type=int, default=512, help="Resize images to this size")
+    parser.add_argument(
+        "--image_size", type=int, default=512, help="Resize images to this size"
+    )
 
     args = parser.parse_args()
     tau, null_stats = calibrate_threshold(

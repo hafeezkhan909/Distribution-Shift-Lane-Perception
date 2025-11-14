@@ -40,10 +40,12 @@ target_layer = model.bottleneck[-1]
 # -----------------
 # Transforms
 # -----------------
-transform = T.Compose([
-    T.Resize((256, 256)),
-    T.ToTensor(),
-])
+transform = T.Compose(
+    [
+        T.Resize((256, 256)),
+        T.ToTensor(),
+    ]
+)
 
 resize_out = (512, 512)  # for final saved visualizations
 
@@ -112,7 +114,7 @@ for img_path in image_paths:
             target_layer=target_layer,
             DEVICE=device,
             method_index=method_index,
-            vis=False
+            vis=False,
         )
 
         outdir = os.path.join(base_outdir, f"method{method_index}")
@@ -130,8 +132,16 @@ for img_path in image_paths:
         cv2.imwrite(os.path.join(outdir, f"{base_name}.jpg"), np_img_resized)
         cv2.imwrite(os.path.join(outdir, f"{base_name}_overlay.jpg"), overlaid_bgr)
         cv2.imwrite(os.path.join(outdir, f"{base_name}_mask_overlay.jpg"), heatmap)
-        cv2.imwrite(os.path.join(outdir, f"{base_name}_gt_overlay.jpg"), gt_overlay_resized)
-        cv2.imwrite(os.path.join(outdir, f"{base_name}_pred_overlay.jpg"), pred_overlay_resized)
-        cv2.imwrite(os.path.join(outdir, f"{base_name}_pred_mask.jpg"), pred_mask_resized)
+        cv2.imwrite(
+            os.path.join(outdir, f"{base_name}_gt_overlay.jpg"), gt_overlay_resized
+        )
+        cv2.imwrite(
+            os.path.join(outdir, f"{base_name}_pred_overlay.jpg"), pred_overlay_resized
+        )
+        cv2.imwrite(
+            os.path.join(outdir, f"{base_name}_pred_mask.jpg"), pred_mask_resized
+        )
 
-print("Saved Grad-CAM, XRes-CAM, GT overlays, predictions, and IoU scores for 20 validation images.")
+print(
+    "Saved Grad-CAM, XRes-CAM, GT overlays, predictions, and IoU scores for 20 validation images."
+)

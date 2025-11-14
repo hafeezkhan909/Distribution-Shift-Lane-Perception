@@ -47,11 +47,30 @@ def main():
     # ----------------------------
     # Parse arguments
     # ----------------------------
-    parser = argparse.ArgumentParser(description="MMD-based shift detector with configurable source/target paths.")
-    parser.add_argument("--src_path", type=str, default="features/CULane_train_1000_0.npy", help="Path to source feature file.")
-    parser.add_argument("--tgt_prefix", type=str, default="features/CULane_train_50_run", help="Prefix of target feature files.")
-    parser.add_argument("--num_runs", type=int, default=1, help="Number of target runs to evaluate.")
-    parser.add_argument("--tau_threshold", type=float, default=0.028562, help="Empirical 95th percentile threshold τ.")
+    parser = argparse.ArgumentParser(
+        description="MMD-based shift detector with configurable source/target paths."
+    )
+    parser.add_argument(
+        "--src_path",
+        type=str,
+        default="features/CULane_train_1000_0.npy",
+        help="Path to source feature file.",
+    )
+    parser.add_argument(
+        "--tgt_prefix",
+        type=str,
+        default="features/CULane_train_50_run",
+        help="Prefix of target feature files.",
+    )
+    parser.add_argument(
+        "--num_runs", type=int, default=1, help="Number of target runs to evaluate."
+    )
+    parser.add_argument(
+        "--tau_threshold",
+        type=float,
+        default=0.028562,
+        help="Empirical 95th percentile threshold τ.",
+    )
     args = parser.parse_args()
 
     # ----------------------------
@@ -86,7 +105,9 @@ def main():
     # ----------------------------
     detections = sum([1 for r, _ in results if r])
     mean_mmd = np.mean([m for _, m in results])
-    print(f"\n✅ {detections}/{len(results)} shifts detected ({detections/len(results)*100:.2f}%)")
+    print(
+        f"\n✅ {detections}/{len(results)} shifts detected ({detections/len(results)*100:.2f}%)"
+    )
     print(f"📊 Mean MMD: {mean_mmd:.6f}")
 
 
