@@ -35,13 +35,10 @@ def mmd_test(X_src, X_tgt):
     mmd = MMDStatistic(len(X_src_t), len(X_tgt_t))
 
     # Compute MMD statistic and kernel matrix
-    t_stat, matrix = mmd(X_src_t, X_tgt_t, alphas=[alpha], ret_matrix=True)
+    t_stat, _ = mmd(X_src_t, X_tgt_t, alphas=[alpha], ret_matrix=True)
 
-    # Compute p-value using built-in bootstrap estimator
-    p_val = mmd.pval(matrix)
-
-    # Return both the test statistic and p-value
-    return t_stat.item(), p_val
+    # Return test statistic
+    return t_stat.item()
 
 
 if __name__ == "__main__":
@@ -49,10 +46,5 @@ if __name__ == "__main__":
     X_src = np.random.randn(200, 128)
     X_tgt = np.random.randn(200, 128) + 1.0
 
-    mmd_val, p_val = mmd_test(X_src, X_tgt)
-    print(f"MMD statistic: {mmd_val:.4f}, p-value: {p_val:.6f}")
-
-    if p_val < 0.05:
-        print("Significant shift detected.")
-    else:
-        print("No significant shift.")
+    mmd_val = mmd_test(X_src, X_tgt)
+    print(f"MMD statistic: {mmd_val:.4f}")

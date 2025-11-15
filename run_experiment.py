@@ -168,7 +168,7 @@ def main(
             source, src_split, batch_size, image_size, tgt_samples, seed, shift=None
         )
         calib_src_feats = extract_features(model, calib_src_loader, device)
-        t_stat, _ = mmd_test(src_feats, calib_src_feats)
+        t_stat = mmd_test(src_feats, calib_src_feats)
         null_stats.append(t_stat)
 
     null_stats = np.array(null_stats)
@@ -186,7 +186,7 @@ def main(
         source, src_split, batch_size, image_size, tgt_samples, seed_match, shift=None
     )
     sanity_src_feats = extract_features(model, sanity_src_loader, device)
-    mmd_val, _ = mmd_test(src_feats, sanity_src_feats)
+    mmd_val = mmd_test(src_feats, sanity_src_feats)
     print(f"[CHECK] MMD({source}→{source}) = {mmd_val:.6f}, τ = {tau:.6f}")
     print(
         "No shift detected (expected same-domain match)."
@@ -195,20 +195,19 @@ def main(
     )
 
     # =========================================================
-    # NEW SECTION: Cross-domain test (CULane → Curvelanes)
+    # NEW SECTION: Cross-domain test (source → target)
     # =========================================================
-    print("\n[STEP] Cross-domain test: CULane → Curvelanes using same τ")
-    target_cross = target
+    print("\n[STEP] Cross-domain test: {source} → {target} using same τ")
 
     # ---- Run 1 random seeds ----
-    num_runs = 1
+    num_runs = 1 # add this in argparse
     tpr_list = []
     mmd_values = []
 
     for run in trange(num_runs, desc="Cross-domain seeds"):
-        seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
+        seed_cross = seed_base + run
         tgt_loader_cross = get_seeded_random_dataloader(
-            target_cross,
+            target,
             tgt_split,
             batch_size,
             image_size,
@@ -217,7 +216,7 @@ def main(
             shift=None,
         )
         tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
-        mmd_cross, _ = mmd_test(src_feats, tgt_feats_cross)
+        mmd_cross = mmd_test(src_feats, tgt_feats_cross)
         mmd_values.append(mmd_cross)
         detected = mmd_cross > tau
         tpr_list.append(int(detected))
@@ -277,7 +276,7 @@ def main(
                 shift=shift_object,
             )
             tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
-            mmd_cross, _ = mmd_test(src_feats, tgt_feats_cross)
+            mmd_cross = mmd_test(src_feats, tgt_feats_cross)
             mmd_values.append(mmd_cross)
             detected = mmd_cross > tau
             tpr_list.append(int(detected))
