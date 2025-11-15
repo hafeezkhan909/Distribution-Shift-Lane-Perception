@@ -160,15 +160,15 @@ def main(
         print(f"[SAVED] {src_path} ({src_feats.shape})")
 
     # ------------------ Calibration ------------------
-    print("\n[STEP 1] Calibration: same-domain (no shift)")
+    print("\n[STEP 1] Calibration: same-domain")
     null_stats = []
     for i in trange(num_calib, desc="Calibrating"):
         seed = seed_base + i
-        tgt_loader = get_seeded_random_dataloader(
+        calib_src_loader = get_seeded_random_dataloader(
             source, src_split, batch_size, image_size, tgt_samples, seed, shift=None
         )
-        tgt_feats = extract_features(model, tgt_loader, device)
-        t_stat, _ = mmd_test(src_feats, tgt_feats)
+        calib_src_feats = extract_features(model, calib_src_loader, device)
+        t_stat, _ = mmd_test(src_feats, calib_src_feats)
         null_stats.append(t_stat)
 
     null_stats = np.array(null_stats)
@@ -180,18 +180,18 @@ def main(
     np.save("features/calibration_null_mmd.npy", null_stats)
 
     # ------------------ Sanity Check ------------------
-    print("\n[STEP] Sanity Check: CULane→CULane")
+    print(f"\n[STEP 2] Sanity Check: {source}→{source}")
     seed_match = seed_base + 1
-    tgt_loader = get_seeded_random_dataloader(
-        target, tgt_split, batch_size, image_size, tgt_samples, seed_match, shift=None
+    sanity_src_loader = get_seeded_random_dataloader(
+        source, src_split, batch_size, image_size, tgt_samples, seed_match, shift=None
     )
-    tgt_feats = extract_features(model, tgt_loader, device)
-    mmd_val, _ = mmd_test(src_feats, tgt_feats)
-    print(f"[CHECK] MMD(CULane→CULane) = {mmd_val:.6f}, τ = {tau:.6f}")
+    sanity_src_feats = extract_features(model, sanity_src_loader, device)
+    mmd_val, _ = mmd_test(src_feats, sanity_src_feats)
+    print(f"[CHECK] MMD({source}→{source}) = {mmd_val:.6f}, τ = {tau:.6f}")
     print(
-        "✅ No shift detected (expected same-domain match)."
+        "No shift detected (expected same-domain match)."
         if mmd_val <= tau
-        else "❌ Unexpected shift."
+        else "Unexpected shift."
     )
 
     # =========================================================
@@ -302,7 +302,7 @@ if __name__ == "__main__":
 
     # --- Dataset Arguments ---
     parser.add_argument(
-        "-s", "--source", type=str, default="Curvelanes", help="Source dataset name"
+        "-s", "--source", type=str, default="CULane", help="Source dataset name"
     )
     parser.add_argument(
         "-t", "--target", type=str, default="Curvelanes", help="Target dataset name"
