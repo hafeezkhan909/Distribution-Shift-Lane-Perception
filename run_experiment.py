@@ -128,10 +128,10 @@ def extract_features(model, loader, device):
 # Combined pipeline
 # =========================================================
 def main(
-    source: str = "Curvelanes",
+    source: str = "CULane",
     target: str = "Curvelanes",
     src_split: str = "train",
-    tgt_split: str = "train",
+    tgt_split: str = "test",
     src_samples: int = 1000,
     tgt_samples: int = 100,
     block_idx: int = 0,
@@ -164,7 +164,7 @@ def main(
         print(f"[SAVED] {src_path} ({src_feats.shape})")
 
     # ------------------ Calibration ------------------
-    print("\n[STEP] Calibration: same-domain (no shift)")
+    print("\n[STEP 1] Calibration: same-domain (no shift)")
     null_stats = []
     for i in trange(num_calib, desc="Calibrating"):
         seed = seed_base + i
