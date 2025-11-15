@@ -7,6 +7,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import transforms
 from autoencoder import ConvAutoencoderFC
+import argparse
 
 # Import the new, specific shift classes from data_utils
 from data_utils import (
@@ -121,21 +122,19 @@ def extract_features(model, loader, device):
 # =========================================================
 # Combined pipeline
 # =========================================================
-def main():
-    # ----- CONFIG -----
-    source = "Curvelanes"
-    target = "Curvelanes"
-    src_split = "train"
-    tgt_split = "train"
-    src_samples = 1000
-    tgt_samples = 100
-    block_idx = 0
-    batch_size = 16
-    image_size = 512
-    num_calib = 100
-    alpha = 0.05
-    seed_base = 42
-    # -------------------
+def main(
+    source: str = "Curvelanes",
+    target: str = "Curvelanes",
+    src_split: str = "train",
+    tgt_split: str = "train",
+    src_samples: int = 1000,
+    tgt_samples: int = 100,
+    block_idx: int = 0,
+    batch_size: int = 16,
+    image_size: int = 512,
+    num_calib: int = 100,
+    alpha: float = 0.05,
+    seed_base: int = 42):
 
     print(f"Cuda Avalible: {torch.cuda.is_available()}")
 
@@ -294,6 +293,77 @@ def main():
         print(f"    Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
         print(f"    TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
 
-
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(
+        prog="Distribution Shift Lane Perception Experiment",
+        description="Run MMD-based distribution shift tests on lane datasets.",
+    )
+
+    # --- Dataset Arguments ---
+    parser.add_argument(
+        "-s", "--source", type=str, default="Curvelanes", help="Source dataset name"
+    )
+    parser.add_argument(
+        "-t", "--target", type=str, default="Curvelanes", help="Target dataset name"
+    )
+    parser.add_argument(
+        "-p", "--src_split", type=str, default="train", help="Source dataset split"
+    )
+    parser.add_argument(
+        "-g", "--tgt_split", type=str, default="train", help="Target dataset split"
+    )
+
+    # --- Sampling Arguments ---
+    parser.add_argument(
+        "-r",
+        "--src_samples",
+        type=int,
+        default=1000,
+        help="Number of samples for the source reference",
+    )
+    parser.add_argument(
+        "-a",
+        "--tgt_samples",
+        type=int,
+        default=100,
+        help="Number of samples for the target test",
+    )
+    parser.add_argument(
+        "-b",
+        "--block_idx",
+        type=int,
+        default=0,
+        help="Block index for chunked source loading",
+    )
+
+    # --- Model & MMD Test Arguments ---
+    parser.add_argument(
+        "-i", "--batch_size", type=int, default=16, help="Batch size for feature extraction"
+    )
+    parser.add_argument(
+        "-z", "--image_size", type=int, default=512, help="Image resize dimension"
+    )
+    parser.add_argument(
+        "-e",
+        "--num_calib",
+        type=int,
+        default=100,
+        help="Number of calibration runs for null distribution",
+    )
+    parser.add_argument(
+        "-n", "--alpha", type=float, default=0.05, help="Significance level for the test"
+    )
+    
+    # --- Reproducibility ---
+    parser.add_argument(
+        "--seed_base",
+        type=int,
+        default=42,
+        help="Base seed for random sampling",
+    )
+
+    args = parser.parse_args()
+    
+    # Call main by unpacking the args dictionary.
+    # This automatically maps 'args.source' to the 'source' param, etc.
+    main(**vars(args))
