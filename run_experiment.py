@@ -37,11 +37,11 @@ class LaneImageDataset(Dataset):
         self.split = split
         self.image_size = image_size
 
-        # list file logic
+        # list file logic: Needs modularization for any data loading.
         if "Curvelanes" in root_dir:
-            list_path = os.path.join(root_dir, split, f"{split}.txt")
+            list_path = os.path.join(root_dir, split, f"{split}.txt") # for Curvelanes txt file extraction
         else:
-            list_path = os.path.join(root_dir, "list", f"{split}.txt")
+            list_path = os.path.join(root_dir, "list", f"{split}.txt") # for CULane txt file extraction 
 
         if not os.path.exists(list_path):
             raise FileNotFoundError(f"List file not found: {list_path}")
@@ -114,12 +114,8 @@ def extract_features(model, loader, device):
             imgs = imgs.to(device, non_blocking=True)
             z = model.encode(imgs)
             if z.dim() > 2:
-                z = z.view(z.size(0), -1)
-            else:
-                raise ValueError(
-                    f"Encoded feature z has unexpected shape: {z.shape}. "
-                    f"Expected a 2D tensor (B, D) after encoding."
-                )
+                z = z.view(z.size(0), -1) # code to run on raw images (to flatten the image and do the tests)
+
             feats.append(z.cpu().numpy())
     return np.concatenate(feats, axis=0)
 
@@ -130,12 +126,12 @@ def extract_features(model, loader, device):
 def main(
     source: str = "CULane",
     target: str = "Curvelanes",
-    src_split: str = "train",
+    src_split: str = "train", # train or test or val split
     tgt_split: str = "test",
-    src_samples: int = 1000,
+    src_samples: int = 1000, # No. of source samples as train set passed
     tgt_samples: int = 100,
-    block_idx: int = 0,
-    batch_size: int = 16,
+    block_idx: int = 0, #block of samples selected from the the text file
+    batch_size: int = 16, #batch processing of data within an epoch
     image_size: int = 512,
     num_calib: int = 100,
     alpha: float = 0.05,
