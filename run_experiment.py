@@ -153,8 +153,8 @@ def main(
     # ------------------ Source ------------------
     src_path = f"features/{source}_{src_split}_{src_samples}_{block_idx}.npy"
     if os.path.exists(src_path):
-        src_feats = np.load(src_path)
         print(f"Src feats already exist, loading from path: {src_path}")
+        src_feats = np.load(src_path)
     else:
         src_loader = get_dataloader(
             source, src_split, batch_size, image_size, src_samples, block_idx
