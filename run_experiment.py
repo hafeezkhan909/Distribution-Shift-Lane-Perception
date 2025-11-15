@@ -115,6 +115,11 @@ def extract_features(model, loader, device):
             z = model.encode(imgs)
             if z.dim() > 2:
                 z = z.view(z.size(0), -1)
+            else:
+                raise ValueError(
+                    f"Encoded feature z has unexpected shape: {z.shape}. "
+                    f"Expected a 2D tensor (B, D) after encoding."
+                )
             feats.append(z.cpu().numpy())
     return np.concatenate(feats, axis=0)
 
@@ -136,7 +141,7 @@ def main(
     alpha: float = 0.05,
     seed_base: int = 42):
 
-    print(f"Cuda Avalible: {torch.cuda.is_available()}")
+    print(f"CUDA Avalible: {torch.cuda.is_available()}")
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     os.makedirs("features", exist_ok=True)
@@ -149,7 +154,7 @@ def main(
     src_path = f"features/{source}_{src_split}_{src_samples}_{block_idx}.npy"
     if os.path.exists(src_path):
         src_feats = np.load(src_path)
-        print(f"[INFO] Loaded source features → {src_path}")
+        print(f"Src feats already exist, loading from path: {src_path}")
     else:
         src_loader = get_dataloader(
             source, src_split, batch_size, image_size, src_samples, block_idx
@@ -197,7 +202,7 @@ def main(
     # NEW SECTION: Cross-domain test (CULane → Curvelanes)
     # =========================================================
     print("\n[STEP] Cross-domain test: CULane → Curvelanes using same τ")
-    target_cross = "CULane"
+    target_cross = target
 
     # ---- Run 1 random seeds ----
     num_runs = 1
@@ -235,7 +240,7 @@ def main(
     # NEW SECTION: Shifted-Data test (CULane → Shifted CULane)
     # =========================================================
     print("\n[STEP] Shifted-Data test: CULane → Shifted CULane using same τ")
-    target_cross = "Curvelanes"
+    target_cross = target
 
     # ---- Run 200 random seeds per shift ----
     num_runs = 200
