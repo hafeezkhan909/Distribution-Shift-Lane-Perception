@@ -95,9 +95,9 @@ def get_seeded_random_dataloader(
     random.seed(seed)
     chosen = random.sample(range(len(ds)), min(num_samples, len(ds)))
     subset = Subset(ds, chosen)
-    print(
-        f"[INFO] {dataset_name} ({split}) → Random {len(chosen)} samples (seed={seed})"
-    )
+    # print(
+    #     f"[INFO] {dataset_name} ({split}) → Random {len(chosen)} samples (seed={seed})"
+    # )
     return DataLoader(
         subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
     )
@@ -110,7 +110,7 @@ def extract_features(model, loader, device):
     model.eval()
     feats = []
     with torch.no_grad():
-        for imgs in tqdm(loader, desc="Extracting features"):
+        for imgs in loader:
             imgs = imgs.to(device, non_blocking=True)
             z = model.encode(imgs)
             if z.dim() > 2:
@@ -147,17 +147,11 @@ def main(
     model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(device)
 
     # ------------------ Source ------------------
-    src_path = f"features/{source}_{src_split}_{src_samples}_{block_idx}.npy"
-    if os.path.exists(src_path):
-        print(f"Src feats already exist, loading from path: {src_path}")
-        src_feats = np.load(src_path)
-    else:
-        src_loader = get_dataloader(
-            source, src_split, batch_size, image_size, src_samples, block_idx
-        )
-        src_feats = extract_features(model, src_loader, device)
-        np.save(src_path, src_feats)
-        print(f"[SAVED] {src_path} ({src_feats.shape})")
+    src_loader = get_dataloader(
+        source, src_split, batch_size, image_size, src_samples, block_idx
+    )
+    src_feats = extract_features(model, src_loader, device)
+    print(f"{source} features loaded successfully !")
 
     # ------------------ Calibration ------------------
     print("\n[STEP 1] Calibration: same-domain")
@@ -197,10 +191,10 @@ def main(
     # =========================================================
     # NEW SECTION: Cross-domain test (source → target)
     # =========================================================
-    print("\n[STEP] Cross-domain test: {source} → {target} using same τ")
+    print(f"\n[STEP] Cross-domain test: {source} → {target} using same τ")
 
     # ---- Run 1 random seeds ----
-    num_runs = 1 # add this in argparse
+    num_runs = 10 # add this in argparse
     tpr_list = []
     mmd_values = []
 
@@ -228,70 +222,70 @@ def main(
     print("\n[RESULTS] Cross-domain detection summary")
     print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
     print(f"TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
-    np.save("features/mmd_curvelanes_100runs.npy", np.array(mmd_values))
-    np.save("features/tpr_curvelanes_100runs.npy", np.array(tpr_list))
+    np.save(f"features/mmd_{source}_{target}_100runs.npy", np.array(mmd_values))
+    np.save(f"features/tpr_{source}_{target}_100runs.npy", np.array(tpr_list))
+    np.save(f"features/tau_{source}_{target}.npy", np.array([tau]))
 
     # =========================================================
-    # NEW SECTION: Shifted-Data test (CULane → Shifted CULane)
+    # NEW SECTION: Shifted-Data test (source → Shifted source)
     # =========================================================
-    print("\n[STEP] Shifted-Data test: CULane → Shifted CULane using same τ")
-    target_cross = target
+    # print("\n[STEP] Shifted-Data test: {source} → Shifted {source} using same τ")
 
-    # ---- Run 200 random seeds per shift ----
-    num_runs = 200
+    # # ---- Run 200 random seeds per shift ----
+    # num_runs = 200
 
-    # Use the new DataShift subclasses from data_utils.py
-    shifts_list = [
-        GaussianShift(std=1),
-        GaussianShift(std=10),
-        GaussianShift(std=20),
-        GaussianShift(std=30),
-        GaussianShift(std=40),
-        GaussianShift(std=50),
-        GaussianShift(std=60),
-        GaussianShift(std=70),
-        GaussianShift(std=80),
-        GaussianShift(std=90),
-        GaussianShift(std=100),
-    ]
+    # # Use the new DataShift subclasses from data_utils.py
+    # shifts_list = [
+    #     GaussianShift(std=1),
+    #     GaussianShift(std=10),
+    #     GaussianShift(std=20),
+    #     GaussianShift(std=30),
+    #     GaussianShift(std=40),
+    #     GaussianShift(std=50),
+    #     GaussianShift(std=60),
+    #     GaussianShift(std=70),
+    #     GaussianShift(std=80),
+    #     GaussianShift(std=90),
+    #     GaussianShift(std=100),
+    # ]
 
-    print("Text for Sanity: With Noise")
+    # print("Text for Sanity: With Noise")
 
-    for shift_object in shifts_list:
-        print(f"\n[STEP] Shifted-Data test: {shift_object}")
-        tpr_list = []
-        mmd_values = []
+    # for shift_object in shifts_list:
+    #     print(f"\n[STEP] Shifted-Data test: {shift_object}")
+    #     tpr_list = []
+    #     mmd_values = []
 
-        for run in trange(num_runs, desc="Random CULane seeds"):
-            seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
+    #     for run in trange(num_runs, desc="Random CULane seeds"):
+    #         seed_cross = seed_base + 100 + run  # avoid overlap with calibration seeds
 
-            # Pass the entire shift_object to the dataloader
-            tgt_loader_cross = get_seeded_random_dataloader(
-                target_cross,
-                tgt_split,
-                batch_size,
-                image_size,
-                tgt_samples,
-                seed_cross,
-                shift=shift_object,
-            )
-            tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
-            mmd_cross = mmd_test(src_feats, tgt_feats_cross)
-            mmd_values.append(mmd_cross)
-            detected = mmd_cross > tau
-            tpr_list.append(int(detected))
+    #         # Pass the entire shift_object to the dataloader
+    #         tgt_loader_cross = get_seeded_random_dataloader(
+    #             target,
+    #             tgt_split,
+    #             batch_size,
+    #             image_size,
+    #             tgt_samples,
+    #             seed_cross,
+    #             shift=shift_object,
+    #         )
+    #         tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
+    #         mmd_cross = mmd_test(src_feats, tgt_feats_cross)
+    #         mmd_values.append(mmd_cross)
+    #         detected = mmd_cross > tau
+    #         tpr_list.append(int(detected))
 
-            # This print is noisy, you might want to comment it out
-            print(
-                f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅ Shift Detected' if detected else '❌ Shift not Detected'}"
-            )
+    #         # This print is noisy, you might want to comment it out
+    #         print(
+    #             f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅ Shift Detected' if detected else '❌ Shift not Detected'}"
+    #         )
 
-        # ---- Summarize results ----
-        tpr = np.mean(tpr_list)
-        print("\n[RESULTS] Shifted-Data detection summary")
-        print(f"    Shifted-Data test: {shift_object}")
-        print(f"    Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-        print(f"    TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
+    #     # ---- Summarize results ----
+    #     tpr = np.mean(tpr_list)
+    #     print("\n[RESULTS] Shifted-Data detection summary")
+    #     print(f"    Shifted-Data test: {shift_object}")
+    #     print(f"    Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
+    #     print(f"    TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(

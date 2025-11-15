@@ -28,8 +28,8 @@ def mmd_test(X_src, X_tgt):
     alpha = 1 / (median_dist + 1e-8)  # same as paper code (not 1/(2σ²))
 
     # Convert to torch Variables
-    X_src_t = torch.tensor(X_src, device="cpu")
-    X_tgt_t = torch.tensor(X_tgt, device="cpu")
+    X_src_t = torch.autograd.Variable(torch.tensor(X_src))
+    X_tgt_t = torch.autograd.Variable(torch.tensor(X_tgt))
 
     # Create MMD test object
     mmd = MMDStatistic(len(X_src_t), len(X_tgt_t))
