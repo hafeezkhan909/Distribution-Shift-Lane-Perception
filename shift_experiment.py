@@ -57,7 +57,8 @@ class ShiftExperiment:
             alpha: float = 0.05,
             seed_base: int = 42,
             shift: str = None,
-            std: float = 0.0
+            std: float = 0.0,
+            cropImg: bool = False
     ):
         
         self.source = source
@@ -75,6 +76,7 @@ class ShiftExperiment:
         self.seed_base = seed_base
         self.shift_type = shift
         self.std = std
+        self.cropImg = cropImg
 
         print(f"CUDA Avalible: {torch.cuda.is_available()}")
 
@@ -97,7 +99,7 @@ class ShiftExperiment:
     def load_source_features(self):
         loader = get_dataloader(
             self.source, self.src_split, self.batch_size, self.image_size,
-            self.src_samples, self.block_idx
+            self.src_samples, self.cropImg, self.block_idx
         )
         self.src_feats = extract_features(self.model, loader, self.device)
         print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
@@ -111,7 +113,7 @@ class ShiftExperiment:
             seed = self.seed_base + i
             calib_src_loader = get_seeded_random_dataloader(
                 self.source, self.src_split, self.batch_size, self.image_size,
-                self.tgt_samples, seed, shift=None
+                self.tgt_samples, seed, self.cropImg, shift=None
             )
             calib_src_feats = extract_features(self.model, calib_src_loader, self.device)
 
@@ -130,7 +132,7 @@ class ShiftExperiment:
 
         sanity_src_loader = get_seeded_random_dataloader(
             self.source, self.src_split, self.batch_size, self.image_size,
-            self.tgt_samples, self.seed_base + 1, shift=None
+            self.tgt_samples, self.seed_base + 1, self.cropImg, shift=None
         )
         sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
 
@@ -144,7 +146,7 @@ class ShiftExperiment:
 
     # STEP 3 — Data Shift Test
     def data_shift_test(self):
-        print(f"[STEP 3] Data Shift Test: {self.source} → {self.target}\n")
+        print(f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}, with std: {self.std}\n")
 
         tpr_list = []
         mmd_values = []
@@ -153,7 +155,7 @@ class ShiftExperiment:
             seed = self.seed_base + i
             tgt_loader_cross = get_seeded_random_dataloader(
                 self.target, self.tgt_split, self.batch_size, self.image_size,
-                self.tgt_samples, seed, shift=self.shift_object
+                self.tgt_samples, seed, self.cropImg, shift=self.shift_object
             )
             tgt_feats_cross = extract_features(self.model, tgt_loader_cross, self.device)
             mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
@@ -200,6 +202,7 @@ if __name__ == "__main__":
     parser.add_argument("--seed_base", type=int, default=42)
     parser.add_argument("--shift", type=str, default=None)
     parser.add_argument("--std", type=float, default=0.0)
+    parser.add_argument("--cropImg", type=bool, default=False)
 
     args = parser.parse_args()
 
