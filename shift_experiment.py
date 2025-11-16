@@ -113,7 +113,7 @@ class ShiftExperiment:
             seed = self.seed_base + i
             calib_src_loader = get_seeded_random_dataloader(
                 self.source, self.src_split, self.batch_size, self.image_size,
-                self.tgt_samples, seed, self.cropImg, shift=None
+                self.tgt_samples, seed, cropImg=self.cropImg, shift=None
             )
             calib_src_feats = extract_features(self.model, calib_src_loader, self.device)
 
@@ -132,7 +132,7 @@ class ShiftExperiment:
 
         sanity_src_loader = get_seeded_random_dataloader(
             self.source, self.src_split, self.batch_size, self.image_size,
-            self.tgt_samples, self.seed_base + 1, self.cropImg, shift=None
+            self.tgt_samples, self.seed_base + 1, cropImg=self.cropImg, shift=None
         )
         sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
 
@@ -155,7 +155,7 @@ class ShiftExperiment:
             seed = self.seed_base + i
             tgt_loader_cross = get_seeded_random_dataloader(
                 self.target, self.tgt_split, self.batch_size, self.image_size,
-                self.tgt_samples, seed, self.cropImg, shift=self.shift_object
+                self.tgt_samples, seed, cropImg=self.cropImg, shift=self.shift_object
             )
             tgt_feats_cross = extract_features(self.model, tgt_loader_cross, self.device)
             mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
