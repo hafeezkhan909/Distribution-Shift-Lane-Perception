@@ -114,6 +114,7 @@ def extract_features(model, loader, device):
             imgs = imgs.to(device, non_blocking=True)
             z = model.encode(imgs)
             if z.dim() > 2:
+                raise ValueError("Images are still in the pixel space")
                 z = z.view(z.size(0), -1) # code to run on raw images (to flatten the image and do the tests)
 
             feats.append(z.cpu().numpy())
