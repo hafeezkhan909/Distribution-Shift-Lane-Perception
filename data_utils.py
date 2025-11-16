@@ -165,7 +165,7 @@ def apply_shift(image: Image.Image, dataShift: DataShift) -> Image.Image:
     Returns:
         Image.Image: The transformed PIL image.
     """
-    print(f"Applying: {dataShift}")
+    # print(f"Applying: {dataShift}")
 
     if dataShift.type == ShiftTypes.GAUSSIAN:
         return add_gaussian_noise(image, mean=dataShift.mean, std=dataShift.std)
