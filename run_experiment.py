@@ -31,8 +31,9 @@ from mmd_test import mmd_test
 class LaneImageDataset(Dataset):
     """Generic dataset for lane images given a root path and list file."""
 
-    def __init__(self, root_dir, split="train", image_size=512, dataShift=None):
+    def __init__(self, root_dir, split="train", image_size=512, dataShift=None, cropImage=False):
         self.shift = dataShift
+        self.cropImage = cropImage
         self.root_dir = root_dir
         self.split = split
         self.image_size = image_size
@@ -65,8 +66,11 @@ class LaneImageDataset(Dataset):
 
         img = Image.open(img_path).convert("RGB")
         if self.shift is not None:
-            img_shifted = apply_shift(img, self.shift)
-            return self.transform(img_shifted)
+            img = apply_shift(img, self.shift)
+        if self.cropImage:
+            w, h = img.size
+            img = img.crop((0, h//2, w, h)) # left, top, right, bottom
+            return self.transform(img)
         else:
             return self.transform(img)
 
@@ -78,7 +82,7 @@ def get_dataloader(
     dataset_name, split, batch_size, image_size, num_samples, block_idx=0
 ):
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, dataShift=None)
+    ds = LaneImageDataset(root, split, image_size, dataShift=None, cropImage=True)
     start, end = block_idx * num_samples, min((block_idx + 1) * num_samples, len(ds))
     subset = Subset(ds, list(range(start, end)))
     print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
@@ -91,7 +95,7 @@ def get_seeded_random_dataloader(
     dataset_name, split, batch_size, image_size, num_samples, seed, shift=None
 ):
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, dataShift=shift)
+    ds = LaneImageDataset(root, split, image_size, dataShift=shift, cropImage=True)
     random.seed(seed)
     chosen = random.sample(range(len(ds)), min(num_samples, len(ds)))
     subset = Subset(ds, chosen)
