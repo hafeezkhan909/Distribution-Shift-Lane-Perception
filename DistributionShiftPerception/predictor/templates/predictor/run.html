@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run Experiment</title>
+</head>
+<body>
+    <h1>Run Distribution Shift Experiment</h1>
+    
+    <form method="post" novalidate>
+        {% csrf_token %}
+        
+        {% if form.non_field_errors %}
+            <div style="color: red;">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        {{ form.as_p }}
+        
+        <button type="submit">Run Experiment</button>
+    </form>
+</body>
+</html>

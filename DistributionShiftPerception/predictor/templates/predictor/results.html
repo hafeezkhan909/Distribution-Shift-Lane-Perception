@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experiment Results</title>
+</head>
+<body>
+    <h1>Experiment Finished</h1>
+
+    {% if results %}
+        <h2>Results:</h2>
+        <ul>
+            <li><strong>Distribution Shifted:</strong> {{ results.is_distribution_shifted }}</li>
+            <li><strong>P-Value:</strong> {{ results.p_value }} (at alpha={{ results.alpha }})</li>
+        </ul>
+        
+        <h3>Parameters Used:</h3>
+        <ul>
+            <li>Source: {{ results.source_dataset }} ({{ results.source_samples }} samples)</li>
+            <li>Target: {{ results.target_dataset }} ({{ results.target_samples }} samples)</li>
+        </ul>
+    {% else %}
+        <p>No results found. An error might have occurred.</p>
+    {% endif %}
+    
+    <a href="{% url 'name_of_your_run_experiment_url' %}">Run another experiment</a>
+</body>
+</html>

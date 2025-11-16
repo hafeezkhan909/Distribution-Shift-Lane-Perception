@@ -20,7 +20,7 @@ from data_utils import (
     ShearShift,
     ZoomShift,
     HorizontalFlipShift,
-    VerticalFlipShift,
+    VerticalFlipShift
 )
 from mmd_test import mmd_test
 
