@@ -4,10 +4,10 @@ import numpy as np
 from PIL import Image
 from tqdm import tqdm, trange
 import torch
-from autoencoder import ConvAutoencoderFC
+from models.autoencoder import ConvAutoencoderFC
 import argparse
 
-from data_utils import (
+from data.data_utils import (
     ShiftTypes,
     apply_shift,
     DataShift,
@@ -19,8 +19,8 @@ from data_utils import (
     HorizontalFlipShift,
     VerticalFlipShift,
 )
-from mmd_test import mmd_test
-from data_builder import (
+from utils.mmd_test import mmd_test
+from data.data_builder import (
     get_dataloader,
     get_seeded_random_dataloader
 )

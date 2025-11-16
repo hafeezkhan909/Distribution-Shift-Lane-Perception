@@ -4,7 +4,7 @@ from PIL import Image
 
 # Import all the functions and classes to be tested
 # Assumes your script is named 'data_utils.py'
-from data_utils import (
+from data.data_utils import (
     ShiftTypes,
     DataShift,
     GaussianShift,

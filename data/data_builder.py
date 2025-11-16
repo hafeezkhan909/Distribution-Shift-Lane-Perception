@@ -4,7 +4,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader, Subset
 from torchvision import transforms
 from PIL import Image
-from data_utils import apply_shift
+from data.data_utils import apply_shift
 
 class LaneImageDataset(Dataset):
     """Generic dataset for lane images given a root path and list file."""
