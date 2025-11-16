@@ -79,10 +79,10 @@ class LaneImageDataset(Dataset):
 # Dataloader helpers
 # =========================================================
 def get_dataloader(
-    dataset_name, split, batch_size, image_size, num_samples, block_idx=0
+    dataset_name, split, batch_size, image_size, num_samples, block_idx=0, cropImage=False
 ):
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, dataShift=None, cropImage=True)
+    ds = LaneImageDataset(root, split, image_size, dataShift=None, cropImage=False)
     start, end = block_idx * num_samples, min((block_idx + 1) * num_samples, len(ds))
     subset = Subset(ds, list(range(start, end)))
     print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
@@ -92,10 +92,10 @@ def get_dataloader(
 
 
 def get_seeded_random_dataloader(
-    dataset_name, split, batch_size, image_size, num_samples, seed, shift=None
+    dataset_name, split, batch_size, image_size, num_samples, seed, shift=None, cropImage=False
 ):
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, dataShift=shift, cropImage=True)
+    ds = LaneImageDataset(root, split, image_size, dataShift=shift, cropImage=False)
     random.seed(seed)
     chosen = random.sample(range(len(ds)), min(num_samples, len(ds)))
     subset = Subset(ds, chosen)
@@ -135,12 +135,15 @@ def main(
     tgt_split: str = "test",
     src_samples: int = 1000, # No. of source samples as train set passed
     tgt_samples: int = 100,
+    num_runs: int = 10,
     block_idx: int = 0, #block of samples selected from the the text file
     batch_size: int = 16, #batch processing of data within an epoch
     image_size: int = 512,
     num_calib: int = 100,
     alpha: float = 0.05,
-    seed_base: int = 42):
+    seed_base: int = 42,
+    shift: str = None,
+    std: float = 0.0):
 
     print(f"CUDA Avalible: {torch.cuda.is_available()}")
 
@@ -193,17 +196,21 @@ def main(
         else "Unexpected shift."
     )
 
-    # =========================================================
-    # NEW SECTION: Cross-domain test (source → target)
-    # =========================================================
-    print(f"\n[STEP] Cross-domain test: {source} → {target} using same τ")
+    shift_object = None
+    if shift == "gaussian":
+        if std == 0.0:
+            raise ValueError("Gaussian noise selected but std=0. Please provide > 0 --std value.")
+        shift_object = GaussianShift(std=std)
 
-    # ---- Run 1 random seeds ----
-    num_runs = 10 # add this in argparse
+    # =========================================================
+    # NEW SECTION: Data Shift test (source → target)
+    # =========================================================
+    print(f"\n[STEP] Data Shift test: {source} → {target} using same τ")
+
     tpr_list = []
     mmd_values = []
 
-    for run in trange(num_runs, desc="Cross-domain seeds"):
+    for run in trange(num_runs, desc="Shift Testing"):
         seed_cross = seed_base + run
         tgt_loader_cross = get_seeded_random_dataloader(
             target,
@@ -212,7 +219,7 @@ def main(
             image_size,
             tgt_samples,
             seed_cross,
-            shift=None,
+            shift=shift_object,
         )
         tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
         mmd_cross = mmd_test(src_feats, tgt_feats_cross)
@@ -224,72 +231,14 @@ def main(
 
     # ---- Summarize results ----
     tpr = np.mean(tpr_list)
-    print("\n[RESULTS] Cross-domain detection summary")
+    print("\n[RESULTS] Data Shift detection summary")
     print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
     print(f"TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
+    print(f"Shifted-Data test: {shift_object}")
     np.save(f"features/mmd_{source}_{target}_100runs.npy", np.array(mmd_values))
     np.save(f"features/tpr_{source}_{target}_100runs.npy", np.array(tpr_list))
     np.save(f"features/tau_{source}_{target}.npy", np.array([tau]))
 
-    # =========================================================
-    # NEW SECTION: Shifted-Data test (source → Shifted source)
-    # =========================================================
-    print("\n[STEP] Shifted-Data test: {source} → Shifted {source} using same τ")
-
-    # ---- Run 200 random seeds per shift ----
-    num_runs = 10
-
-    # Use the new DataShift subclasses from data_utils.py
-    shifts_list = [
-        GaussianShift(std=1),
-        GaussianShift(std=10),
-        GaussianShift(std=20),
-        GaussianShift(std=30),
-        GaussianShift(std=40),
-        GaussianShift(std=50),
-        GaussianShift(std=60),
-        GaussianShift(std=70),
-        GaussianShift(std=80),
-        GaussianShift(std=90),
-        GaussianShift(std=100),
-    ]
-
-    print("Test for Sanity: With Noise")
-
-    for shift_object in shifts_list:
-        print(f"\n[STEP] Shifted-Data test: {shift_object}")
-        tpr_list = []
-        mmd_values = []
-
-        for run in trange(num_runs, desc="Random CULane seeds"):
-            seed_cross = seed_base + run
-
-            # Pass the entire shift_object to the dataloader
-            tgt_loader_shifted = get_seeded_random_dataloader(
-                source,
-                src_split,
-                batch_size,
-                image_size,
-                tgt_samples,
-                seed_cross,
-                shift=shift_object,
-            )
-            tgt_feats_shifted = extract_features(model, tgt_loader_shifted, device)
-            mmd_cross = mmd_test(src_feats, tgt_feats_shifted)
-            mmd_values.append(mmd_cross)
-            detected = mmd_cross > tau
-            tpr_list.append(int(detected))
-
-            print(
-                f"[RUN {run+1:03d}] MMD={mmd_cross:.6f} {'✅ Shift Detected' if detected else '❌ Shift not Detected'}"
-            )
-
-        # ---- Summarize results ----
-        tpr = np.mean(tpr_list)
-        print("\n[RESULTS] Shifted-Data detection summary")
-        print(f"    Shifted-Data test: {shift_object}")
-        print(f"    Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-        print(f"    TPR (true positive rate) over {num_runs} runs: {tpr*100:.2f}%")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
@@ -308,7 +257,7 @@ if __name__ == "__main__":
         "-p", "--src_split", type=str, default="train", help="Source dataset split"
     )
     parser.add_argument(
-        "-g", "--tgt_split", type=str, default="train", help="Target dataset split"
+        "-g", "--tgt_split", type=str, default="valid", help="Target dataset split"
     )
 
     # --- Sampling Arguments ---
@@ -325,6 +274,12 @@ if __name__ == "__main__":
         type=int,
         default=100,
         help="Number of samples for the target test",
+    )
+    parser.add_argument(
+        "--num_runs",
+        type=int,
+        default=10,
+        help="Number of runs",
     )
     parser.add_argument(
         "-b",
@@ -359,9 +314,11 @@ if __name__ == "__main__":
         default=42,
         help="Base seed for random sampling",
     )
-
+    parser.add_argument("--shift", type=str, default=None,
+                        help="Type of shift: gaussian | rotate | translate etc.")
+    parser.add_argument("--std", type=float, default=0.0,
+                        help="Std for Gaussian noise shift")
+    
     args = parser.parse_args()
     
-    # Call main by unpacking the args dictionary.
-    # This automatically maps 'args.source' to the 'source' param, etc.
     main(**vars(args))
