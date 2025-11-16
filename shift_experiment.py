@@ -58,7 +58,12 @@ class ShiftExperiment:
             seed_base: int = 42,
             shift: str = None,
             std: float = 0.0,
-            cropImg: bool = False
+            cropImg: bool = False,
+            rotation_angle: float = 45.0,
+            width_shift_frac: float = 0.2, 
+            height_shift_frac: float = 0.2,
+            shear_angle: float = 20.0,
+            zoom_factor: float = 1.3 # Guide: 1.3 is 30% zoom in and 0.7 is 30% zoom out
     ):
         
         self.source = source
@@ -77,6 +82,11 @@ class ShiftExperiment:
         self.shift_type = shift
         self.std = std
         self.cropImg = cropImg
+        self.rotation_angle = rotation_angle
+        self.width_shift_frac = width_shift_frac
+        self.height_shift_frac = height_shift_frac
+        self.shear_angle = shear_angle
+        self.zoom_factor = zoom_factor
 
         print(f"CUDA Avalible: {torch.cuda.is_available()}")
 
@@ -93,6 +103,26 @@ class ShiftExperiment:
             if self.std == 0.0:
                 raise ValueError("Gaussian noise selected but std=0. Please provide > 0 --std value.")
             self.shift_object = GaussianShift(std=self.std)
+        elif self.shift_type == "rotation_shift":
+            if self.rotation_angle == 0.0:
+                raise ValueError("Rotation angle selected = 0. Please provide valid --rotation_angle value.")
+            self.shift_object = RotationShift(angle=self.rotation_angle)
+        elif self.shift_type == "translation_shift":
+            if self.width_shift_frac == 0.0 or self.height_shift_frac==0:
+                raise ValueError("width_shift_frac or height_shift_frac angle selected = 0. Please provide valid --width_shift_frac or --height_shift_frac value.")
+            self.shift_object = TranslationShift(width_shift_frac=self.width_shift_frac, height_shift_frac=self.height_shift_frac)
+        elif self.shift_type == "shear_shift":
+            if self.shear_angle == 0.0:
+                raise ValueError("Shear angle selected = 0. Please provide valid --shear_angle value.")
+            self.shift_object = ShearShift(shear_angle=self.shear_angle)
+        elif self.shift_type == "zoom_shift":
+            if self.zoom_factor == 1.0:
+                raise ValueError("Zoom factor selected = 1. Please provide valid --zoom_factor value.")
+            self.shift_object = ZoomShift(zoom_factor=self.zoom_factor)
+        elif self.shift_type == "horizontal_flip_shift":
+            self.shift_object = HorizontalFlipShift()
+        elif self.shift_type == "vertical_flip_shift":
+            self.shift_object = VerticalFlipShift()
 
         
     # STEP 0 — Load Source Features
@@ -146,7 +176,7 @@ class ShiftExperiment:
 
     # STEP 3 — Data Shift Test
     def data_shift_test(self):
-        print(f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}, with std: {self.std}\n")
+        print(f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}\n")
 
         tpr_list = []
         mmd_values = []
@@ -203,6 +233,11 @@ if __name__ == "__main__":
     parser.add_argument("--shift", type=str, default=None)
     parser.add_argument("--std", type=float, default=0.0)
     parser.add_argument("--cropImg", type=bool, default=False)
+    parser.add_argument("--rotation_angle", type=float, default=0.0)
+    parser.add_argument("--shear_angle", type=float, default=0.0)
+    parser.add_argument("--zoom_factor", type=float, default=1.0)
+    parser.add_argument("--weight_shift_frac", type=float, default=0.2)
+    parser.add_argument("--height_shift_frac", type=float, default=0.2)
 
     args = parser.parse_args()
 
