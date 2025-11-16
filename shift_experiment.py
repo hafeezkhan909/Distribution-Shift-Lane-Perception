@@ -236,7 +236,7 @@ if __name__ == "__main__":
     parser.add_argument("--rotation_angle", type=float, default=0.0)
     parser.add_argument("--shear_angle", type=float, default=0.0)
     parser.add_argument("--zoom_factor", type=float, default=1.0)
-    parser.add_argument("--weight_shift_frac", type=float, default=0.2)
+    parser.add_argument("--width_shift_frac", type=float, default=0.2)
     parser.add_argument("--height_shift_frac", type=float, default=0.2)
 
     args = parser.parse_args()
