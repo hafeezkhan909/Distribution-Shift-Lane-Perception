@@ -91,4 +91,116 @@ class ShiftExperiment:
             if self.std == 0.0:
                 raise ValueError("Gaussian noise selected but std=0. Please provide > 0 --std value.")
             self.shift_object = GaussianShift(std=self.std)
+
         
+    # STEP 0 — Load Source Features
+    def load_source_features(self):
+        loader = get_dataloader(
+            self.source, self.src_split, self.batch_size, self.image_size,
+            self.src_samples, self.block_idx
+        )
+        self.src_feats = extract_features(self.model, loader, self.device)
+        print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
+    
+    # STEP 1 — Calibration (Null Distribution)
+    def calibrate(self):
+        print(f"[STEP 1] Calibration using {self.source}...")
+        null_stats = []
+
+        for i in trange(self.num_calib, desc="Calibrating"):
+            seed = self.seed_base + i
+            calib_src_loader = get_seeded_random_dataloader(
+                self.source, self.src_split, self.batch_size, self.image_size,
+                self.tgt_samples, seed, shift=None
+            )
+            calib_src_feats = extract_features(self.model, calib_src_loader, self.device)
+
+            t_stat = mmd_test(self.src_feats, calib_src_feats)
+            null_stats.append(t_stat)
+
+        self.null_stats = np.array(null_stats)
+        self.tau = np.percentile(self.null_stats, 100 * (1 - self.alpha))
+
+        print(f"\n[RESULT] τ({1 - self.alpha:.2f}) = {self.tau:.6f}")
+        print(f"Mean MMD (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n")
+
+    # STEP 2 — Sanity Check
+    def sanity_check(self):
+        print("[STEP 2] Sanity Check...")
+
+        sanity_src_loader = get_seeded_random_dataloader(
+            self.source, self.src_split, self.batch_size, self.image_size,
+            self.tgt_samples, self.seed_base + 1, shift=None
+        )
+        sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
+
+        mmd_val = mmd_test(self.src_feats, sanity_src_feats)
+        print(f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}")
+
+        if mmd_val <= self.tau:
+            print("No shift detected.\n")
+        else:
+            print("False shift detected.\n")
+
+    # STEP 3 — Data Shift Test
+    def data_shift_test(self):
+        print(f"[STEP 3] Data Shift Test: {self.source} → {self.target}\n")
+
+        tpr_list = []
+        mmd_values = []
+
+        for i in trange(self.num_runs, desc="Shift Testing"):
+            seed = self.seed_base + i
+            tgt_loader_cross = get_seeded_random_dataloader(
+                self.target, self.tgt_split, self.batch_size, self.image_size,
+                self.tgt_samples, seed, shift=self.shift_object
+            )
+            tgt_feats_cross = extract_features(self.model, tgt_loader_cross, self.device)
+            mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
+
+            mmd_values.append(mmd_cross)
+            detected = mmd_cross > self.tau
+            tpr_list.append(int(detected))
+
+            print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
+
+        tpr_result = np.mean(tpr_list)
+        print("\n[RESULTS] Data Shift detection summary")
+        print(f"Noise Applied: {self.shift_object}")
+        print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
+        print(f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%")
+
+    # RUN EVERYTHING
+    def run(self):
+        # Step 0
+        self.load_source_features()
+        # Step 1
+        self.calibrate()
+        # Step 2
+        self.sanity_check()
+        # Step 3
+        self.data_shift_test()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument("--source", type=str, default="CULane")
+    parser.add_argument("--target", type=str, default="Curvelanes")
+    parser.add_argument("--src_split", type=str, default="train")
+    parser.add_argument("--tgt_split", type=str, default="valid")
+    parser.add_argument("--src_samples", type=int, default=1000)
+    parser.add_argument("--tgt_samples", type=int, default=100)
+    parser.add_argument("--num_runs", type=int, default=10)
+    parser.add_argument("--block_idx", type=int, default=0)
+    parser.add_argument("--batch_size", type=int, default=16)
+    parser.add_argument("--image_size", type=int, default=512)
+    parser.add_argument("--num_calib", type=int, default=100)
+    parser.add_argument("--alpha", type=float, default=0.05)
+    parser.add_argument("--seed_base", type=int, default=42)
+    parser.add_argument("--shift", type=str, default=None)
+    parser.add_argument("--std", type=float, default=0.0)
+
+    args = parser.parse_args()
+
+    ShiftExperiment(**vars(args)).run()
