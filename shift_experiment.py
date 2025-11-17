@@ -1,16 +1,11 @@
 import os
-import random
 import numpy as np
-from PIL import Image
-from tqdm import tqdm, trange
+from tqdm import trange
 import torch
 from models.autoencoder import ConvAutoencoderFC
 import argparse
 
 from data.data_utils import (
-    ShiftTypes,
-    apply_shift,
-    DataShift,
     GaussianShift,
     RotationShift,
     TranslationShift,
