@@ -20,10 +20,7 @@ from data.data_utils import (
     VerticalFlipShift,
 )
 from utils.mmd_test import mmd_test
-from data.data_builder import (
-    get_dataloader,
-    get_seeded_random_dataloader
-)
+from data.data_builder import get_dataloader, get_seeded_random_dataloader
 
 
 # =========================================================
@@ -38,7 +35,9 @@ def extract_features(model, loader, device):
             z = model.encode(imgs)
             if z.dim() > 2:
                 raise ValueError("Images are still in the pixel space")
-                z = z.view(z.size(0), -1) # code to run on raw images (to flatten the image and do the tests)
+                z = z.view(
+                    z.size(0), -1
+                )  # code to run on raw images (to flatten the image and do the tests)
 
             feats.append(z.cpu().numpy())
     return np.concatenate(feats, axis=0)
@@ -50,19 +49,20 @@ def extract_features(model, loader, device):
 def main(
     source: str = "CULane",
     target: str = "Curvelanes",
-    src_split: str = "train", # train or test or val split
+    src_split: str = "train",  # train or test or val split
     tgt_split: str = "test",
-    src_samples: int = 1000, # No. of source samples as train set passed
+    src_samples: int = 1000,  # No. of source samples as train set passed
     tgt_samples: int = 100,
     num_runs: int = 10,
-    block_idx: int = 0, #block of samples selected from the the text file
-    batch_size: int = 16, #batch processing of data within an epoch
+    block_idx: int = 0,  # block of samples selected from the the text file
+    batch_size: int = 16,  # batch processing of data within an epoch
     image_size: int = 512,
     num_calib: int = 100,
     alpha: float = 0.05,
     seed_base: int = 42,
     shift: str = None,
-    std: float = 0.0):
+    std: float = 0.0,
+):
 
     print(f"CUDA Avalible: {torch.cuda.is_available()}")
 
@@ -118,7 +118,9 @@ def main(
     shift_object = None
     if shift == "gaussian":
         if std == 0.0:
-            raise ValueError("Gaussian noise selected but std=0. Please provide > 0 --std value.")
+            raise ValueError(
+                "Gaussian noise selected but std=0. Please provide > 0 --std value."
+            )
         shift_object = GaussianShift(std=std)
 
     # =========================================================
@@ -210,7 +212,11 @@ if __name__ == "__main__":
 
     # --- Model & MMD Test Arguments ---
     parser.add_argument(
-        "-i", "--batch_size", type=int, default=16, help="Batch size for feature extraction"
+        "-i",
+        "--batch_size",
+        type=int,
+        default=16,
+        help="Batch size for feature extraction",
     )
     parser.add_argument(
         "-z", "--image_size", type=int, default=512, help="Image resize dimension"
@@ -223,9 +229,13 @@ if __name__ == "__main__":
         help="Number of calibration runs for null distribution",
     )
     parser.add_argument(
-        "-n", "--alpha", type=float, default=0.05, help="Significance level for the test"
+        "-n",
+        "--alpha",
+        type=float,
+        default=0.05,
+        help="Significance level for the test",
     )
-    
+
     # --- Reproducibility ---
     parser.add_argument(
         "--seed_base",
@@ -233,11 +243,16 @@ if __name__ == "__main__":
         default=42,
         help="Base seed for random sampling",
     )
-    parser.add_argument("--shift", type=str, default=None,
-                        help="Type of shift: gaussian | rotate | translate etc.")
-    parser.add_argument("--std", type=float, default=0.0,
-                        help="Std for Gaussian noise shift")
-    
+    parser.add_argument(
+        "--shift",
+        type=str,
+        default=None,
+        help="Type of shift: gaussian | rotate | translate etc.",
+    )
+    parser.add_argument(
+        "--std", type=float, default=0.0, help="Std for Gaussian noise shift"
+    )
+
     args = parser.parse_args()
-    
+
     main(**vars(args))
