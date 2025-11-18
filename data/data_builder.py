@@ -1,22 +1,26 @@
 import os
 import random
-from torch.utils.data import Dataset, DataLoader, Subset
-from torchvision import transforms
+from typing import Any, List
+
 from PIL import Image
-from data.data_utils import apply_shift, DataShift
+import torch
+from torch.utils.data import DataLoader, Dataset, Subset
+from torchvision import transforms
+
+from data.data_utils import DataShift, apply_shift
 
 
 class ImageDataset(Dataset):
     """A generic PyTorch dataset for loading images from a file list.
 
-    This class supports different directory structures (e.g., Curvelanes vs. CULane)
-    for locating the image list file and provides standard image transformations
-    (resizing, optional cropping, optional shifting).
+    This class loads image paths from a specified list file and provides standard
+    image transformations (resizing, optional cropping, optional shifting).
 
     Attributes:
         shift: The data shift parameter used for augmentation/correction.
         cropImg: Flag indicating whether to crop the image to the bottom half.
-        root_dir: The root path of the dataset.
+        root_dir: The base path of the dataset where images are located.
+        list_path: The full path to the text file containing relative image paths.
         image_size: The target image size for transformation.
         image_paths: A list of relative paths to all images in the dataset.
         transform: The torchvision transformation pipeline.
@@ -28,14 +32,14 @@ class ImageDataset(Dataset):
         list_path: str,
         image_size: int = 512,
         cropImg: bool = False,
-        dataShift: DataShift = None
+        dataShift: DataShift = None,
     ) -> None:
         """Initializes the ImageDataset.
 
         Args:
-            root_dir: The root directory where the dataset is located. This
-                path is inspected to determine the dataset structure (Curvelanes
-                vs. others) for list file location.
+            root_dir: The root directory where the dataset images are located.
+            list_path: The full file path to the list file (e.g., 'train.txt')
+                containing relative paths to images, one per line.
             image_size: The target size (width and height) for resizing the
                 images. Defaults to 512.
             cropImg: If True, crops the image to the bottom half (0, h//2, w, h)
@@ -44,21 +48,21 @@ class ImageDataset(Dataset):
                 function. Defaults to None.
 
         Raises:
-            FileNotFoundError: If the expected list file for the given split
-                and root directory structure is not found.
+            FileNotFoundError: If the list file specified by `list_path` is not found.
         """
         self.shift: DataShift = dataShift
         self.cropImg: bool = cropImg
         self.root_dir: str = root_dir
         self.image_size: int = image_size
 
-
         if not os.path.exists(list_path):
             raise FileNotFoundError(f"List file not found: {list_path}")
 
         # Load image paths from the list file
         with open(list_path, "r") as f:
-            self.image_paths: list[str] = [line.strip() for line in f.readlines() if line.strip()]
+            self.image_paths: List[str] = [
+                line.strip() for line in f.readlines() if line.strip()
+            ]
 
         # Define the common transformation pipeline
         self.transform = transforms.Compose(
@@ -73,7 +77,7 @@ class ImageDataset(Dataset):
         """
         return len(self.image_paths)
 
-    def __getitem__(self, idx: int) -> any:
+    def __getitem__(self, idx: int) -> Any:
         """Retrieves the image at the specified index and applies all steps.
 
         Steps include: path construction, image loading, optional shift,
@@ -85,16 +89,8 @@ class ImageDataset(Dataset):
         Returns:
             The transformed image data, typically a torch.Tensor (C, H, W).
         """
-        # Get relative path and clean leading slashes
-        rel_path: str = self.image_paths[idx].lstrip("/")
 
-        # Construct full image path
-        if "Curvelanes" in self.root_dir:
-            # Curvelanes full path: root_dir/split/relative_path
-            img_path: str = os.path.join(self.root_dir, self.split, rel_path)
-        else:
-            # Default full path: root_dir/relative_path
-            img_path: str = os.path.join(self.root_dir, rel_path)
+        img_path: str = os.path.join(self.root_dir, self.image_paths[idx].lstrip("/"))
 
         # Load the image
         img: Image.Image = Image.open(img_path).convert("RGB")
