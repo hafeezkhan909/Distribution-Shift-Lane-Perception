@@ -1,6 +1,7 @@
 import os
 import random
-from typing import Any, List
+import warnings
+from typing import Any, List, Optional, Type
 
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset, Subset
@@ -76,6 +77,13 @@ class ImageDataset(Dataset):
         """
         return len(self.image_paths)
 
+    def get_image_path(self, idx: int) -> str:
+        """Resolves the full file path for a given index.
+        
+        Child classes can override this method if their path logic differs.
+        """
+        return os.path.join(self.root_dir, self.image_paths[idx].lstrip("/"))
+
     def __getitem__(self, idx: int) -> Any:
         """Retrieves the image at the specified index and applies all steps.
 
@@ -91,20 +99,24 @@ class ImageDataset(Dataset):
 
         img_path: str = os.path.join(self.root_dir, self.image_paths[idx].lstrip("/"))
 
-        # Load the image
-        img: Image.Image = Image.open(img_path).convert("RGB")
+        # 2. Load the image
+        try:
+            img: Image.Image = Image.open(img_path).convert("RGB")
+        except (OSError, FileNotFoundError) as e:
+            print(f"Error loading image: {img_path}")
+            raise e
 
-        # Apply optional shift
+        # 3. Apply optional shift
         if self.shift is not None:
             img = apply_shift(img, self.shift)
 
-        # Apply optional crop to the bottom half
+        # 4. Apply optional crop to the bottom half
         if self.cropImg:
             w, h = img.size
             # Crop region: (left, top, right, bottom)
             img = img.crop((0, h // 2, w, h))
 
-        # Apply the standard transformation pipeline
+        # 5. Apply the standard transformation pipeline
         return self.transform(img)
 
 
@@ -113,80 +125,99 @@ class LaneImageDataset(Dataset):
     """Generic dataset for lane images given a root path and list file."""
 
     def __init__(
-        self, root_dir, split="train", image_size=512, cropImg=False, dataShift=None
+        self,
+        root_dir: str,
+        split: str = "train",
+        image_size: int = 512,
+        cropImg: bool = False,
+        dataShift: DataShift = None,
     ):
-        self.shift = dataShift
-        self.cropImg = cropImg
-        self.root_dir = root_dir
-        self.split = split
-        self.image_size = image_size
-
-        # list file logic: Needs modularization for any data loading.
+        warnings.warn(
+            "LaneImageDataset is pending deprecation. Use ImageDataset directly.",
+            PendingDeprecationWarning,
+            stacklevel=2
+        )
+        
+        # Determine list_path based on dataset name
         if "Curvelanes" in root_dir:
-            list_path = os.path.join(
-                root_dir, split, f"{split}.txt"
-            )  # for Curvelanes txt file extraction
+            list_path = os.path.join(root_dir, split, f"{split}.txt")
+            self._is_curvelanes = True
         else:
-            list_path = os.path.join(
-                root_dir, "list", f"{split}.txt"
-            )  # for CULane txt file extraction
+            list_path = os.path.join(root_dir, "list", f"{split}.txt")
+            self._is_curvelanes = False
+        
+        self.split = split
 
-        if not os.path.exists(list_path):
-            raise FileNotFoundError(f"List file not found: {list_path}")
-
-        with open(list_path, "r") as f:
-            self.image_paths = [line.strip() for line in f.readlines() if line.strip()]
-
-        self.transform = transforms.Compose(
-            [transforms.Resize((image_size, image_size)), transforms.ToTensor()]
+        # Initialize parent class
+        super().__init__(
+            root_dir=root_dir,
+            list_path=list_path,
+            image_size=image_size,
+            cropImg=cropImg,
+            dataShift=dataShift,
         )
 
-    def __len__(self):
-        return len(self.image_paths)
-
-    def __getitem__(self, idx):
+    def get_image_path(self, idx: int) -> str:
+        """Overrides the parent path logic to handle dataset specific structures."""
         rel_path = self.image_paths[idx].lstrip("/")
-        if "Curvelanes" in self.root_dir:
-            img_path = os.path.join(self.root_dir, self.split, rel_path)
+        
+        if self._is_curvelanes:
+            return os.path.join(self.root_dir, self.split, rel_path)
         else:
-            img_path = os.path.join(self.root_dir, rel_path)
-
-        img = Image.open(img_path).convert("RGB")
-        if self.shift is not None:
-            img = apply_shift(img, self.shift)
-        if self.cropImg:
-            w, h = img.size
-            img = img.crop((0, h // 2, w, h))  # left, top, right, bottom
-            return self.transform(img)
-        else:
-            return self.transform(img)
+            return os.path.join(self.root_dir, rel_path)
 
 
-# Dataloader helpers
+# --- Dataloader Helpers ---
+
 def get_dataloader(
-    dataset_name, split, batch_size, image_size, num_samples, cropImg, block_idx=0
-):
+    dataset_name: str,
+    split: str,
+    batch_size: int,
+    image_size: int,
+    num_samples: int,
+    cropImg: bool,
+    block_idx: int = 0,
+    dataset_cls: Type[Dataset] = LaneImageDataset, # Allow dependency injection
+) -> DataLoader:
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, cropImg)
-    start, end = block_idx * num_samples, min((block_idx + 1) * num_samples, len(ds))
+    
+    # Instantiate the specific dataset class
+    ds = dataset_cls(root, split=split, image_size=image_size, cropImg=cropImg)
+    
+    start = block_idx * num_samples
+    end = min((block_idx + 1) * num_samples, len(ds))
+    
+    # Validate indices
+    if start >= len(ds):
+        raise ValueError(f"Block index {block_idx} is out of range for dataset size {len(ds)}")
+
     subset = Subset(ds, list(range(start, end)))
     print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
+    
     return DataLoader(
         subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
     )
 
 
 def get_seeded_random_dataloader(
-    dataset_name, split, batch_size, image_size, num_samples, seed, cropImg, shift
-):
+    dataset_name: str,
+    split: str,
+    batch_size: int,
+    image_size: int,
+    num_samples: int,
+    seed: int,
+    cropImg: bool,
+    shift: Optional[DataShift],
+    dataset_cls: Type[Dataset] = LaneImageDataset,
+) -> DataLoader:
     root = f"datasets/{dataset_name}"
-    ds = LaneImageDataset(root, split, image_size, cropImg, dataShift=shift)
+    
+    ds = dataset_cls(root, split=split, image_size=image_size, cropImg=cropImg, dataShift=shift)
+    
     random.seed(seed)
-    chosen = random.sample(range(len(ds)), min(num_samples, len(ds)))
-    subset = Subset(ds, chosen)
-    # print(
-    #     f"[INFO] {dataset_name} ({split}) → Random {len(chosen)} samples (seed={seed})"
-    # )
+    chosen_indices = random.sample(range(len(ds)), min(num_samples, len(ds)))
+    subset = Subset(ds, chosen_indices)
+    
     return DataLoader(
         subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
     )
