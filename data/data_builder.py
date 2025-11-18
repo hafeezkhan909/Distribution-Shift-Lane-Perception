@@ -120,7 +120,6 @@ class ImageDataset(Dataset):
         return self.transform(img)
 
 
-@PendingDeprecationWarning
 class LaneImageDataset(Dataset):
     """Generic dataset for lane images given a root path and list file."""
 
