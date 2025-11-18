@@ -3,7 +3,6 @@ import random
 from typing import Any, List
 
 from PIL import Image
-import torch
 from torch.utils.data import DataLoader, Dataset, Subset
 from torchvision import transforms
 
