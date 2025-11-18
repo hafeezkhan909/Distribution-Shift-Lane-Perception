@@ -1,6 +1,8 @@
 import json
 import os
 from typing import Any, Dict, List, Union
+import argparse
+import sys
 
 # Define type aliases for clarity in type hinting
 JsonDict = Dict[str, Any]
@@ -27,7 +29,7 @@ class JsonExperimentManager:
       ]
     }
 
-    Attributes:
+        Attributes:
         file_location (str): Get-only. The directory path for the JSON file.
         file_name (str): Get-only. The file name for the JSON file.
         style (JsonStyle): Get/Set. The indentation style for the JSON file.
@@ -255,83 +257,127 @@ class JsonExperimentManager:
                 raise
 
 
-if __name__ == "__main__":
-    # --- Example Usage ---
-    # This block will only run when the script is executed directly.
+def main() -> None:
+    """
+    Provides a command-line interface for managing the experiment JSON file.
+    """
+    parser = argparse.ArgumentParser(
+        description="CLI tool to manage a JSON file of experiments."
+    )
 
-    # Define a test directory in the current working directory
-    test_dir = os.path.join(os.getcwd(), "experiment_data_prod")
+    # --- Global Arguments ---
+    parser.add_argument(
+        "-l",
+        "--location",
+        type=str,
+        default=".",
+        help="The directory to store the JSON file. Default: current directory.",
+    )
+    parser.add_argument(
+        "-f",
+        "--file",
+        type=str,
+        default="results.json",
+        help="The name of the JSON file. Default: results.json",
+    )
 
-    # --- 1. Initialize the manager ---
-    print("--- Initializing Manager ---")
+    # --- Sub-commands ---
+    subparsers = parser.add_subparsers(
+        dest="command", required=True, help="The operation to perform."
+    )
+
+    # --- 'add' command ---
+    parser_add = subparsers.add_parser("add", help="Add a new experiment to the file.")
+    parser_add.add_argument(
+        "-a",
+        "--args",
+        type=str,
+        required=True,
+        help='JSON string for the "arguments" (e.g., \'{"voltage": 5}\')',
+    )
+    parser_add.add_argument(
+        "-d",
+        "--data",
+        type=str,
+        required=True,
+        help='JSON string for the "data" (e.g., \'{"resistance": 1.2}\')',
+    )
+
+    # --- 'get' command ---
+    parser_get = subparsers.add_parser(
+        "get", help="Get and print all experiments from the file."
+    )
+
+    # --- 'set-style' command ---
+    parser_style = subparsers.add_parser(
+        "set-style", help="Change the indentation style of the JSON file."
+    )
+    parser_style.add_argument(
+        "style", type=str, help='The new style (e.g., "4", "2", or "none" for compact).'
+    )
+
+    args = parser.parse_args()
+
+    # --- Initialize the manager ---
     try:
+        # Note: The style passed here is only for *file creation*.
+        # The manager will use the existing file's format on load.
         manager = JsonExperimentManager(
-            file_location=test_dir,
-            file_name="prod_results.json",
-            style=4,  # Use 4-space indentation
+            file_location=args.location, file_name=args.file
         )
+    except Exception as e:
+        print(f"Error initializing experiment manager: {e}", file=sys.stderr)
+        sys.exit(1)
 
-        # --- 2. Add some experiments ---
-        print("\n--- Adding Experiments ---")
-        manager.add_experiment(
-            arguments={"voltage": 5, "material": "copper"},
-            data={"resistance": 1.2, "time_ms": 150},
-        )
-        manager.add_experiment(
-            arguments={"voltage": 10, "material": "copper"},
-            data={"resistance": 1.1, "time_ms": 145},
-        )
+    # --- Execute the command ---
+    try:
+        if args.command == "add":
+            try:
+                arguments = json.loads(args.args)
+                data = json.loads(args.data)
+                if not isinstance(arguments, dict) or not isinstance(data, dict):
+                    raise ValueError(
+                        "Arguments and data must be JSON objects (dictionaries)."
+                    )
+                manager.add_experiment(arguments, data)
+            except json.JSONDecodeError:
+                print(
+                    f"Error: Invalid JSON string for --args or --data.", file=sys.stderr
+                )
+                sys.exit(1)
+            except ValueError as e:
+                print(f"Error: {e}", file=sys.stderr)
+                sys.exit(1)
 
-        # --- 3. Get all data ---
-        print("\n--- Retrieving Data ---")
-        all_data: ExperimentList = manager.get_all_experiments()
-        print(f"Retrieved {len(all_data)} experiments.")
-        # Print it nicely
-        print(json.dumps(all_data, indent=2))
+        elif args.command == "get":
+            experiments = manager.get_all_experiments()
+            # Print formatted JSON to the console
+            print(json.dumps(experiments, indent=2))
 
-        # --- 4. Change the style ---
-        print("\n--- Changing Style ---")
-        # Set style to None for a compact file
-        manager.style = None
-        print(f"Current style: {manager.style}")
+        elif args.command == "set-style":
+            style_str = args.style.lower()
+            new_style: JsonStyle = None
 
-        # Check 'experiment_data_prod/prod_results.json' to see it's now compact.
-        # Let's change it back to pretty-print
-        manager.style = 4
-        print(f"Current style: {manager.style}")
-        # The file will be rewritten again.
+            if style_str == "none":
+                new_style = None
+            else:
+                try:
+                    new_style = int(style_str)
+                    if new_style < 0:
+                        raise ValueError
+                except ValueError:
+                    print(
+                        f"Error: Style must be a positive integer or 'none'.",
+                        file=sys.stderr,
+                    )
+                    sys.exit(1)
 
-        # --- 5. Test the error-throwing setters ---
-        print("\n--- Testing Forbidden Setters ---")
-        try:
-            manager.file_name = "new_results.json"
-        except ValueError as e:
-            print(f"Caught expected error: {e}")
-
-        try:
-            manager.file_location = "new_data_dir"
-        except ValueError as e:
-            print(f"Caught expected error: {e}")
-
-        # --- 6. Simulate re-loading the manager ---
-        print("\n--- Re-initializing Manager (Loading from file) ---")
-        # Create a new instance pointing to the *same file*
-        manager_2 = JsonExperimentManager(
-            file_location=test_dir, file_name="prod_results.json"
-        )
-        # It should load the 2 experiments we already saved
-        print(f"Manager 2 loaded {len(manager_2.get_all_experiments())} experiments.")
-
-        manager_2.add_experiment(
-            arguments={"voltage": 5, "material": "silver"},
-            data={"resistance": 0.8, "time_ms": 120},
-        )
-        # Now the file will contain 3 experiments
-        print(
-            f"Manager 2 now shows {len(manager_2.get_all_experiments())} total experiments."
-        )
-
-        print("\n--- Test Complete ---")
+            manager.style = new_style
 
     except Exception as e:
-        print(f"\nAn unexpected error occurred during the example run: {e}")
+        print(f"An unexpected error occurred: {e}", file=sys.stderr)
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
