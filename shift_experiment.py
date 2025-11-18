@@ -1,16 +1,11 @@
 import os
-import random
 import numpy as np
-from PIL import Image
-from tqdm import tqdm, trange
+from tqdm import trange
 import torch
 from models.autoencoder import ConvAutoencoderFC
 import argparse
 
 from data.data_utils import (
-    ShiftTypes,
-    apply_shift,
-    DataShift,
     GaussianShift,
     RotationShift,
     TranslationShift,
@@ -20,10 +15,9 @@ from data.data_utils import (
     VerticalFlipShift,
 )
 from utils.mmd_test import mmd_test
-from data.data_builder import (
-    get_dataloader,
-    get_seeded_random_dataloader
-)
+from data.data_builder import get_dataloader, get_seeded_random_dataloader
+from data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
+
 
 # ---------Feature extraction---------
 def extract_features(model, loader, device):
@@ -35,37 +29,43 @@ def extract_features(model, loader, device):
             z = model.encode(imgs)
             if z.dim() > 2:
                 raise ValueError("Images are still in the pixel space")
-                z = z.view(z.size(0), -1) # code to run on raw images (to flatten the image and do the tests)
+                z = z.view(
+                    z.size(0), -1
+                )  # code to run on raw images (to flatten the image and do the tests)
 
             feats.append(z.cpu().numpy())
     return np.concatenate(feats, axis=0)
 
+
 class ShiftExperiment:
     def __init__(
-            self,
-            source: str = "CULane",
-            target: str = "Curvelanes",
-            src_split: str = "train", # train or test or val split
-            tgt_split: str = "test",
-            src_samples: int = 1000, # No. of source samples as train set passed
-            tgt_samples: int = 100,
-            num_runs: int = 10,
-            block_idx: int = 0, #block of samples selected from the the text file
-            batch_size: int = 16, #batch processing of data within an epoch
-            image_size: int = 512,
-            num_calib: int = 100,
-            alpha: float = 0.05,
-            seed_base: int = 42,
-            shift: str = None,
-            std: float = 0.0,
-            cropImg: bool = False,
-            rotation_angle: float = 45.0,
-            width_shift_frac: float = 0.2, 
-            height_shift_frac: float = 0.2,
-            shear_angle: float = 20.0,
-            zoom_factor: float = 1.3 # Guide: 1.3 is 30% zoom in and 0.7 is 30% zoom out
+        self,
+        source: str = "CULane",
+        target: str = "Curvelanes",
+        src_split: str = "train",  # train or test or val split
+        tgt_split: str = "test",
+        src_samples: int = 1000,  # No. of source samples as train set passed
+        tgt_samples: int = 100,
+        num_runs: int = 10,
+        block_idx: int = 0,  # block of samples selected from the the text file
+        batch_size: int = 16,  # batch processing of data within an epoch
+        image_size: int = 512,
+        num_calib: int = 100,
+        alpha: float = 0.05,
+        seed_base: int = 42,
+        shift: str = None,
+        std: float = 0.0,
+        cropImg: bool = False,
+        rotation_angle: float = 45.0,
+        width_shift_frac: float = 0.2,
+        height_shift_frac: float = 0.2,
+        shear_angle: float = 20.0,
+        zoom_factor: float = 1.3,  # Guide: 1.3 is 30% zoom in and 0.7 is 30% zoom out
+        file_name: str = "testData.json",
+        file_location: str = "./",
+        file_style: JsonStyle = 4,
     ):
-        
+
         self.source = source
         self.target = target
         self.src_split = src_split
@@ -88,7 +88,42 @@ class ShiftExperiment:
         self.shear_angle = shear_angle
         self.zoom_factor = zoom_factor
 
+        # ------------------ Data Logger Config  ------------------
+
+        self.datalogger = JsonExperimentManager(
+            file_location=file_location, file_name=file_name, style=file_style
+        )
+
+        self.loggerArgs: JsonDict = {
+            "source": source,
+            "target": target,
+            "src_split": src_split,
+            "tgt_split": tgt_split,
+            "src_samples": src_samples,
+            "tgt_samples": tgt_samples,
+            "num_runs": num_runs,
+            "block_idx": block_idx,
+            "batch_size": batch_size,
+            "image_size": image_size,
+            "num_calib": num_calib,
+            "alpha": alpha,
+            "seed_base": seed_base,
+            "shift": shift,
+            "std": std,
+            "cropImg": cropImg,
+            "rotation_angle": rotation_angle,
+            "width_shift_frac": width_shift_frac,
+            "height_shift_frac": height_shift_frac,
+            "shear_angle": shear_angle,
+            "zoom_factor": zoom_factor,
+        }
+
+        self.loggerExperimentalData: JsonDict = {}
+
+        # ------------------ Check for GPU ------------------
+
         print(f"CUDA Avalible: {torch.cuda.is_available()}")
+        self.loggerExperimentalData["CUDA"] = True
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         os.makedirs("features", exist_ok=True)
@@ -101,51 +136,81 @@ class ShiftExperiment:
         self.shift_object = None
         if self.shift_type == "gaussian":
             if self.std == 0.0:
-                raise ValueError("Gaussian noise selected but std=0. Please provide > 0 --std value.")
+                raise ValueError(
+                    "Gaussian noise selected but std=0. Please provide > 0 --std value."
+                )
             self.shift_object = GaussianShift(std=self.std)
         elif self.shift_type == "rotation_shift":
             if self.rotation_angle == 0.0:
-                raise ValueError("Rotation angle selected = 0. Please provide valid --rotation_angle value.")
+                raise ValueError(
+                    "Rotation angle selected = 0. Please provide valid --rotation_angle value."
+                )
             self.shift_object = RotationShift(angle=self.rotation_angle)
         elif self.shift_type == "translation_shift":
-            if self.width_shift_frac == 0.0 or self.height_shift_frac==0:
-                raise ValueError("width_shift_frac or height_shift_frac angle selected = 0. Please provide valid --width_shift_frac or --height_shift_frac value.")
-            self.shift_object = TranslationShift(width_shift_frac=self.width_shift_frac, height_shift_frac=self.height_shift_frac)
+            if self.width_shift_frac == 0.0 or self.height_shift_frac == 0:
+                raise ValueError(
+                    "width_shift_frac or height_shift_frac angle selected = 0. Please provide valid --width_shift_frac or --height_shift_frac value."
+                )
+            self.shift_object = TranslationShift(
+                width_shift_frac=self.width_shift_frac,
+                height_shift_frac=self.height_shift_frac,
+            )
         elif self.shift_type == "shear_shift":
             if self.shear_angle == 0.0:
-                raise ValueError("Shear angle selected = 0. Please provide valid --shear_angle value.")
+                raise ValueError(
+                    "Shear angle selected = 0. Please provide valid --shear_angle value."
+                )
             self.shift_object = ShearShift(shear_angle=self.shear_angle)
         elif self.shift_type == "zoom_shift":
             if self.zoom_factor == 1.0:
-                raise ValueError("Zoom factor selected = 1. Please provide valid --zoom_factor value.")
+                raise ValueError(
+                    "Zoom factor selected = 1. Please provide valid --zoom_factor value."
+                )
             self.shift_object = ZoomShift(zoom_factor=self.zoom_factor)
         elif self.shift_type == "horizontal_flip_shift":
             self.shift_object = HorizontalFlipShift()
         elif self.shift_type == "vertical_flip_shift":
             self.shift_object = VerticalFlipShift()
 
-        
     # STEP 0 — Load Source Features
     def load_source_features(self):
         loader = get_dataloader(
-            self.source, self.src_split, self.batch_size, self.image_size,
-            self.src_samples, self.cropImg, self.block_idx
+            self.source,
+            self.src_split,
+            self.batch_size,
+            self.image_size,
+            self.src_samples,
+            self.cropImg,
+            self.block_idx,
         )
         self.src_feats = extract_features(self.model, loader, self.device)
         print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
-    
+        self.loggerExperimentalData["Source Features Shape"] = list(
+            self.src_feats.shape
+        )
+
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
+        calibrationData: JsonDict = {}
         print(f"[STEP 1] Calibration using {self.source}...")
+        calibrationData["Uses"] = self.source
         null_stats = []
 
         for i in trange(self.num_calib, desc="Calibrating"):
             seed = self.seed_base + i
             calib_src_loader = get_seeded_random_dataloader(
-                self.source, self.src_split, self.batch_size, self.image_size,
-                self.tgt_samples, seed, cropImg=self.cropImg, shift=None
+                self.source,
+                self.src_split,
+                self.batch_size,
+                self.image_size,
+                self.tgt_samples,
+                seed,
+                cropImg=self.cropImg,
+                shift=None,
             )
-            calib_src_feats = extract_features(self.model, calib_src_loader, self.device)
+            calib_src_feats = extract_features(
+                self.model, calib_src_loader, self.device
+            )
 
             t_stat = mmd_test(self.src_feats, calib_src_feats)
             null_stats.append(t_stat)
@@ -154,53 +219,111 @@ class ShiftExperiment:
         self.tau = np.percentile(self.null_stats, 100 * (1 - self.alpha))
 
         print(f"\n[RESULT] τ({1 - self.alpha:.2f}) = {self.tau:.6f}")
-        print(f"Mean MMD (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n")
+        print(
+            f"Mean MMD (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n"
+        )
+        calibrationData["Result"] = {
+            "Tau": float(self.tau),
+            "Mean MMD": float(self.null_stats.mean()),
+            "MMD Bilateral Tollerance": float(self.null_stats.std()),
+        }
+        self.loggerExperimentalData["Calibration"] = calibrationData
 
     # STEP 2 — Sanity Check
     def sanity_check(self):
+        sanityCheckData: JsonDict = {}
         print("[STEP 2] Sanity Check...")
 
         sanity_src_loader = get_seeded_random_dataloader(
-            self.source, self.src_split, self.batch_size, self.image_size,
-            self.tgt_samples, self.seed_base + 1, cropImg=self.cropImg, shift=None
+            self.source,
+            self.src_split,
+            self.batch_size,
+            self.image_size,
+            self.tgt_samples,
+            self.seed_base + 1,
+            cropImg=self.cropImg,
+            shift=None,
         )
         sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
 
         mmd_val = mmd_test(self.src_feats, sanity_src_feats)
-        print(f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}")
+        print(
+            f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
+        )
+        sanityCheckData["Results"] = {
+            "Sanity Check Definition": f"{self.source}→{self.source}",
+            "MMD": float(mmd_val),
+            "Tau": float(self.tau),
+        }
 
         if mmd_val <= self.tau:
+            sanityCheckData["Shift Detected"] = bool(False)
             print("No shift detected.\n")
         else:
+            sanityCheckData["Shift Detected"] = bool(True)
             print("False shift detected.\n")
+
+        self.loggerExperimentalData["Sanity Check"] = sanityCheckData
 
     # STEP 3 — Data Shift Test
     def data_shift_test(self):
-        print(f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}\n")
+        dataShiftTestData: JsonDict = {}
+        print(
+            f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}\n"
+        )
+        dataShiftTestData["Data Shift Test Definition"] = (
+            f"{self.source} → {self.target}"
+        )
+        dataShiftTestData["Noise Applied"] = str(self.shift_object)
+        dataShiftTestData["Runs"] = self.num_runs
 
         tpr_list = []
         mmd_values = []
+        dataShiftTestDataTests: list[JsonDict] = []
 
         for i in trange(self.num_runs, desc="Shift Testing"):
+            testData: JsonDict = {}
             seed = self.seed_base + i
             tgt_loader_cross = get_seeded_random_dataloader(
-                self.target, self.tgt_split, self.batch_size, self.image_size,
-                self.tgt_samples, seed, cropImg=self.cropImg, shift=self.shift_object
+                self.target,
+                self.tgt_split,
+                self.batch_size,
+                self.image_size,
+                self.tgt_samples,
+                seed,
+                cropImg=self.cropImg,
+                shift=self.shift_object,
             )
-            tgt_feats_cross = extract_features(self.model, tgt_loader_cross, self.device)
+            tgt_feats_cross = extract_features(
+                self.model, tgt_loader_cross, self.device
+            )
             mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
 
             mmd_values.append(mmd_cross)
-            detected = mmd_cross > self.tau
+            detected: bool = mmd_cross > self.tau
             tpr_list.append(int(detected))
 
             print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
+            testData["Run"] = int(i + 1)
+            testData["MMD"] = float(mmd_cross)
+            testData["Shift Detected"] = bool(detected)
+            dataShiftTestDataTests.append(testData)
+
+        dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
 
         tpr_result = np.mean(tpr_list)
         print("\n[RESULTS] Data Shift detection summary")
         print(f"Noise Applied: {self.shift_object}")
         print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-        print(f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%")
+        print(
+            f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%"
+        )
+        dataShiftTestData["TPR"] = float(tpr_result * 100)
+        dataShiftTestData["Average MMD"] = float(np.mean(mmd_values))
+        dataShiftTestData["Average MMD Bilateral Tollerance"] = float(
+            np.std(mmd_values)
+        )
+        self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
     def run(self):
@@ -212,6 +335,10 @@ class ShiftExperiment:
         self.sanity_check()
         # Step 3
         self.data_shift_test()
+        # Log Data
+        self.datalogger.add_experiment(
+            arguments=self.loggerArgs, data=self.loggerExperimentalData
+        )
 
 
 if __name__ == "__main__":
@@ -238,6 +365,18 @@ if __name__ == "__main__":
     parser.add_argument("--zoom_factor", type=float, default=1.0)
     parser.add_argument("--width_shift_frac", type=float, default=0.2)
     parser.add_argument("--height_shift_frac", type=float, default=0.2)
+    parser.add_argument(
+        "--file_location",
+        type=str,
+        default="logs",
+        help="Directory to save the log file.",
+    )
+    parser.add_argument(
+        "--file_name",
+        type=str,
+        default="sanity_check.json",
+        help="Name of the log file.",
+    )
 
     args = parser.parse_args()
 
