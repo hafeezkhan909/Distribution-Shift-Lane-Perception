@@ -61,8 +61,8 @@ class ShiftExperiment:
         height_shift_frac: float = 0.2,
         shear_angle: float = 20.0,
         zoom_factor: float = 1.3,  # Guide: 1.3 is 30% zoom in and 0.7 is 30% zoom out
-        file_name: str = "",
-        file_location: str = "",
+        file_name: str = "testData.json",
+        file_location: str = "./",
         file_style: JsonStyle = 4,
     ):
 
@@ -185,7 +185,9 @@ class ShiftExperiment:
         )
         self.src_feats = extract_features(self.model, loader, self.device)
         print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
-        self.loggerExperimentalData["Source Features Shape"] = self.src_feats.shape
+        self.loggerExperimentalData["Source Features Shape"] = list(
+            self.src_feats.shape
+        )
 
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
@@ -221,9 +223,9 @@ class ShiftExperiment:
             f"Mean MMD (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n"
         )
         calibrationData["Result"] = {
-            "Tau": self.tau,
-            "Mean MMD": self.null_stats.mean(),
-            "MMD Bilateral Tollerance": self.null_stats.std(),
+            "Tau": float(self.tau),
+            "Mean MMD": float(self.null_stats.mean()),
+            "MMD Bilateral Tollerance": float(self.null_stats.std()),
         }
         self.loggerExperimentalData["Calibration"] = calibrationData
 
@@ -250,15 +252,15 @@ class ShiftExperiment:
         )
         sanityCheckData["Results"] = {
             "Sanity Check Definition": f"{self.source}→{self.source}",
-            "MMD": mmd_val,
-            "Tau": self.tau,
+            "MMD": float(mmd_val),
+            "Tau": float(self.tau),
         }
 
         if mmd_val <= self.tau:
-            sanityCheckData["Shift Detected"] = False
+            sanityCheckData["Shift Detected"] = bool(False)
             print("No shift detected.\n")
         else:
-            sanityCheckData["Shift Detected"] = True
+            sanityCheckData["Shift Detected"] = bool(True)
             print("False shift detected.\n")
 
         self.loggerExperimentalData["Sanity Check"] = sanityCheckData
@@ -272,7 +274,7 @@ class ShiftExperiment:
         dataShiftTestData["Data Shift Test Definition"] = (
             f"{self.source} → {self.target}"
         )
-        dataShiftTestData["Noise Applied"] = self.shift_object
+        dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
 
         tpr_list = []
@@ -302,9 +304,9 @@ class ShiftExperiment:
             tpr_list.append(int(detected))
 
             print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
-            testData["Run"] = i + 1
-            testData["MMD"] = mmd_cross
-            testData["Shift Detected"] = detected
+            testData["Run"] = int(i + 1)
+            testData["MMD"] = float(mmd_cross)
+            testData["Shift Detected"] = bool(detected)
             dataShiftTestDataTests.append(testData)
 
         dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
@@ -316,9 +318,11 @@ class ShiftExperiment:
         print(
             f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%"
         )
-        dataShiftTestData["TPR"] = tpr_result * 100
-        dataShiftTestData["Average MMD"] = np.mean(mmd_values)
-        dataShiftTestData["Average MMD Bilateral Tollerance"] = np.std(mmd_values)
+        dataShiftTestData["TPR"] = float(tpr_result * 100)
+        dataShiftTestData["Average MMD"] = float(np.mean(mmd_values))
+        dataShiftTestData["Average MMD Bilateral Tollerance"] = float(
+            np.std(mmd_values)
+        )
         self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
