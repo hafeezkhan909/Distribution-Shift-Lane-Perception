@@ -61,9 +61,11 @@ class JsonExperimentManager:
         if not os.path.exists(self._file_location):
             try:
                 os.makedirs(self._file_location)
-                print(f"Created directory: {self._file_location}")
+                print(f"[Data Logger] Created directory: {self._file_location}")
             except OSError as e:
-                print(f"Error creating directory {self._file_location}: {e}")
+                print(
+                    f"[Data Logger] Error creating directory {self._file_location}: {e}"
+                )
                 raise  # Re-raise the exception as it's a critical failure
 
         self._file_path: str = os.path.join(self._file_location, self._file_name)
@@ -95,18 +97,22 @@ class JsonExperimentManager:
                     self._data = loaded_data
                 else:
                     print(
-                        f"Warning: File {self._file_path} has invalid structure. Resetting."
+                        f"[Data Logger] Warning: File {self._file_path} has invalid structure. Resetting."
                     )
                     self._data = {"experiments": []}
                     self._save_to_file()  # Overwrite invalid file
 
         except FileNotFoundError:
             # Requirement 2: File doesn't exist, so create it
-            print(f"File not found. Creating new file at {self._file_path}")
+            print(
+                f"[Data Logger] File not found. Creating new file at {self._file_path}"
+            )
             self._save_to_file()
         except json.JSONDecodeError:
             # File is empty or corrupt
-            print(f"Warning: File {self._file_path} is empty or corrupt. Resetting.")
+            print(
+                f"[Data Logger] Warning: File {self._file_path} is empty or corrupt. Resetting."
+            )
             self._data = {"experiments": []}
             self._save_to_file()
 
@@ -155,7 +161,7 @@ class JsonExperimentManager:
         self._data["experiments"].append(new_experiment)
         self._save_to_file()
         print(
-            f"Added new experiment. Total experiments: {len(self._data['experiments'])}"
+            f"[Data Logger] Added new experiment. Total experiments: {len(self._data['experiments'])}"
         )
 
     def get_all_experiments(self) -> ExperimentList:
@@ -245,15 +251,17 @@ class JsonExperimentManager:
             old_style = self._style
             self._style = value
             print(
-                f"Style changed from {old_style} to {value}. Rewriting file {self._file_path}..."
+                f"[Data Logger] Style changed from {old_style} to {value}. Rewriting file {self._file_path}..."
             )
             try:
                 self._save_to_file()
-                print("File rewrite complete.")
+                print("[Data Logger] File rewrite complete.")
             except (IOError, TypeError) as e:
                 # Revert style if save fails to maintain consistent state
                 self._style = old_style
-                print(f"Failed to rewrite file with new style: {e}. Style reverted.")
+                print(
+                    f"[Data Logger] Failed to rewrite file with new style: {e}. Style reverted."
+                )
                 raise
 
 
@@ -326,7 +334,9 @@ def main() -> None:
             file_location=args.location, file_name=args.file
         )
     except Exception as e:
-        print(f"Error initializing experiment manager: {e}", file=sys.stderr)
+        print(
+            f"[Data Logger] Error initializing experiment manager: {e}", file=sys.stderr
+        )
         sys.exit(1)
 
     # --- Execute the command ---
