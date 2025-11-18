@@ -16,6 +16,7 @@ from data.data_utils import (
 )
 from utils.mmd_test import mmd_test
 from data.data_builder import get_dataloader, get_seeded_random_dataloader
+from data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
 
 
 # ---------Feature extraction---------
@@ -60,6 +61,9 @@ class ShiftExperiment:
         height_shift_frac: float = 0.2,
         shear_angle: float = 20.0,
         zoom_factor: float = 1.3,  # Guide: 1.3 is 30% zoom in and 0.7 is 30% zoom out
+        file_name: str = "",
+        file_location: str = "",
+        file_style: JsonStyle = 4,
     ):
 
         self.source = source
@@ -84,7 +88,42 @@ class ShiftExperiment:
         self.shear_angle = shear_angle
         self.zoom_factor = zoom_factor
 
+        # ------------------ Data Logger Config  ------------------
+
+        self.datalogger = JsonExperimentManager(
+            file_location=file_location, file_name=file_name, style=file_style
+        )
+
+        self.loggerArgs: JsonDict = {
+            "source": source,
+            "target": target,
+            "src_split": src_split,
+            "tgt_split": tgt_split,
+            "src_samples": src_samples,
+            "tgt_samples": tgt_samples,
+            "num_runs": num_runs,
+            "block_idx": block_idx,
+            "batch_size": batch_size,
+            "image_size": image_size,
+            "num_calib": num_calib,
+            "alpha": alpha,
+            "seed_base": seed_base,
+            "shift": shift,
+            "std": std,
+            "cropImg": cropImg,
+            "rotation_angle": rotation_angle,
+            "width_shift_frac": width_shift_frac,
+            "height_shift_frac": height_shift_frac,
+            "shear_angle": shear_angle,
+            "zoom_factor": zoom_factor,
+        }
+
+        self.loggerExperimentalData: JsonDict = {}
+
+        # ------------------ Check for GPU ------------------
+
         print(f"CUDA Avalible: {torch.cuda.is_available()}")
+        self.loggerExperimentalData["CUDA"] = True
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         os.makedirs("features", exist_ok=True)
@@ -146,10 +185,13 @@ class ShiftExperiment:
         )
         self.src_feats = extract_features(self.model, loader, self.device)
         print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
+        self.loggerExperimentalData["Source Features Shape"] = self.src_feats.shape
 
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
+        calibrationData: JsonDict = {}
         print(f"[STEP 1] Calibration using {self.source}...")
+        calibrationData["Uses"] = self.source
         null_stats = []
 
         for i in trange(self.num_calib, desc="Calibrating"):
@@ -178,9 +220,16 @@ class ShiftExperiment:
         print(
             f"Mean MMD (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n"
         )
+        calibrationData["Result"] = {
+            "Tau": self.tau,
+            "Mean MMD": self.null_stats.mean(),
+            "MMD Bilateral Tollerance": self.null_stats.std(),
+        }
+        self.loggerExperimentalData["Calibration"] = calibrationData
 
     # STEP 2 — Sanity Check
     def sanity_check(self):
+        sanityCheckData: JsonDict = {}
         print("[STEP 2] Sanity Check...")
 
         sanity_src_loader = get_seeded_random_dataloader(
@@ -199,22 +248,39 @@ class ShiftExperiment:
         print(
             f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
         )
+        sanityCheckData["Results"] = {
+            "Sanity Check Definition": f"{self.source}→{self.source}",
+            "MMD": mmd_val,
+            "Tau": self.tau,
+        }
 
         if mmd_val <= self.tau:
+            sanityCheckData["Shift Detected"] = False
             print("No shift detected.\n")
         else:
+            sanityCheckData["Shift Detected"] = True
             print("False shift detected.\n")
+
+        self.loggerExperimentalData["Sanity Check"] = sanityCheckData
 
     # STEP 3 — Data Shift Test
     def data_shift_test(self):
+        dataShiftTestData: JsonDict = {}
         print(
             f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}\n"
         )
+        dataShiftTestData["Data Shift Test Definition"] = (
+            f"{self.source} → {self.target}"
+        )
+        dataShiftTestData["Noise Applied"] = self.shift_object
+        dataShiftTestData["Runs"] = self.num_runs
 
         tpr_list = []
         mmd_values = []
+        dataShiftTestDataTests: list[JsonDict] = []
 
         for i in trange(self.num_runs, desc="Shift Testing"):
+            testData: JsonDict = {}
             seed = self.seed_base + i
             tgt_loader_cross = get_seeded_random_dataloader(
                 self.target,
@@ -232,10 +298,16 @@ class ShiftExperiment:
             mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
 
             mmd_values.append(mmd_cross)
-            detected = mmd_cross > self.tau
+            detected: bool = mmd_cross > self.tau
             tpr_list.append(int(detected))
 
             print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
+            testData["Run"] = i + 1
+            testData["MMD"] = mmd_cross
+            testData["Shift Detected"] = detected
+            dataShiftTestDataTests.append(testData)
+
+        dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
 
         tpr_result = np.mean(tpr_list)
         print("\n[RESULTS] Data Shift detection summary")
@@ -244,6 +316,10 @@ class ShiftExperiment:
         print(
             f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%"
         )
+        dataShiftTestData["TPR"] = tpr_result * 100
+        dataShiftTestData["Average MMD"] = np.mean(mmd_values)
+        dataShiftTestData["Average MMD Bilateral Tollerance"] = np.std(mmd_values)
+        self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
     def run(self):
@@ -255,6 +331,10 @@ class ShiftExperiment:
         self.sanity_check()
         # Step 3
         self.data_shift_test()
+        # Log Data
+        self.datalogger.add_experiment(
+            arguments=self.loggerArgs, data=self.loggerExperimentalData
+        )
 
 
 if __name__ == "__main__":
@@ -281,6 +361,18 @@ if __name__ == "__main__":
     parser.add_argument("--zoom_factor", type=float, default=1.0)
     parser.add_argument("--width_shift_frac", type=float, default=0.2)
     parser.add_argument("--height_shift_frac", type=float, default=0.2)
+    parser.add_argument(
+        "--file_location",
+        type=str,
+        default="logs",
+        help="Directory to save the log file.",
+    )
+    parser.add_argument(
+        "--file_name",
+        type=str,
+        default="sanity_check.json",
+        help="Name of the log file.",
+    )
 
     args = parser.parse_args()
 
