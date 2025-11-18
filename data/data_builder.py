@@ -6,6 +6,60 @@ from PIL import Image
 from data.data_utils import apply_shift
 
 
+class ImageDataset(Dataset):
+    """Generic dataset for images given a list file path."""
+
+    def __init__(
+        self, root_dir, image_size=512, cropImg=False, dataShift=None
+    ):
+        self.shift = dataShift
+        self.cropImg = cropImg
+        self.root_dir = root_dir
+        self.split = split
+        self.image_size = image_size
+
+        # list file logic: Needs modularization for any data loading.
+        if "Curvelanes" in root_dir:
+            list_path = os.path.join(
+                root_dir, split, f"{split}.txt"
+            )  # for Curvelanes txt file extraction
+        else:
+            list_path = os.path.join(
+                root_dir, "list", f"{split}.txt"
+            )  # for CULane txt file extraction
+
+        if not os.path.exists(list_path):
+            raise FileNotFoundError(f"List file not found: {list_path}")
+
+        with open(list_path, "r") as f:
+            self.image_paths = [line.strip() for line in f.readlines() if line.strip()]
+
+        self.transform = transforms.Compose(
+            [transforms.Resize((image_size, image_size)), transforms.ToTensor()]
+        )
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        rel_path = self.image_paths[idx].lstrip("/")
+        if "Curvelanes" in self.root_dir:
+            img_path = os.path.join(self.root_dir, self.split, rel_path)
+        else:
+            img_path = os.path.join(self.root_dir, rel_path)
+
+        img = Image.open(img_path).convert("RGB")
+        if self.shift is not None:
+            img = apply_shift(img, self.shift)
+        if self.cropImg:
+            w, h = img.size
+            img = img.crop((0, h // 2, w, h))  # left, top, right, bottom
+            return self.transform(img)
+        else:
+            return self.transform(img)
+
+
+@PendingDeprecationWarning
 class LaneImageDataset(Dataset):
     """Generic dataset for lane images given a root path and list file."""
 
