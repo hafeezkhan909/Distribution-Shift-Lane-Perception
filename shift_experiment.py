@@ -65,9 +65,9 @@ class ShiftExperiment:
         file_location: str = "./",
         file_style: JsonStyle = 4,
     ):
-        self.source_dir_dir = source_dir
+        self.source_dir = source_dir
         self.target_dir = target_dir
-        self.source_dir_list_dir = source_list_path
+        self.source_list_dir = source_list_path
         self.target_list_dir = target_list_path
         self.src_samples = src_samples
         self.tgt_samples = tgt_samples
@@ -174,8 +174,8 @@ class ShiftExperiment:
     # STEP 0 — Load Source Features
     def load_source_features(self):
         loaderReturn = get_dataloader(
-            root_dir=self.source_dir_dir,
-            list_path=self.source_dir_list_dir,
+            root_dir=self.source_dir,
+            list_path=self.source_list_dir,
             batch_size=self.batch_size,
             image_size=self.image_size,
             num_samples=self.src_samples,
@@ -185,7 +185,7 @@ class ShiftExperiment:
         loader = loaderReturn[0]
         image_paths = loaderReturn[1]
         self.src_feats = extract_features(self.model, loader, self.device)
-        print(f"{self.source_dir_dir} features loaded. Shape = {self.src_feats.shape}\n")
+        print(f"{self.source_dir} features loaded. Shape = {self.src_feats.shape}\n")
         self.loggerExperimentalData["Source Features Shape"] = list(
             self.src_feats.shape
         )
@@ -240,8 +240,8 @@ class ShiftExperiment:
         print("[STEP 2] Sanity Check...")
 
         loaderReturn = get_seeded_random_dataloader(
-            root_dir=self.source_dir_dir,
-            list_path=self.source_dir_list_dir,
+            root_dir=self.source_dir,
+            list_path=self.source_list_dir,
             batch_size=self.batch_size,
             image_size=self.image_size,
             num_samples=self.tgt_samples,
@@ -293,8 +293,8 @@ class ShiftExperiment:
             testData: JsonDict = {}
             seed = self.seed_base + i
             loaderReturn = get_seeded_random_dataloader(
-                root_dir=self.source_dir_dir,
-                list_path=self.source_dir_list_dir,
+                root_dir=self.source_dir,
+                list_path=self.source_list_dir,
                 batch_size=self.batch_size,
                 image_size=self.image_size,
                 num_samples=self.tgt_samples,
