@@ -79,7 +79,7 @@ class ImageDataset(Dataset):
 
     def get_image_path(self, idx: int) -> str:
         """Resolves the full file path for a given index.
-        
+
         Child classes can override this method if their path logic differs.
         """
         return os.path.join(self.root_dir, self.image_paths[idx].lstrip("/"))
@@ -134,9 +134,9 @@ class LaneImageDataset(Dataset):
         warnings.warn(
             "LaneImageDataset is pending deprecation. Use ImageDataset directly.",
             PendingDeprecationWarning,
-            stacklevel=2
+            stacklevel=2,
         )
-        
+
         # Determine list_path based on dataset name
         if "Curvelanes" in root_dir:
             list_path = os.path.join(root_dir, split, f"{split}.txt")
@@ -144,7 +144,7 @@ class LaneImageDataset(Dataset):
         else:
             list_path = os.path.join(root_dir, "list", f"{split}.txt")
             self._is_curvelanes = False
-        
+
         self.split = split
 
         # Initialize parent class
@@ -159,7 +159,7 @@ class LaneImageDataset(Dataset):
     def get_image_path(self, idx: int) -> str:
         """Overrides the parent path logic to handle dataset specific structures."""
         rel_path = self.image_paths[idx].lstrip("/")
-        
+
         if self._is_curvelanes:
             return os.path.join(self.root_dir, self.split, rel_path)
         else:
@@ -167,6 +167,7 @@ class LaneImageDataset(Dataset):
 
 
 # --- Dataloader Helpers ---
+
 
 def get_dataloader(
     dataset_name: str,
@@ -176,23 +177,25 @@ def get_dataloader(
     num_samples: int,
     cropImg: bool,
     block_idx: int = 0,
-    dataset_cls: Type[Dataset] = LaneImageDataset, # Allow dependency injection
+    dataset_cls: Type[Dataset] = LaneImageDataset,  # Allow dependency injection
 ) -> DataLoader:
     root = f"datasets/{dataset_name}"
-    
+
     # Instantiate the specific dataset class
     ds = dataset_cls(root, split=split, image_size=image_size, cropImg=cropImg)
-    
+
     start = block_idx * num_samples
     end = min((block_idx + 1) * num_samples, len(ds))
-    
+
     # Validate indices
     if start >= len(ds):
-        raise ValueError(f"Block index {block_idx} is out of range for dataset size {len(ds)}")
+        raise ValueError(
+            f"Block index {block_idx} is out of range for dataset size {len(ds)}"
+        )
 
     subset = Subset(ds, list(range(start, end)))
     print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
-    
+
     return DataLoader(
         subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
     )
@@ -210,13 +213,15 @@ def get_seeded_random_dataloader(
     dataset_cls: Type[Dataset] = LaneImageDataset,
 ) -> DataLoader:
     root = f"datasets/{dataset_name}"
-    
-    ds = dataset_cls(root, split=split, image_size=image_size, cropImg=cropImg, dataShift=shift)
-    
+
+    ds = dataset_cls(
+        root, split=split, image_size=image_size, cropImg=cropImg, dataShift=shift
+    )
+
     random.seed(seed)
     chosen_indices = random.sample(range(len(ds)), min(num_samples, len(ds)))
     subset = Subset(ds, chosen_indices)
-    
+
     return DataLoader(
         subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
     )
