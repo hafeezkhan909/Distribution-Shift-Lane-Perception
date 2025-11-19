@@ -277,10 +277,10 @@ class ShiftExperiment:
     def data_shift_test(self):
         dataShiftTestData: JsonDict = {}
         print(
-            f"[STEP 3] Data Shift Test: {self.source_dir} to {self.target}, Noise applied: {self.shift_object}\n"
+            f"[STEP 3] Data Shift Test: {self.source_dir} to {self.target_dir}, Noise applied: {self.shift_object}\n"
         )
         dataShiftTestData["Data Shift Test Definition"] = (
-            f"{self.source_dir} to {self.target}"
+            f"{self.source_dir} to {self.target_dir}"
         )
         dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
@@ -362,9 +362,9 @@ if __name__ == "__main__":
     parser.add_argument("--tgt_samples", type=int, default=5) # 100
     parser.add_argument("--num_runs", type=int, default=10)
     parser.add_argument("--block_idx", type=int, default=0)
-    parser.add_argument("--batch_size", type=int, default=16)
+    parser.add_argument("--batch_size", type=int, default=2) # 16
     parser.add_argument("--image_size", type=int, default=512)
-    parser.add_argument("--num_calib", type=int, default=100)
+    parser.add_argument("--num_calib", type=int, default=5) # 100
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--seed_base", type=int, default=42)
     parser.add_argument("--shift", type=str, default=None)
