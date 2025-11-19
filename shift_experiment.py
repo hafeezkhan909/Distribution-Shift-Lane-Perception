@@ -230,7 +230,7 @@ class ShiftExperiment:
         calibrationData["Result"] = {
             "Tau": float(self.tau),
             "Mean MMD": float(self.null_stats.mean()),
-            "MMD Bilateral Tollerance": float(self.null_stats.std()),
+            "MMD (std)": float(self.null_stats.std()),
         }
         self.loggerExperimentalData["Calibration"] = calibrationData
 
@@ -256,10 +256,10 @@ class ShiftExperiment:
 
         mmd_val = mmd_test(self.src_feats, sanity_src_feats)
         print(
-            f"[SANITY CHECK] MMD({self.source_dir}→{self.source_dir}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
+            f"[SANITY CHECK] MMD({self.source_dir}to{self.source_dir}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
         )
         sanityCheckData["Results"] = {
-            "Sanity Check Definition": f"{self.source_dir}→{self.source_dir}",
+            "Sanity Check Definition": f"{self.source_dir}to{self.source_dir}",
             "MMD": float(mmd_val),
             "Tau": float(self.tau),
         }
@@ -277,10 +277,10 @@ class ShiftExperiment:
     def data_shift_test(self):
         dataShiftTestData: JsonDict = {}
         print(
-            f"[STEP 3] Data Shift Test: {self.source_dir} → {self.target}, Noise applied: {self.shift_object}\n"
+            f"[STEP 3] Data Shift Test: {self.source_dir} to {self.target}, Noise applied: {self.shift_object}\n"
         )
         dataShiftTestData["Data Shift Test Definition"] = (
-            f"{self.source_dir} → {self.target}"
+            f"{self.source_dir} to {self.target}"
         )
         dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
@@ -330,7 +330,7 @@ class ShiftExperiment:
         )
         dataShiftTestData["TPR"] = float(tpr_result * 100)
         dataShiftTestData["Average MMD"] = float(np.mean(mmd_values))
-        dataShiftTestData["Average MMD Bilateral Tollerance"] = float(
+        dataShiftTestData["Average MMD (std)"] = float(
             np.std(mmd_values)
         )
         self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
