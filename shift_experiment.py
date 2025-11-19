@@ -64,6 +64,7 @@ class ShiftExperiment:
         file_name: str = "testData.json",
         file_location: str = "./",
         file_style: JsonStyle = 4,
+        save_all_image_paths: bool = False,
     ):
         self.source_dir = source_dir
         self.target_dir = target_dir
@@ -86,6 +87,7 @@ class ShiftExperiment:
         self.height_shift_frac = height_shift_frac
         self.shear_angle = shear_angle
         self.zoom_factor = zoom_factor
+        self.save_all_image_paths = save_all_image_paths
 
         # ------------------ Data Logger Config  ------------------
 
@@ -304,6 +306,7 @@ class ShiftExperiment:
             )
             tgt_loader_cross = loaderReturn[0]
             testData["Image Paths"] = loaderReturn[1]
+            testData["Seed"] = seed
             tgt_feats_cross = extract_features(
                 self.model, tgt_loader_cross, self.device
             )
@@ -317,7 +320,11 @@ class ShiftExperiment:
             testData["Run"] = int(i + 1)
             testData["MMD"] = float(mmd_cross)
             testData["Shift Detected"] = bool(detected)
-            dataShiftTestDataTests.append(testData)
+
+            if self.save_all_image_paths:
+                dataShiftTestDataTests.append(testData)
+            elif i == 1:
+                dataShiftTestDataTests.append(testData)
 
         dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
 
@@ -330,9 +337,7 @@ class ShiftExperiment:
         )
         dataShiftTestData["TPR"] = float(tpr_result * 100)
         dataShiftTestData["Average MMD"] = float(np.mean(mmd_values))
-        dataShiftTestData["Average MMD (std)"] = float(
-            np.std(mmd_values)
-        )
+        dataShiftTestData["Average MMD (std)"] = float(np.std(mmd_values))
         self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
@@ -354,10 +359,24 @@ class ShiftExperiment:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--source_dir", type=str, default="./datasets/CULane")
-    parser.add_argument("--target_dir", type=str, default="./datasets/Curvelanes")
-    parser.add_argument("--source_list_path", type=str, default="./datasets/CULane/list/train.txt")
-    parser.add_argument("--target_list_path", type=str, default="./datasets/Curvelane/train/train.txt")
+    parser.add_argument(
+        "--source_dir", required=True, type=str, default="./datasets/CULane"
+    )
+    parser.add_argument(
+        "--target_dir", required=True, type=str, default="./datasets/Curvelanes"
+    )
+    parser.add_argument(
+        "--source_list_path",
+        required=True,
+        type=str,
+        default="./datasets/CULane/list/train.txt",
+    )
+    parser.add_argument(
+        "--target_list_path",
+        required=True,
+        type=str,
+        default="./datasets/Curvelane/train/train.txt",
+    )
     parser.add_argument("--src_samples", type=int, default=1000)
     parser.add_argument("--tgt_samples", type=int, default=100)
     parser.add_argument("--num_runs", type=int, default=10)
@@ -375,6 +394,7 @@ if __name__ == "__main__":
     parser.add_argument("--zoom_factor", type=float, default=1.0)
     parser.add_argument("--width_shift_frac", type=float, default=0.2)
     parser.add_argument("--height_shift_frac", type=float, default=0.2)
+    parser.add_argument("--save_all_image_paths", type=bool, default=False)
     parser.add_argument(
         "--file_location",
         type=str,
