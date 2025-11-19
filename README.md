@@ -68,29 +68,95 @@ The kernel bandwidth is set using the median pairwise distance heuristic (1 / me
 
 ## 📋 Prerequisites
 
-1. **Python 3** and required packages:
+### 1. Python 3 and required packages:
+
+   > Notice: Python 3.10.19 is **Highly Reccomended**
 
    ```
-   pip install torch torchvision numpy Pillow tqdm
-   
-   
+   # Instally numpy first because it is a torch_two_sample dependency
+   pip install numpy<2.0
+
+   # Install remaining dependencies
+   pip install scipy torch torchvision tqdm Pillow && pip install ./torch_two_sample
    ```
 
-2. **Project Files:** Ensure these files are in the same directory as your main script:
+### 2.  Dataset Structure
+All datasets must adhere to a simple file-list structure for our data loaders:
 
-   * `autoencoder.py`
+**Root Directory (root_dir):** The absolute path to the base folder containing all image files.
 
-   * `data_utils.py`
+**List File (list_path):** A text file (e.g., train.txt) containing paths to images, one per line.
 
-   * `mmd_test.py`
+The paths listed inside the List File must be relative to the root_dir.
 
-3. **Datasets:** The script expects datasets to be located in a root `datasets/` folder, following the structure defined in the `LaneImageDataset` class.
+**Example**
+Given the root directory is datasets/MyProject:
 
-   * `datasets/Curvelanes/`
+|    File Path in System    |   Path in `train.txt`  |
+| --------------------------------- | -------------- |
+| `datasets/MyProject/data/001.jpg` | `data/001.jpg` |
+| `datasets/MyProject/data/002.jpg` | `data/002.jpg` |
 
-   * `datasets/CULane/` (or any other dataset)
+## 🚀 How to Run `shift_experiment.py`
 
-## 🚀 How to Run
+Execute the script via the command line. The experiment performs feature extraction, MMD calibration, a sanity check, and finally the data shift test.
+
+### 1. Basic Usage
+
+Unlike previous versions, **you must explicitly provide the source and target directories and list files.**
+
+```bash
+python shift_experiment.py \
+  --source_dir ./datasets/CULane \
+  --target_dir ./datasets/Curvelanes \
+  --source_list_path ./datasets/CULane/list/train.txt \
+  --target_list_path ./datasets/Curvelane/train/train.txt
+```
+
+### 2. Required Arguments
+
+The following arguments are strictly required to run the script:
+
+| Argument | Description |
+| :--- | :--- |
+| `--source_dir` | Root directory for the Source dataset. |
+| `--target_dir` | Root directory for the Target dataset. |
+| `--source_list_path` | Path to the text file containing source image paths. |
+| `--target_list_path` | Path to the text file containing target image paths. |
+
+### 3. Shift Scenarios
+
+To apply a specific synthetic shift, add `--shift <TYPE>` and the corresponding parameter flag.
+
+| Shift Type | Required Parameter | Default | Example Command Snippet |
+| :--- | :--- | :--- | :--- |
+| **Gaussian Noise** | `--std` | `0.0` | `--shift gaussian --std 1.5` |
+| **Rotation** | `--rotation_angle` | `0.0` | `--shift rotation_shift --rotation_angle 30` |
+| **Translation** | `--width_shift_frac`<br>`--height_shift_frac` | `0.2`<br>`0.2` | `--shift translation_shift --width_shift_frac 0.3` |
+| **Shear** | `--shear_angle` | `0.0` | `--shift shear_shift --shear_angle 15` |
+| **Zoom** | `--zoom_factor` | `1.0` | `--shift zoom_shift --zoom_factor 1.3` |
+| **Flips** | *(None)* | N/A | `--shift horizontal_flip_shift` |
+
+### 4. Optional Configuration
+
+You can customize the experiment parameters using these flags:
+
+| Flag | Default | Description |
+| :--- | :--- | :--- |
+| `--src_samples` | `1000` | Number of images to sample from the source. |
+| `--tgt_samples` | `100` | Number of images to sample from the target. |
+| `--image_size` | `512` | Target size (H & W) to resize images to. |
+| `--batch_size` | `16` | Batch size for the dataloader. |
+| `--num_runs` | `10` | Number of experiment repetitions. |
+| `--num_calib` | `100` | Number of calibration runs. |
+| `--cropImg` | `False` | If set (e.g. `--cropImg True`), crops images to bottom half. |
+| `--block_idx` | `0` | Index for data blocking/pagination. |
+| `--seed_base` | `42` | Base seed for random operations. |
+| `--alpha` | `0.05` | Significance level for the test. |
+| `--file_location` | `logs` | Directory to save output logs. |
+| `--file_name` | `sanity_check.json` | Filename for the output JSON log. |
+
+## 🚀 How to Run `run_experiment.py`
 
 The script `run_experiment.py` is configured to run from the command line.
 
