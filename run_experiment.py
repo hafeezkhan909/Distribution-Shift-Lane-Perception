@@ -105,9 +105,9 @@ def main(
             num_samples=src_samples,
             seed=seed,
             cropImg=True,
-            shift=None
+            shift=None,
         )[0]
-        
+
         calib_src_feats = extract_features(model, calib_src_loader, device)
         t_stat = mmd_test(src_feats, calib_src_feats)
         null_stats.append(t_stat)
@@ -124,15 +124,15 @@ def main(
     print(f"\n[STEP 2] Sanity Check: {source}→{source}")
     seed_match = seed_base + 1
     sanity_src_loader = get_seeded_random_dataloader(
-            root_dir=root_dir_source,
-            list_path=list_path_source,
-            batch_size=int,
-            image_size=int,
-            num_samples=src_samples,
-            seed=seed_match,
-            cropImg=True,
-            shift=None
-        )[0]
+        root_dir=root_dir_source,
+        list_path=list_path_source,
+        batch_size=int,
+        image_size=int,
+        num_samples=src_samples,
+        seed=seed_match,
+        cropImg=True,
+        shift=None,
+    )[0]
     sanity_src_feats = extract_features(model, sanity_src_loader, device)
     mmd_val = mmd_test(src_feats, sanity_src_feats)
     print(f"[CHECK] MMD({source}→{source}) = {mmd_val:.6f}, τ = {tau:.6f}")
@@ -168,7 +168,7 @@ def main(
             num_samples=src_samples,
             seed=seed,
             cropImg=True,
-            shift=None
+            shift=None,
         )[0]
         tgt_feats_cross = extract_features(model, tgt_loader_cross, device)
         mmd_cross = mmd_test(src_feats, tgt_feats_cross)
