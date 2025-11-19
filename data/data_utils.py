@@ -5,7 +5,6 @@
 import numpy as np
 from enum import Enum
 from PIL import Image
-from torchvision import transforms
 from torchvision.transforms import functional as F
 import os
 from abc import ABC, abstractmethod
