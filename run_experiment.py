@@ -75,8 +75,14 @@ def main(
 
     # ------------------ Source ------------------
     src_loader = get_dataloader(
-        source, src_split, batch_size, image_size, src_samples, block_idx
-    )
+        root_dir="datasets/" + source,
+        list_path="datasets/" + source + "list/test.txt",
+        batch_size=int,
+        image_size=int,
+        num_samples=src_samples,
+        cropImg=True,
+        block_idx=block_idx,
+    )[0]
     src_feats = extract_features(model, src_loader, device)
     print(f"{source} features loaded successfully !")
 
@@ -85,6 +91,7 @@ def main(
     null_stats = []
     for i in trange(num_calib, desc="Calibrating"):
         seed = seed_base + i
+        # TODO: Fix
         calib_src_loader = get_seeded_random_dataloader(
             source, src_split, batch_size, image_size, tgt_samples, seed, shift=None
         )
@@ -103,6 +110,7 @@ def main(
     # ------------------ Sanity Check ------------------
     print(f"\n[STEP 2] Sanity Check: {source}→{source}")
     seed_match = seed_base + 1
+    # TODO: Fix
     sanity_src_loader = get_seeded_random_dataloader(
         source, src_split, batch_size, image_size, tgt_samples, seed_match, shift=None
     )
@@ -133,6 +141,7 @@ def main(
 
     for run in trange(num_runs, desc="Shift Testing"):
         seed_cross = seed_base + run
+        # TODO: Fix
         tgt_loader_cross = get_seeded_random_dataloader(
             target,
             tgt_split,

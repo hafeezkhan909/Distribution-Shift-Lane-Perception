@@ -40,10 +40,10 @@ def extract_features(model, loader, device):
 class ShiftExperiment:
     def __init__(
         self,
-        source: str = "CULane",
-        target: str = "Curvelanes",
-        src_split: str = "train",  # train or test or val split
-        tgt_split: str = "test",
+        source_dir: str = "datasets/CULane",
+        target_dir: str = "datasets/Curvelanes",
+        source_list_dir: str = "datasets/CULane/list/test.txt",
+        target_list_dir: str = "datasets/Curvelanes/train/train.txt",
         src_samples: int = 1000,  # No. of source samples as train set passed
         tgt_samples: int = 100,
         num_runs: int = 10,
@@ -65,11 +65,10 @@ class ShiftExperiment:
         file_location: str = "./",
         file_style: JsonStyle = 4,
     ):
-
-        self.source = source
-        self.target = target
-        self.src_split = src_split
-        self.tgt_split = tgt_split
+        self.source_dir = source_dir
+        self.target_dir = target_dir
+        self.source_list_dir = source_list_dir
+        self.target_list_dir = target_list_dir
         self.src_samples = src_samples
         self.tgt_samples = tgt_samples
         self.num_runs = num_runs
@@ -95,10 +94,10 @@ class ShiftExperiment:
         )
 
         self.loggerArgs: JsonDict = {
-            "source": source,
-            "target": target,
-            "src_split": src_split,
-            "tgt_split": tgt_split,
+            "source_dir": source_dir,
+            "target_dir": target_dir,
+            "target_dir": source_list_dir,
+            "target_dir": target_list_dir,
             "src_samples": src_samples,
             "tgt_samples": tgt_samples,
             "num_runs": num_runs,
@@ -174,20 +173,23 @@ class ShiftExperiment:
 
     # STEP 0 — Load Source Features
     def load_source_features(self):
-        loader = get_dataloader(
-            self.source,
-            self.src_split,
-            self.batch_size,
-            self.image_size,
-            self.src_samples,
-            self.cropImg,
-            self.block_idx,
+        loaderReturn = get_dataloader(
+            root_dir=self.source_dir,
+            list_path=self.source_list_dir,
+            batch_size=self.batch_size,
+            image_size=self.image_size,
+            num_samples=self.src_samples,
+            cropImg=self.cropImg,
+            block_idx=self.block_idx,
         )
+        loader = loaderReturn[0]
+        image_paths = loaderReturn[1]
         self.src_feats = extract_features(self.model, loader, self.device)
         print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
         self.loggerExperimentalData["Source Features Shape"] = list(
             self.src_feats.shape
         )
+        self.loggerExperimentalData["Source Features Image Paths"] = list(image_paths)
 
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
@@ -195,19 +197,22 @@ class ShiftExperiment:
         print(f"[STEP 1] Calibration using {self.source}...")
         calibrationData["Uses"] = self.source
         null_stats = []
+        all_image_dirs = {}
 
         for i in trange(self.num_calib, desc="Calibrating"):
             seed = self.seed_base + i
-            calib_src_loader = get_seeded_random_dataloader(
-                self.source,
-                self.src_split,
-                self.batch_size,
-                self.image_size,
-                self.tgt_samples,
-                seed,
+            dataloaderReturn = get_seeded_random_dataloader(
+                root_dir=str,
+                list_path=str,
+                batch_size=self.batch_size,
+                image_size=self.image_size,
+                num_samples=self.tgt_samples,
+                seed=seed,
                 cropImg=self.cropImg,
                 shift=None,
             )
+            calib_src_loader = dataloaderReturn[0]
+            all_image_dirs[f"Calibrating with seed {seed}"] = dataloaderReturn[1]
             calib_src_feats = extract_features(
                 self.model, calib_src_loader, self.device
             )
@@ -234,6 +239,7 @@ class ShiftExperiment:
         sanityCheckData: JsonDict = {}
         print("[STEP 2] Sanity Check...")
 
+        # TODO: Fix
         sanity_src_loader = get_seeded_random_dataloader(
             self.source,
             self.src_split,
@@ -284,6 +290,7 @@ class ShiftExperiment:
         for i in trange(self.num_runs, desc="Shift Testing"):
             testData: JsonDict = {}
             seed = self.seed_base + i
+            # TODO: Fix
             tgt_loader_cross = get_seeded_random_dataloader(
                 self.target,
                 self.tgt_split,
@@ -344,10 +351,10 @@ class ShiftExperiment:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--source", type=str, default="CULane")
-    parser.add_argument("--target", type=str, default="Curvelanes")
-    parser.add_argument("--src_split", type=str, default="train")
-    parser.add_argument("--tgt_split", type=str, default="valid")
+    parser.add_argument("--source-dir", type=str, default="CULane")
+    parser.add_argument("--target-dir", type=str, default="Curvelanes")
+    parser.add_argument("--source-list-dir", type=str, default="CULane/list")
+    parser.add_argument("--target-list-dir", type=str, default="Curvelanes/list")
     parser.add_argument("--src_samples", type=int, default=1000)
     parser.add_argument("--tgt_samples", type=int, default=100)
     parser.add_argument("--num_runs", type=int, default=10)

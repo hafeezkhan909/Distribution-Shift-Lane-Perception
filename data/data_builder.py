@@ -1,7 +1,7 @@
 import os
 import random
 import warnings
-from typing import Any, List, Optional, Type
+from typing import Any, List, Optional, Tuple
 
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset, Subset
@@ -170,19 +170,19 @@ class LaneImageDataset(Dataset):
 
 
 def get_dataloader(
-    dataset_name: str,
-    split: str,
+    root_dir: str,
+    list_path: str,
     batch_size: int,
     image_size: int,
     num_samples: int,
     cropImg: bool,
     block_idx: int = 0,
-    dataset_cls: Type[Dataset] = LaneImageDataset,  # Allow dependency injection
-) -> DataLoader:
-    root = f"datasets/{dataset_name}"
+):
 
     # Instantiate the specific dataset class
-    ds = dataset_cls(root, split=split, image_size=image_size, cropImg=cropImg)
+    ds = ImageDataset(
+        root_dir=root_dir, list_path=list_path, image_size=image_size, cropImg=cropImg
+    )
 
     start = block_idx * num_samples
     end = min((block_idx + 1) * num_samples, len(ds))
@@ -193,35 +193,53 @@ def get_dataloader(
             f"Block index {block_idx} is out of range for dataset size {len(ds)}"
         )
 
-    subset = Subset(ds, list(range(start, end)))
-    print(f"[INFO] {dataset_name} ({split}) → [{start}:{end}] ({len(subset)} samples)")
+    # Generate the list of indices for this block
+    indices = list(range(start, end))
 
-    return DataLoader(
-        subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
-    )
+    # Extract the full paths for these specific indices using the class method
+    image_paths = [ds.get_image_path(i) for i in indices]
+
+    subset = Subset(ds, indices)
+    print(f"[INFO] ({root_dir}) → [{start}:{end}] ({len(subset)} samples)")
+
+    return [
+        DataLoader(
+            subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
+        ),
+        image_paths,
+    ]
 
 
 def get_seeded_random_dataloader(
-    dataset_name: str,
-    split: str,
+    root_dir: str,
+    list_path: str,
     batch_size: int,
     image_size: int,
     num_samples: int,
     seed: int,
     cropImg: bool,
     shift: Optional[DataShift],
-    dataset_cls: Type[Dataset] = LaneImageDataset,
-) -> DataLoader:
-    root = f"datasets/{dataset_name}"
+):
 
-    ds = dataset_cls(
-        root, split=split, image_size=image_size, cropImg=cropImg, dataShift=shift
+    ds = ImageDataset(
+        root_dir=root_dir,
+        list_path=list_path,
+        image_size=image_size,
+        cropImg=cropImg,
+        dataShift=shift,
     )
 
     random.seed(seed)
     chosen_indices = random.sample(range(len(ds)), min(num_samples, len(ds)))
+
+    # Extract the full paths for these specific indices using the class method
+    image_paths = [ds.get_image_path(i) for i in chosen_indices]
+
     subset = Subset(ds, chosen_indices)
 
-    return DataLoader(
-        subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
-    )
+    return [
+        DataLoader(
+            subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
+        ),
+        image_paths,
+    ]
