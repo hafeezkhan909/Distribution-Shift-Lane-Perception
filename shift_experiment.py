@@ -40,10 +40,10 @@ def extract_features(model, loader, device):
 class ShiftExperiment:
     def __init__(
         self,
-        source_dir: str = "datasets/CULane",
-        target_dir: str = "datasets/Curvelanes",
-        source_list_dir: str = "datasets/CULane/list/test.txt",
-        target_list_dir: str = "datasets/Curvelanes/train/train.txt",
+        source_dir: str = "./datasets/CULane",
+        target_dir: str = "./datasets/Curvelanes",
+        source_list_path: str = "./datasets/CULane/list/test.txt",
+        target_list_path: str = "./datasets/Curvelanes/train/train.txt",
         src_samples: int = 1000,  # No. of source samples as train set passed
         tgt_samples: int = 100,
         num_runs: int = 10,
@@ -67,8 +67,8 @@ class ShiftExperiment:
     ):
         self.source_dir = source_dir
         self.target_dir = target_dir
-        self.source_list_dir = source_list_dir
-        self.target_list_dir = target_list_dir
+        self.source_list_dir = source_list_path
+        self.target_list_dir = target_list_path
         self.src_samples = src_samples
         self.tgt_samples = tgt_samples
         self.num_runs = num_runs
@@ -96,8 +96,8 @@ class ShiftExperiment:
         self.loggerArgs: JsonDict = {
             "source_dir": source_dir,
             "target_dir": target_dir,
-            "target_dir": source_list_dir,
-            "target_dir": target_list_dir,
+            "target_dir": source_list_path,
+            "target_dir": target_list_path,
             "src_samples": src_samples,
             "tgt_samples": tgt_samples,
             "num_runs": num_runs,
@@ -354,10 +354,10 @@ class ShiftExperiment:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--source-dir", type=str, default="CULane")
-    parser.add_argument("--target-dir", type=str, default="Curvelanes")
-    parser.add_argument("--source-list-dir", type=str, default="CULane/list")
-    parser.add_argument("--target-list-dir", type=str, default="Curvelanes/list")
+    parser.add_argument("--source_dir", type=str, default="./datasets/CULane")
+    parser.add_argument("--target_dir", type=str, default="./datasets/Curvelanes")
+    parser.add_argument("--source_list_path", type=str, default="./datasets/CULane/list/train.txt")
+    parser.add_argument("--target_list_path", type=str, default="./datasets/Curvelane/train/train.txt")
     parser.add_argument("--src_samples", type=int, default=1000)
     parser.add_argument("--tgt_samples", type=int, default=100)
     parser.add_argument("--num_runs", type=int, default=10)
