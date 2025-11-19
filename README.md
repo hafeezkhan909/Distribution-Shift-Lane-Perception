@@ -101,36 +101,60 @@ Given the root directory is datasets/MyProject:
 
 Execute the script via the command line. The experiment performs feature extraction, MMD calibration, a sanity check, and finally the data shift test.
 
-### Basic Usage
+### 1. Basic Usage
+
+Unlike previous versions, **you must explicitly provide the source and target directories and list files.**
 
 ```bash
-python shift_experiment.py --source CULane --target Curvelanes --shift <SHIFT_TYPE> [SHIFT_ARGS]
+python shift_experiment.py \
+  --source_dir ./datasets/CULane \
+  --target_dir ./datasets/Curvelanes \
+  --source_list_path ./datasets/CULane/list/train.txt \
+  --target_list_path ./datasets/Curvelane/train/train.txt
 ```
 
-### Shift Scenarios
+### 2. Required Arguments
 
-Select a shift type and provide the corresponding magnitude argument:
+The following arguments are strictly required to run the script:
 
-| Shift Type | Required Argument | Example Command |
+| Argument | Description |
+| :--- | :--- |
+| `--source_dir` | Root directory for the Source dataset. |
+| `--target_dir` | Root directory for the Target dataset. |
+| `--source_list_path` | Path to the text file containing source image paths. |
+| `--target_list_path` | Path to the text file containing target image paths. |
+
+### 3. Shift Scenarios
+
+To apply a specific synthetic shift, add `--shift <TYPE>` and the corresponding parameter flag.
+
+| Shift Type | Required Parameter | Default | Example Command Snippet |
+| :--- | :--- | :--- | :--- |
+| **Gaussian Noise** | `--std` | `0.0` | `--shift gaussian --std 1.5` |
+| **Rotation** | `--rotation_angle` | `0.0` | `--shift rotation_shift --rotation_angle 30` |
+| **Translation** | `--width_shift_frac`<br>`--height_shift_frac` | `0.2`<br>`0.2` | `--shift translation_shift --width_shift_frac 0.3` |
+| **Shear** | `--shear_angle` | `0.0` | `--shift shear_shift --shear_angle 15` |
+| **Zoom** | `--zoom_factor` | `1.0` | `--shift zoom_shift --zoom_factor 1.3` |
+| **Flips** | *(None)* | N/A | `--shift horizontal_flip_shift` |
+
+### 4. Optional Configuration
+
+You can customize the experiment parameters using these flags:
+
+| Flag | Default | Description |
 | :--- | :--- | :--- |
-| **Gaussian Noise** | `--std` | `python shift_experiment.py --shift gaussian --std 1.5` |
-| **Rotation** | `--rotation_angle` | `python shift_experiment.py --shift rotation_shift --rotation_angle 30` |
-| **Translation** | `--width/height_shift_frac` | `python shift_experiment.py --shift translation_shift --width_shift_frac 0.2` |
-| **Shear** | `--shear_angle` | `python shift_experiment.py --shift shear_shift --shear_angle 15` |
-| **Zoom** | `--zoom_factor` | `python shift_experiment.py --shift zoom_shift --zoom_factor 1.3` |
-| **Flips** | *(None)* | `python shift_experiment.py --shift horizontal_flip_shift` |
-
-### Common Optional Flags
-
-  * `--source` / `--target`: Dataset names (Default: `CULane`, `Curvelanes`).
-  * `--src_samples` / `--tgt_samples`: Number of samples to process (Default: `1000`, `100`).
-  * `--num_runs`: Number of times to repeat the shift test (Default: `10`).
-  * `--file_name`: Name of the output JSON log (Default: `sanity_check.json`).
-  * `--cropImg`: Boolean flag to crop images (Default: `False`).
-
-### Output
-
-Results, including MMD scores, TPR (True Positive Rate), and pass/fail status, are printed to the console and saved to `logs/<file_name>`.
+| `--src_samples` | `1000` | Number of images to sample from the source. |
+| `--tgt_samples` | `100` | Number of images to sample from the target. |
+| `--image_size` | `512` | Target size (H & W) to resize images to. |
+| `--batch_size` | `16` | Batch size for the dataloader. |
+| `--num_runs` | `10` | Number of experiment repetitions. |
+| `--num_calib` | `100` | Number of calibration runs. |
+| `--cropImg` | `False` | If set (e.g. `--cropImg True`), crops images to bottom half. |
+| `--block_idx` | `0` | Index for data blocking/pagination. |
+| `--seed_base` | `42` | Base seed for random operations. |
+| `--alpha` | `0.05` | Significance level for the test. |
+| `--file_location` | `logs` | Directory to save output logs. |
+| `--file_name` | `sanity_check.json` | Filename for the output JSON log. |
 
 ## 🚀 How to Run `run_experiment.py`
 
