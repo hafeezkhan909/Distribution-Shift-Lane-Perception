@@ -103,7 +103,9 @@ Execute the script via the command line. The experiment performs feature extract
 
 ### 1. Basic Usage
 
-Unlike previous versions, **you must explicitly provide the source and target directories and list files.**
+You must explicitly provide the source and target directories and list files.
+
+> **Checkout our [Command Generator](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/) that will auto-populate your command line args!**
 
 ```bash
 python shift_experiment.py \
