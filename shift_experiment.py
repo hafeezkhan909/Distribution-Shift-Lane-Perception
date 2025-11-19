@@ -65,9 +65,9 @@ class ShiftExperiment:
         file_location: str = "./",
         file_style: JsonStyle = 4,
     ):
-        self.source_dir = source_dir
+        self.source_dir_dir = source_dir
         self.target_dir = target_dir
-        self.source_list_dir = source_list_path
+        self.source_dir_list_dir = source_list_path
         self.target_list_dir = target_list_path
         self.src_samples = src_samples
         self.tgt_samples = tgt_samples
@@ -174,8 +174,8 @@ class ShiftExperiment:
     # STEP 0 — Load Source Features
     def load_source_features(self):
         loaderReturn = get_dataloader(
-            root_dir=self.source_dir,
-            list_path=self.source_list_dir,
+            root_dir=self.source_dir_dir,
+            list_path=self.source_dir_list_dir,
             batch_size=self.batch_size,
             image_size=self.image_size,
             num_samples=self.src_samples,
@@ -185,7 +185,7 @@ class ShiftExperiment:
         loader = loaderReturn[0]
         image_paths = loaderReturn[1]
         self.src_feats = extract_features(self.model, loader, self.device)
-        print(f"{self.source} features loaded. Shape = {self.src_feats.shape}\n")
+        print(f"{self.source_dir_dir} features loaded. Shape = {self.src_feats.shape}\n")
         self.loggerExperimentalData["Source Features Shape"] = list(
             self.src_feats.shape
         )
@@ -194,8 +194,8 @@ class ShiftExperiment:
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
         calibrationData: JsonDict = {}
-        print(f"[STEP 1] Calibration using {self.source}...")
-        calibrationData["Uses"] = self.source
+        print(f"[STEP 1] Calibration using {self.source_dir}...")
+        calibrationData["Uses"] = self.source_dir
         null_stats = []
         all_image_dirs = {}
 
@@ -240,8 +240,8 @@ class ShiftExperiment:
         print("[STEP 2] Sanity Check...")
 
         loaderReturn = get_seeded_random_dataloader(
-            root_dir=self.source_dir,
-            list_path=self.source_list_dir,
+            root_dir=self.source_dir_dir,
+            list_path=self.source_dir_list_dir,
             batch_size=self.batch_size,
             image_size=self.image_size,
             num_samples=self.tgt_samples,
@@ -256,10 +256,10 @@ class ShiftExperiment:
 
         mmd_val = mmd_test(self.src_feats, sanity_src_feats)
         print(
-            f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
+            f"[SANITY CHECK] MMD({self.source_dir}→{self.source_dir}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
         )
         sanityCheckData["Results"] = {
-            "Sanity Check Definition": f"{self.source}→{self.source}",
+            "Sanity Check Definition": f"{self.source_dir}→{self.source_dir}",
             "MMD": float(mmd_val),
             "Tau": float(self.tau),
         }
@@ -277,10 +277,10 @@ class ShiftExperiment:
     def data_shift_test(self):
         dataShiftTestData: JsonDict = {}
         print(
-            f"[STEP 3] Data Shift Test: {self.source} → {self.target}, Noise applied: {self.shift_object}\n"
+            f"[STEP 3] Data Shift Test: {self.source_dir} → {self.target}, Noise applied: {self.shift_object}\n"
         )
         dataShiftTestData["Data Shift Test Definition"] = (
-            f"{self.source} → {self.target}"
+            f"{self.source_dir} → {self.target}"
         )
         dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
@@ -293,8 +293,8 @@ class ShiftExperiment:
             testData: JsonDict = {}
             seed = self.seed_base + i
             loaderReturn = get_seeded_random_dataloader(
-                root_dir=self.source_dir,
-                list_path=self.source_list_dir,
+                root_dir=self.source_dir_dir,
+                list_path=self.source_dir_list_dir,
                 batch_size=self.batch_size,
                 image_size=self.image_size,
                 num_samples=self.tgt_samples,
