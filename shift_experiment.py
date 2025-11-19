@@ -295,8 +295,8 @@ class ShiftExperiment:
             testData: JsonDict = {}
             seed = self.seed_base + i
             loaderReturn = get_seeded_random_dataloader(
-                root_dir=self.source_dir,
-                list_path=self.source_list_dir,
+                root_dir=self.target_dir,
+                list_path=self.target_list_dir,
                 batch_size=self.batch_size,
                 image_size=self.image_size,
                 num_samples=self.tgt_samples,
@@ -375,7 +375,7 @@ if __name__ == "__main__":
         "--target_list_path",
         required=True,
         type=str,
-        default="./datasets/Curvelane/train/train.txt",
+        default="./datasets/Curvelanes/train/train.txt",
     )
     parser.add_argument("--src_samples", type=int, default=1000)
     parser.add_argument("--tgt_samples", type=int, default=100)
