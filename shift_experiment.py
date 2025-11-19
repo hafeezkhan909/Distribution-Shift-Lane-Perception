@@ -247,14 +247,7 @@ class ShiftExperiment:
         sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
 
         mmd_val = mmd_test(self.src_feats, sanity_src_feats)
-        print(
-            f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
-        )
-        sanityCheckData["Results"] = {
-            "Sanity Check Definition": f"{self.source}→{self.source}",
-            "MMD": float(mmd_val),
-            "Tau": float(self.tau),
-        }
+        print(f"[SANITY CHECK] MMD({self.source}→{self.source}) = {mmd_val:.6f}, τ = {self.tau:.6f}")
 
         if mmd_val <= self.tau:
             sanityCheckData["Shift Detected"] = bool(False)
