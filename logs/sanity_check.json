@@ -1,3 +1,194 @@
 {
-    "experiments": []
+    "experiments": [
+        {
+            "arguments": {
+                "source_dir": "./datasets/CULane",
+                "target_dir": "./datasets/Curvelane/train/train.txt",
+                "src_samples": 5,
+                "tgt_samples": 5,
+                "num_runs": 10,
+                "block_idx": 0,
+                "batch_size": 2,
+                "image_size": 512,
+                "num_calib": 5,
+                "alpha": 0.05,
+                "seed_base": 42,
+                "shift": null,
+                "std": 0.0,
+                "cropImg": false,
+                "rotation_angle": 0.0,
+                "width_shift_frac": 0.2,
+                "height_shift_frac": 0.2,
+                "shear_angle": 0.0,
+                "zoom_factor": 1.0
+            },
+            "data": {
+                "CUDA": true,
+                "Source Features Shape": [
+                    5,
+                    256
+                ],
+                "Source Features Image Paths": [
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00000.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00030.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00060.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00090.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00120.jpg"
+                ],
+                "Calibration": {
+                    "Uses": "./datasets/CULane",
+                    "Result": {
+                        "Tau": 0.17134996354579926,
+                        "Mean MMD": 0.15267983376979827,
+                        "MMD (std)": 0.012661165590714863
+                    }
+                },
+                "Sanity Check": {
+                    "Image Paths": [
+                        "./datasets/CULane/driver_23_30frame/05160941_0491.MP4/00975.jpg",
+                        "./datasets/CULane/driver_23_30frame/05161705_0631.MP4/03385.jpg",
+                        "./datasets/CULane/driver_23_30frame/05151658_0425.MP4/04920.jpg",
+                        "./datasets/CULane/driver_161_90frame/06032207_0962.MP4/01980.jpg",
+                        "./datasets/CULane/driver_23_30frame/05170723_0693.MP4/03710.jpg"
+                    ],
+                    "Results": {
+                        "Sanity Check Definition": "./datasets/CULaneto./datasets/CULane",
+                        "MMD": 0.14521513879299164,
+                        "Tau": 0.17134996354579926
+                    },
+                    "Shift Detected": false
+                },
+                "Data Shift Test Data": {
+                    "Data Shift Test Definition": "./datasets/CULane to ./datasets/Curvelanes",
+                    "Noise Applied": "None",
+                    "Runs": 10,
+                    "Individual Test Data": [
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_182_30frame/06010728_0081.MP4/04500.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161214_0542.MP4/00945.jpg",
+                                "./datasets/CULane/driver_23_30frame/05160911_0481.MP4/01725.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161641_0623.MP4/03115.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161534_0601.MP4/03415.jpg"
+                            ],
+                            "Run": 1,
+                            "MMD": 0.14969097077846527,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_23_30frame/05160941_0491.MP4/00975.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161705_0631.MP4/03385.jpg",
+                                "./datasets/CULane/driver_23_30frame/05151658_0425.MP4/04920.jpg",
+                                "./datasets/CULane/driver_161_90frame/06032207_0962.MP4/01980.jpg",
+                                "./datasets/CULane/driver_23_30frame/05170723_0693.MP4/03710.jpg"
+                            ],
+                            "Run": 2,
+                            "MMD": 0.14521513879299164,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_161_90frame/06031317_0847.MP4/02700.jpg",
+                                "./datasets/CULane/driver_161_90frame/06030955_0787.MP4/00900.jpg",
+                                "./datasets/CULane/driver_161_90frame/06031219_0835.MP4/00630.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161226_0546.MP4/00285.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161439_0586.MP4/02115.jpg"
+                            ],
+                            "Run": 3,
+                            "MMD": 0.1549808830022812,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_23_30frame/05161635_0621.MP4/01525.jpg",
+                                "./datasets/CULane/driver_161_90frame/06031616_0868.MP4/01710.jpg",
+                                "./datasets/CULane/driver_161_90frame/06030852_0766.MP4/00270.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161601_0610.MP4/05035.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161108_0520.MP4/03945.jpg"
+                            ],
+                            "Run": 4,
+                            "MMD": 0.13806994259357452,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_23_30frame/05161056_0516.MP4/03915.jpg",
+                                "./datasets/CULane/driver_23_30frame/05170829_0715.MP4/03350.jpg",
+                                "./datasets/CULane/driver_23_30frame/05160944_0492.MP4/01095.jpg",
+                                "./datasets/CULane/driver_182_30frame/06011841_0275.MP4/03630.jpg",
+                                "./datasets/CULane/driver_182_30frame/06011838_0274.MP4/02280.jpg"
+                            ],
+                            "Run": 5,
+                            "MMD": 0.17544223368167877,
+                            "Shift Detected": true
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_23_30frame/05170644_0680.MP4/03020.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161032_0508.MP4/03435.jpg",
+                                "./datasets/CULane/driver_161_90frame/06031752_0900.MP4/03600.jpg",
+                                "./datasets/CULane/driver_182_30frame/06011441_0195.MP4/01080.jpg",
+                                "./datasets/CULane/driver_161_90frame/06032110_0943.MP4/00000.jpg"
+                            ],
+                            "Run": 6,
+                            "MMD": 0.15122602880001068,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_182_30frame/06011228_0180.MP4/01140.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161811_0653.MP4/01605.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161259_0557.MP4/00795.jpg",
+                                "./datasets/CULane/driver_182_30frame/06011447_0197.MP4/03120.jpg",
+                                "./datasets/CULane/driver_161_90frame/06031131_0819.MP4/02250.jpg"
+                            ],
+                            "Run": 7,
+                            "MMD": 0.14070114493370056,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_23_30frame/05161041_0511.MP4/04365.jpg",
+                                "./datasets/CULane/driver_23_30frame/05170629_0675.MP4/00470.jpg",
+                                "./datasets/CULane/driver_161_90frame/06031547_0858.MP4/01350.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161211_0541.MP4/03105.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161829_0659.MP4/00825.jpg"
+                            ],
+                            "Run": 8,
+                            "MMD": 0.12637439370155334,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_161_90frame/06040129_1029.MP4/04500.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161622_0617.MP4/00685.jpg",
+                                "./datasets/CULane/driver_23_30frame/05170711_0689.MP4/02570.jpg",
+                                "./datasets/CULane/driver_182_30frame/06010652_0069.MP4/01980.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161528_0599.MP4/04735.jpg"
+                            ],
+                            "Run": 9,
+                            "MMD": 0.11942395567893982,
+                            "Shift Detected": false
+                        },
+                        {
+                            "Image Paths": [
+                                "./datasets/CULane/driver_23_30frame/05161531_0600.MP4/03415.jpg",
+                                "./datasets/CULane/driver_161_90frame/06040202_1040.MP4/00180.jpg",
+                                "./datasets/CULane/driver_182_30frame/06011438_0194.MP4/01170.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161350_0574.MP4/05295.jpg",
+                                "./datasets/CULane/driver_23_30frame/05161537_0602.MP4/02695.jpg"
+                            ],
+                            "Run": 10,
+                            "MMD": 0.1732644885778427,
+                            "Shift Detected": true
+                        }
+                    ],
+                    "TPR": 20.0,
+                    "Average MMD": 0.14743891805410386,
+                    "Average MMD (std)": 0.01701209495815852
+                }
+            }
+        }
+    ]
 }
