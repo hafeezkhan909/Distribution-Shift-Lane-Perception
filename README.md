@@ -68,29 +68,71 @@ The kernel bandwidth is set using the median pairwise distance heuristic (1 / me
 
 ## 📋 Prerequisites
 
-1. **Python 3** and required packages:
+### 1. Python 3 and required packages:
+
+   > Notice: Python 3.10.19 is **Highly Reccomended**
 
    ```
-   pip install torch torchvision numpy Pillow tqdm
-   
-   
+   # Instally numpy first because it is a torch_two_sample dependency
+   pip install numpy<2.0
+
+   # Install remaining dependencies
+   pip install scipy torch torchvision tqdm Pillow && pip install ./torch_two_sample
    ```
 
-2. **Project Files:** Ensure these files are in the same directory as your main script:
+### 2.  Dataset Structure
+All datasets must adhere to a simple file-list structure for our data loaders:
 
-   * `autoencoder.py`
+**Root Directory (root_dir):** The absolute path to the base folder containing all image files.
 
-   * `data_utils.py`
+**List File (list_path):** A text file (e.g., train.txt) containing paths to images, one per line.
 
-   * `mmd_test.py`
+The paths listed inside the List File must be relative to the root_dir.
 
-3. **Datasets:** The script expects datasets to be located in a root `datasets/` folder, following the structure defined in the `LaneImageDataset` class.
+**Example**
+Given the root directory is datasets/MyProject:
 
-   * `datasets/Curvelanes/`
+|    File Path in System    |   Path in `train.txt`  |
+| --------------------------------- | -------------- |
+| `datasets/MyProject/data/001.jpg` | `data/001.jpg` |
+| `datasets/MyProject/data/002.jpg` | `data/002.jpg` |
 
-   * `datasets/CULane/` (or any other dataset)
+## 🚀 How to Run `shift_experiment.py`
 
-## 🚀 How to Run
+Execute the script via the command line. The experiment performs feature extraction, MMD calibration, a sanity check, and finally the data shift test.
+
+### Basic Usage
+
+```bash
+python shift_experiment.py --source CULane --target Curvelanes --shift <SHIFT_TYPE> [SHIFT_ARGS]
+```
+
+### Shift Scenarios
+
+Select a shift type and provide the corresponding magnitude argument:
+
+| Shift Type | Required Argument | Example Command |
+| :--- | :--- | :--- |
+| **Gaussian Noise** | `--std` | `python shift_experiment.py --shift gaussian --std 1.5` |
+| **Rotation** | `--rotation_angle` | `python shift_experiment.py --shift rotation_shift --rotation_angle 30` |
+| **Translation** | `--width/height_shift_frac` | `python shift_experiment.py --shift translation_shift --width_shift_frac 0.2` |
+| **Shear** | `--shear_angle` | `python shift_experiment.py --shift shear_shift --shear_angle 15` |
+| **Zoom** | `--zoom_factor` | `python shift_experiment.py --shift zoom_shift --zoom_factor 1.3` |
+| **Flips** | *(None)* | `python shift_experiment.py --shift horizontal_flip_shift` |
+
+### Common Optional Flags
+
+  * `--source` / `--target`: Dataset names (Default: `CULane`, `Curvelanes`).
+  * `--src_samples` / `--tgt_samples`: Number of samples to process (Default: `1000`, `100`).
+  * `--num_runs`: Number of times to repeat the shift test (Default: `10`).
+  * `--file_name`: Name of the output JSON log (Default: `sanity_check.json`).
+  * `--cropImg`: Boolean flag to crop images (Default: `False`).
+
+### Output
+
+Results, including MMD scores, TPR (True Positive Rate), and pass/fail status, are printed to the console and saved to `logs/<file_name>`.
+
+## 🚀 How to Run `run_experiment.py`
 
 The script `run_experiment.py` is configured to run from the command line.
 
