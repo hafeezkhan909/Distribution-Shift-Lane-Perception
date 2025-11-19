@@ -202,8 +202,8 @@ class ShiftExperiment:
         for i in trange(self.num_calib, desc="Calibrating"):
             seed = self.seed_base + i
             dataloaderReturn = get_seeded_random_dataloader(
-                root_dir=str,
-                list_path=str,
+                root_dir=self.source_dir,
+                list_path=self.source_list_dir,
                 batch_size=self.batch_size,
                 image_size=self.image_size,
                 num_samples=self.tgt_samples,
@@ -358,8 +358,8 @@ if __name__ == "__main__":
     parser.add_argument("--target_dir", type=str, default="./datasets/Curvelanes")
     parser.add_argument("--source_list_path", type=str, default="./datasets/CULane/list/train.txt")
     parser.add_argument("--target_list_path", type=str, default="./datasets/Curvelane/train/train.txt")
-    parser.add_argument("--src_samples", type=int, default=1000)
-    parser.add_argument("--tgt_samples", type=int, default=100)
+    parser.add_argument("--src_samples", type=int, default=5) # 1000
+    parser.add_argument("--tgt_samples", type=int, default=5) # 100
     parser.add_argument("--num_runs", type=int, default=10)
     parser.add_argument("--block_idx", type=int, default=0)
     parser.add_argument("--batch_size", type=int, default=16)
