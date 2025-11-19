@@ -123,8 +123,9 @@ class ShiftExperiment:
 
         # ------------------ Check for GPU ------------------
 
-        print(f"CUDA Avalible: {torch.cuda.is_available()}")
-        self.loggerExperimentalData["CUDA"] = True
+        cuda_available = torch.cuda.is_available()
+        print(f"CUDA Available: {cuda_available}")
+        self.loggerExperimentalData["CUDA"] = cuda_available
 
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         os.makedirs("features", exist_ok=True)
