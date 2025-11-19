@@ -82,7 +82,37 @@ class ImageDataset(Dataset):
 
         Child classes can override this method if their path logic differs.
         """
-        return os.path.join(self.root_dir, self.image_paths[idx].lstrip("/"))
+        # Normalize the listed path and handle absolute paths
+        listed = self.image_paths[idx]
+        # If the list file contains an absolute path and that path actually
+        # exists on this filesystem, return it. Some list files start paths
+        # with a leading slash (e.g. '/driver_23_30frame/...') which are not
+        # true absolute paths for this machine — treat those as relative to
+        # `root_dir` if the absolute form does not exist.
+        if os.path.isabs(listed):
+            if os.path.exists(listed):
+                return listed
+            # otherwise treat as relative by stripping leading slashes
+        rel = listed.lstrip("/")
+
+        # Candidate locations to try (ordered by likelihood)
+        candidates = [
+            os.path.join(self.root_dir, rel),
+            os.path.join(self.root_dir, "images", rel),
+            os.path.join(self.root_dir, "train", rel),
+            os.path.join(self.root_dir, "test", rel),
+            os.path.join(self.root_dir, "valid", rel),
+            os.path.join(self.root_dir, "list", rel),
+            os.path.join(self.root_dir, "laneseg_label_w16", rel),
+            os.path.join(self.root_dir, "laneseg_label_w16_test", rel),
+        ]
+
+        for c in candidates:
+            if os.path.exists(c):
+                return c
+
+        # Fallback: return the primary join even if it doesn't exist (caller will raise on open)
+        return candidates[0]
 
     def __getitem__(self, idx: int) -> Any:
         """Retrieves the image at the specified index and applies all steps.
@@ -97,7 +127,7 @@ class ImageDataset(Dataset):
             The transformed image data, typically a torch.Tensor (C, H, W).
         """
 
-        img_path: str = os.path.join(self.root_dir, self.image_paths[idx].lstrip("/"))
+        img_path: str = self.get_image_path(idx)
 
         # 2. Load the image
         try:

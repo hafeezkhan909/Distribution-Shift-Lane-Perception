@@ -189,6 +189,77 @@
                     "Average MMD (std)": 0.01701209495815852
                 }
             }
+        },
+        {
+            "arguments": {
+                "source_dir": "./datasets/CULane",
+                "target_dir": "./datasets/Curvelanes",
+                "source_list_path": "./datasets/CULane/list/train.txt",
+                "target_list_path": "./datasets/Curvelanes/train/train.txt",
+                "src_samples": 5,
+                "tgt_samples": 5,
+                "num_runs": 1,
+                "block_idx": 0,
+                "batch_size": 2,
+                "image_size": 512,
+                "num_calib": 100,
+                "alpha": 0.05,
+                "seed_base": 42,
+                "shift": null,
+                "std": 0.0,
+                "cropImg": false,
+                "rotation_angle": 0.0,
+                "width_shift_frac": 0.2,
+                "height_shift_frac": 0.2,
+                "shear_angle": 0.0,
+                "zoom_factor": 1.0
+            },
+            "data": {
+                "CUDA": true,
+                "Source Features Shape": [
+                    5,
+                    256
+                ],
+                "Source Features Image Paths": [
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00000.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00030.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00060.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00090.jpg",
+                    "./datasets/CULane/driver_23_30frame/05151649_0422.MP4/00120.jpg"
+                ],
+                "Calibration": {
+                    "Uses": "./datasets/CULane",
+                    "Result": {
+                        "Tau": 0.24567245244979857,
+                        "Mean MMD": 0.21297595918178558,
+                        "MMD (std)": 0.022791740595271292
+                    }
+                },
+                "Sanity Check": {
+                    "Image Paths": [
+                        "./datasets/CULane/driver_23_30frame/05160941_0491.MP4/00975.jpg",
+                        "./datasets/CULane/driver_23_30frame/05161705_0631.MP4/03385.jpg",
+                        "./datasets/CULane/driver_23_30frame/05151658_0425.MP4/04920.jpg",
+                        "./datasets/CULane/driver_161_90frame/06032207_0962.MP4/01980.jpg",
+                        "./datasets/CULane/driver_23_30frame/05170723_0693.MP4/03710.jpg"
+                    ],
+                    "Results": {
+                        "Sanity Check Definition": "./datasets/CULaneto./datasets/CULane",
+                        "MMD": 0.21352264285087585,
+                        "Tau": 0.24567245244979857
+                    },
+                    "Shift Detected": false
+                },
+                "Data Shift Test Data": {
+                    "Data Shift Test Definition": "./datasets/CULane to ./datasets/Curvelanes",
+                    "Noise Applied": "None",
+                    "Runs": 1,
+                    "Individual Test Data": [],
+                    "TPR": 100.0,
+                    "Average MMD": 0.32197415828704834,
+                    "Average MMD (std)": 0.0
+                }
+            }
         }
     ]
 }
