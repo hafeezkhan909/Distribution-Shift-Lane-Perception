@@ -239,17 +239,19 @@ class ShiftExperiment:
         sanityCheckData: JsonDict = {}
         print("[STEP 2] Sanity Check...")
 
-        # TODO: Fix
-        sanity_src_loader = get_seeded_random_dataloader(
-            self.source,
-            self.src_split,
-            self.batch_size,
-            self.image_size,
-            self.tgt_samples,
-            self.seed_base + 1,
+        loaderReturn = get_seeded_random_dataloader(
+            root_dir=self.source_dir,
+            list_path=self.source_list_dir,
+            batch_size=self.batch_size,
+            image_size=self.image_size,
+            num_samples=self.tgt_samples,
+            seed=int(self.seed_base + 1),
             cropImg=self.cropImg,
             shift=None,
         )
+        sanity_src_loader = loaderReturn[0]
+        sanityCheckData["Image Paths"] = loaderReturn[1]
+
         sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
 
         mmd_val = mmd_test(self.src_feats, sanity_src_feats)
@@ -290,17 +292,18 @@ class ShiftExperiment:
         for i in trange(self.num_runs, desc="Shift Testing"):
             testData: JsonDict = {}
             seed = self.seed_base + i
-            # TODO: Fix
-            tgt_loader_cross = get_seeded_random_dataloader(
-                self.target,
-                self.tgt_split,
-                self.batch_size,
-                self.image_size,
-                self.tgt_samples,
-                seed,
+            loaderReturn = get_seeded_random_dataloader(
+                root_dir=self.source_dir,
+                list_path=self.source_list_dir,
+                batch_size=self.batch_size,
+                image_size=self.image_size,
+                num_samples=self.tgt_samples,
+                seed=seed,
                 cropImg=self.cropImg,
                 shift=self.shift_object,
             )
+            tgt_loader_cross = loaderReturn[0]
+            testData["Image Paths"] = loaderReturn[1]
             tgt_feats_cross = extract_features(
                 self.model, tgt_loader_cross, self.device
             )
