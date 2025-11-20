@@ -324,7 +324,7 @@ class ShiftExperiment:
 
             if self.save_all_image_paths:
                 dataShiftTestDataTests.append(testData)
-            elif i == 1:
+            elif i == 0:
                 dataShiftTestDataTests.append(testData)
 
         dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
