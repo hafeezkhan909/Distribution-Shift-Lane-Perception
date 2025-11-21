@@ -15,7 +15,7 @@ sphinx:
    configuration: docs/source/conf.py
 
 # Install Python for auto documentation
-# python:
-#    install:
-#    - requirements: docs/requirements.txt
+python:
+   install:
+   - requirements: docs/requirements.txt
         
