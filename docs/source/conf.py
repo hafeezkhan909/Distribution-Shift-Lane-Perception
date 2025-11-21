@@ -11,6 +11,36 @@ version = '0.1.0'
 
 # -- General configuration
 
+autodoc_mock_imports = [
+    # The core math/data libraries
+    "numpy",
+    "scipy",
+    "sympy",
+    "h5py",
+    "networkx",
+
+    # The Deep Learning frameworks (The heaviest ones)
+    "torch",
+    "torchvision",
+    "torch_two_sample",  # Your custom git dependency
+    "triton",            # GPU optimization library (often fails on CPUs)
+    
+    # TensorFlow stack (You have this installed, so we mock it)
+    "tensorflow",
+    "tensorboard",
+    "keras",
+
+    # Image & Utilities
+    "PIL",   # This mocks 'Pillow'
+    "tqdm",  # Progress bars
+    
+    # System/Hardware specific (Safest to mock)
+    "nvidia",
+    "cuda",
+]
+
+autodoc_mock_imports = ["torch_two_sample", "torch", "numpy"]
+
 extensions = [
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
