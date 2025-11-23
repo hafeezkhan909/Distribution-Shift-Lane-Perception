@@ -16,6 +16,16 @@ The pipeline consists of:
 
 ## Setup
 
+### PyPI Installation (after publishing)
+
+```
+pip install distribution-shift-perception
+```
+
+This installs console scripts named `dslp-shift-experiment`,
+`dslp-run-experiment`, and `dslp-log-manager` for running experiments and
+managing JSON logs without cloning the repository.
+
 ### Enviroment
 
 #### Python 3 and Required Packages
