@@ -11,5 +11,4 @@
 .idea/modules.xml
 .idea/vcs.xml
 /.idea
-torch-two-sample
 datasets
