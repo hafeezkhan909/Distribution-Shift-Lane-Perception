@@ -1,5 +1,11 @@
 [build-system]
-requires = ["setuptools>=69", "wheel"]
+requires = [
+    "setuptools>=69",
+    "wheel",
+    "numpy>=1.24",
+    "cython",
+    "pytest-runner",
+]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -17,7 +23,6 @@ dependencies = [
     "tqdm>=4.60",
     "Pillow>=9.0",
     "scipy>=1.10",
-    "torch-two-sample>=0.1",
 ]
 keywords = [
     "distribution-shift",
@@ -37,4 +42,4 @@ dslp-run-experiment = "distribution_shift_perception.run_experiment:cli"
 dslp-log-manager = "distribution_shift_perception.data.data_logging:main"
 
 [tool.setuptools.packages.find]
-include = ["distribution_shift_perception*"]
+include = ["distribution_shift_perception*", "torch_two_sample*"]

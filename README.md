@@ -26,6 +26,10 @@ This installs console scripts named `dslp-shift-experiment`,
 `dslp-run-experiment`, and `dslp-log-manager` for running experiments and
 managing JSON logs without cloning the repository.
 
+The wheel bundles the upstream `torch-two-sample` project, compiling its
+`torch_two_sample` extension during installation—no extra dependency installs
+are required beyond the build prerequisites listed in `pyproject.toml`.
+
 ### Enviroment
 
 #### Python 3 and Required Packages
