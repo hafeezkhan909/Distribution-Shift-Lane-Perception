@@ -12,75 +12,43 @@ The pipeline consists of:
 
 3. **Evaluation:** If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
 
-## How It Works
+![Diagram of how the pipeline works](ShiftDist.svg)
 
-### 1. Calibration (same-domain)
+## Setup
 
-The script first samples multiple subsets from the **same dataset** (e.g., Curvelanes) and computes the MMD statistic between each subset and a fixed reference set.
-These values form the *null distribution* of MMD under no shift, from which the threshold `τ` is computed at the desired significance level (α = 0.05 by default).
+### Enviroment
 
-### 2. Cross-domain (or shifted) testing
+#### Python 3 and Required Packages
 
-After calibration, the script compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
-If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
+> Notice: Python 3.10.19 is reccomended
 
-### 3. Aggregated evaluation
-
-To measure stability, the script repeats the cross-domain test for 100 different random subsets and reports:
-
-* Mean and standard deviation of MMD values
-
-* **True Positive Rate (TPR)** — percentage of runs correctly detecting the shift
-
-## Files
-
-### `run_experiment.py`
-
-Main experiment pipeline.
-
-* Loads a pretrained (ResNet) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
-
-* Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
-
-* Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
-
-* Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
-
-### `mmd_test.py`
-
-Implements the **Maximum Mean Discrepancy (MMD)** test using `torch_two_sample`.
-It computes both the MMD statistic and bootstrap-based p-value between two feature distributions.
-
+##### Anaconda Installation
 ```
-def mmd_test(X_src, X_tgt):
-    \"\"\"
-    Args:
-        X_src (np.ndarray): Source domain features, shape (N, D)
-        X_tgt (np.ndarray): Target domain features, shape (M, D)
-    Returns:
-        (mmd_statistic, p_value)
-    \"\"\"
+# Instally everything using the environment.yml file
+conda env create -f environment.yml
 
+# Activate the environment
+conda activate distribution_shift_perception
 
+# Install the torch_two_sample dependency
+git clone https://github.com/josipd/torch-two-sample.git
+cd torch_two_sample
+python setup.py install
 ```
 
-The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
+##### Python Pip Installation
+```
+# Install dependencies
+pip install scipy torch torchvision tqdm Pillow
+pip install "numpy<2.0"
 
-## 📋 Prerequisites
+# Install the torch_two_sample dependency
+git clone https://github.com/josipd/torch-two-sample.git
+cd torch_two_sample
+python setup.py install
+```
 
-### 1. Python 3 and required packages:
-
-   > Notice: Python 3.10.19 is **Highly Reccomended**
-
-   ```
-   # Instally numpy first because it is a torch_two_sample dependency
-   pip install numpy<2.0
-
-   # Install remaining dependencies
-   pip install scipy torch torchvision tqdm Pillow && pip install ./torch_two_sample
-   ```
-
-### 2.  Dataset Structure
+#### Dataset Structure
 All datasets must adhere to a simple file-list structure for our data loaders:
 
 **Root Directory (root_dir):** The absolute path to the base folder containing all image files.
@@ -106,6 +74,7 @@ Execute the script via the command line. The experiment performs feature extract
 You must explicitly provide the source and target directories and list files.
 
 > **Checkout our [Command Generator](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/) that will auto-populate your command line args!**
+[![Image of the Command Generator](Distribution-Shift-Lane-Perception-Command-Generator.png)](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/)
 
 ```bash
 python shift_experiment.py \
@@ -261,6 +230,60 @@ features/
  ├─ calibration_null_mmd.npy      (MMD values from calibration runs)
  ├─ mmd_curvelanes_100runs.npy    (MMD values from cross-domain test runs)
  └─ tpr_curvelanes_100runs.npy    (Detection results (0 or 1) for each test run)
+```
+
+## Files
+
+### `run_experiment.py`
+
+Main experiment pipeline.
+
+* Loads a pretrained (ResNet) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
+
+* Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
+
+* Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
+
+* Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
+
+### `mmd_test.py`
+
+Implements the **Maximum Mean Discrepancy (MMD)** test using `torch_two_sample`.
+It computes both the MMD statistic and bootstrap-based p-value between two feature distributions.
+
+```
+def mmd_test(X_src, X_tgt):
+    \"\"\"
+    Args:
+        X_src (np.ndarray): Source domain features, shape (N, D)
+        X_tgt (np.ndarray): Target domain features, shape (M, D)
+    Returns:
+        (mmd_statistic, p_value)
+    \"\"\"
 
 
 ```
+
+The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
+
+
+## How It Works
+
+### 1. Calibration (same-domain)
+
+The script first samples multiple subsets from the **same dataset** (e.g., Curvelanes) and computes the MMD statistic between each subset and a fixed reference set.
+These values form the *null distribution* of MMD under no shift, from which the threshold `τ` is computed at the desired significance level (α = 0.05 by default).
+
+### 2. Cross-domain (or shifted) testing
+
+After calibration, the script compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
+If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
+
+### 3. Aggregated evaluation
+
+To measure stability, the script repeats the cross-domain test for 100 different random subsets and reports:
+
+* Mean and standard deviation of MMD values
+
+* **True Positive Rate (TPR)** — percentage of runs correctly detecting the shift
+
