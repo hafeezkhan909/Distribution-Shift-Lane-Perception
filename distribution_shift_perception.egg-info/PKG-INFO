@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: distribution-shift-perception
-Version: 0.1.0
+Version: 0.1.1
 Summary: Maximum mean discrepancy based distribution shift detection for lane perception datasets.
 Author: Mohammed Abdul Hafeez Khan, Alexander Doyle
 License: MIT License
@@ -37,7 +37,6 @@ Requires-Dist: torchvision>=0.15
 Requires-Dist: tqdm>=4.60
 Requires-Dist: Pillow>=9.0
 Requires-Dist: scipy>=1.10
-Requires-Dist: torch-two-sample>=0.1
 Dynamic: license-file
 
 # Distribution-Shift-Lane-Perception
@@ -67,6 +66,10 @@ pip install distribution-shift-perception
 This installs console scripts named `dslp-shift-experiment`,
 `dslp-run-experiment`, and `dslp-log-manager` for running experiments and
 managing JSON logs without cloning the repository.
+
+The wheel bundles the upstream `torch-two-sample` project, compiling its
+`torch_two_sample` extension during installation—no extra dependency installs
+are required beyond the build prerequisites listed in `pyproject.toml`.
 
 ### Enviroment
 
