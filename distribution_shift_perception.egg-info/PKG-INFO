@@ -2,7 +2,7 @@ Metadata-Version: 2.4
 Name: distribution-shift-perception
 Version: 0.1.0
 Summary: Maximum mean discrepancy based distribution shift detection for lane perception datasets.
-Author: Mohammed Abdul Hafeez Khan
+Author: Mohammed Abdul Hafeez Khan, Alexander Doyle
 License: MIT License
         
         Copyright (c) 2025 Mohammed Abdul Hafeez Khan
