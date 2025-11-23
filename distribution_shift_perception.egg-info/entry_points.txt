@@ -1,0 +1,4 @@
+[console_scripts]
+dslp-log-manager = distribution_shift_perception.data.data_logging:main
+dslp-run-experiment = distribution_shift_perception.run_experiment:cli
+dslp-shift-experiment = distribution_shift_perception.shift_experiment:main
