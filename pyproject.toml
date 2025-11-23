@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "distribution-shift-perception"
+version = "0.1.0"
+description = "Maximum mean discrepancy based distribution shift detection for lane perception datasets."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Mohammed Abdul Hafeez Khan" }]
+requires-python = ">=3.9"
+dependencies = [
+    "numpy>=1.24,<3",
+    "torch>=2.0",
+    "torchvision>=0.15",
+    "tqdm>=4.60",
+    "Pillow>=9.0",
+    "scipy>=1.10",
+    "torch-two-sample>=0.1",
+]
+keywords = [
+    "distribution-shift",
+    "mmd",
+    "lane-detection",
+    "computer-vision",
+    "pytorch",
+]
+
+[project.urls]
+Homepage = "https://github.com/hafeezkhan909/Distribution-Shift-Lane-Perception"
+Repository = "https://github.com/hafeezkhan909/Distribution-Shift-Lane-Perception"
+
+[project.entry-points."console_scripts"]
+dslp-shift-experiment = "distribution_shift_perception.shift_experiment:main"
+dslp-run-experiment = "distribution_shift_perception.run_experiment:cli"
+dslp-log-manager = "distribution_shift_perception.data.data_logging:main"
+
+[tool.setuptools.packages.find]
+include = ["distribution_shift_perception*"]
