@@ -12,75 +12,22 @@ The pipeline consists of:
 
 3. **Evaluation:** If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
 
-## How It Works
+## Setup
 
-### 1. Calibration (same-domain)
+### Enviroment
 
-The script first samples multiple subsets from the **same dataset** (e.g., Curvelanes) and computes the MMD statistic between each subset and a fixed reference set.
-These values form the *null distribution* of MMD under no shift, from which the threshold `τ` is computed at the desired significance level (α = 0.05 by default).
+#### Python 3 and Required Packages
 
-### 2. Cross-domain (or shifted) testing
-
-After calibration, the script compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
-If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
-
-### 3. Aggregated evaluation
-
-To measure stability, the script repeats the cross-domain test for 100 different random subsets and reports:
-
-* Mean and standard deviation of MMD values
-
-* **True Positive Rate (TPR)** — percentage of runs correctly detecting the shift
-
-## Files
-
-### `run_experiment.py`
-
-Main experiment pipeline.
-
-* Loads a pretrained (ResNet) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
-
-* Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
-
-* Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
-
-* Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
-
-### `mmd_test.py`
-
-Implements the **Maximum Mean Discrepancy (MMD)** test using `torch_two_sample`.
-It computes both the MMD statistic and bootstrap-based p-value between two feature distributions.
-
+> Notice: Python 3.10.19 is reccomended
 ```
-def mmd_test(X_src, X_tgt):
-    \"\"\"
-    Args:
-        X_src (np.ndarray): Source domain features, shape (N, D)
-        X_tgt (np.ndarray): Target domain features, shape (M, D)
-    Returns:
-        (mmd_statistic, p_value)
-    \"\"\"
+# Instally numpy first because it is a torch_two_sample dependency
+pip install numpy<2.0
 
-
+# Install remaining dependencies
+pip install scipy torch torchvision tqdm Pillow && pip install ./torch_two_sample
 ```
 
-The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
-
-## 📋 Prerequisites
-
-### 1. Python 3 and required packages:
-
-   > Notice: Python 3.10.19 is **Highly Reccomended**
-
-   ```
-   # Instally numpy first because it is a torch_two_sample dependency
-   pip install numpy<2.0
-
-   # Install remaining dependencies
-   pip install scipy torch torchvision tqdm Pillow && pip install ./torch_two_sample
-   ```
-
-### 2.  Dataset Structure
+#### Dataset Structure
 All datasets must adhere to a simple file-list structure for our data loaders:
 
 **Root Directory (root_dir):** The absolute path to the base folder containing all image files.
@@ -261,6 +208,60 @@ features/
  ├─ calibration_null_mmd.npy      (MMD values from calibration runs)
  ├─ mmd_curvelanes_100runs.npy    (MMD values from cross-domain test runs)
  └─ tpr_curvelanes_100runs.npy    (Detection results (0 or 1) for each test run)
+```
+
+## Files
+
+### `run_experiment.py`
+
+Main experiment pipeline.
+
+* Loads a pretrained (ResNet) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
+
+* Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
+
+* Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
+
+* Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
+
+### `mmd_test.py`
+
+Implements the **Maximum Mean Discrepancy (MMD)** test using `torch_two_sample`.
+It computes both the MMD statistic and bootstrap-based p-value between two feature distributions.
+
+```
+def mmd_test(X_src, X_tgt):
+    \"\"\"
+    Args:
+        X_src (np.ndarray): Source domain features, shape (N, D)
+        X_tgt (np.ndarray): Target domain features, shape (M, D)
+    Returns:
+        (mmd_statistic, p_value)
+    \"\"\"
 
 
 ```
+
+The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
+
+
+## How It Works
+
+### 1. Calibration (same-domain)
+
+The script first samples multiple subsets from the **same dataset** (e.g., Curvelanes) and computes the MMD statistic between each subset and a fixed reference set.
+These values form the *null distribution* of MMD under no shift, from which the threshold `τ` is computed at the desired significance level (α = 0.05 by default).
+
+### 2. Cross-domain (or shifted) testing
+
+After calibration, the script compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
+If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
+
+### 3. Aggregated evaluation
+
+To measure stability, the script repeats the cross-domain test for 100 different random subsets and reports:
+
+* Mean and standard deviation of MMD values
+
+* **True Positive Rate (TPR)** — percentage of runs correctly detecting the shift
+
