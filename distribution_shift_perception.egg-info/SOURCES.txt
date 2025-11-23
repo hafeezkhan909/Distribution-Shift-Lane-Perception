@@ -4,6 +4,7 @@ README.md
 pyproject.toml
 setup.py
 ./distribution_shift_perception/__init__.py
+./distribution_shift_perception/_vendor.py
 ./distribution_shift_perception/run_experiment.py
 ./distribution_shift_perception/shift_experiment.py
 ./distribution_shift_perception/data/__init__.py
@@ -30,6 +31,7 @@ setup.py
 ./distribution_shift_perception/utils/__init__.py
 ./distribution_shift_perception/utils/mmd_test.py
 distribution_shift_perception/__init__.py
+distribution_shift_perception/_vendor.py
 distribution_shift_perception/run_experiment.py
 distribution_shift_perception/shift_experiment.py
 distribution_shift_perception.egg-info/PKG-INFO

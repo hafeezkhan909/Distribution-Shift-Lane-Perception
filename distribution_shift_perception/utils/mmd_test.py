@@ -2,7 +2,14 @@
 import numpy as np
 import torch
 from scipy.spatial import distance
-from torch_two_sample import MMDStatistic
+
+try:
+    from torch_two_sample import MMDStatistic
+except ModuleNotFoundError:  # pragma: no cover - exercised in wheels without global install
+    from .._vendor import ensure_torch_two_sample
+
+    ensure_torch_two_sample()
+    from torch_two_sample import MMDStatistic
 
 
 def mmd_test(X_src, X_tgt):

@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "distribution-shift-perception"
-version = "0.1.1"
+version = "0.1.2"
 description = "Maximum mean discrepancy based distribution shift detection for lane perception datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
