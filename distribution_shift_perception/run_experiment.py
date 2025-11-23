@@ -1,13 +1,14 @@
 import os
 import random
+import argparse
+
 import numpy as np
 from PIL import Image
 from tqdm import tqdm, trange
 import torch
-from models.autoencoder import ConvAutoencoderFC
-import argparse
 
-from data.data_utils import (
+from .models.autoencoder import ConvAutoencoderFC
+from .data.data_utils import (
     ShiftTypes,
     apply_shift,
     DataShift,
@@ -19,8 +20,8 @@ from data.data_utils import (
     HorizontalFlipShift,
     VerticalFlipShift,
 )
-from utils.mmd_test import mmd_test
-from data.data_builder import get_dataloader, get_seeded_random_dataloader
+from .utils.mmd_test import mmd_test
+from .data.data_builder import get_dataloader, get_seeded_random_dataloader
 
 
 # =========================================================
@@ -189,7 +190,7 @@ def main(
     np.save(f"features/tau_{source}_{target}.npy", np.array([tau]))
 
 
-if __name__ == "__main__":
+def build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="Distribution Shift Lane Perception Experiment",
         description="Run MMD-based distribution shift tests on lane datasets.",
@@ -281,6 +282,14 @@ if __name__ == "__main__":
         "--std", type=float, default=0.0, help="Std for Gaussian noise shift"
     )
 
-    args = parser.parse_args()
+    return parser
 
+
+def cli(argv: list[str] | None = None) -> None:
+    parser = build_argument_parser()
+    args = parser.parse_args(argv)
     main(**vars(args))
+
+
+if __name__ == "__main__":
+    cli()

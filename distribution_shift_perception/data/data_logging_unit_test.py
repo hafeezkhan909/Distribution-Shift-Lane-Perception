@@ -4,7 +4,7 @@ import json
 import shutil
 
 # Import the class to be tested
-from data_logging import JsonExperimentManager, JsonDict
+from .data_logging import JsonExperimentManager, JsonDict
 
 
 class TestJsonExperimentManager(unittest.TestCase):

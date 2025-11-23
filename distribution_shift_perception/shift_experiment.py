@@ -1,11 +1,11 @@
 import os
+import argparse
 import numpy as np
 from tqdm import trange
 import torch
-from models.autoencoder import ConvAutoencoderFC
-import argparse
 
-from data.data_utils import (
+from .models.autoencoder import ConvAutoencoderFC
+from .data.data_utils import (
     GaussianShift,
     RotationShift,
     TranslationShift,
@@ -14,9 +14,9 @@ from data.data_utils import (
     HorizontalFlipShift,
     VerticalFlipShift,
 )
-from utils.mmd_test import mmd_test
-from data.data_builder import get_dataloader, get_seeded_random_dataloader
-from data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
+from .utils.mmd_test import mmd_test
+from .data.data_builder import get_dataloader, get_seeded_random_dataloader
+from .data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
 
 
 # ---------Feature extraction---------
@@ -357,7 +357,7 @@ class ShiftExperiment:
         )
 
 
-if __name__ == "__main__":
+def build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
 
     parser.add_argument(
@@ -409,6 +409,14 @@ if __name__ == "__main__":
         help="Name of the log file.",
     )
 
-    args = parser.parse_args()
+    return parser
 
+
+def main(argv: list[str] | None = None) -> None:
+    parser = build_argument_parser()
+    args = parser.parse_args(argv)
     ShiftExperiment(**vars(args)).run()
+
+
+if __name__ == "__main__":
+    main()

@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image
 
 # Import all the functions and classes to be tested
-from data.data_utils import (
+from .data_utils import (
     DataShift,
     GaussianShift,
     RotationShift,

@@ -7,7 +7,7 @@ from PIL import Image
 from torch.utils.data import DataLoader, Dataset, Subset
 from torchvision import transforms
 
-from data.data_utils import DataShift, apply_shift
+from .data_utils import DataShift, apply_shift
 
 
 class ImageDataset(Dataset):
