@@ -12,6 +12,8 @@ The pipeline consists of:
 
 3. **Evaluation:** If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
 
+![Diagram of how the pipeline works](ShiftDist.svg)
+
 ## Setup
 
 ### Enviroment
@@ -19,12 +21,31 @@ The pipeline consists of:
 #### Python 3 and Required Packages
 
 > Notice: Python 3.10.19 is reccomended
-```
-# Instally numpy first because it is a torch_two_sample dependency
-pip install numpy<2.0
 
-# Install remaining dependencies
-pip install scipy torch torchvision tqdm Pillow && pip install ./torch_two_sample
+##### Anaconda Installation
+```
+# Instally everything using the environment.yml file
+conda env create -f environment.yml
+
+# Activate the environment
+conda activate distribution_shift_perception
+
+# Install the torch_two_sample dependency
+git clone https://github.com/josipd/torch-two-sample.git
+cd torch_two_sample
+python setup.py install
+```
+
+##### Python Pip Installation
+```
+# Install dependencies
+pip install scipy torch torchvision tqdm Pillow
+pip install "numpy<2.0"
+
+# Install the torch_two_sample dependency
+git clone https://github.com/josipd/torch-two-sample.git
+cd torch_two_sample
+python setup.py install
 ```
 
 #### Dataset Structure
@@ -53,6 +74,7 @@ Execute the script via the command line. The experiment performs feature extract
 You must explicitly provide the source and target directories and list files.
 
 > **Checkout our [Command Generator](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/) that will auto-populate your command line args!**
+[![Image of the Command Generator](Distribution-Shift-Lane-Perception-Command-Generator.png)](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/)
 
 ```bash
 python shift_experiment.py \
