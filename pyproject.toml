@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Maximum mean discrepancy based distribution shift detection for lane perception datasets."
 readme = "README.md"
 license = { file = "LICENSE" }
-authors = [{ name = "Mohammed Abdul Hafeez Khan" }]
+authors = [{ name = "Mohammed Abdul Hafeez Khan" }, { name = "Alexander Doyle" }]
 requires-python = ">=3.9"
 dependencies = [
     "numpy>=1.24,<3",
