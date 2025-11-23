@@ -1,0 +1,7 @@
+numpy<3,>=1.24
+torch>=2.0
+torchvision>=0.15
+tqdm>=4.60
+Pillow>=9.0
+scipy>=1.10
+torch-two-sample>=0.1
