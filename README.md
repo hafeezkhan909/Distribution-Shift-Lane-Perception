@@ -1,4 +1,4 @@
-# Distribution-Shift-Lane-Perception
+![Data Shift Test drawio (1)](https://github.com/user-attachments/assets/1a8233a8-67b1-402a-bf0c-3b7a06b0ab4f)![Calibration drawio](https://github.com/user-attachments/assets/caed4bc4-79e1-4556-85d6-d2d82834d764)# Distribution-Shift-Lane-Perception
 
 ## Overview
 
@@ -8,11 +8,16 @@ The pipeline consists of:
 
 1. **Calibration (same-domain):** Establishes a "null distribution" of MMD values by repeatedly comparing the source data to random subsets of itself. This determines the threshold `τ` (tau) for shift detection.
 
-2. **Testing (cross-domain or shifted):** Compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
+![Data Shift Test drawio](https://github.com/user-attachments/assets/6b3eae5f-82a7-46cf-b508-604949b1c4db)
 
-3. **Evaluation:** If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
+3. **Testing (cross-domain or shifted):** Compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
 
-![Diagram of how the pipeline works](ShiftDist.svg)
+![Uploading Calibration.drawio.svg…]()
+
+5. **Evaluation:** If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
+
+![Uploading Data Shift Test.drawio (1).svg…]()
+
 
 ## Setup
 
