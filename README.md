@@ -259,13 +259,13 @@ It computes both the MMD statistic and bootstrap-based p-value between two featu
 
 ```
 def mmd_test(X_src, X_tgt):
-    \"\"\"
+    """
     Args:
         X_src (np.ndarray): Source domain features, shape (N, D)
         X_tgt (np.ndarray): Target domain features, shape (M, D)
     Returns:
         (mmd_statistic, p_value)
-    \"\"\"
+    """
 
 
 ```
