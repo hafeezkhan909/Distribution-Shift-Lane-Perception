@@ -6,15 +6,17 @@ The pipeline estimates an empirical MMD threshold (`τ`) using *same-domain cali
 
 The pipeline consists of:
 
-1. **Calibration (same-domain):** Establishes a "null distribution" of MMD values by repeatedly comparing the source data to random subsets of itself. This determines the threshold `τ` (tau) for shift detection.
+1. **Extract Features:** Encodes features from the source and target data and generates MMD statistics from the features.
 
+![Extract Features](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/55cdb24adb325f13e72e69dfaf63fa1bfc64c617/Extract%20Features.svg)
 
-3. **Testing (cross-domain or shifted):** Compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
+3. **Calibration:** Establishes a "null distribution" of MMD values by repeatedly comparing the source features to random subsets of itself. This determines the threshold `τ` (tau) for shift detection.
 
+![Calibration Diagram](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/55cdb24adb325f13e72e69dfaf63fa1bfc64c617/Calibration.svg)
 
-5. **Evaluation:** If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
+5. **Data Shift Test (New Domain or Shifted Same Domain):** Compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset. If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
 
-
+![Data Shift Test Diagram](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/a506fb0058852d54292d289fcdcb714868d91daa/Data%20Shift%20Test.svg)
 
 ## Setup
 
