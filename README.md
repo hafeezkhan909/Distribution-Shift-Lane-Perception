@@ -10,7 +10,7 @@ The pipeline consists of:
 
 ![Extract Features](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/55cdb24adb325f13e72e69dfaf63fa1bfc64c617/Extract%20Features.svg)
 
-3. **Calibration:** Establishes a "null distribution" of MMD values by repeatedly comparing the source features to random subsets of itself. This determines the threshold `τ` (tau) for shift detection.
+3. **Calibration:** We form a "null distribution" of MMD values by extracting the embeddings of the fixed source features and randomly sampled target features (we set it to 100 iterations in our experiments). Then, we select the threshold `τ` (tau) as the 95th (\(\alpha = 0.05\)) percentile to be determined as shift detection.
 
 ![Calibration Diagram](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/55cdb24adb325f13e72e69dfaf63fa1bfc64c617/Calibration.svg)
 
@@ -24,9 +24,11 @@ The pipeline consists of:
 
 #### Python 3 and Required Packages
 
-> Notice: Python 3.10.19 is reccomended
+> Notice: Python 3.8 and above
 
-##### Anaconda Installation
+##### Two ways to setup (either or):
+
+1. Conda Environment Setup
 ```
 # Instally everything using the environment.yml file
 conda env create -f environment.yml
@@ -40,7 +42,7 @@ cd torch_two_sample
 python setup.py install
 ```
 
-##### Python Pip Installation
+2. Python Pip Setup
 ```
 # Install dependencies
 pip install scipy torch torchvision tqdm Pillow
@@ -242,7 +244,7 @@ features/
 
 Main experiment pipeline.
 
-* Loads a pretrained (ResNet) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction.
+* Loads a pretrained (ResNet-18) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction. You can add different types of encoders as you wish (ResNet-50, DLA, etc), but make sure to keep the latent dim as 512. Soon we will release code for more models including ViTs.
 
 * Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
 
@@ -269,25 +271,4 @@ def mmd_test(X_src, X_tgt):
 ```
 
 The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
-
-
-## How It Works
-
-### 1. Calibration (same-domain)
-
-The script first samples multiple subsets from the **same dataset** (e.g., Curvelanes) and computes the MMD statistic between each subset and a fixed reference set.
-These values form the *null distribution* of MMD under no shift, from which the threshold `τ` is computed at the desired significance level (α = 0.05 by default).
-
-### 2. Cross-domain (or shifted) testing
-
-After calibration, the script compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset.
-If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
-
-### 3. Aggregated evaluation
-
-To measure stability, the script repeats the cross-domain test for 100 different random subsets and reports:
-
-* Mean and standard deviation of MMD values
-
-* **True Positive Rate (TPR)** — percentage of runs correctly detecting the shift
 
