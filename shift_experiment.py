@@ -59,7 +59,7 @@ class ShiftExperiment:
         tgt_samples: int = 1000,
         num_runs: int = 10,
         block_idx: int = 0,
-        batch_size: int = 512,
+        batch_size: int = 1024,
         image_size: int = 512,
         num_calib: int = 100,
         alpha: float = 0.05,
