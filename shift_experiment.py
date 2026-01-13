@@ -256,7 +256,7 @@ class ShiftExperiment:
                 self.model, calib_src_test_loader, self.device
             )
 
-            t_stat = mmd_test(self.src_feats, calib_src_feats)
+            t_stat = mmd_test(self.src_feats, calib_src_test_feats)
             null_stats.append(t_stat)
 
         self.null_stats = np.array(null_stats)
