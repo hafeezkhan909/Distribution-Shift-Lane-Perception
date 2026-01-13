@@ -250,10 +250,10 @@ class ShiftExperiment:
                 cropImg=self.cropImg,
                 shift=None,
             )
-            calib_src_loader = dataloaderReturn[0]
+            calib_src_test_loader = dataloaderReturn[0]
             all_image_dirs[f"Calibrating with seed {seed}"] = dataloaderReturn[1]
-            calib_src_feats = extract_features(
-                self.model, calib_src_loader, self.device
+            calib_src_test_feats = extract_features(
+                self.model, calib_src_test_loader, self.device
             )
 
             t_stat = mmd_test(self.src_feats, calib_src_feats)
