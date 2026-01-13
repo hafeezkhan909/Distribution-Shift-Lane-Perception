@@ -399,6 +399,9 @@ class ShiftExperiment:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--source_test_list_path", required=True, type=str, default="./datasets/CULane/list/test.txt"
+    )
+    parser.add_argument(
         "--source_dir", required=True, type=str, default="./datasets/CULane"
     )
     parser.add_argument(
