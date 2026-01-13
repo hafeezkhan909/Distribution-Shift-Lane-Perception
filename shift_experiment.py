@@ -109,6 +109,7 @@ class ShiftExperiment:
             "source_dir": source_dir,
             "target_dir": target_dir,
             "source_list_path": source_list_path,
+            "source_test_list_path": source_test_list_path,
             "target_list_path": target_list_path,
             "src_samples": src_samples,
             "tgt_samples": tgt_samples,
