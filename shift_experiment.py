@@ -24,12 +24,14 @@ def extract_features(model, loader, device):
     model.eval()
     feats = []
 
+    # Check if we are using DataParallel
     is_parallel = isinstance(model, torch.nn.DataParallel)
 
     with torch.no_grad():
         for imgs in loader:
             imgs = imgs.to(device, non_blocking=True)
 
+            # Parallel models wrap the original methods under .module
             if is_parallel:
                 z = model.module.encode(imgs)
             else:
@@ -53,7 +55,7 @@ class ShiftExperiment:
         source_list_path: str = "./datasets/CULane/list/train.txt",
         source_test_list_path: str = "./datasets/CULane/list/test.txt",
         target_list_path: str = "./datasets/CULane/list/test.txt",
-        src_samples: int = 1000,  # No. of source samples as train set passed
+        src_samples: int = 1000,
         tgt_samples: int = 1000,
         num_runs: int = 10,
         block_idx: int = 0,  # block of samples selected from the the text file
@@ -99,8 +101,7 @@ class ShiftExperiment:
         self.zoom_factor = zoom_factor
         self.save_all_image_paths = save_all_image_paths
 
-        # ------------------ Data Logger Config  ------------------
-
+        # --- Data Logger ---
         self.datalogger = JsonExperimentManager(
             file_location=file_location, file_name=file_name, style=file_style
         )
@@ -152,7 +153,7 @@ class ShiftExperiment:
         else:
             self.model = base_model
 
-        # Initialialize shift object
+        # --- Shift Object Logic ---
         self.shift_object = None
         if self.shift_type == "gaussian":
             if self.std == 0.0:
