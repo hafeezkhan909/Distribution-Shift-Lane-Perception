@@ -418,7 +418,7 @@ if __name__ == "__main__":
     parser.add_argument("--tgt_samples", type=int, default=100)
     parser.add_argument("--num_runs", type=int, default=10)
     parser.add_argument("--block_idx", type=int, default=0)
-    parser.add_argument("--batch_size", type=int, default=16)
+    parser.add_argument("--batch_size", type=int, default=128)
     parser.add_argument("--image_size", type=int, default=512)
     parser.add_argument("--num_calib", type=int, default=100)
     parser.add_argument("--alpha", type=float, default=0.05)
