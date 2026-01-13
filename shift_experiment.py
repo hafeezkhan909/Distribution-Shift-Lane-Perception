@@ -78,6 +78,7 @@ class ShiftExperiment:
         self.source_dir = source_dir
         self.target_dir = target_dir
         self.source_list_dir = source_list_path
+        self.source_test_list_dir = source_test_list_path
         self.target_list_dir = target_list_path
         self.src_samples = src_samples
         self.tgt_samples = tgt_samples
