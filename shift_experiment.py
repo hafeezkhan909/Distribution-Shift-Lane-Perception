@@ -206,10 +206,10 @@ class ShiftExperiment:
         image_paths = loaderReturn[1]
         self.src_feats = extract_features(self.model, loader, self.device)
         print(f"{self.source_dir} features loaded. Shape = {self.src_feats.shape}\n")
-        self.loggerExperimentalData["Source Features Shape"] = list(
+        self.loggerExperimentalData["Source Training Feature Shape"] = list(
             self.src_feats.shape
         )
-        self.loggerExperimentalData["Source Features Image Paths"] = list(image_paths)
+        self.loggerExperimentalData["Source Training Feature Image Paths"] = list(image_paths)
 
     def load_source_test_features(self):
         loaderReturn = get_dataloader(
@@ -227,10 +227,10 @@ class ShiftExperiment:
         print(
             f"{self.source_dir} features loaded. Shape = {self.src_test_feats.shape}\n"
         )
-        self.loggerExperimentalData["Source Features Shape"] = list(
+        self.loggerExperimentalData["Source Testing Features Shape"] = list(
             self.src_test_feats.shape
         )
-        self.loggerExperimentalData["Source Features Image Paths"] = list(image_paths)
+        self.loggerExperimentalData["Source Testing Features Image Paths"] = list(image_paths)
 
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
