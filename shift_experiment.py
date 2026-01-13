@@ -211,6 +211,25 @@ class ShiftExperiment:
         )
         self.loggerExperimentalData["Source Features Image Paths"] = list(image_paths)
 
+    def load_source_test_features(self):
+        loaderReturn = get_dataloader(
+            root_dir=self.source_dir,
+            list_path=self.source_test_list_dir,
+            batch_size=self.batch_size,
+            image_size=self.image_size,
+            num_samples=self.src_samples,
+            cropImg=self.cropImg,
+            block_idx=self.block_idx,
+        )
+        loader = loaderReturn[0]
+        image_paths = loaderReturn[1]
+        self.src_test_feats = extract_features(self.model, loader, self.device)
+        print(f"{self.source_dir} features loaded. Shape = {self.src_test_feats.shape}\n")
+        self.loggerExperimentalData["Source Features Shape"] = list(
+            self.src_test_feats.shape
+        )
+        self.loggerExperimentalData["Source Features Image Paths"] = list(image_paths)
+
     # STEP 1 — Calibration (Null Distribution)
     def calibrate(self):
         calibrationData: JsonDict = {}
