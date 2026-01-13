@@ -54,7 +54,7 @@ class ShiftExperiment:
         source_test_list_path: str = "./datasets/CULane/list/test.txt",
         target_list_path: str = "./datasets/CULane/list/test.txt",
         src_samples: int = 1000,  # No. of source samples as train set passed
-        tgt_samples: int = 100,
+        tgt_samples: int = 1000,
         num_runs: int = 10,
         block_idx: int = 0,  # block of samples selected from the the text file
         batch_size: int = 16,  # batch processing of data within an epoch
