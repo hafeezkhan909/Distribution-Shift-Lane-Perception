@@ -234,7 +234,7 @@ def get_dataloader(
 
     return [
         DataLoader(
-            subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
+            subset, batch_size=batch_size, shuffle=False, num_workers=12, pin_memory=True, persistent_workers=True
         ),
         image_paths,
     ]
