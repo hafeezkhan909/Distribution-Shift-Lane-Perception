@@ -23,10 +23,18 @@ from data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
 def extract_features(model, loader, device):
     model.eval()
     feats = []
+
+    is_parallel = isinstance(model, torch.nn.DataParallel)
+
     with torch.no_grad():
         for imgs in loader:
             imgs = imgs.to(device, non_blocking=True)
-            z = model.encode(imgs)
+
+            if is_parallel:
+                z = model.module.encode(imgs)
+            else:
+                z = model.encode(imgs)
+            
             if z.dim() > 2:
                 raise ValueError("Images are still in the pixel space")
                 z = z.view(
