@@ -142,8 +142,15 @@ class ShiftExperiment:
 
         # ------------------ Model ------------------
         print("\nInitializing autoencoder...")
-        self.model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(self.device)
+        base_model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(self.device)
 
+        # 2. Multi-GPU Wrap
+        if torch.cuda.device_count() > 1:
+            print(f"Using {torch.cuda.device_count()} GPUs via DataParallel")
+            self.model = torch.nn.DataParallel(base_model)
+        else:
+            self.model = base_model
+        
         # Initialialize shift object
         self.shift_object = None
         if self.shift_type == "gaussian":
