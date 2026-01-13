@@ -49,9 +49,10 @@ class ShiftExperiment:
     def __init__(
         self,
         source_dir: str = "./datasets/CULane",
-        target_dir: str = "./datasets/Curvelanes",
-        source_list_path: str = "./datasets/CULane/list/test.txt",
-        target_list_path: str = "./datasets/Curvelanes/train/train.txt",
+        target_dir: str = "./datasets/CULane",
+        source_list_path: str = "./datasets/CULane/list/train.txt",
+        source_test_list_path: str = "./datasets/CULane/list/test.txt",
+        target_list_path: str = "./datasets/CULane/list/test.txt",
         src_samples: int = 1000,  # No. of source samples as train set passed
         tgt_samples: int = 100,
         num_runs: int = 10,
