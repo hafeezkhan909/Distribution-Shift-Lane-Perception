@@ -242,7 +242,7 @@ class ShiftExperiment:
             seed = self.seed_base + i
             dataloaderReturn = get_seeded_random_dataloader(
                 root_dir=self.source_dir,
-                list_path=self.source_list_dir,
+                list_path=self.source_test_list_dir,
                 batch_size=self.batch_size,
                 image_size=self.image_size,
                 num_samples=self.tgt_samples,
