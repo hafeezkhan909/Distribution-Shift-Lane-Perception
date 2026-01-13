@@ -133,25 +133,25 @@ class ShiftExperiment:
 
         self.loggerExperimentalData: JsonDict = {}
 
-        # ------------------ Check for GPU ------------------
-
-        cuda_available = torch.cuda.is_available()
-        print(f"CUDA Available: {cuda_available}")
-        self.loggerExperimentalData["CUDA"] = cuda_available
-
+        # --- GPU Setup ---
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        os.makedirs("features", exist_ok=True)
-
-        # ------------------ Model ------------------
-        print("\nInitializing autoencoder...")
+        num_gpus = torch.cuda.device_count()
+        print(f"CUDA Available: {torch.cuda.is_available()} | Total GPUs Found: {num_gpus}")
+        
+        # --- Model Initialization ---
+        print("\nInitializing autoencoder on 4 GPUs...")
         base_model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(self.device)
 
-        # 2. Multi-GPU Wrap
-        if torch.cuda.device_count() > 1:
-            print(f"Using {torch.cuda.device_count()} GPUs via DataParallel")
+        if num_gpus >= 4:
+            # Explicitly use device IDs 0, 1, 2, and 3
+            self.model = torch.nn.DataParallel(base_model, device_ids=[0, 1, 2, 3])
+            print("Successfully initialized DataParallel on GPUs: 0, 1, 2, 3")
+        elif num_gpus > 1:
             self.model = torch.nn.DataParallel(base_model)
+            print(f"Warning: Only {num_gpus} GPUs found. Using all available.")
         else:
             self.model = base_model
+            print("Using single GPU/CPU.")
 
         # --- Shift Object Logic ---
         self.shift_object = None
