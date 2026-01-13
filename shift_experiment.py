@@ -34,7 +34,7 @@ def extract_features(model, loader, device):
                 z = model.module.encode(imgs)
             else:
                 z = model.encode(imgs)
-            
+
             if z.dim() > 2:
                 raise ValueError("Images are still in the pixel space")
                 z = z.view(
@@ -150,7 +150,7 @@ class ShiftExperiment:
             self.model = torch.nn.DataParallel(base_model)
         else:
             self.model = base_model
-        
+
         # Initialialize shift object
         self.shift_object = None
         if self.shift_type == "gaussian":
@@ -224,7 +224,9 @@ class ShiftExperiment:
         loader = loaderReturn[0]
         image_paths = loaderReturn[1]
         self.src_test_feats = extract_features(self.model, loader, self.device)
-        print(f"{self.source_dir} features loaded. Shape = {self.src_test_feats.shape}\n")
+        print(
+            f"{self.source_dir} features loaded. Shape = {self.src_test_feats.shape}\n"
+        )
         self.loggerExperimentalData["Source Features Shape"] = list(
             self.src_test_feats.shape
         )
@@ -395,7 +397,6 @@ class ShiftExperiment:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-
     parser.add_argument(
         "--source_dir", required=True, type=str, default="./datasets/CULane"
     )
@@ -448,3 +449,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     ShiftExperiment(**vars(args)).run()
+    ShiftExperiment().run()
