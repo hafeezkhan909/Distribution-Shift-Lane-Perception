@@ -58,8 +58,8 @@ class ShiftExperiment:
         src_samples: int = 1000,
         tgt_samples: int = 1000,
         num_runs: int = 10,
-        block_idx: int = 0,  # block of samples selected from the the text file
-        batch_size: int = 16,  # batch processing of data within an epoch
+        block_idx: int = 0,
+        batch_size: int = 512,
         image_size: int = 512,
         num_calib: int = 100,
         alpha: float = 0.05,
@@ -71,7 +71,7 @@ class ShiftExperiment:
         width_shift_frac: float = 0.2,
         height_shift_frac: float = 0.2,
         shear_angle: float = 20.0,
-        zoom_factor: float = 1.3,  # Guide: 1.3 is 30% zoom in and 0.7 is 30% zoom out
+        zoom_factor: float = 1.3,
         file_name: str = "testData.json",
         file_location: str = "./",
         file_style: JsonStyle = 4,
