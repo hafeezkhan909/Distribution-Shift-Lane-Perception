@@ -1,7 +1,7 @@
 import os
 import random
 import warnings
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional
 
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset, Subset
