@@ -57,6 +57,8 @@ class ShiftExperiment:
         target_list_path: str = "./datasets/CULane/list/test.txt",
         src_samples: int = 1000,
         tgt_samples: int = 1000,
+        ratio_src_samples: int = 1000,
+        ratio_tgt_samples: int = 10,
         num_runs: int = 10,
         block_idx: int = 0,
         batch_size: int = 1024,
@@ -84,6 +86,8 @@ class ShiftExperiment:
         self.target_list_dir = target_list_path
         self.src_samples = src_samples
         self.tgt_samples = tgt_samples
+        self.ratio_src_samples = ratio_src_samples
+        self.ratio_tgt_samples = ratio_tgt_samples
         self.num_runs = num_runs
         self.block_idx = block_idx
         self.batch_size = batch_size
@@ -345,14 +349,14 @@ class ShiftExperiment:
                 list_paths=[self.source_list_dir, self.target_list_dir],
                 batch_sizes=[self.batch_size, self.batch_size],
                 image_size=self.image_size,
-                num_samples=[self.src_samples, self.tgt_samples],
+                num_samples=[self.ratio_src_samples, self.ratio_tgt_samples],
                 cropImg=self.cropImg,
                 shift=self.shift_object,
             )
 
             tgt_loader_cross = loaderReturn[0]
-            testData["Source Samples"] = self.src_samples
-            testData["Target Samples"] = self.tgt_samples
+            testData["Source Samples"] = self.ratio_src_samples
+            testData["Target Samples"] = self.ratio_tgt_samples
             testData["Image Paths"] = loaderReturn[1]
             tgt_feats_cross = extract_features(
                 self.model, tgt_loader_cross, self.device
@@ -428,6 +432,8 @@ if __name__ == "__main__":
         type=str,
         default="./datasets/Curvelanes/train/train.txt",
     )
+    parser.add_argument("--ratio_src_samples", type=int, default=1000)
+    parser.add_argument("--ratio_tgt_samples", type=int, default=1000)
     parser.add_argument("--src_samples", type=int, default=1000)
     parser.add_argument("--tgt_samples", type=int, default=100)
     parser.add_argument("--num_runs", type=int, default=10)
