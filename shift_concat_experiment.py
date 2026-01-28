@@ -15,7 +15,7 @@ from data.data_utils import (
     VerticalFlipShift,
 )
 from utils.mmd_test import mmd_test
-from data.data_builder import get_dataloader, get_seeded_random_dataloader
+from data.data_builder import get_dataloader, get_concat_dataloader, get_seeded_random_dataloader
 from data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
 
 
