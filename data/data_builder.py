@@ -4,7 +4,7 @@ import warnings
 from typing import Any, List, Optional
 
 from PIL import Image
-from torch.utils.data import DataLoader, Dataset, Subset
+from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset
 from torchvision import transforms
 
 from data.data_utils import DataShift, apply_shift
