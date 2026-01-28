@@ -259,17 +259,79 @@ def get_seeded_random_dataloader(
         dataShift=shift,
     )
 
+    # Set the random seed for reproducibility
     random.seed(seed)
+
+    # Randomly sample indices without replacement
     chosen_indices = random.sample(range(len(ds)), min(num_samples, len(ds)))
 
     # Extract the full paths for these specific indices using the class method
     image_paths = [ds.get_image_path(i) for i in chosen_indices]
 
+    # Generate the subset
     subset = Subset(ds, chosen_indices)
 
     return [
         DataLoader(
             subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
+        ),
+        image_paths,
+    ]
+
+
+def get_mixed_dataloader(
+    root_dirs: List[str],
+    list_paths: List[str],
+    batch_sizes: List[int],
+    image_sizes: List[int],
+    num_samples: List[int],
+    random: List[bool],
+    cropImg: List[bool],
+    block_idx: List[int]
+):
+    # TODO: Make it work
+    # Ensure all input lists have the same length
+    assert len(root_dirs) == len(random) == len(list_paths) == len(batch_sizes) == len(
+        image_sizes
+    ) == len(num_samples) == len(cropImg) == len(block_idx), "All input lists must have the same length."
+
+    ds = []
+    subsets = []
+
+    print("[INFO] Mixed Dataloader Configuration:")
+
+    # Instantiate the specific dataset classes
+    for i in range(len(root_dirs)):
+        ds.append(
+            ImageDataset(
+                root_dir=root_dirs[i],
+                list_path=list_paths[i],
+                image_size=image_sizes[i],
+                cropImg=cropImg[i],
+            )
+        )
+
+        start = block_idx * num_samples
+        end = min((block_idx + 1) * num_samples, len(ds[i]))
+
+        # Validate indices
+        if start >= len(ds[i]):
+            raise ValueError(
+                f"Block index {block_idx} is out of range for dataset size {len(ds[i])}"
+            )
+
+        # Generate the list of indices for this block
+        indices = list(range(start, end))
+
+        # Extract the full paths for these specific indices using the class method
+        image_paths = [ds[i].get_image_path(j) for j in indices]
+
+        subsets.append(Subset(ds[i], indices))
+        print(f"[INFO] ({root_dirs[i]}) → [{start}:{end}] ({len(subset)} samples)")
+
+    return [
+        DataLoader(
+            subset, batch_size=batch_size, shuffle=False, num_workers=12, pin_memory=True, persistent_workers=True
         ),
         image_paths,
     ]
