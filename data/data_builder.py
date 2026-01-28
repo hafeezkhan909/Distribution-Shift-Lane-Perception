@@ -295,38 +295,38 @@ def get_mixed_dataloader(
         image_sizes
     ) == len(num_samples) == len(cropImg) == len(block_idx), "All input lists must have the same length."
 
-    ds = []
     subsets = []
+    all_image_paths = []
 
     print("[INFO] Mixed Dataloader Configuration:")
 
     # Instantiate the specific dataset classes
     for i in range(len(root_dirs)):
-        ds.append(
-            ImageDataset(
-                root_dir=root_dirs[i],
-                list_path=list_paths[i],
-                image_size=image_sizes[i],
-                cropImg=cropImg[i],
-            )
+        ds = ImageDataset(
+            root_dir=root_dirs[i],
+            list_path=list_paths[i],
+            image_size=image_sizes[i],
+            cropImg=cropImg[i],
         )
 
-        start = block_idx * num_samples
-        end = min((block_idx + 1) * num_samples, len(ds[i]))
+        start = block_idx[i] * num_samples[i]
+        end = min((block_idx[i] + 1) * num_samples[i], len(ds))
 
         # Validate indices
-        if start >= len(ds[i]):
+        if start >= len(ds):
             raise ValueError(
-                f"Block index {block_idx} is out of range for dataset size {len(ds[i])}"
+                f"Block index {block_idx[i]} is out of range for dataset size {len(ds)}"
             )
 
         # Generate the list of indices for this block
         indices = list(range(start, end))
 
-        # Extract the full paths for these specific indices using the class method
-        image_paths = [ds[i].get_image_path(j) for j in indices]
+        # Extract the full paths for these specific indices
+        image_paths = [ds.get_image_path(j) for j in indices]
+        all_image_paths.extend(image_paths)  # Flatten into single list
 
-        subsets.append(Subset(ds[i], indices))
+        subset = Subset(ds, indices)
+        subsets.append(subset)
         print(f"[INFO] ({root_dirs[i]}) → [{start}:{end}] ({len(subset)} samples)")
 
     return [
