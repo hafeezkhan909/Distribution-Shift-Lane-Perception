@@ -279,7 +279,7 @@ def get_seeded_random_dataloader(
     ]
 
 
-def get_mixed_dataloader(
+def get_concat_dataloader(
     root_dirs: List[str],
     list_paths: List[str],
     batch_sizes: List[int],
