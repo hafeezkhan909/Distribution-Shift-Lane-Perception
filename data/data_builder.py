@@ -335,9 +335,21 @@ def get_mixed_dataloader(
         subsets.append(subset)
         print(f"[INFO] ({root_dirs[i]}) → [{start}:{end}] ({len(subset)} samples)")
 
-    return [
-        DataLoader(
-            subset, batch_size=batch_size, shuffle=False, num_workers=12, pin_memory=True, persistent_workers=True
-        ),
-        image_paths,
-    ]
+    # Concatenate all subsets into one dataset
+    combined_dataset = ConcatDataset(subsets)
+    
+    print(f"[INFO] Total combined samples: {len(combined_dataset)}")
+    
+    # Use the first batch_size (or make batch_size a single int parameter)
+    batch_size = batch_sizes[0] if isinstance(batch_sizes, list) else batch_sizes
+    
+    combined_dataloader = DataLoader(
+        combined_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=12,
+        pin_memory=True,
+        persistent_workers=True
+    )
+
+    return [combined_dataloader, all_image_paths]
