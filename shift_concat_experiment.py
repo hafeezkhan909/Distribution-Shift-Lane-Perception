@@ -332,30 +332,35 @@ class ShiftExperiment:
         dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
 
+        tpr_list = []
+        mmd_values = []
+
         dataShiftTestDataTests: list[JsonDict] = []
 
         for i in trange(self.num_runs, desc="Shift Testing"):
             testData: JsonDict = {}
-            seed = self.seed_base + i
-            loaderReturn = get_seeded_random_dataloader(
-                root_dir=self.target_dir,
-                list_path=self.target_list_dir,
-                batch_size=self.batch_size,
+
+            loaderReturn = get_concat_dataloader(
+                root_dirs=[self.source_dir, self.target_dir],
+                list_paths=[self.source_list_dir, self.target_list_dir],
+                batch_sizes=[self.batch_size, self.batch_size],
                 image_size=self.image_size,
-                num_samples=self.tgt_samples,
-                seed=seed,
+                num_samples=[self.src_samples, self.tgt_samples],
                 cropImg=self.cropImg,
                 shift=self.shift_object,
             )
+
             tgt_loader_cross = loaderReturn[0]
+            testData["Source Samples"] = self.src_samples
+            testData["Target Samples"] = self.tgt_samples
             testData["Image Paths"] = loaderReturn[1]
-            testData["Seed"] = seed
             tgt_feats_cross = extract_features(
                 self.model, tgt_loader_cross, self.device
             )
             mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
-
+            mmd_values.append(mmd_cross)
             detected: bool = mmd_cross > self.tau
+            tpr_list.append(int(detected))
 
             print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
             testData["Run"] = int(i + 1)
@@ -369,8 +374,16 @@ class ShiftExperiment:
 
         dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
 
+        tpr_result = np.mean(tpr_list)
         print("\n[RESULTS] Data Shift detection summary")
         print(f"Noise Applied: {self.shift_object}")
+        print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
+        print(
+            f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%"
+        )
+        dataShiftTestData["TPR"] = float(tpr_result * 100)
+        dataShiftTestData["Average MMD"] = float(np.mean(mmd_values))
+        dataShiftTestData["Average MMD (std)"] = float(np.std(mmd_values))
         self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
