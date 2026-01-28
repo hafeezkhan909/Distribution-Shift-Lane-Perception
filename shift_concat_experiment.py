@@ -332,8 +332,6 @@ class ShiftExperiment:
         dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
 
-        tpr_list = []
-        mmd_values = []
         dataShiftTestDataTests: list[JsonDict] = []
 
         for i in trange(self.num_runs, desc="Shift Testing"):
@@ -357,9 +355,7 @@ class ShiftExperiment:
             )
             mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
 
-            mmd_values.append(mmd_cross)
             detected: bool = mmd_cross > self.tau
-            tpr_list.append(int(detected))
 
             print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅' if detected else '❌'}")
             testData["Run"] = int(i + 1)
@@ -373,16 +369,8 @@ class ShiftExperiment:
 
         dataShiftTestData["Individual Test Data"] = dataShiftTestDataTests
 
-        tpr_result = np.mean(tpr_list)
         print("\n[RESULTS] Data Shift detection summary")
         print(f"Noise Applied: {self.shift_object}")
-        print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
-        print(
-            f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%"
-        )
-        dataShiftTestData["TPR"] = float(tpr_result * 100)
-        dataShiftTestData["Average MMD"] = float(np.mean(mmd_values))
-        dataShiftTestData["Average MMD (std)"] = float(np.std(mmd_values))
         self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
