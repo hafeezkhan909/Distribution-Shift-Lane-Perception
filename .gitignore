@@ -20,3 +20,8 @@ data/__pycache__/data_logging.cpython-310.pyc
 data/__pycache__/data_utils.cpython-310.pyc
 models/__pycache__/autoencoder.cpython-310.pyc
 utils/__pycache__/mmd_test.cpython-310.pyc
+data/__pycache__/data_builder.cpython-310.pyc
+data/__pycache__/data_logging.cpython-310.pyc
+data/__pycache__/data_utils.cpython-310.pyc
+models/__pycache__/autoencoder.cpython-310.pyc
+utils/__pycache__/mmd_test.cpython-310.pyc
