@@ -327,10 +327,10 @@ class ShiftExperiment:
     def data_shift_test(self):
         dataShiftTestData: JsonDict = {}
         print(
-            f"[STEP 3] Data Shift Test: {self.source_dir} to {self.target_dir} + {self.source_dir}, Noise applied: {self.shift_object}\n"
+            f"[STEP 3] Data Shift Test: {self.source_dir} to ({self.ratio_tgt_samples}) {self.target_dir} + ({self.ratio_src_samples}) {self.source_dir}, Noise applied: {self.shift_object}\n"
         )
         dataShiftTestData["Data Shift Test Definition"] = (
-            f"{self.source_dir} to {self.target_dir} + {self.source_dir}"
+            f"{self.source_dir} to ({self.ratio_tgt_samples}) {self.target_dir} + ({self.ratio_src_samples}) {self.source_dir}"
         )
         dataShiftTestData["Noise Applied"] = str(self.shift_object)
         dataShiftTestData["Runs"] = self.num_runs
