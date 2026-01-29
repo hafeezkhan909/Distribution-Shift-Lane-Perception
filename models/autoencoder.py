@@ -79,8 +79,10 @@ class ConvAutoencoderFC(nn.Module):
         out = self.decoder_conv(h)
         return out
 
-    def forward(self, x):
+    def forward(self, x, return_encoding=False):
         z = self.encode(x)
+        if return_encoding:
+            return z
         out = self.decode(z)
         return out, z
 

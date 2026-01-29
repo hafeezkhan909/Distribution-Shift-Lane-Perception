@@ -31,11 +31,10 @@ def extract_features(model, loader, device):
         for imgs in loader:
             imgs = imgs.to(device, non_blocking=True)
 
-            # Parallel models wrap the original methods under .module
-            if is_parallel:
-                z = model.module.encode(imgs)
-            else:
-                z = model.encode(imgs)
+            # if is_parallel:
+            #     z = model.encode(imgs)
+            # else:
+            z = model(imgs, return_encoding=True)
 
             if z.dim() > 2:
                 raise ValueError("Images are still in the pixel space")
