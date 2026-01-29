@@ -234,7 +234,7 @@ def get_dataloader(
 
     return [
         DataLoader(
-            subset, batch_size=batch_size, shuffle=False, num_workers=12, pin_memory=True, persistent_workers=True
+            subset, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True, persistent_workers=True, prefetch_factor=2
         ),
         image_paths,
     ]
@@ -273,7 +273,7 @@ def get_seeded_random_dataloader(
 
     return [
         DataLoader(
-            subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
+            subset, batch_size=batch_size, shuffle=False, num_workers=16, pin_memory=True, prefetch_factor=2
         ),
         image_paths,
     ]
@@ -350,9 +350,10 @@ def get_concat_dataloader(
         combined_dataset,
         batch_size=batch_size,
         shuffle=False,
-        num_workers=12,
+        num_workers=16,
         pin_memory=True,
-        persistent_workers=True
+        persistent_workers=True,
+        prefetch_factor=2
     )
 
     return [combined_dataloader, all_image_paths]
