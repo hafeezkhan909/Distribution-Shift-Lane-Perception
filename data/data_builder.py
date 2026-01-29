@@ -285,9 +285,9 @@ def get_concat_dataloader(
     batch_sizes: List[int],
     image_sizes: List[int],
     num_samples: List[int],
-    random: List[bool],
     cropImg: List[bool],
-    block_idx: List[int]
+    block_idx: List[int],
+    seeds: List[int]
 ):
     """Creates a single combined dataloader from multiple datasets.
     
@@ -297,7 +297,7 @@ def get_concat_dataloader(
             - List of all image paths across datasets
     """
     # Ensure all input lists have the same length
-    assert len(root_dirs) == len(random) == len(list_paths) == len(batch_sizes) == len(
+    assert len(root_dirs) == len(list_paths) == len(batch_sizes) == len(
         image_sizes
     ) == len(num_samples) == len(cropImg) == len(block_idx), "All input lists must have the same length."
 
@@ -324,14 +324,17 @@ def get_concat_dataloader(
                 f"Block index {block_idx[i]} is out of range for dataset size {len(ds)}"
             )
 
-        # Generate the list of indices for this block
-        indices = list(range(start, end))
+        # Set seed unique to this dataset index for reproducibility
+        random.seed(seeds[i])
+
+        # Randomly sample indices without replacement
+        chosen_indices = random.sample(range(len(ds)), min(num_samples[i], len(ds)))
 
         # Extract the full paths for these specific indices
-        image_paths = [ds.get_image_path(j) for j in indices]
+        image_paths = [ds.get_image_path(j) for j in chosen_indices]
         all_image_paths.extend(image_paths)  # Flatten into single list
 
-        subset = Subset(ds, indices)
+        subset = Subset(ds, chosen_indices)
         subsets.append(subset)
         print(f"[INFO] ({root_dirs[i]}) → [{start}:{end}] ({len(subset)} samples)")
 

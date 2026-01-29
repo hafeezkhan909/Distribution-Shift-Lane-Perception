@@ -347,10 +347,11 @@ class ShiftExperiment:
                 root_dirs=[self.source_dir, self.target_dir],
                 list_paths=[self.source_list_dir, self.target_list_dir],
                 batch_sizes=[self.batch_size, self.batch_size],
-                image_size=self.image_size,
+                image_sizes=[self.image_size, self.image_size],
                 num_samples=[self.ratio_src_samples, self.ratio_tgt_samples],
-                cropImg=self.cropImg,
-                shift=self.shift_object,
+                cropImg=[self.cropImg, self.cropImg],
+                block_idx=[self.block_idx, self.block_idx],
+                seeds=[self.seed_base + i, self.seed_base + i]
             )
 
             tgt_loader_cross = loaderReturn[0]
