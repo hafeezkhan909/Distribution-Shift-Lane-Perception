@@ -304,4 +304,34 @@ No shift detected.
 [INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
 [INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
 [INFO] Total combined samples: 10
-Shift Testing:  53%|█████▎    | 53/100 [02:04<01:51,  2.36s/it]
+Shift Testing:  53%|█████▎    | 53/100 [02:04<01:51,  2.36s/it][RUN 53] MMD=0.126727 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  54%|█████▍    | 54/100 [02:07<01:48,  2.35s/it][RUN 54] MMD=0.110520 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  55%|█████▌    | 55/100 [02:09<01:46,  2.38s/it][RUN 55] MMD=0.122533 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  56%|█████▌    | 56/100 [02:11<01:45,  2.39s/it][RUN 56] MMD=0.097314 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  57%|█████▋    | 57/100 [02:14<01:41,  2.37s/it][RUN 57] MMD=0.119619 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  58%|█████▊    | 58/100 [02:16<01:38,  2.35s/it][RUN 58] MMD=0.148127 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [36:45] (9 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [4:5] (1 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  59%|█████▉    | 59/100 [02:18<01:35,  2.33s/it]
