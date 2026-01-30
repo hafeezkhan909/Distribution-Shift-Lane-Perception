@@ -1,0 +1,57 @@
+----------------------------------------------------
+Slurm Job ID: 156269
+Running on host: gpu05
+Start Time: Fri Jan 30 01:04:50 PM EST 2026
+----------------------------------------------------
+Initializing conda for script...
+Conda environment activated and isolated:
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                     /home1/adoyle2025/miniconda3
+clrernet                 /home1/adoyle2025/miniconda3/envs/clrernet
+distribution_shift_perception     /home1/adoyle2025/miniconda3/envs/distribution_shift_perception
+dslp_env                 /home1/adoyle2025/miniconda3/envs/dslp_env
+lane_env_cpu             /home1/adoyle2025/miniconda3/envs/lane_env_cpu
+lane_perception_test     /home1/adoyle2025/miniconda3/envs/lane_perception_test
+ml_project           *   /home1/adoyle2025/miniconda3/envs/ml_project
+test_env                 /home1/adoyle2025/miniconda3/envs/test_env
+tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
+
+Starting Unit Test...
+/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/cuda/__init__.py:827: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+CUDA Available: True | Total GPUs Found: 4
+
+Initializing autoencoder on 4 GPUs...
+Successfully initialized DataParallel on GPUs: 0, 1, 2, 3
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [40:50] (10 samples)
+Traceback (most recent call last):
+  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 470, in <module>
+    ShiftExperiment(**vars(args)).run()
+  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 396, in run
+    self.load_source_features()
+  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 212, in load_source_features
+    self.src_feats = extract_features(self.model, loader, self.device)
+  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 37, in extract_features
+    z = model(imgs, return_encoding=True)
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/data_parallel.py", line 193, in forward
+    replicas = self.replicate(self.module, self.device_ids[: len(inputs)])
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/data_parallel.py", line 200, in replicate
+    return replicate(module, device_ids, not torch.is_grad_enabled())
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/replicate.py", line 125, in replicate
+    param_copies = _broadcast_coalesced_reshape(params, devices, detach)
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/replicate.py", line 91, in _broadcast_coalesced_reshape
+    return comm.broadcast_coalesced(tensors, devices)
+  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/comm.py", line 66, in broadcast_coalesced
+    return torch._C._broadcast_coalesced(tensors, devices, buffer_size)
+RuntimeError: NCCL Error 2: unhandled system error (run with NCCL_DEBUG=INFO for details)
+----------------------------------------------------
+Job finished: Fri Jan 30 01:06:29 PM EST 2026
+----------------------------------------------------

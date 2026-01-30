@@ -1,0 +1,91 @@
+----------------------------------------------------
+Slurm Job ID: 155912
+Running on host: node01
+Start Time: Thu Jan 29 07:50:33 PM EST 2026
+----------------------------------------------------
+Initializing conda for script...
+Conda environment activated and isolated:
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                     /home1/adoyle2025/miniconda3
+clrernet                 /home1/adoyle2025/miniconda3/envs/clrernet
+distribution_shift_perception     /home1/adoyle2025/miniconda3/envs/distribution_shift_perception
+dslp_env                 /home1/adoyle2025/miniconda3/envs/dslp_env
+lane_env_cpu             /home1/adoyle2025/miniconda3/envs/lane_env_cpu
+lane_perception_test     /home1/adoyle2025/miniconda3/envs/lane_perception_test
+ml_project           *   /home1/adoyle2025/miniconda3/envs/ml_project
+test_env                 /home1/adoyle2025/miniconda3/envs/test_env
+tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
+
+Starting Unit Test...
+============================================================
+MIXED SHIFT EXPERIMENT VISUALIZER
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+Found 16 CCE*.log files:
+  - CCE1.log
+  - CCE2.log
+  - CCE3.log
+  - CCE4.log
+  - CCE5.log
+  - CCE6.log
+  - CCE7.log
+  - CCE8.log
+  - CCE9.log
+  - CCE10.log
+  - CCE11.log
+  - CCE12.log
+  - CCE13.log
+  - CCE14.log
+  - CCE15.log
+  - CCE16.log
+
+Processing files:
+[CCE 1] ✓ (Src=1000, Tgt=0, TPR=0.0%)
+[CCE 2] ✓ (Src=990, Tgt=10, TPR=0.0%)
+[CCE 3] ✓ (Src=900, Tgt=100, TPR=0.0%)
+[CCE 4] ✓ (Src=750, Tgt=250, TPR=0.0%)
+[CCE 5] ✓ (Src=500, Tgt=500, TPR=0.0%)
+[CCE 6] ✓ (Src=250, Tgt=750, TPR=100.0%)
+[CCE 7] ✓ (Src=100, Tgt=900, TPR=100.0%)
+[CCE 8] ✓ (Src=10, Tgt=990, TPR=100.0%)
+[CCE 9] ✓ (Src=10, Tgt=990, TPR=100.0%)
+[CCE10] ✓ (Src=400, Tgt=600, TPR=100.0%)
+[CCE11] ✓ (Src=450, Tgt=550, TPR=0.0%)
+[CCE12] ✓ (Src=300, Tgt=700, TPR=100.0%)
+[CCE13] ✓ (Src=440, Tgt=560, TPR=100.0%)
+[CCE14] ✓ (Src=430, Tgt=570, TPR=100.0%)
+[CCE15] ✓ (Src=420, Tgt=580, TPR=100.0%)
+[CCE16] ✓ (Src=455, Tgt=545, TPR=100.0%)
+
+✓ Successfully loaded 16 experiments: CCE[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+✓ Processing 16 experiments
+
+
+✓ Saved to: figures/mixed_shift_experiments_analysis.png
+
+Mapping (Sequential → CCE):
+   1 → CCE 1 (ratio: 0.00)
+   2 → CCE 2 (ratio: 0.01)
+   3 → CCE 3 (ratio: 0.11)
+   4 → CCE 4 (ratio: 0.33)
+   5 → CCE 5 (ratio: 1.00)
+   6 → CCE16 (ratio: 1.20)
+   7 → CCE11 (ratio: 1.22)
+   8 → CCE13 (ratio: 1.27)
+   9 → CCE14 (ratio: 1.33)
+  10 → CCE15 (ratio: 1.38)
+  11 → CCE10 (ratio: 1.50)
+  12 → CCE12 (ratio: 2.33)
+  13 → CCE 6 (ratio: 3.00)
+  14 → CCE 7 (ratio: 9.00)
+  15 → CCE 8 (ratio: 99.00)
+  16 → CCE 9 (ratio: 99.00)
+
+============================================================
+✓ Complete!
+============================================================
+Done!

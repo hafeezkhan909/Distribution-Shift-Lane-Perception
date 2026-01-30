@@ -1,0 +1,91 @@
+----------------------------------------------------
+Slurm Job ID: 156119
+Running on host: node01
+Start Time: Fri Jan 30 11:02:53 AM EST 2026
+----------------------------------------------------
+Initializing conda for script...
+Conda environment activated and isolated:
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                     /home1/adoyle2025/miniconda3
+clrernet                 /home1/adoyle2025/miniconda3/envs/clrernet
+distribution_shift_perception     /home1/adoyle2025/miniconda3/envs/distribution_shift_perception
+dslp_env                 /home1/adoyle2025/miniconda3/envs/dslp_env
+lane_env_cpu             /home1/adoyle2025/miniconda3/envs/lane_env_cpu
+lane_perception_test     /home1/adoyle2025/miniconda3/envs/lane_perception_test
+ml_project           *   /home1/adoyle2025/miniconda3/envs/ml_project
+test_env                 /home1/adoyle2025/miniconda3/envs/test_env
+tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
+
+Starting Unit Test...
+============================================================
+MIXED SHIFT EXPERIMENT VISUALIZER (ADDITIVE TARGET MINI)
+============================================================
+
+Found 16 ATM*.log files:
+  - ATM1.log
+  - ATM2.log
+  - ATM3.log
+  - ATM4.log
+  - ATM5.log
+  - ATM6.log
+  - ATM7.log
+  - ATM8.log
+  - ATM9.log
+  - ATM10.log
+  - ATM11.log
+  - ATM12.log
+  - ATM13.log
+  - ATM14.log
+  - ATM15.log
+  - ATM16.log
+
+Processing files:
+[ATM 1] ✓ (Src=100, Tgt=0, TPR=0.0%)
+[ATM 2] ✓ (Src=100, Tgt=10, TPR=0.0%)
+[ATM 3] ✓ (Src=100, Tgt=20, TPR=0.0%)
+[ATM 4] ✓ (Src=100, Tgt=30, TPR=0.0%)
+[ATM 5] ✓ (Src=100, Tgt=40, TPR=0.0%)
+[ATM 6] ✓ (Src=100, Tgt=50, TPR=0.0%)
+[ATM 7] ✓ (Src=100, Tgt=60, TPR=1.0%)
+[ATM 8] ✓ (Src=100, Tgt=70, TPR=1.0%)
+[ATM 9] ✓ (Src=100, Tgt=80, TPR=51.0%)
+[ATM10] ✓ (Src=100, Tgt=90, TPR=0.0%)
+[ATM11] ✓ (Src=100, Tgt=100, TPR=21.0%)
+[ATM12] ✓ (Src=100, Tgt=110, TPR=33.0%)
+[ATM13] ✓ (Src=100, Tgt=120, TPR=70.0%)
+[ATM14] ✓ (Src=100, Tgt=130, TPR=91.0%)
+[ATM15] ✓ (Src=100, Tgt=140, TPR=79.0%)
+[ATM16] ✓ (Src=100, Tgt=150, TPR=45.0%)
+
+✓ Successfully loaded 16 experiments: ATM[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+✓ Processing 16 experiments
+
+
+✓ Saved to: figures/mixed_shift_experiments_additiveTgtMini_analysis.png
+
+Mapping (Sequential → ATM):
+   1 → ATM 1 (ratio: 0.00)
+   2 → ATM 2 (ratio: 0.10)
+   3 → ATM 3 (ratio: 0.20)
+   4 → ATM 4 (ratio: 0.30)
+   5 → ATM 5 (ratio: 0.40)
+   6 → ATM 6 (ratio: 0.50)
+   7 → ATM 7 (ratio: 0.60)
+   8 → ATM 8 (ratio: 0.70)
+   9 → ATM 9 (ratio: 0.80)
+  10 → ATM10 (ratio: 0.90)
+  11 → ATM11 (ratio: 1.00)
+  12 → ATM12 (ratio: 1.10)
+  13 → ATM13 (ratio: 1.20)
+  14 → ATM14 (ratio: 1.30)
+  15 → ATM15 (ratio: 1.40)
+  16 → ATM16 (ratio: 1.50)
+
+============================================================
+✓ Complete!
+============================================================
+Done!

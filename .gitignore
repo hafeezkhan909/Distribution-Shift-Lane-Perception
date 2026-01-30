@@ -14,6 +14,3 @@
 torch-two-sample
 datasets
 logs
-LocalBash
-figures/mixed_shift_experiments_analysis.png
-visualize_results.py

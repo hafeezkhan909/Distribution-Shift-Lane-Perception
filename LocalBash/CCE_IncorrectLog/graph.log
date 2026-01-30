@@ -1,0 +1,76 @@
+----------------------------------------------------
+Slurm Job ID: 155910
+Running on host: node01
+Start Time: Thu Jan 29 06:13:54 PM EST 2026
+----------------------------------------------------
+Initializing conda for script...
+Conda environment activated and isolated:
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                     /home1/adoyle2025/miniconda3
+clrernet                 /home1/adoyle2025/miniconda3/envs/clrernet
+distribution_shift_perception     /home1/adoyle2025/miniconda3/envs/distribution_shift_perception
+dslp_env                 /home1/adoyle2025/miniconda3/envs/dslp_env
+lane_env_cpu             /home1/adoyle2025/miniconda3/envs/lane_env_cpu
+lane_perception_test     /home1/adoyle2025/miniconda3/envs/lane_perception_test
+ml_project           *   /home1/adoyle2025/miniconda3/envs/ml_project
+test_env                 /home1/adoyle2025/miniconda3/envs/test_env
+tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
+
+Starting Unit Test...
+============================================================
+MIXED SHIFT EXPERIMENT VISUALIZER (MICRO)
+============================================================
+
+Found 11 MCE*.log files:
+  - MCE1.log
+  - MCE2.log
+  - MCE3.log
+  - MCE4.log
+  - MCE5.log
+  - MCE6.log
+  - MCE7.log
+  - MCE8.log
+  - MCE9.log
+  - MCE10.log
+  - MCE11.log
+
+Processing files:
+[MCE 1] ✓ (Src=10, Tgt=0, TPR=1.0%)
+[MCE 2] ✓ (Src=9, Tgt=1, TPR=3.0%)
+[MCE 3] ✓ (Src=8, Tgt=2, TPR=9.0%)
+[MCE 4] ✓ (Src=7, Tgt=3, TPR=5.0%)
+[MCE 5] ✓ (Src=6, Tgt=4, TPR=15.0%)
+[MCE 6] ✓ (Src=5, Tgt=5, TPR=56.0%)
+[MCE 7] ✓ (Src=4, Tgt=6, TPR=66.0%)
+[MCE 8] ✓ (Src=3, Tgt=7, TPR=97.0%)
+[MCE 9] ✓ (Src=2, Tgt=8, TPR=100.0%)
+[MCE10] ✓ (Src=1, Tgt=9, TPR=100.0%)
+[MCE11] ✓ (Src=0, Tgt=10, TPR=100.0%)
+
+✓ Successfully loaded 11 experiments: MCE[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+✓ Processing 11 experiments
+
+
+✓ Saved to: figures/mixed_shift_experiments_micro_analysis.png
+
+Mapping (Sequential → MCE):
+   1 → MCE 1 (ratio: 0.00)
+   2 → MCE 2 (ratio: 0.11)
+   3 → MCE 3 (ratio: 0.25)
+   4 → MCE 4 (ratio: 0.43)
+   5 → MCE 5 (ratio: 0.67)
+   6 → MCE 6 (ratio: 1.00)
+   7 → MCE 7 (ratio: 1.50)
+   8 → MCE 8 (ratio: 2.33)
+   9 → MCE 9 (ratio: 4.00)
+  10 → MCE10 (ratio: 9.00)
+  11 → MCE11 (ratio: ∞)
+
+============================================================
+✓ Complete!
+============================================================
+Done!
