@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 156270
-Running on host: gpu05
-Start Time: Fri Jan 30 01:06:30 PM EST 2026
+Slurm Job ID: 156346
+Running on host: gpu07
+Start Time: Fri Jan 30 03:11:12 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,37 +21,532 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Unit Test...
-/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/cuda/__init__.py:827: UserWarning: Can't initialize NVML
-  warnings.warn("Can't initialize NVML")
 CUDA Available: True | Total GPUs Found: 4
 
 Initializing autoencoder on 4 GPUs...
 Successfully initialized DataParallel on GPUs: 0, 1, 2, 3
 [INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [40:50] (10 samples)
-Traceback (most recent call last):
-  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 470, in <module>
-    ShiftExperiment(**vars(args)).run()
-  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 396, in run
-    self.load_source_features()
-  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 212, in load_source_features
-    self.src_feats = extract_features(self.model, loader, self.device)
-  File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 37, in extract_features
-    z = model(imgs, return_encoding=True)
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
-    return forward_call(*args, **kwargs)
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/data_parallel.py", line 193, in forward
-    replicas = self.replicate(self.module, self.device_ids[: len(inputs)])
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/data_parallel.py", line 200, in replicate
-    return replicate(module, device_ids, not torch.is_grad_enabled())
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/replicate.py", line 125, in replicate
-    param_copies = _broadcast_coalesced_reshape(params, devices, detach)
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/replicate.py", line 91, in _broadcast_coalesced_reshape
-    return comm.broadcast_coalesced(tensors, devices)
-  File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/comm.py", line 66, in broadcast_coalesced
-    return torch._C._broadcast_coalesced(tensors, devices, buffer_size)
-RuntimeError: NCCL Error 2: unhandled system error (run with NCCL_DEBUG=INFO for details)
+/home1/adoyle2025/Datasets/Datasets/CULane features loaded. Shape = (10, 256)
+
+[STEP 1] Calibration using /home1/adoyle2025/Datasets/Datasets/CULane...
+Calibrating:   0%|          | 0/100 [00:00<?, ?it/s]Calibrating:   1%|          | 1/100 [00:02<03:50,  2.33s/it]Calibrating:   2%|▏         | 2/100 [00:04<03:44,  2.29s/it]Calibrating:   3%|▎         | 3/100 [00:06<03:42,  2.30s/it]Calibrating:   4%|▍         | 4/100 [00:09<03:39,  2.28s/it]Calibrating:   5%|▌         | 5/100 [00:11<03:34,  2.25s/it]Calibrating:   6%|▌         | 6/100 [00:13<03:32,  2.26s/it]Calibrating:   7%|▋         | 7/100 [00:15<03:30,  2.26s/it]Calibrating:   8%|▊         | 8/100 [00:18<03:28,  2.26s/it]Calibrating:   9%|▉         | 9/100 [00:20<03:24,  2.24s/it]Calibrating:  10%|█         | 10/100 [00:22<03:23,  2.26s/it]Calibrating:  11%|█         | 11/100 [00:24<03:20,  2.25s/it]Calibrating:  12%|█▏        | 12/100 [00:27<03:17,  2.24s/it]Calibrating:  13%|█▎        | 13/100 [00:29<03:14,  2.23s/it]Calibrating:  14%|█▍        | 14/100 [00:31<03:12,  2.24s/it]Calibrating:  15%|█▌        | 15/100 [00:33<03:11,  2.25s/it]Calibrating:  16%|█▌        | 16/100 [00:36<03:07,  2.23s/it]Calibrating:  17%|█▋        | 17/100 [00:38<03:04,  2.23s/it]Calibrating:  18%|█▊        | 18/100 [00:40<03:02,  2.23s/it]Calibrating:  19%|█▉        | 19/100 [00:42<03:00,  2.23s/it]Calibrating:  20%|██        | 20/100 [00:44<02:57,  2.22s/it]Calibrating:  21%|██        | 21/100 [00:47<02:55,  2.22s/it]Calibrating:  22%|██▏       | 22/100 [00:49<02:54,  2.23s/it]Calibrating:  23%|██▎       | 23/100 [00:51<02:51,  2.23s/it]Calibrating:  24%|██▍       | 24/100 [00:53<02:51,  2.26s/it]Calibrating:  25%|██▌       | 25/100 [00:56<02:49,  2.26s/it]Calibrating:  26%|██▌       | 26/100 [00:58<02:47,  2.27s/it]Calibrating:  27%|██▋       | 27/100 [01:00<02:45,  2.26s/it]Calibrating:  28%|██▊       | 28/100 [01:03<02:42,  2.26s/it]Calibrating:  29%|██▉       | 29/100 [01:05<02:39,  2.25s/it]Calibrating:  30%|███       | 30/100 [01:07<02:38,  2.27s/it]Calibrating:  31%|███       | 31/100 [01:09<02:35,  2.25s/it]Calibrating:  32%|███▏      | 32/100 [01:11<02:32,  2.24s/it]Calibrating:  33%|███▎      | 33/100 [01:14<02:30,  2.24s/it]Calibrating:  34%|███▍      | 34/100 [01:16<02:27,  2.24s/it]Calibrating:  35%|███▌      | 35/100 [01:18<02:25,  2.23s/it]Calibrating:  36%|███▌      | 36/100 [01:20<02:24,  2.25s/it]Calibrating:  37%|███▋      | 37/100 [01:23<02:21,  2.25s/it]Calibrating:  38%|███▊      | 38/100 [01:25<02:20,  2.26s/it]Calibrating:  39%|███▉      | 39/100 [01:27<02:18,  2.27s/it]Calibrating:  40%|████      | 40/100 [01:30<02:15,  2.26s/it]Calibrating:  41%|████      | 41/100 [01:32<02:14,  2.28s/it]Calibrating:  42%|████▏     | 42/100 [01:34<02:10,  2.26s/it]Calibrating:  43%|████▎     | 43/100 [01:36<02:07,  2.24s/it]Calibrating:  44%|████▍     | 44/100 [01:38<02:04,  2.23s/it]Calibrating:  45%|████▌     | 45/100 [01:41<02:04,  2.26s/it]Calibrating:  46%|████▌     | 46/100 [01:43<02:00,  2.23s/it]Calibrating:  47%|████▋     | 47/100 [01:45<01:58,  2.24s/it]Calibrating:  48%|████▊     | 48/100 [01:47<01:56,  2.24s/it]Calibrating:  49%|████▉     | 49/100 [01:50<01:54,  2.24s/it]Calibrating:  50%|█████     | 50/100 [01:52<01:53,  2.27s/it]Calibrating:  51%|█████     | 51/100 [01:54<01:51,  2.28s/it]Calibrating:  52%|█████▏    | 52/100 [01:57<01:49,  2.28s/it]Calibrating:  53%|█████▎    | 53/100 [01:59<01:46,  2.27s/it]Calibrating:  54%|█████▍    | 54/100 [02:01<01:44,  2.27s/it]Calibrating:  55%|█████▌    | 55/100 [02:03<01:41,  2.26s/it]Calibrating:  56%|█████▌    | 56/100 [02:06<01:39,  2.26s/it]Calibrating:  57%|█████▋    | 57/100 [02:08<01:37,  2.26s/it]Calibrating:  58%|█████▊    | 58/100 [02:10<01:34,  2.25s/it]Calibrating:  59%|█████▉    | 59/100 [02:12<01:32,  2.26s/it]Calibrating:  60%|██████    | 60/100 [02:15<01:30,  2.26s/it]Calibrating:  61%|██████    | 61/100 [02:17<01:27,  2.24s/it]Calibrating:  62%|██████▏   | 62/100 [02:19<01:25,  2.25s/it]Calibrating:  63%|██████▎   | 63/100 [02:21<01:24,  2.28s/it]Calibrating:  64%|██████▍   | 64/100 [02:24<01:21,  2.28s/it]Calibrating:  65%|██████▌   | 65/100 [02:26<01:19,  2.27s/it]Calibrating:  66%|██████▌   | 66/100 [02:28<01:17,  2.27s/it]Calibrating:  67%|██████▋   | 67/100 [02:31<01:15,  2.27s/it]Calibrating:  68%|██████▊   | 68/100 [02:33<01:12,  2.25s/it]Calibrating:  69%|██████▉   | 69/100 [02:35<01:09,  2.25s/it]Calibrating:  70%|███████   | 70/100 [02:37<01:07,  2.25s/it]Calibrating:  71%|███████   | 71/100 [02:40<01:05,  2.25s/it]Calibrating:  72%|███████▏  | 72/100 [02:42<01:03,  2.26s/it]Calibrating:  73%|███████▎  | 73/100 [02:44<01:00,  2.24s/it]Calibrating:  74%|███████▍  | 74/100 [02:46<00:58,  2.24s/it]Calibrating:  75%|███████▌  | 75/100 [02:49<00:56,  2.26s/it]Calibrating:  76%|███████▌  | 76/100 [02:51<00:54,  2.26s/it]Calibrating:  77%|███████▋  | 77/100 [02:53<00:52,  2.26s/it]Calibrating:  78%|███████▊  | 78/100 [02:55<00:50,  2.27s/it]Calibrating:  79%|███████▉  | 79/100 [02:58<00:47,  2.27s/it]Calibrating:  80%|████████  | 80/100 [03:00<00:45,  2.27s/it]Calibrating:  81%|████████  | 81/100 [03:02<00:43,  2.27s/it]Calibrating:  82%|████████▏ | 82/100 [03:04<00:40,  2.27s/it]Calibrating:  83%|████████▎ | 83/100 [03:07<00:38,  2.27s/it]Calibrating:  84%|████████▍ | 84/100 [03:09<00:35,  2.25s/it]Calibrating:  85%|████████▌ | 85/100 [03:11<00:33,  2.23s/it]Calibrating:  86%|████████▌ | 86/100 [03:13<00:31,  2.24s/it]Calibrating:  87%|████████▋ | 87/100 [03:16<00:28,  2.23s/it]Calibrating:  88%|████████▊ | 88/100 [03:18<00:26,  2.23s/it]Calibrating:  89%|████████▉ | 89/100 [03:20<00:24,  2.23s/it]Calibrating:  90%|█████████ | 90/100 [03:22<00:22,  2.22s/it]Calibrating:  91%|█████████ | 91/100 [03:24<00:20,  2.22s/it]Calibrating:  92%|█████████▏| 92/100 [03:27<00:17,  2.21s/it]Calibrating:  93%|█████████▎| 93/100 [03:29<00:15,  2.22s/it]Calibrating:  94%|█████████▍| 94/100 [03:31<00:13,  2.22s/it]Calibrating:  95%|█████████▌| 95/100 [03:33<00:11,  2.23s/it]Calibrating:  96%|█████████▌| 96/100 [03:36<00:08,  2.23s/it]Calibrating:  97%|█████████▋| 97/100 [03:38<00:06,  2.22s/it]Calibrating:  98%|█████████▊| 98/100 [03:40<00:04,  2.23s/it]Calibrating:  99%|█████████▉| 99/100 [03:42<00:02,  2.23s/it]Calibrating: 100%|██████████| 100/100 [03:44<00:00,  2.21s/it]Calibrating: 100%|██████████| 100/100 [03:44<00:00,  2.25s/it]
+
+[RESULT] τ(0.95) = 0.142224
+Mean MMD (same-distribution): 0.122170 ± 0.013121
+
+[STEP 2] Sanity Check...
+[SANITY CHECK] MMD(/home1/adoyle2025/Datasets/Datasets/CULaneto/home1/adoyle2025/Datasets/Datasets/CULane) = 0.120070, τ = 0.142224
+No shift detected.
+
+[STEP 3] Data Shift Test: /home1/adoyle2025/Datasets/Datasets/CULane to (5) /home1/adoyle2025/Datasets/Datasets/Curvelanes + (5) /home1/adoyle2025/Datasets/Datasets/CULane, Noise applied: None
+
+Shift Testing:   0%|          | 0/100 [00:00<?, ?it/s][INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   1%|          | 1/100 [00:02<03:45,  2.28s/it][RUN 1] MMD=0.125920 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   2%|▏         | 2/100 [00:04<03:54,  2.39s/it][RUN 2] MMD=0.150419 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   3%|▎         | 3/100 [00:07<03:52,  2.40s/it][RUN 3] MMD=0.126231 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   4%|▍         | 4/100 [00:09<03:49,  2.40s/it][RUN 4] MMD=0.109447 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   5%|▌         | 5/100 [00:11<03:48,  2.41s/it][RUN 5] MMD=0.128557 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   6%|▌         | 6/100 [00:14<03:50,  2.46s/it][RUN 6] MMD=0.153163 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   7%|▋         | 7/100 [00:16<03:48,  2.46s/it][RUN 7] MMD=0.139915 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   8%|▊         | 8/100 [00:19<03:44,  2.44s/it][RUN 8] MMD=0.114206 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:   9%|▉         | 9/100 [00:21<03:40,  2.42s/it][RUN 9] MMD=0.164060 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  10%|█         | 10/100 [00:24<03:38,  2.42s/it][RUN 10] MMD=0.114533 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  11%|█         | 11/100 [00:26<03:36,  2.43s/it][RUN 11] MMD=0.155251 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  12%|█▏        | 12/100 [00:29<03:33,  2.42s/it][RUN 12] MMD=0.151930 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  13%|█▎        | 13/100 [00:31<03:31,  2.43s/it][RUN 13] MMD=0.162211 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  14%|█▍        | 14/100 [00:33<03:27,  2.42s/it][RUN 14] MMD=0.125822 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  15%|█▌        | 15/100 [00:36<03:26,  2.43s/it][RUN 15] MMD=0.139478 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  16%|█▌        | 16/100 [00:38<03:23,  2.42s/it][RUN 16] MMD=0.147779 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  17%|█▋        | 17/100 [00:41<03:22,  2.45s/it][RUN 17] MMD=0.169138 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  18%|█▊        | 18/100 [00:43<03:20,  2.44s/it][RUN 18] MMD=0.125815 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  19%|█▉        | 19/100 [00:46<03:18,  2.45s/it][RUN 19] MMD=0.145163 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  20%|██        | 20/100 [00:48<03:16,  2.45s/it][RUN 20] MMD=0.165845 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  21%|██        | 21/100 [00:51<03:14,  2.46s/it][RUN 21] MMD=0.154114 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  22%|██▏       | 22/100 [00:53<03:11,  2.46s/it][RUN 22] MMD=0.165032 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  23%|██▎       | 23/100 [00:56<03:11,  2.49s/it][RUN 23] MMD=0.159363 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  24%|██▍       | 24/100 [00:58<03:09,  2.49s/it][RUN 24] MMD=0.115110 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  25%|██▌       | 25/100 [01:01<03:05,  2.47s/it][RUN 25] MMD=0.153238 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  26%|██▌       | 26/100 [01:03<03:02,  2.46s/it][RUN 26] MMD=0.141797 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  27%|██▋       | 27/100 [01:05<02:58,  2.45s/it][RUN 27] MMD=0.120165 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  28%|██▊       | 28/100 [01:08<02:55,  2.44s/it][RUN 28] MMD=0.145223 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  29%|██▉       | 29/100 [01:10<02:55,  2.47s/it][RUN 29] MMD=0.124980 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  30%|███       | 30/100 [01:13<02:51,  2.45s/it][RUN 30] MMD=0.133673 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  31%|███       | 31/100 [01:15<02:48,  2.44s/it][RUN 31] MMD=0.145282 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  32%|███▏      | 32/100 [01:18<02:46,  2.45s/it][RUN 32] MMD=0.138276 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  33%|███▎      | 33/100 [01:20<02:44,  2.45s/it][RUN 33] MMD=0.175850 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  34%|███▍      | 34/100 [01:23<02:40,  2.44s/it][RUN 34] MMD=0.134004 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  35%|███▌      | 35/100 [01:25<02:38,  2.44s/it][RUN 35] MMD=0.144551 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  36%|███▌      | 36/100 [01:27<02:37,  2.46s/it][RUN 36] MMD=0.164199 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  37%|███▋      | 37/100 [01:30<02:35,  2.47s/it][RUN 37] MMD=0.158421 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  38%|███▊      | 38/100 [01:32<02:33,  2.47s/it][RUN 38] MMD=0.160561 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  39%|███▉      | 39/100 [01:35<02:30,  2.46s/it][RUN 39] MMD=0.145303 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  40%|████      | 40/100 [01:37<02:28,  2.47s/it][RUN 40] MMD=0.152670 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  41%|████      | 41/100 [01:40<02:25,  2.47s/it][RUN 41] MMD=0.111999 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  42%|████▏     | 42/100 [01:42<02:22,  2.45s/it][RUN 42] MMD=0.163991 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  43%|████▎     | 43/100 [01:45<02:19,  2.45s/it][RUN 43] MMD=0.140118 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  44%|████▍     | 44/100 [01:47<02:16,  2.43s/it][RUN 44] MMD=0.169464 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  45%|████▌     | 45/100 [01:50<02:14,  2.45s/it][RUN 45] MMD=0.127697 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  46%|████▌     | 46/100 [01:52<02:12,  2.45s/it][RUN 46] MMD=0.117395 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  47%|████▋     | 47/100 [01:54<02:09,  2.44s/it][RUN 47] MMD=0.147026 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  48%|████▊     | 48/100 [01:57<02:07,  2.45s/it][RUN 48] MMD=0.125164 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  49%|████▉     | 49/100 [01:59<02:04,  2.45s/it][RUN 49] MMD=0.169010 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  50%|█████     | 50/100 [02:02<02:01,  2.43s/it][RUN 50] MMD=0.134897 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  51%|█████     | 51/100 [02:04<01:59,  2.44s/it][RUN 51] MMD=0.148671 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  52%|█████▏    | 52/100 [02:07<01:58,  2.46s/it][RUN 52] MMD=0.156917 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  53%|█████▎    | 53/100 [02:09<01:54,  2.44s/it][RUN 53] MMD=0.157688 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  54%|█████▍    | 54/100 [02:12<01:52,  2.44s/it][RUN 54] MMD=0.134513 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  55%|█████▌    | 55/100 [02:14<01:50,  2.46s/it][RUN 55] MMD=0.132982 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  56%|█████▌    | 56/100 [02:17<01:48,  2.47s/it][RUN 56] MMD=0.128719 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  57%|█████▋    | 57/100 [02:19<01:46,  2.47s/it][RUN 57] MMD=0.164802 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  58%|█████▊    | 58/100 [02:22<01:44,  2.48s/it][RUN 58] MMD=0.141871 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  59%|█████▉    | 59/100 [02:24<01:42,  2.49s/it][RUN 59] MMD=0.126482 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  60%|██████    | 60/100 [02:26<01:39,  2.48s/it][RUN 60] MMD=0.137531 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  61%|██████    | 61/100 [02:29<01:36,  2.48s/it][RUN 61] MMD=0.145629 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  62%|██████▏   | 62/100 [02:31<01:34,  2.48s/it][RUN 62] MMD=0.155653 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  63%|██████▎   | 63/100 [02:34<01:31,  2.47s/it][RUN 63] MMD=0.130963 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  64%|██████▍   | 64/100 [02:36<01:28,  2.46s/it][RUN 64] MMD=0.170165 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  65%|██████▌   | 65/100 [02:39<01:26,  2.47s/it][RUN 65] MMD=0.102191 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  66%|██████▌   | 66/100 [02:41<01:23,  2.46s/it][RUN 66] MMD=0.130306 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  67%|██████▋   | 67/100 [02:44<01:21,  2.46s/it][RUN 67] MMD=0.132510 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  68%|██████▊   | 68/100 [02:46<01:18,  2.44s/it][RUN 68] MMD=0.135839 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  69%|██████▉   | 69/100 [02:49<01:15,  2.43s/it][RUN 69] MMD=0.139679 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  70%|███████   | 70/100 [02:51<01:13,  2.43s/it][RUN 70] MMD=0.152278 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  71%|███████   | 71/100 [02:53<01:10,  2.45s/it][RUN 71] MMD=0.098247 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  72%|███████▏  | 72/100 [02:56<01:08,  2.46s/it][RUN 72] MMD=0.146112 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  73%|███████▎  | 73/100 [02:58<01:06,  2.45s/it][RUN 73] MMD=0.131166 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  74%|███████▍  | 74/100 [03:01<01:03,  2.45s/it][RUN 74] MMD=0.112708 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  75%|███████▌  | 75/100 [03:03<01:01,  2.44s/it][RUN 75] MMD=0.177881 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  76%|███████▌  | 76/100 [03:06<00:58,  2.45s/it][RUN 76] MMD=0.122764 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  77%|███████▋  | 77/100 [03:08<00:56,  2.44s/it][RUN 77] MMD=0.156429 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  78%|███████▊  | 78/100 [03:10<00:53,  2.42s/it][RUN 78] MMD=0.149820 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  79%|███████▉  | 79/100 [03:13<00:51,  2.43s/it][RUN 79] MMD=0.150961 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  80%|████████  | 80/100 [03:15<00:48,  2.44s/it][RUN 80] MMD=0.130209 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  81%|████████  | 81/100 [03:18<00:46,  2.44s/it][RUN 81] MMD=0.140427 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  82%|████████▏ | 82/100 [03:20<00:43,  2.43s/it][RUN 82] MMD=0.131996 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  83%|████████▎ | 83/100 [03:23<00:41,  2.44s/it][RUN 83] MMD=0.138819 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  84%|████████▍ | 84/100 [03:25<00:39,  2.45s/it][RUN 84] MMD=0.155476 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  85%|████████▌ | 85/100 [03:28<00:36,  2.45s/it][RUN 85] MMD=0.131696 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  86%|████████▌ | 86/100 [03:30<00:34,  2.45s/it][RUN 86] MMD=0.129158 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  87%|████████▋ | 87/100 [03:33<00:31,  2.45s/it][RUN 87] MMD=0.114127 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  88%|████████▊ | 88/100 [03:35<00:29,  2.45s/it][RUN 88] MMD=0.132303 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  89%|████████▉ | 89/100 [03:37<00:26,  2.45s/it][RUN 89] MMD=0.127719 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  90%|█████████ | 90/100 [03:40<00:24,  2.45s/it][RUN 90] MMD=0.133552 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  91%|█████████ | 91/100 [03:42<00:22,  2.46s/it][RUN 91] MMD=0.128135 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  92%|█████████▏| 92/100 [03:45<00:19,  2.48s/it][RUN 92] MMD=0.135929 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  93%|█████████▎| 93/100 [03:47<00:17,  2.48s/it][RUN 93] MMD=0.129535 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  94%|█████████▍| 94/100 [03:50<00:14,  2.49s/it][RUN 94] MMD=0.129885 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  95%|█████████▌| 95/100 [03:52<00:12,  2.50s/it][RUN 95] MMD=0.149927 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  96%|█████████▌| 96/100 [03:55<00:09,  2.48s/it][RUN 96] MMD=0.154534 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  97%|█████████▋| 97/100 [03:57<00:07,  2.47s/it][RUN 97] MMD=0.141487 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  98%|█████████▊| 98/100 [04:00<00:04,  2.47s/it][RUN 98] MMD=0.126402 ❌
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing:  99%|█████████▉| 99/100 [04:02<00:02,  2.47s/it][RUN 99] MMD=0.162578 ✅
+[INFO] Mixed Dataloader Configuration:
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [20:25] (5 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes) → [20:25] (5 samples)
+[INFO] Total combined samples: 10
+Shift Testing: 100%|██████████| 100/100 [04:05<00:00,  2.47s/it]Shift Testing: 100%|██████████| 100/100 [04:05<00:00,  2.45s/it]
+[RUN 100] MMD=0.149583 ✅
+
+[RESULTS] Data Shift detection summary
+Noise Applied: None
+Average MMD: 0.140984 ± 0.016891
+TPR (true positive rate) over 100 runs: 45.00%
+[Data Logger] Added new experiment. Total experiments: 7
 ----------------------------------------------------
-Job finished: Fri Jan 30 01:08:09 PM EST 2026
+Job finished: Fri Jan 30 03:19:26 PM EST 2026
 ----------------------------------------------------

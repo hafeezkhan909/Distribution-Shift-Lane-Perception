@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 156271
+Slurm Job ID: 156359
 Running on host: gpu05
-Start Time: Fri Jan 30 01:08:10 PM EST 2026
+Start Time: Fri Jan 30 03:29:46 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -27,7 +27,7 @@ CUDA Available: True | Total GPUs Found: 4
 
 Initializing autoencoder on 4 GPUs...
 Successfully initialized DataParallel on GPUs: 0, 1, 2, 3
-[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [40:50] (10 samples)
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [4000:5000] (1000 samples)
 Traceback (most recent call last):
   File "/home1/adoyle2025/Distribution-Shift-Lane-Perception/shift_concat_experiment.py", line 470, in <module>
     ShiftExperiment(**vars(args)).run()
@@ -52,6 +52,3 @@ Traceback (most recent call last):
   File "/home1/adoyle2025/miniconda3/envs/ml_project/lib/python3.10/site-packages/torch/nn/parallel/comm.py", line 66, in broadcast_coalesced
     return torch._C._broadcast_coalesced(tensors, devices, buffer_size)
 RuntimeError: NCCL Error 2: unhandled system error (run with NCCL_DEBUG=INFO for details)
-----------------------------------------------------
-Job finished: Fri Jan 30 01:09:49 PM EST 2026
-----------------------------------------------------

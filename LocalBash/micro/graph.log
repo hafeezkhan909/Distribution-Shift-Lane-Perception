@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 156374
+Slurm Job ID: 156373
 Running on host: node01
-Start Time: Fri Jan 30 03:04:12 PM EST 2026
+Start Time: Fri Jan 30 03:00:14 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -22,28 +22,32 @@ tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Unit Test...
 ============================================================
-MIXED SHIFT EXPERIMENT VISUALIZER (MINI)
+MIXED SHIFT EXPERIMENT VISUALIZER (MICRO)
 ============================================================
 
-Found 3 CSE*_mini.log files:
-  - CSE4_mini.log
-  - CSE5_mini.log
-  - CSE7_mini.log
+Found 4 MCE*.log files:
+  - MCE2.log
+  - MCE3.log
+  - MCE8.log
+  - MCE9.log
 
 Processing files:
-[CSE 4] ✓ (Src=70, Tgt=30, TPR=0.0%)
-[CSE 5] ✓ (Src=60, Tgt=40, TPR=0.0%)
-[CSE 7] ✗ Failed to parse
+[MCE 2] ✓ (Src=9, Tgt=1, TPR=8.0%)
+[MCE 3] ✓ (Src=8, Tgt=2, TPR=5.0%)
+[MCE 8] ✓ (Src=3, Tgt=7, TPR=79.0%)
+[MCE 9] ✓ (Src=2, Tgt=8, TPR=63.0%)
 
-✓ Successfully loaded 2 experiments: CSE[4, 5]
-✓ Processing 2 experiments
+✓ Successfully loaded 4 experiments: MCE[2, 3, 8, 9]
+✓ Processing 4 experiments
 
 
-✓ Saved to: figures/mixed_shift_experiments_mini_analysis.png
+✓ Saved to: figures/mixed_shift_experiments_micro_analysis.png
 
-Mapping (Sequential → CSE):
-   1 → CSE 4 (ratio: 0.43)
-   2 → CSE 5 (ratio: 0.67)
+Mapping (Sequential → MCE):
+   1 → MCE 2 (ratio: 0.11)
+   2 → MCE 3 (ratio: 0.25)
+   3 → MCE 8 (ratio: 2.33)
+   4 → MCE 9 (ratio: 4.00)
 
 ============================================================
 ✓ Complete!
