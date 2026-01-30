@@ -1,0 +1,32 @@
+----------------------------------------------------
+Slurm Job ID: 156272
+Running on host: gpu07
+Start Time: Fri Jan 30 01:09:29 PM EST 2026
+----------------------------------------------------
+Initializing conda for script...
+Conda environment activated and isolated:
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                     /home1/adoyle2025/miniconda3
+clrernet                 /home1/adoyle2025/miniconda3/envs/clrernet
+distribution_shift_perception     /home1/adoyle2025/miniconda3/envs/distribution_shift_perception
+dslp_env                 /home1/adoyle2025/miniconda3/envs/dslp_env
+lane_env_cpu             /home1/adoyle2025/miniconda3/envs/lane_env_cpu
+lane_perception_test     /home1/adoyle2025/miniconda3/envs/lane_perception_test
+ml_project           *   /home1/adoyle2025/miniconda3/envs/ml_project
+test_env                 /home1/adoyle2025/miniconda3/envs/test_env
+tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
+
+Starting Unit Test...
+CUDA Available: True | Total GPUs Found: 4
+
+Initializing autoencoder on 4 GPUs...
+Successfully initialized DataParallel on GPUs: 0, 1, 2, 3
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [40:50] (10 samples)
+/home1/adoyle2025/Datasets/Datasets/CULane features loaded. Shape = (10, 256)
+
+[STEP 1] Calibration using /home1/adoyle2025/Datasets/Datasets/CULane...
+Calibrating:   0%|          | 0/100 [00:00<?, ?it/s]Calibrating:   1%|          | 1/100 [00:02<03:45,  2.28s/it]Calibrating:   2%|▏         | 2/100 [00:04<03:39,  2.24s/it]Calibrating:   3%|▎         | 3/100 [00:06<03:35,  2.22s/it]Calibrating:   4%|▍         | 4/100 [00:08<03:33,  2.23s/it]Calibrating:   5%|▌         | 5/100 [00:11<03:31,  2.23s/it]Calibrating:   6%|▌         | 6/100 [00:13<03:30,  2.24s/it]Calibrating:   7%|▋         | 7/100 [00:15<03:27,  2.23s/it]Calibrating:   8%|▊         | 8/100 [00:17<03:24,  2.22s/it]Calibrating:   9%|▉         | 9/100 [00:20<03:23,  2.23s/it]Calibrating:  10%|█         | 10/100 [00:22<03:20,  2.23s/it]Calibrating:  11%|█         | 11/100 [00:24<03:17,  2.22s/it]Calibrating:  12%|█▏        | 12/100 [00:26<03:15,  2.22s/it]Calibrating:  13%|█▎        | 13/100 [00:28<03:12,  2.21s/it]Calibrating:  14%|█▍        | 14/100 [00:31<03:10,  2.21s/it]Calibrating:  15%|█▌        | 15/100 [00:33<03:08,  2.21s/it]Calibrating:  16%|█▌        | 16/100 [00:35<03:06,  2.22s/it]Calibrating:  17%|█▋        | 17/100 [00:37<03:03,  2.21s/it]Calibrating:  18%|█▊        | 18/100 [00:39<02:59,  2.19s/it]Calibrating:  19%|█▉        | 19/100 [00:42<02:58,  2.21s/it]Calibrating:  20%|██        | 20/100 [00:44<02:56,  2.20s/it]Calibrating:  21%|██        | 21/100 [00:46<02:55,  2.22s/it]Calibrating:  22%|██▏       | 22/100 [00:48<02:55,  2.24s/it]Calibrating:  23%|██▎       | 23/100 [00:51<02:52,  2.23s/it]Calibrating:  24%|██▍       | 24/100 [00:53<02:47,  2.21s/it]Calibrating:  25%|██▌       | 25/100 [00:55<02:45,  2.21s/it]Calibrating:  26%|██▌       | 26/100 [00:57<02:45,  2.23s/it]Calibrating:  27%|██▋       | 27/100 [01:00<02:44,  2.25s/it]Calibrating:  28%|██▊       | 28/100 [01:02<02:42,  2.26s/it]Calibrating:  29%|██▉       | 29/100 [01:04<02:39,  2.25s/it]Calibrating:  30%|███       | 30/100 [01:06<02:36,  2.23s/it]Calibrating:  31%|███       | 31/100 [01:08<02:33,  2.22s/it]Calibrating:  32%|███▏      | 32/100 [01:11<02:30,  2.21s/it]Calibrating:  33%|███▎      | 33/100 [01:13<02:27,  2.21s/it]Calibrating:  34%|███▍      | 34/100 [01:15<02:25,  2.20s/it]Calibrating:  35%|███▌      | 35/100 [01:17<02:22,  2.20s/it]Calibrating:  36%|███▌      | 36/100 [01:19<02:21,  2.21s/it]Calibrating:  37%|███▋      | 37/100 [01:22<02:19,  2.22s/it]Calibrating:  38%|███▊      | 38/100 [01:24<02:16,  2.21s/it]Calibrating:  39%|███▉      | 39/100 [01:26<02:14,  2.21s/it]Calibrating:  40%|████      | 40/100 [01:28<02:13,  2.23s/it]Calibrating:  41%|████      | 41/100 [01:31<02:11,  2.23s/it]Calibrating:  42%|████▏     | 42/100 [01:33<02:08,  2.22s/it]
