@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 156373
+Slurm Job ID: 157916
 Running on host: node01
-Start Time: Fri Jan 30 03:00:14 PM EST 2026
+Start Time: Sun Feb  1 03:55:26 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,35 +21,3 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Unit Test...
-============================================================
-MIXED SHIFT EXPERIMENT VISUALIZER (MICRO)
-============================================================
-
-Found 4 MCE*.log files:
-  - MCE2.log
-  - MCE3.log
-  - MCE8.log
-  - MCE9.log
-
-Processing files:
-[MCE 2] ✓ (Src=9, Tgt=1, TPR=8.0%)
-[MCE 3] ✓ (Src=8, Tgt=2, TPR=5.0%)
-[MCE 8] ✓ (Src=3, Tgt=7, TPR=79.0%)
-[MCE 9] ✓ (Src=2, Tgt=8, TPR=63.0%)
-
-✓ Successfully loaded 4 experiments: MCE[2, 3, 8, 9]
-✓ Processing 4 experiments
-
-
-✓ Saved to: figures/mixed_shift_experiments_micro_analysis.png
-
-Mapping (Sequential → MCE):
-   1 → MCE 2 (ratio: 0.11)
-   2 → MCE 3 (ratio: 0.25)
-   3 → MCE 8 (ratio: 2.33)
-   4 → MCE 9 (ratio: 4.00)
-
-============================================================
-✓ Complete!
-============================================================
-Done!

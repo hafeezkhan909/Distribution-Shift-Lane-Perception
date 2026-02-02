@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 155912
-Running on host: node01
-Start Time: Thu Jan 29 07:50:33 PM EST 2026
+Slurm Job ID: 157980
+Running on host: node14
+Start Time: Sun Feb  1 11:19:57 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -54,10 +54,10 @@ Processing files:
 [CCE 8] ✓ (Src=10, Tgt=990, TPR=100.0%)
 [CCE 9] ✓ (Src=10, Tgt=990, TPR=100.0%)
 [CCE10] ✓ (Src=400, Tgt=600, TPR=100.0%)
-[CCE11] ✓ (Src=450, Tgt=550, TPR=0.0%)
+[CCE11] ✓ (Src=450, Tgt=550, TPR=100.0%)
 [CCE12] ✓ (Src=300, Tgt=700, TPR=100.0%)
 [CCE13] ✓ (Src=440, Tgt=560, TPR=100.0%)
-[CCE14] ✓ (Src=430, Tgt=570, TPR=100.0%)
+[CCE14] ✓ (Src=430, Tgt=570, TPR=98.0%)
 [CCE15] ✓ (Src=420, Tgt=580, TPR=100.0%)
 [CCE16] ✓ (Src=455, Tgt=545, TPR=100.0%)
 

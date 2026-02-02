@@ -9,6 +9,7 @@
 #SBATCH --gres=gpu:4
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
+#SBATCH --exclude=gpu05
 #
     
 # --- Job Execution ---
