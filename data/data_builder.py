@@ -344,7 +344,7 @@ def get_concat_dataloader(
     print(f"[INFO] Total combined samples: {len(combined_dataset)}")
     
     # Use the first batch_size (or make batch_size a single int parameter)
-    batch_size = batch_sizes[0] if isinstance(batch_sizes, list) else batch_sizes
+    batch_size = batch_sizes[0]
     
     combined_dataloader = DataLoader(
         combined_dataset,
