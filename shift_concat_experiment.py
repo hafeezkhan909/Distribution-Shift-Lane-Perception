@@ -3,6 +3,7 @@ import numpy as np
 from tqdm import trange
 import torch
 from models.autoencoder import ConvAutoencoderFC
+from models.autoencoder32 import ConvAutoencoderFC32
 import argparse
 
 from data.data_utils import (
@@ -77,6 +78,7 @@ class ShiftExperiment:
         file_location: str = "./",
         file_style: JsonStyle = 4,
         save_all_image_paths: bool = False,
+        32dimensional: bool = False,
     ):
         self.source_dir = source_dir
         self.target_dir = target_dir
@@ -138,6 +140,7 @@ class ShiftExperiment:
             "height_shift_frac": height_shift_frac,
             "shear_angle": shear_angle,
             "zoom_factor": zoom_factor,
+            "32dimensional": 32dimensional
         }
 
         self.loggerExperimentalData: JsonDict = {}
@@ -149,7 +152,10 @@ class ShiftExperiment:
         
         # --- Model Initialization ---
         print("\nInitializing autoencoder on 4 GPUs...")
-        base_model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(self.device)
+        if 32dimensional:
+            base_model = ConvAutoencoderFC32(latent_dim=512, pretrained=True).to(self.device)
+        else:
+            base_model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(self.device)
 
         if num_gpus >= 4:
             # Explicitly use device IDs 0, 1, 2, and 3
@@ -486,6 +492,7 @@ if __name__ == "__main__":
     parser.add_argument("--width_shift_frac", type=float, default=0.2)
     parser.add_argument("--height_shift_frac", type=float, default=0.2)
     parser.add_argument("--save_all_image_paths", type=bool, default=False)
+    parser.add_argument("--32dimensional", type=bool, default=False)
     parser.add_argument(
         "--file_location",
         type=str,
