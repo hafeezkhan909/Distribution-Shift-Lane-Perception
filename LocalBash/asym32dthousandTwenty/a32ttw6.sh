@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # --- Slurm Job Configuration ---
-#SBATCH --job-name=32T2
+#SBATCH --job-name=a32ttw6
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --output=32T2.log
+#SBATCH --output=a32ttw6.log
 #SBATCH --partition=gpu2
 #SBATCH --gres=gpu:4
 #SBATCH --cpus-per-task=16
@@ -16,6 +16,7 @@ echo "----------------------------------------------------"
 echo "Slurm Job ID: $SLURM_JOB_ID"
 echo "Running on host: $(hostname)"
 echo "Start Time: $(date)"
+echo "Experiment 6: Src=50% (10 samples), Tgt=50% (10 samples)"
 echo "----------------------------------------------------"
 
 
@@ -39,17 +40,17 @@ python shift_concat_experiment.py \
     --source_list_path /home1/adoyle2025/Datasets/Datasets/CULane/list/train.txt \
     --target_list_path /home1/adoyle2025/Datasets/Datasets/Curvelanes/train/train.txt \
     --source_test_list_path /home1/adoyle2025/Datasets/Datasets/CULane/list/test.txt \
-    --src_samples 10 \
-    --tgt_samples 10 \
-    --ratio_src_samples 9 \
-    --ratio_tgt_samples 1 \
+    --src_samples 1000 \
+    --tgt_samples 20 \
+    --ratio_src_samples 10 \
+    --ratio_tgt_samples 10 \
     --num_runs 100 \
     --block_idx 4 \
     --seed_base 32 \
     --batch_size 4096 \
     --thirty_two_dimensional True \
     --save_all_image_paths True \
-    --file_name "mixed_shift_experiment_32dimension_ten.json"
+    --file_name "a32ttw.json"
 
 echo "----------------------------------------------------"
 echo "Job finished: $(date)"

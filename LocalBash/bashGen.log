@@ -1,0 +1,51 @@
+----------------------------------------------------
+Slurm Job ID: 158474
+Running on host: node01
+Start Time: Wed Feb  4 02:45:10 PM EST 2026
+----------------------------------------------------
+========================================
+Generating ratio experiment scripts...
+Total samples (k): 20
+========================================
+Creating Experiment 1: Src=0% (0), Tgt=100% (20)
+Creating Experiment 2: Src=10% (2), Tgt=90% (18)
+Creating Experiment 3: Src=20% (4), Tgt=80% (16)
+Creating Experiment 4: Src=30% (6), Tgt=70% (14)
+Creating Experiment 5: Src=40% (8), Tgt=60% (12)
+Creating Experiment 6: Src=50% (10), Tgt=50% (10)
+Creating Experiment 7: Src=60% (12), Tgt=40% (8)
+Creating Experiment 8: Src=70% (14), Tgt=30% (6)
+Creating Experiment 9: Src=80% (16), Tgt=20% (4)
+Creating Experiment 10: Src=90% (18), Tgt=10% (2)
+Creating Experiment 11: Src=100% (20), Tgt=0% (0)
+========================================
+Generated 11 scripts successfully!
+
+Generated files:
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw10.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw11.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw1.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw2.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw3.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw4.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw5.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw6.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw7.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw8.sh
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty/a32ttw9.sh
+
+To submit all jobs:
+  for script in a32ttw*.sh; do sbatch $script; done
+
+To submit individually:
+  sbatch a32ttw1.sh
+  sbatch a32ttw2.sh
+  sbatch a32ttw3.sh
+  sbatch a32ttw4.sh
+  sbatch a32ttw5.sh
+  sbatch a32ttw6.sh
+  sbatch a32ttw7.sh
+  sbatch a32ttw8.sh
+  sbatch a32ttw9.sh
+  sbatch a32ttw10.sh
+  sbatch a32ttw11.sh

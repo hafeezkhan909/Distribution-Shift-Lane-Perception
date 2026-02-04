@@ -73,7 +73,6 @@ def parse_log_file(log_path):
             metrics['src_samples'] = int(shift_desc.group(2))
     
     return metrics if metrics else None
-
 def load_experiment_data(logs_dir, log_pattern='*.log'):
     """Load all log files matching the pattern"""
     data = {}
@@ -98,9 +97,10 @@ def load_experiment_data(logs_dir, log_pattern='*.log'):
     
     for log_file in log_files:
         # Try to extract experiment number from filename
-        exp_match = re.search(r'(\d+)', log_file.stem)
-        if exp_match:
-            exp_num = int(exp_match.group(1))
+        # Changed: Use findall to get ALL numbers, then take the LAST one
+        numbers = re.findall(r'(\d+)', log_file.stem)
+        if numbers:
+            exp_num = int(numbers[-1])  # Take the LAST number found
         else:
             # Use file index if no number found
             exp_num = len(data) + 1
