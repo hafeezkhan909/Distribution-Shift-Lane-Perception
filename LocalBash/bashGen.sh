@@ -8,6 +8,7 @@
 #SBATCH --partition=eternity
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=8GB
+#SBATCH --nice=100
 #
     
 # --- Job Execution ---
@@ -18,10 +19,10 @@ echo "Start Time: $(date)"
 echo "----------------------------------------------------"
 
 # Configuration
-K=20  # Total samples (can be changed to any multiple of 10)
-srcSamples=1000
-SCRIPT_PREFIX="a32ttw"
-OUTPUT_DIR="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/asym32dthousandTwenty"
+K=10  # Total samples (can be changed to any multiple of 10)
+srcSamples=10
+SCRIPT_PREFIX="d128ids"
+OUTPUT_DIR="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/ten128d"
 
 # Create output directory if it doesn't exist
 mkdir -p "$OUTPUT_DIR"
@@ -101,8 +102,8 @@ python shift_concat_experiment.py \\
     --num_runs 100 \\
     --block_idx 4 \\
     --seed_base 32 \\
-    --batch_size 4096 \\
-    --thirty_two_dimensional True \\
+    --batch_size 2048 \\
+    --dConfig "d128ids" \\
     --save_all_image_paths True \\
     --file_name "${SCRIPT_PREFIX}.json"
 

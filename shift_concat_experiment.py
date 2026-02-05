@@ -2,8 +2,7 @@ import os
 import numpy as np
 from tqdm import trange
 import torch
-from models.autoencoder import ConvAutoencoderFC
-from models.autoencoder32 import ConvAutoencoderFC32
+from models.autoencoderConfigurable import ConfConvAutoencoderFC32
 import argparse
 
 from data.data_utils import (
@@ -79,6 +78,7 @@ class ShiftExperiment:
         file_style: JsonStyle = 4,
         save_all_image_paths: bool = False,
         thirty_two_dimensional: bool = False,
+        dConfig: str = "",
     ):
         self.source_dir = source_dir
         self.target_dir = target_dir
@@ -140,7 +140,8 @@ class ShiftExperiment:
             "height_shift_frac": height_shift_frac,
             "shear_angle": shear_angle,
             "zoom_factor": zoom_factor,
-            "thirty_two_dimensional": thirty_two_dimensional
+            "thirty_two_dimensional": thirty_two_dimensional,
+            "dConfig": dConfig
         }
 
         self.loggerExperimentalData: JsonDict = {}
@@ -153,9 +154,9 @@ class ShiftExperiment:
         # --- Model Initialization ---
         print("\nInitializing autoencoder on 4 GPUs...")
         if thirty_two_dimensional:
-            base_model = ConvAutoencoderFC32(latent_dim=512, pretrained=True).to(self.device)
-        else:
-            base_model = ConvAutoencoderFC(latent_dim=512, pretrained=True).to(self.device)
+            dConfig = "d32"
+            raise Warning("This arg is about to be deprecated. Please use dConfig directly.")
+        base_model = ConfConvAutoencoderFC32(config=dConfig, pretrained=True).to(self.device)
 
         if num_gpus >= 4:
             # Explicitly use device IDs 0, 1, 2, and 3
@@ -492,6 +493,7 @@ if __name__ == "__main__":
     parser.add_argument("--width_shift_frac", type=float, default=0.2)
     parser.add_argument("--height_shift_frac", type=float, default=0.2)
     parser.add_argument("--save_all_image_paths", type=bool, default=False)
+    parser.add_argument("--dConfig", type=str, default="")
     parser.add_argument("--thirty_two_dimensional", type=bool, default=False)
     parser.add_argument(
         "--file_location",
