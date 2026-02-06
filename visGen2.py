@@ -3,10 +3,12 @@
 Visualize Mixed Shift Experiment Results (Generalized - Enhanced)
 Reads from .log files in specified directories and generates graphs in multiple formats
 EACH DIRECTORY GETS ITS OWN SEPARATE GRAPH - SEARCHES RECURSIVELY
+Includes experiment configuration from bash scripts
 """
 
 import re
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 from pathlib import Path
 import argparse
@@ -16,6 +18,135 @@ import os
 # Set style
 plt.rcParams['figure.figsize'] = (15, 10)
 plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
+
+# Architecture configurations
+ARCHITECTURE_CONFIGS = {
+    "d128rel": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 128, "Output")
+    ],
+    "d64rel": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 64, "Output")
+    ],
+    "d32rel": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 32, "Output")
+    ],
+    "d128gdd": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 512, "BatchNorm+ReLU"),
+        (512, 128, "Output")
+    ],
+    "d64gdd": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 512, "BatchNorm+ReLU"),
+        (512, 64, "Output")
+    ],
+    "d32gdd": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 512, "BatchNorm+ReLU"),
+        (512, 32, "Output")
+    ],
+    "d64ids": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 256, "BatchNorm+ReLU"),
+        (256, 64, "Output")
+    ],
+    "d128ids": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 256, "BatchNorm+ReLU"),
+        (256, 128, "Output")
+    ],
+    "d32": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 256, "BatchNorm+ReLU"),
+        (256, 32, "Output")
+    ],
+    "orig": [
+        ("flatten_dim", 4096, "BatchNorm+ReLU"),
+        (4096, 1024, "BatchNorm+ReLU"),
+        (1024, 256, "Output")
+    ]
+}
+
+CONFIG_NAMES = {
+    "rel": "Remove Extra Layer",
+    "ids": "Increase Dimension Size",
+    "gdd": "Gradually Decrease Dimensions",
+    "orig": "Original Architecture",
+    "d32": "32D Standard"
+}
+
+def parse_bash_script(bash_path):
+    """Parse bash script to extract experiment configuration"""
+    if not bash_path.exists():
+        return None
+    
+    try:
+        with open(bash_path, 'r') as f:
+            content = f.read()
+        
+        config = {}
+        
+        # Extract various parameters
+        params = {
+            'src_samples': r'--src_samples\s+(\d+)',
+            'tgt_samples': r'--tgt_samples\s+(\d+)',
+            'ratio_src_samples': r'--ratio_src_samples\s+(\d+)',
+            'ratio_tgt_samples': r'--ratio_tgt_samples\s+(\d+)',
+            'num_runs': r'--num_runs\s+(\d+)',
+            'block_idx': r'--block_idx\s+(\d+)',
+            'seed_base': r'--seed_base\s+(\d+)',
+            'batch_size': r'--batch_size\s+(\d+)',
+            'file_name': r'--file_name\s+"([^"]+)"',
+        }
+        
+        for param, pattern in params.items():
+            match = re.search(pattern, content)
+            if match:
+                config[param] = int(match.group(1)) if param != 'file_name' else match.group(1)
+        
+        # Check for dimensionality configuration
+        thirty_two_match = re.search(r'--thirty_two_dimensional\s+True', content)
+        dconfig_match = re.search(r'--dConfig\s+"([^"]+)"', content)
+        
+        if dconfig_match:
+            config['dim_config'] = dconfig_match.group(1)
+            config['dim_type'] = 'dConfig'
+        elif thirty_two_match:
+            config['dim_config'] = 'd32'
+            config['dim_type'] = 'thirty_two_dimensional'
+        else:
+            config['dim_config'] = 'orig'
+            config['dim_type'] = 'default'
+        
+        return config
+    except Exception as e:
+        print(f"  ⚠ Error parsing bash script {bash_path.name}: {e}")
+        return None
+
+def get_config_description(dim_config):
+    """Get human-readable description of dimension config"""
+    if not dim_config or dim_config == 'orig':
+        return "Original (256D)"
+    
+    # Extract dimension and type
+    match = re.match(r'd(\d+)(.+)?', dim_config)
+    if match:
+        dim = match.group(1)
+        config_type = match.group(2) if match.group(2) else ""
+        
+        type_name = CONFIG_NAMES.get(config_type, config_type.upper() if config_type else "Standard")
+        return f"{dim}D - {type_name}"
+    
+    return dim_config
 
 def parse_log_file(log_path):
     """Parse a single log file to extract experiment metrics"""
@@ -95,6 +226,12 @@ def parse_log_file(log_path):
     
     return metrics if metrics else None
 
+def find_bash_script(log_path):
+    """Find the corresponding bash script for a log file"""
+    log_stem = log_path.stem
+    bash_path = log_path.parent / f"{log_stem}.sh"
+    return bash_path if bash_path.exists() else None
+
 def load_experiment_data(logs_dir, log_pattern='*.log'):
     """Load all log files matching the pattern FROM A SINGLE DIRECTORY ONLY (not subdirectories)"""
     data = {}
@@ -106,7 +243,6 @@ def load_experiment_data(logs_dir, log_pattern='*.log'):
     errors = []
     
     # CRITICAL: Only get .log files directly in THIS directory, not subdirectories
-    # Use iterdir() to avoid recursion
     log_files = sorted([f for f in logs_path.iterdir() if f.is_file() and f.suffix == '.log'])
     
     if not log_files:
@@ -129,6 +265,15 @@ def load_experiment_data(logs_dir, log_pattern='*.log'):
         
         try:
             metrics = parse_log_file(log_file)
+            
+            # Try to find and parse corresponding bash script
+            bash_script = find_bash_script(log_file)
+            bash_config = None
+            if bash_script:
+                bash_config = parse_bash_script(bash_script)
+                if bash_config:
+                    print(f"[Config: {bash_config.get('dim_config', 'N/A')}] ", end='', flush=True)
+            
             if metrics:
                 src = metrics.get('src_samples', None)
                 tgt = metrics.get('tgt_samples', None)
@@ -139,6 +284,9 @@ def load_experiment_data(logs_dir, log_pattern='*.log'):
                 tgt_calib = metrics.get('tgt_calib', None)
                 
                 if src is not None and tgt is not None and mmd is not None:
+                    # Merge bash config into metrics
+                    if bash_config:
+                        metrics['bash_config'] = bash_config
                     data[exp_num] = metrics
                     print(f"✓ (AE_Dim={ae_dim}, Src_Calib={src_calib}, Tgt_Calib={tgt_calib}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
                 else:
@@ -169,7 +317,9 @@ def extract_metrics(data):
         'ratio': [],
         'autoencoder_dim': [],
         'src_calib': [],
-        'tgt_calib': []
+        'tgt_calib': [],
+        'dim_config': [],
+        'bash_config': []
     }
     
     for exp_num, exp_data in sorted(data.items()):
@@ -195,6 +345,11 @@ def extract_metrics(data):
         metrics['autoencoder_dim'].append(exp_data.get('autoencoder_dim', 0))
         metrics['src_calib'].append(exp_data.get('src_calib', 0))
         metrics['tgt_calib'].append(exp_data.get('tgt_calib', 0))
+        
+        bash_config = exp_data.get('bash_config', {})
+        dim_config = bash_config.get('dim_config', 'unknown') if bash_config else 'unknown'
+        metrics['dim_config'].append(dim_config)
+        metrics['bash_config'].append(bash_config)
     
     return metrics
 
@@ -209,9 +364,123 @@ def create_output_directories(base_dir='figures'):
     
     return base_path
 
-def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments):
+def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments, dim_config=None):
     """Generate a descriptive filename based on experiment parameters"""
-    return f"mmd_analysis_dim{ae_dim}_src{src_calib}_tgt{tgt_calib}_n{n_experiments}"
+    base = f"mmd_analysis_dim{ae_dim}_src{src_calib}_tgt{tgt_calib}_n{n_experiments}"
+    if dim_config and dim_config != 'unknown' and dim_config != 'orig':
+        base += f"_{dim_config}"
+    return base
+
+def plot_architecture_diagram(dim_config, output_dir, base_filename):
+    """Create a neural network architecture diagram"""
+    if dim_config not in ARCHITECTURE_CONFIGS:
+        print(f"  ⚠ No architecture diagram for config: {dim_config}")
+        return
+    
+    layers = ARCHITECTURE_CONFIGS[dim_config]
+    
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, len(layers) + 1)
+    ax.axis('off')
+    
+    # Title
+    config_desc = get_config_description(dim_config)
+    plt.title(f'Autoencoder Architecture: {config_desc}', fontsize=18, fontweight='bold', pad=20)
+    
+    y_pos = len(layers)
+    max_width = 8
+    
+    for i, (input_dim, output_dim, activation) in enumerate(layers):
+        # Determine box width based on dimension size
+        if isinstance(output_dim, int):
+            if output_dim >= 4096:
+                width = max_width
+            elif output_dim >= 1024:
+                width = max_width * 0.75
+            elif output_dim >= 512:
+                width = max_width * 0.5
+            elif output_dim >= 256:
+                width = max_width * 0.35
+            elif output_dim >= 128:
+                width = max_width * 0.25
+            elif output_dim >= 64:
+                width = max_width * 0.18
+            else:
+                width = max_width * 0.12
+        else:
+            width = max_width * 0.8
+        
+        x_center = 5
+        x_left = x_center - width / 2
+        
+        # Choose color based on layer type
+        if activation == "Output":
+            color = '#F18F01'  # Orange for output
+        elif i == 0:
+            color = '#06A77D'  # Green for input
+        else:
+            color = '#2E86AB'  # Blue for hidden layers
+        
+        # Draw rectangle
+        rect = mpatches.FancyBboxPatch(
+            (x_left, y_pos - 0.4), width, 0.8,
+            boxstyle="round,pad=0.05",
+            edgecolor='black',
+            facecolor=color,
+            linewidth=2,
+            alpha=0.7
+        )
+        ax.add_patch(rect)
+        
+        # Add text
+        if isinstance(input_dim, str):
+            dim_text = f"Input: {input_dim}"
+        else:
+            dim_text = f"{input_dim} → {output_dim}"
+        
+        ax.text(x_center, y_pos, dim_text,
+                ha='center', va='center',
+                fontsize=14, fontweight='bold', color='white')
+        
+        # Add activation info below
+        if activation != "Output":
+            ax.text(x_center, y_pos - 0.55, activation,
+                    ha='center', va='top',
+                    fontsize=10, style='italic', color='#555')
+        else:
+            ax.text(x_center, y_pos - 0.55, 'Latent Space',
+                    ha='center', va='top',
+                    fontsize=10, fontweight='bold', color='#555')
+        
+        # Draw arrow to next layer
+        if i < len(layers) - 1:
+            ax.annotate('', xy=(x_center, y_pos - 0.5), xytext=(x_center, y_pos - 1.5),
+                       arrowprops=dict(arrowstyle='->', lw=2, color='black'))
+        
+        y_pos -= 1
+    
+    # Add legend
+    legend_elements = [
+        mpatches.Patch(facecolor='#06A77D', edgecolor='black', label='Input Layer', alpha=0.7),
+        mpatches.Patch(facecolor='#2E86AB', edgecolor='black', label='Hidden Layers', alpha=0.7),
+        mpatches.Patch(facecolor='#F18F01', edgecolor='black', label='Output Layer (Latent)', alpha=0.7)
+    ]
+    ax.legend(handles=legend_elements, loc='upper right', fontsize=11)
+    
+    # Save architecture diagram
+    base_path = Path(output_dir)
+    formats = {'svg': None, 'png': 300, 'jpeg': 300, 'pdf': None, 'eps': None}
+    
+    for fmt, dpi in formats.items():
+        output_file = base_path / fmt / f"{base_filename}_architecture.{fmt}"
+        if dpi:
+            plt.savefig(output_file, dpi=dpi, bbox_inches='tight', format=fmt)
+        else:
+            plt.savefig(output_file, bbox_inches='tight', format=fmt)
+        print(f"✓ Saved architecture {fmt.upper()}: {output_file}")
+    
+    plt.close()
 
 def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='experiment'):
     """Generate comprehensive visualization of all experiments in multiple formats"""
@@ -231,16 +500,19 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     sorted_ae_dim = [metrics['autoencoder_dim'][i] for i in sorted_indices]
     sorted_src_calib = [metrics['src_calib'][i] for i in sorted_indices]
     sorted_tgt_calib = [metrics['tgt_calib'][i] for i in sorted_indices]
+    sorted_dim_config = [metrics['dim_config'][i] for i in sorted_indices]
     
     # Get the most common values (mode)
     ae_dim_mode = max(set(sorted_ae_dim), key=sorted_ae_dim.count) if sorted_ae_dim else 0
     src_calib_mode = max(set(sorted_src_calib), key=sorted_src_calib.count) if sorted_src_calib else 0
     tgt_calib_mode = max(set(sorted_tgt_calib), key=sorted_tgt_calib.count) if sorted_tgt_calib else 0
+    dim_config_mode = max(set(sorted_dim_config), key=sorted_dim_config.count) if sorted_dim_config else 'unknown'
     
     # VALIDATION: Check if all experiments have consistent calibration values
     unique_src_calib = set(sorted_src_calib)
     unique_tgt_calib = set(sorted_tgt_calib)
     unique_ae_dim = set(sorted_ae_dim)
+    unique_dim_config = set(sorted_dim_config)
     
     warnings = []
     if len(unique_src_calib) > 1 or len(unique_tgt_calib) > 1 or len(unique_ae_dim) > 1:
@@ -253,6 +525,10 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
         print(f"   Target calibration values: {unique_tgt_calib}")
         print(f"   Autoencoder dimensions: {unique_ae_dim}")
         print(f"   This suggests data from multiple experiment types are mixed!")
+    
+    if len(unique_dim_config) > 1:
+        warnings.append(f"  Multiple dimension configs: {unique_dim_config}")
+        print(f"   Multiple dimension configs: {unique_dim_config}")
     
     sequential_labels = [f"{i+1}" for i in range(n_experiments)]
     
@@ -324,10 +600,11 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     plt.legend(fontsize=11, loc='best')
     plt.grid(True, alpha=0.3, axis='y')
     
-    # Scientific title with sample information
+    # Scientific title with configuration information
+    config_desc = get_config_description(dim_config_mode)
     plt.suptitle(
         f'Maximum Mean Discrepancy Analysis of Distribution Shift Detection\n' +
-        f'Feature Space Dimensionality: {ae_dim_mode} | ' +
+        f'Architecture: {config_desc} | ' +
         f'Source Samples: {src_calib_mode} | ' +
         f'Target Samples: {tgt_calib_mode} | ' +
         f'N={n_experiments} Experiments', 
@@ -336,7 +613,7 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     plt.tight_layout(rect=[0, 0, 1, 0.95])
     
     # Generate descriptive filename
-    base_filename = generate_filename(ae_dim_mode, src_calib_mode, tgt_calib_mode, n_experiments)
+    base_filename = generate_filename(ae_dim_mode, src_calib_mode, tgt_calib_mode, n_experiments, dim_config_mode)
     
     # Save in multiple formats
     formats = {
@@ -364,9 +641,15 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
             ratio_str = '∞'
         else:
             ratio_str = f'{sorted_ratio[i]:.2f}'
-        print(f"  {i+1:2d} → Exp{actual_exp:2d} (AE_Dim: {sorted_ae_dim[i]}, Src_Calib: {sorted_src_calib[i]}, Tgt_Calib: {sorted_tgt_calib[i]}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
+        config_str = sorted_dim_config[i] if sorted_dim_config[i] != 'unknown' else 'N/A'
+        print(f"  {i+1:2d} → Exp{actual_exp:2d} (Config: {config_str}, AE_Dim: {sorted_ae_dim[i]}, Src_Calib: {sorted_src_calib[i]}, Tgt_Calib: {sorted_tgt_calib[i]}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
     
-    plt.close()  # Close the figure instead of showing it when batch processing
+    plt.close()
+    
+    # Generate architecture diagram if config is known
+    if dim_config_mode and dim_config_mode != 'unknown':
+        print(f"\nGenerating architecture diagram for {dim_config_mode}...")
+        plot_architecture_diagram(dim_config_mode, output_dir, base_filename)
     
     return warnings
 
@@ -378,12 +661,10 @@ def should_exclude_directory(dir_path, base_path, exclude_patterns):
     try:
         relative_path = dir_path.relative_to(base_path)
     except ValueError:
-        # If not relative to base_path, check absolute path
         relative_path = dir_path
     
     for pattern in exclude_patterns:
         pattern_path = Path(pattern)
-        # Check if the directory matches the exclusion pattern or is a subdirectory of it
         if relative_path == pattern_path or pattern_path in relative_path.parents or str(pattern_path) in str(relative_path):
             return True
     
@@ -396,18 +677,15 @@ def find_log_directories(base_path='LocalBash', exclude_dirs=None):
     if exclude_dirs is None:
         exclude_dirs = []
     
-    # Normalize exclude patterns to be relative to base_path
     exclude_patterns = []
     for exclude_dir in exclude_dirs:
         exclude_path = Path(exclude_dir)
         try:
-            # Try to make it relative to base_path
             if exclude_path.is_absolute():
                 exclude_patterns.append(exclude_path.relative_to(base_path))
             else:
                 exclude_patterns.append(exclude_path)
         except ValueError:
-            # If it fails, just use the pattern as-is
             exclude_patterns.append(exclude_path)
     
     if not base_path.exists():
@@ -417,18 +695,14 @@ def find_log_directories(base_path='LocalBash', exclude_dirs=None):
     log_dirs = []
     excluded_dirs = []
     
-    # Walk through all subdirectories RECURSIVELY
     for root, dirs, files in os.walk(base_path):
         root_path = Path(root)
         
-        # Check if this directory should be excluded
         if should_exclude_directory(root_path, base_path, exclude_patterns):
             excluded_dirs.append(root_path)
-            # Don't descend into subdirectories of excluded directories
             dirs[:] = []
             continue
         
-        # Check if current directory has any .log files directly in it
         log_files = [f for f in files if f.endswith('.log')]
         if log_files:
             log_dirs.append(root_path)
@@ -440,7 +714,7 @@ def find_log_directories(base_path='LocalBash', exclude_dirs=None):
     
     if excluded_dirs:
         print(f"\n  Excluded {len(excluded_dirs)} directories:")
-        for excluded in excluded_dirs[:5]:  # Show first 5
+        for excluded in excluded_dirs[:5]:
             try:
                 rel_path = excluded.relative_to(base_path)
                 print(f"    - {rel_path}")
@@ -454,7 +728,7 @@ def find_log_directories(base_path='LocalBash', exclude_dirs=None):
 def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(
-        description='Visualize experiment results from log files',
+        description='Visualize experiment results from log files with architecture diagrams',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -507,15 +781,12 @@ Examples:
     if not args.log_path and not args.all_dirs:
         parser.error("Either --log-path or --all-dirs must be specified")
     
-    # Directories to exclude
     exclude_dirs = ['CCE_IncorrectLog']
     
-    # Track all errors and warnings
     all_errors = {}
     all_warnings = {}
     skipped_dirs = []
     
-    # Determine which directories to process
     if args.all_dirs:
         print(f"\n{'='*60}")
         print(f"Searching RECURSIVELY in {args.base_path} for directories with .log files...")
@@ -531,10 +802,8 @@ Examples:
     else:
         log_directories = [Path(args.log_path)]
     
-    # Process each directory SEPARATELY
     successful_graphs = 0
     for log_dir in log_directories:
-        # Get relative path for better display
         try:
             folder_display = log_dir.relative_to(Path(args.base_path)) if args.all_dirs else log_dir
         except:
@@ -548,7 +817,6 @@ Examples:
         print(f"Full path: {log_dir}")
         print(f"Output dir: {args.output_dir}")
         
-        # Load data ONLY from this specific directory (not its subdirectories)
         data, errors = load_experiment_data(log_dir, args.pattern)
         
         if errors:
@@ -561,7 +829,6 @@ Examples:
         
         print(f"\n✓ Successfully loaded {len(data)} experiments from {folder_display}")
         
-        # Extract metrics from THIS directory only
         metrics = extract_metrics(data)
         
         if not metrics['experiment_num']:
@@ -571,7 +838,6 @@ Examples:
         
         print(f"✓ Processing {len(metrics['experiment_num'])} experiments from {folder_display}\n")
         
-        # Generate graph for THIS directory only
         warnings = plot_comprehensive_analysis(
             metrics, 
             output_dir=args.output_dir,
@@ -617,4 +883,3 @@ Examples:
 
 if __name__ == "__main__":
     main()
-    
