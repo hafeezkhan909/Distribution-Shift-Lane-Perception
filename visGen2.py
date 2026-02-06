@@ -2,6 +2,7 @@
 """
 Visualize Mixed Shift Experiment Results (Generalized - Enhanced)
 Reads from .log files in specified directories and generates graphs in multiple formats
+EACH DIRECTORY GETS ITS OWN SEPARATE GRAPH - SEARCHES RECURSIVELY
 """
 
 import re
@@ -95,25 +96,27 @@ def parse_log_file(log_path):
     return metrics if metrics else None
 
 def load_experiment_data(logs_dir, log_pattern='*.log'):
-    """Load all log files matching the pattern"""
+    """Load all log files matching the pattern FROM A SINGLE DIRECTORY ONLY (not subdirectories)"""
     data = {}
     logs_path = Path(logs_dir)
     
     if not logs_path.exists():
-        print(f"\n❌ Directory not found: {logs_dir}")
-        return data
+        return data, [f"Directory not found: {logs_dir}"]
     
-    log_files = sorted(logs_path.glob(log_pattern))
+    errors = []
+    
+    # CRITICAL: Only get .log files directly in THIS directory, not subdirectories
+    # Use iterdir() to avoid recursion
+    log_files = sorted([f for f in logs_path.iterdir() if f.is_file() and f.suffix == '.log'])
     
     if not log_files:
-        print(f"\n❌ No log files found matching pattern: {log_pattern}")
-        return data
+        return data, [f"No log files found in {logs_dir}"]
     
-    print(f"\nFound {len(log_files)} log files:")
+    print(f"\nFound {len(log_files)} log files in {logs_dir}:")
     for f in log_files:
         print(f"  - {f.name}")
     
-    print(f"\nProcessing files:")
+    print(f"\nProcessing files from {logs_dir}:")
     
     for log_file in log_files:
         numbers = re.findall(r'(\d+)', log_file.stem)
@@ -123,25 +126,35 @@ def load_experiment_data(logs_dir, log_pattern='*.log'):
             exp_num = len(data) + 1
         
         print(f"[Exp {exp_num:2d}] ", end='', flush=True)
-        metrics = parse_log_file(log_file)
-        if metrics:
-            src = metrics.get('src_samples', None)
-            tgt = metrics.get('tgt_samples', None)
-            mmd = metrics.get('test_avg_mmd', None)
-            tpr = metrics.get('tpr', None)
-            ae_dim = metrics.get('autoencoder_dim', None)
-            src_calib = metrics.get('src_calib', None)
-            tgt_calib = metrics.get('tgt_calib', None)
-            
-            if src is not None and tgt is not None and mmd is not None:
-                data[exp_num] = metrics
-                print(f"✓ (AE_Dim={ae_dim}, Src_Calib={src_calib}, Tgt_Calib={tgt_calib}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
+        
+        try:
+            metrics = parse_log_file(log_file)
+            if metrics:
+                src = metrics.get('src_samples', None)
+                tgt = metrics.get('tgt_samples', None)
+                mmd = metrics.get('test_avg_mmd', None)
+                tpr = metrics.get('tpr', None)
+                ae_dim = metrics.get('autoencoder_dim', None)
+                src_calib = metrics.get('src_calib', None)
+                tgt_calib = metrics.get('tgt_calib', None)
+                
+                if src is not None and tgt is not None and mmd is not None:
+                    data[exp_num] = metrics
+                    print(f"✓ (AE_Dim={ae_dim}, Src_Calib={src_calib}, Tgt_Calib={tgt_calib}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
+                else:
+                    error_msg = f"{log_file.name}: Missing required data (src={src}, tgt={tgt}, mmd={mmd})"
+                    errors.append(error_msg)
+                    print(f"⚠ MISSING: src={src}, tgt={tgt}, mmd={mmd}")
             else:
-                print(f"⚠ MISSING: src={src}, tgt={tgt}, mmd={mmd}")
-        else:
-            print(f"✗ Failed to parse")
+                error_msg = f"{log_file.name}: Failed to parse"
+                errors.append(error_msg)
+                print(f"✗ Failed to parse")
+        except Exception as e:
+            error_msg = f"{log_file.name}: Exception - {str(e)}"
+            errors.append(error_msg)
+            print(f"✗ Exception: {str(e)}")
     
-    return data
+    return data, errors
 
 def extract_metrics(data):
     """Convert parsed data into metrics arrays"""
@@ -200,7 +213,7 @@ def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments):
     """Generate a descriptive filename based on experiment parameters"""
     return f"mmd_analysis_dim{ae_dim}_src{src_calib}_tgt{tgt_calib}_n{n_experiments}"
 
-def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='experiment', epoch_time=None):
+def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='experiment'):
     """Generate comprehensive visualization of all experiments in multiple formats"""
     base_path = create_output_directories(output_dir)
     
@@ -223,6 +236,23 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     ae_dim_mode = max(set(sorted_ae_dim), key=sorted_ae_dim.count) if sorted_ae_dim else 0
     src_calib_mode = max(set(sorted_src_calib), key=sorted_src_calib.count) if sorted_src_calib else 0
     tgt_calib_mode = max(set(sorted_tgt_calib), key=sorted_tgt_calib.count) if sorted_tgt_calib else 0
+    
+    # VALIDATION: Check if all experiments have consistent calibration values
+    unique_src_calib = set(sorted_src_calib)
+    unique_tgt_calib = set(sorted_tgt_calib)
+    unique_ae_dim = set(sorted_ae_dim)
+    
+    warnings = []
+    if len(unique_src_calib) > 1 or len(unique_tgt_calib) > 1 or len(unique_ae_dim) > 1:
+        warnings.append(f"Inconsistent values in {folder_name}")
+        warnings.append(f"  Source calibration values: {unique_src_calib}")
+        warnings.append(f"  Target calibration values: {unique_tgt_calib}")
+        warnings.append(f"  Autoencoder dimensions: {unique_ae_dim}")
+        print(f"\n⚠️  WARNING: Inconsistent values detected in {folder_name}!")
+        print(f"   Source calibration values: {unique_src_calib}")
+        print(f"   Target calibration values: {unique_tgt_calib}")
+        print(f"   Autoencoder dimensions: {unique_ae_dim}")
+        print(f"   This suggests data from multiple experiment types are mixed!")
     
     sequential_labels = [f"{i+1}" for i in range(n_experiments)]
     
@@ -328,7 +358,7 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
         
         print(f"✓ Saved {fmt.upper()}: {output_file}")
     
-    print("\nMapping (Sequential → Experiment):")
+    print(f"\nMapping (Sequential → Experiment) for {folder_name}:")
     for i, actual_exp in enumerate(sorted_exp_num):
         if sorted_ratio[i] == float('inf'):
             ratio_str = '∞'
@@ -336,23 +366,88 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
             ratio_str = f'{sorted_ratio[i]:.2f}'
         print(f"  {i+1:2d} → Exp{actual_exp:2d} (AE_Dim: {sorted_ae_dim[i]}, Src_Calib: {sorted_src_calib[i]}, Tgt_Calib: {sorted_tgt_calib[i]}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
     
-    plt.show()
+    plt.close()  # Close the figure instead of showing it when batch processing
+    
+    return warnings
 
-def find_log_directories(base_path='LocalBash'):
-    """Find all directories in LocalBash that contain log files"""
+def should_exclude_directory(dir_path, base_path, exclude_patterns):
+    """Check if a directory should be excluded based on exclusion patterns"""
+    dir_path = Path(dir_path)
     base_path = Path(base_path)
+    
+    try:
+        relative_path = dir_path.relative_to(base_path)
+    except ValueError:
+        # If not relative to base_path, check absolute path
+        relative_path = dir_path
+    
+    for pattern in exclude_patterns:
+        pattern_path = Path(pattern)
+        # Check if the directory matches the exclusion pattern or is a subdirectory of it
+        if relative_path == pattern_path or pattern_path in relative_path.parents or str(pattern_path) in str(relative_path):
+            return True
+    
+    return False
+
+def find_log_directories(base_path='LocalBash', exclude_dirs=None):
+    """Find all directories (RECURSIVELY) in LocalBash that contain log files, excluding specified directories"""
+    base_path = Path(base_path)
+    
+    if exclude_dirs is None:
+        exclude_dirs = []
+    
+    # Normalize exclude patterns to be relative to base_path
+    exclude_patterns = []
+    for exclude_dir in exclude_dirs:
+        exclude_path = Path(exclude_dir)
+        try:
+            # Try to make it relative to base_path
+            if exclude_path.is_absolute():
+                exclude_patterns.append(exclude_path.relative_to(base_path))
+            else:
+                exclude_patterns.append(exclude_path)
+        except ValueError:
+            # If it fails, just use the pattern as-is
+            exclude_patterns.append(exclude_path)
     
     if not base_path.exists():
         print(f"❌ Base path not found: {base_path}")
         return []
     
     log_dirs = []
+    excluded_dirs = []
     
-    # Walk through all subdirectories
+    # Walk through all subdirectories RECURSIVELY
     for root, dirs, files in os.walk(base_path):
-        # Check if current directory has any .log files
-        if any(f.endswith('.log') for f in files):
-            log_dirs.append(Path(root))
+        root_path = Path(root)
+        
+        # Check if this directory should be excluded
+        if should_exclude_directory(root_path, base_path, exclude_patterns):
+            excluded_dirs.append(root_path)
+            # Don't descend into subdirectories of excluded directories
+            dirs[:] = []
+            continue
+        
+        # Check if current directory has any .log files directly in it
+        log_files = [f for f in files if f.endswith('.log')]
+        if log_files:
+            log_dirs.append(root_path)
+            try:
+                rel_path = root_path.relative_to(base_path)
+                print(f"  Found directory with logs: {rel_path}")
+            except ValueError:
+                print(f"  Found directory with logs: {root_path}")
+    
+    if excluded_dirs:
+        print(f"\n  Excluded {len(excluded_dirs)} directories:")
+        for excluded in excluded_dirs[:5]:  # Show first 5
+            try:
+                rel_path = excluded.relative_to(base_path)
+                print(f"    - {rel_path}")
+            except ValueError:
+                print(f"    - {excluded}")
+        if len(excluded_dirs) > 5:
+            print(f"    ... and {len(excluded_dirs) - 5} more")
     
     return sorted(log_dirs)
 
@@ -366,7 +461,7 @@ Examples:
   # Process a single directory
   python visualizeGeneralized.py --log-path LocalBash/micro
   
-  # Process all directories in LocalBash
+  # Process all directories in LocalBash RECURSIVELY (each gets its own graph)
   python visualizeGeneralized.py --all-dirs --base-path LocalBash
   
   # Process with custom output directory
@@ -383,7 +478,7 @@ Examples:
     parser.add_argument(
         '--all-dirs',
         action='store_true',
-        help='Process all directories in base-path that contain log files'
+        help='Process all directories in base-path that contain log files RECURSIVELY (each directory gets its own graph)'
     )
     
     parser.add_argument(
@@ -412,9 +507,21 @@ Examples:
     if not args.log_path and not args.all_dirs:
         parser.error("Either --log-path or --all-dirs must be specified")
     
+    # Directories to exclude
+    exclude_dirs = ['CCE_IncorrectLog']
+    
+    # Track all errors and warnings
+    all_errors = {}
+    all_warnings = {}
+    skipped_dirs = []
+    
     # Determine which directories to process
     if args.all_dirs:
-        log_directories = find_log_directories(args.base_path)
+        print(f"\n{'='*60}")
+        print(f"Searching RECURSIVELY in {args.base_path} for directories with .log files...")
+        print(f"Excluding: {', '.join(exclude_dirs)}")
+        print(f"{'='*60}")
+        log_directories = find_log_directories(args.base_path, exclude_dirs=exclude_dirs)
         if not log_directories:
             print(f"❌ No directories with log files found in {args.base_path}")
             return
@@ -424,42 +531,90 @@ Examples:
     else:
         log_directories = [Path(args.log_path)]
     
-    # Process each directory
+    # Process each directory SEPARATELY
+    successful_graphs = 0
     for log_dir in log_directories:
-        folder_name = log_dir.name
+        # Get relative path for better display
+        try:
+            folder_display = log_dir.relative_to(Path(args.base_path)) if args.all_dirs else log_dir
+        except:
+            folder_display = log_dir
+        
+        folder_name = str(folder_display).replace('/', '_').replace('\\', '_')
         
         print("\n" + "="*60)
-        print(f"PROCESSING: {folder_name}")
+        print(f"PROCESSING: {folder_display}")
         print("="*60)
-        print(f"Log path: {log_dir}")
-        print(f"Pattern: {args.pattern}")
+        print(f"Full path: {log_dir}")
         print(f"Output dir: {args.output_dir}")
         
-        data = load_experiment_data(log_dir, args.pattern)
+        # Load data ONLY from this specific directory (not its subdirectories)
+        data, errors = load_experiment_data(log_dir, args.pattern)
+        
+        if errors:
+            all_errors[str(folder_display)] = errors
         
         if not data:
-            print(f"\n❌ No data found in {log_dir}!")
+            print(f"\n❌ No valid data found in {folder_display}!")
+            skipped_dirs.append(str(folder_display))
             continue
         
-        print(f"\n✓ Successfully loaded {len(data)} experiments")
+        print(f"\n✓ Successfully loaded {len(data)} experiments from {folder_display}")
         
+        # Extract metrics from THIS directory only
         metrics = extract_metrics(data)
         
         if not metrics['experiment_num']:
-            print(f"\n❌ No valid metrics in {log_dir}!")
+            print(f"\n❌ No valid metrics in {folder_display}!")
+            skipped_dirs.append(str(folder_display))
             continue
         
-        print(f"✓ Processing {len(metrics['experiment_num'])} experiments\n")
+        print(f"✓ Processing {len(metrics['experiment_num'])} experiments from {folder_display}\n")
         
-        plot_comprehensive_analysis(
+        # Generate graph for THIS directory only
+        warnings = plot_comprehensive_analysis(
             metrics, 
             output_dir=args.output_dir,
             folder_name=folder_name
         )
+        
+        if warnings:
+            all_warnings[str(folder_display)] = warnings
+        
+        successful_graphs += 1
+    
+    # Print summary
+    print("\n" + "="*60)
+    print("SUMMARY")
+    print("="*60)
+    print(f"✓ Successfully generated {successful_graphs} graphs")
+    
+    if skipped_dirs:
+        print(f"\n⚠️  Skipped {len(skipped_dirs)} directories (no valid data):")
+        for skipped in skipped_dirs:
+            print(f"   - {skipped}")
+    
+    if all_warnings:
+        print(f"\n⚠️  Warnings ({len(all_warnings)} directories with issues):")
+        for dir_name, warnings in all_warnings.items():
+            print(f"\n   {dir_name}:")
+            for warning in warnings:
+                print(f"      {warning}")
+    
+    if all_errors:
+        print(f"\n❌ Errors ({len(all_errors)} directories with errors):")
+        for dir_name, errors in all_errors.items():
+            print(f"\n   {dir_name}:")
+            for error in errors:
+                print(f"      {error}")
+    
+    if not all_warnings and not all_errors and not skipped_dirs:
+        print("\n✅ No errors or warnings!")
     
     print("\n" + "="*60)
-    print("✓ All processing complete!")
+    print(f"✓ All processing complete!")
     print("="*60)
 
 if __name__ == "__main__":
     main()
+    
