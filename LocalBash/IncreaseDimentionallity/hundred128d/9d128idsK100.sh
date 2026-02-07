@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # --- Slurm Job Configuration ---
 #SBATCH --job-name=9d128idsK100
@@ -10,7 +10,7 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
 #
-    
+
 # --- Job Execution ---
 echo "----------------------------------------------------"
 echo "Slurm Job ID: $SLURM_JOB_ID"
