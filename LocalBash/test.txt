@@ -1,0 +1,27 @@
+for script in *d128idsK100.sh; do sbatch $script; done
+
+for script in *d128idsK1000.sh; do sbatch $script; done
+
+for script in *d64idsK1000.sh; do sbatch $script; done
+
+for script in *d128relK100.sh; do sbatch $script; done
+
+for script in *d128relK1000.sh; do sbatch $script; done
+
+for script in *d64relK100.sh; do sbatch $script; done
+
+for script in *d64relK1000.sh; do sbatch $script; done
+
+for script in *d32relK100.sh; do sbatch $script; done
+
+for script in *d32relK1000.sh; do sbatch $script; done
+
+for script in *d128gddK100.sh; do sbatch $script; done
+
+for script in *d128gddK1000.sh; do sbatch $script; done
+
+for script in *d64gddK1000.sh; do sbatch $script; done
+
+for script in *d32gddK100.sh; do sbatch $script; done
+
+for script in *d32gddK1000.sh; do sbatch $script; done

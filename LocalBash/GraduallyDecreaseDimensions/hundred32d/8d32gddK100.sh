@@ -47,7 +47,7 @@ python shift_concat_experiment.py \
     --num_runs 100 \
     --block_idx 4 \
     --seed_base 32 \
-    --batch_size 2048 \
+    --batch_size 4090 \
     --dConfig "d128ids" \
     --save_all_image_paths True \
     --file_name "d32gddK100.json"
