@@ -24,67 +24,46 @@ plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.
 
 # Architecture configurations
 ARCHITECTURE_CONFIGS = {
-    "d128rel": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 128, "Output")
-    ],
-    "d64rel": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 64, "Output")
-    ],
-    "d32rel": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 32, "Output")
-    ],
-    "d128gdd": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 512, "BatchNorm+ReLU"),
-        (512, 128, "Output")
-    ],
-    "d64gdd": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 512, "BatchNorm+ReLU"),
-        (512, 64, "Output")
-    ],
-    "d32gdd": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 512, "BatchNorm+ReLU"),
-        (512, 32, "Output")
-    ],
-    "d64ids": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 256, "BatchNorm+ReLU"),
-        (256, 64, "Output")
-    ],
-    "d128ids": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 256, "BatchNorm+ReLU"),
-        (256, 128, "Output")
-    ],
-    "d32": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 256, "BatchNorm+ReLU"),
-        (256, 32, "Output")
-    ],
-    "orig": [
-        ("flatten_dim", 4096, "BatchNorm+ReLU"),
-        (4096, 1024, "BatchNorm+ReLU"),
-        (1024, 256, "Output")
-    ]
-}
-
-CONFIG_NAMES = {
-    "rel": "Remove Extra Layer",
-    "ids": "Increase Dimension Size",
-    "gdd": "Gradually Decrease Dimensions",
-    "orig": "Original Architecture",
-    "d32": "32D Standard"
+    "d128rel": {
+        "name": "Remove Extra Layer",
+        "layers": [4096, 1024, 128]
+    },
+    "d64rel": {
+        "name": "Remove Extra Layer",
+        "layers": [4096, 1024, 64]
+    },
+    "d32rel": {
+        "name": "Remove Extra Layer",
+        "layers": [4096, 1024, 32]
+    },
+    "d128gdd": {
+        "name": "Gradually Decrease Dimensions",
+        "layers": [4096, 512, 128]
+    },
+    "d64gdd": {
+        "name": "Gradually Decrease Dimensions",
+        "layers": [4096, 512, 64]
+    },
+    "d32gdd": {
+        "name": "Gradually Decrease Dimensions",
+        "layers": [4096, 512, 32]
+    },
+    "d64ids": {
+        "name": "Increase Dimension Size",
+        "layers": [4096, 1024, 256, 64]
+    },
+    "d128ids": {
+        "name": "Increase Dimension Size",
+        "layers": [4096, 1024, 256, 128]
+    },
+    "d32": {
+        "name": "32D Standard",
+        "layers": [4096, 1024, 256, 32]
+    },
+    "orig": {
+        "name": "Original Architecture",
+        "layers": [4096, 1024, 256]
+    }
 }
 
 def parse_bash_script(bash_path):
@@ -160,10 +139,32 @@ def get_config_description(dim_config):
         dim = match.group(1)
         config_type = match.group(2) if match.group(2) else ""
         
-        type_name = CONFIG_NAMES.get(config_type, config_type.upper() if config_type else "Standard")
+        # Simple mapping for common types
+        type_mapping = {
+            "rel": "Remove Extra Layer",
+            "ids": "Increase Dimension Size",
+            "gdd": "Gradually Decrease Dimensions",
+            "": "Standard"
+        }
+        type_name = type_mapping.get(config_type, config_type.upper() if config_type else "Standard")
         return f"{dim}D - {type_name}"
     
     return dim_config
+
+def get_architecture_text(dim_config):
+    """Get architecture text for display at bottom of graph"""
+    if not dim_config or dim_config not in ARCHITECTURE_CONFIGS:
+        # Default/unknown config
+        if dim_config == 'orig' or not dim_config:
+            return "Original Architecture\n4096 → 1024 → 256"
+        return f"Architecture: {dim_config}\n(Configuration details not available)"
+    
+    config = ARCHITECTURE_CONFIGS[dim_config]
+    name = config['name']
+    layers = config['layers']
+    layer_text = " → ".join(str(layer) for layer in layers)
+    
+    return f"{name}\n{layer_text}"
 
 def parse_log_file(log_path):
     """Parse a single log file to extract experiment metrics"""
@@ -404,165 +405,6 @@ def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments, dim_config=No
         base += f"_{dim_config}"
     return base
 
-def plot_architecture_diagram(dim_config, output_dir, base_filename):
-    """Create a professional neural network architecture diagram"""
-    if dim_config not in ARCHITECTURE_CONFIGS:
-        print(f"  ⚠ No architecture diagram for config: {dim_config}")
-        return
-    
-    layers = ARCHITECTURE_CONFIGS[dim_config]
-    
-    fig, ax = plt.subplots(figsize=(14, 10))
-    ax.set_xlim(0, 14)
-    ax.set_ylim(0, 12)
-    ax.axis('off')
-    
-    # Title
-    config_desc = get_config_description(dim_config)
-    ax.text(7, 11.5, f'Autoencoder Architecture: {config_desc}', 
-            fontsize=20, fontweight='bold', ha='center')
-    
-    # Legend
-    legend_x = 10.5
-    legend_y = 10.8
-    
-    # Input layer legend
-    input_rect = mpatches.Rectangle((legend_x, legend_y), 0.4, 0.25, 
-                                     facecolor='#06A77D', edgecolor='black', linewidth=2)
-    ax.add_patch(input_rect)
-    ax.text(legend_x + 0.6, legend_y + 0.125, 'Input Layer', 
-            fontsize=11, va='center')
-    
-    # Hidden layer legend
-    hidden_rect = mpatches.Rectangle((legend_x, legend_y - 0.4), 0.4, 0.25, 
-                                      facecolor='#5A9BD5', edgecolor='black', linewidth=2)
-    ax.add_patch(hidden_rect)
-    ax.text(legend_x + 0.6, legend_y - 0.275, 'Hidden Layers', 
-            fontsize=11, va='center')
-    
-    # Output layer legend
-    output_rect = mpatches.Rectangle((legend_x, legend_y - 0.8), 0.4, 0.25, 
-                                      facecolor='#E8A84F', edgecolor='black', linewidth=2)
-    ax.add_patch(output_rect)
-    ax.text(legend_x + 0.6, legend_y - 0.675, 'Output Layer (Latent)', 
-            fontsize=11, va='center')
-    
-    # Calculate layer positions and sizes
-    y_start = 9.5
-    y_spacing = 2.0
-    max_width = 10.0
-    x_center = 7.0
-    
-    # Get all dimension values for scaling
-    all_dims = []
-    for input_dim, output_dim, _ in layers:
-        if isinstance(output_dim, int):
-            all_dims.append(output_dim)
-    max_dim = max(all_dims) if all_dims else 4096
-    
-    # Draw layers from top to bottom
-    prev_y = None
-    prev_width = None
-    
-    for i, (input_dim, output_dim, activation) in enumerate(layers):
-        # Determine layer properties
-        if i == 0:
-            color = '#06A77D'  # Green for input
-            layer_label = "Input: flatten_dim"
-        elif activation == "Output":
-            color = '#E8A84F'  # Orange for output
-            layer_label = "Latent Space"
-        else:
-            color = '#5A9BD5'  # Blue for hidden
-            layer_label = ""
-        
-        # Calculate width based on dimension size (logarithmic scale for better visualization)
-        if isinstance(output_dim, int):
-            width = max_width * (np.log(output_dim + 1) / np.log(max_dim + 1))
-            width = max(width, 1.5)  # Minimum width
-        else:
-            width = max_width * 0.9
-        
-        height = 0.6
-        y_pos = y_start - (i * y_spacing)
-        x_left = x_center - width / 2
-        
-        # Draw the rectangle
-        rect = mpatches.FancyBboxPatch(
-            (x_left, y_pos), width, height,
-            boxstyle="round,pad=0.02",
-            facecolor=color,
-            edgecolor='black',
-            linewidth=2.5
-        )
-        ax.add_patch(rect)
-        
-        # Add dimension text inside the box
-        if isinstance(input_dim, str):
-            dim_text = f"Input: flatten_dim"
-        else:
-            dim_text = f"{input_dim} → {output_dim}"
-        
-        ax.text(x_center, y_pos + height/2, dim_text,
-                ha='center', va='center',
-                fontsize=16, fontweight='bold', color='white')
-        
-        # Add activation function label above the box (not for first layer)
-        if activation != "Output" and i > 0:
-            ax.text(x_center, y_pos + height + 0.15, activation,
-                    ha='center', va='bottom',
-                    fontsize=10, style='italic', color='#333')
-        
-        # Add layer label below the box
-        if layer_label:
-            ax.text(x_center, y_pos - 0.15, layer_label,
-                    ha='center', va='top',
-                    fontsize=12, fontweight='bold', color='#333')
-        
-        # Draw arrow from previous layer
-        if prev_y is not None:
-            arrow_start_y = prev_y
-            arrow_end_y = y_pos + height
-            
-            ax.annotate('', 
-                       xy=(x_center, arrow_end_y), 
-                       xytext=(x_center, arrow_start_y),
-                       arrowprops=dict(
-                           arrowstyle='->', 
-                           lw=3, 
-                           color='black',
-                           shrinkA=0,
-                           shrinkB=0
-                       ))
-            
-            # Add activation label on the arrow
-            if i > 0 and activation != "Output":
-                mid_y = (arrow_start_y + arrow_end_y) / 2
-                ax.text(x_center + 0.3, mid_y, activation,
-                        ha='left', va='center',
-                        fontsize=9, style='italic', color='#555',
-                        bbox=dict(boxstyle='round,pad=0.3', facecolor='white', 
-                                 edgecolor='none', alpha=0.8))
-        
-        prev_y = y_pos
-        prev_width = width
-    
-    plt.tight_layout()
-    
-    # Save architecture diagram
-    base_path = Path(output_dir)
-    formats = {'svg': None, 'png': 300, 'jpeg': 300, 'pdf': None, 'eps': None}
-    
-    for fmt, dpi in formats.items():
-        output_file = base_path / fmt / f"{base_filename}_architecture.{fmt}"
-        if dpi:
-            plt.savefig(output_file, dpi=dpi, bbox_inches='tight', format=fmt)
-        else:
-            plt.savefig(output_file, bbox_inches='tight', format=fmt)
-        print(f"✓ Saved architecture {fmt.upper()}: {output_file}")
-    
-    plt.close()
-
 def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='experiment'):
     """Generate comprehensive visualization of all experiments in multiple formats"""
     base_path = create_output_directories(output_dir)
@@ -613,7 +455,8 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     
     sequential_labels = [f"{i+1}" for i in range(n_experiments)]
     
-    fig = plt.figure(figsize=(18, 7))
+    # Create figure with extra space at bottom for architecture text
+    fig = plt.figure(figsize=(18, 8))
     
     # 1. TPR
     ax1 = plt.subplot(1, 3, 1)
@@ -689,9 +532,17 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
         f'Source Samples: {src_calib_mode} | ' +
         f'Target Samples: {tgt_calib_mode} | ' +
         f'N={n_experiments} Experiments', 
-        fontsize=16, fontweight='bold', y=0.98
+        fontsize=16, fontweight='bold', y=0.97
     )
-    plt.tight_layout(rect=[0, 0, 1, 0.95])
+    
+    # Add architecture text at the bottom
+    arch_text = get_architecture_text(dim_config_mode)
+    fig.text(0.5, 0.02, arch_text, 
+             ha='center', va='bottom',
+             fontsize=13, fontweight='bold',
+             bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgray', alpha=0.3))
+    
+    plt.tight_layout(rect=[0, 0.06, 1, 0.94])
     
     # Generate descriptive filename
     base_filename = generate_filename(ae_dim_mode, src_calib_mode, tgt_calib_mode, n_experiments, dim_config_mode)
@@ -726,11 +577,6 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
         print(f"  {i+1:2d} → Exp{actual_exp:2d} (Config: {config_str}, AE_Dim: {sorted_ae_dim[i]}, Src_Calib: {sorted_src_calib[i]}, Tgt_Calib: {sorted_tgt_calib[i]}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
     
     plt.close()
-    
-    # Generate architecture diagram if config is known
-    if dim_config_mode and dim_config_mode != 'unknown':
-        print(f"\nGenerating architecture diagram for {dim_config_mode}...")
-        plot_architecture_diagram(dim_config_mode, output_dir, base_filename)
     
     return warnings
 
@@ -809,7 +655,7 @@ def find_log_directories(base_path='LocalBash', exclude_dirs=None):
 def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(
-        description='Visualize experiment results from log files with architecture diagrams',
+        description='Visualize experiment results from log files',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:

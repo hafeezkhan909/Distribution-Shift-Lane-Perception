@@ -5,8 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --output=graph.log
-#SBATCH --partition=gpu2
-#SBATCH --gres=gpu:1
+#SBATCH --partition=eternity
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=8G
     
