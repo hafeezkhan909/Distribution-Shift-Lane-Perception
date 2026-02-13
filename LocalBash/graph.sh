@@ -31,6 +31,6 @@ cd /home1/adoyle2025/Distribution-Shift-Lane-Perception
 
 echo "Starting Unit Test..."
 
-python visGen2.py --all-dirs --base-path LocalBash --output-dir figures
+python3 visGen2.py --log-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer --recursive --output-dir figures_organized
 
 echo "Done!"

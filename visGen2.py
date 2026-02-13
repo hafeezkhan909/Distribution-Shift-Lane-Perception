@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
-Visualize Mixed Shift Experiment Results (Generalized - Enhanced)
-Reads from .log files in specified directories and generates graphs in multiple formats
-EACH DIRECTORY GETS ITS OWN SEPARATE GRAPH - SEARCHES RECURSIVELY
-Includes experiment configuration from bash scripts
+Visualize Mixed Shift Experiment Results (Robust Version)
+Handles mixed/misplaced log files by grouping them based on their actual configuration
+extracted from filename and log content.
 """
 
 import re
 import os
 import argparse
-import time
 from pathlib import Path
+from collections import defaultdict
 
 import numpy as np
 import matplotlib
@@ -56,6 +55,10 @@ ARCHITECTURE_CONFIGS = {
         "name": "Increase Dimension Size",
         "layers": [4096, 1024, 256, 128]
     },
+    "d32ids": {
+        "name": "Increase Dimension Size",
+        "layers": [4096, 1024, 256, 32]
+    },
     "d32": {
         "name": "32D Standard",
         "layers": [4096, 1024, 256, 32]
@@ -66,105 +69,66 @@ ARCHITECTURE_CONFIGS = {
     }
 }
 
-def parse_bash_script(bash_path):
-    """Parse bash script to extract experiment configuration"""
-    if not bash_path.exists():
-        return None
+def extract_config_from_filename(filename):
+    """
+    Extract configuration from filename pattern.
     
-    try:
-        # Try UTF-8 first
-        with open(bash_path, 'r', encoding='utf-8') as f:
-            content = f.read()
-    except UnicodeDecodeError:
-        try:
-            # Try latin-1 as fallback
-            with open(bash_path, 'r', encoding='latin-1') as f:
-                content = f.read()
-        except UnicodeDecodeError:
-            try:
-                # Try cp1252 (Windows encoding)
-                with open(bash_path, 'r', encoding='cp1252') as f:
-                    content = f.read()
-            except Exception as e:
-                print(f"  ⚠ Error reading bash script {bash_path.name}: {e}")
-                return None
-    except Exception as e:
-        print(f"  ⚠ Error parsing bash script {bash_path.name}: {e}")
-        return None
+    Patterns:
+    - d64ids = 64 dimensions, increase dimension size
+    - d128gdd = 128 dimensions, gradually decrease dimensions
+    - d32rel = 32 dimensions, remove extra layer
+    - K100 = 100 samples, K1000 = 1000 samples, no K = 10 samples
     
-    config = {}
+    Examples:
+    - d64idsK100.log
+    - d128gdd10.log (10 samples, no K)
+    - 5d64gddK1000.log
+    """
+    stem = Path(filename).stem
     
-    # Extract various parameters
-    params = {
-        'src_samples': r'--src_samples\s+(\d+)',
-        'tgt_samples': r'--tgt_samples\s+(\d+)',
-        'ratio_src_samples': r'--ratio_src_samples\s+(\d+)',
-        'ratio_tgt_samples': r'--ratio_tgt_samples\s+(\d+)',
-        'num_runs': r'--num_runs\s+(\d+)',
-        'block_idx': r'--block_idx\s+(\d+)',
-        'seed_base': r'--seed_base\s+(\d+)',
-        'batch_size': r'--batch_size\s+(\d+)',
-        'file_name': r'--file_name\s+"([^"]+)"',
+    config = {
+        'dim_config': 'unknown',
+        'calibration_samples': 'unknown',
+        'experiment_num': None
     }
     
-    for param, pattern in params.items():
-        match = re.search(pattern, content)
-        if match:
-            config[param] = int(match.group(1)) if param != 'file_name' else match.group(1)
+    # Extract dimension configuration (d64ids, d128gdd, d32rel, etc.)
+    # Pattern: look for dXXXyyy where XXX is digits and yyy is letters
+    dim_match = re.search(r'd(\d+)(ids|gdd|rel)', stem, re.IGNORECASE)
+    if dim_match:
+        dim_size = dim_match.group(1)
+        dim_type = dim_match.group(2).lower()
+        config['dim_config'] = f"d{dim_size}{dim_type}"
     
-    # Check for dimensionality configuration
-    thirty_two_match = re.search(r'--thirty_two_dimensional\s+True', content)
-    dconfig_match = re.search(r'--dConfig\s+"([^"]+)"', content)
-    
-    if dconfig_match:
-        config['dim_config'] = dconfig_match.group(1)
-        config['dim_type'] = 'dConfig'
-    elif thirty_two_match:
-        config['dim_config'] = 'd32'
-        config['dim_type'] = 'thirty_two_dimensional'
+    # Extract calibration samples (K100, K1000, or just digits)
+    # First try K pattern
+    k_match = re.search(r'K(\d+)', stem)
+    if k_match:
+        config['calibration_samples'] = int(k_match.group(1))
     else:
-        config['dim_config'] = 'orig'
-        config['dim_type'] = 'default'
+        # Try to find just digits at the end (for 10 sample case)
+        # Look for pattern like "d64gdd10" or "5d64gdd10"
+        digit_match = re.search(r'd\d+(?:ids|gdd|rel)(\d+)', stem)
+        if digit_match:
+            config['calibration_samples'] = int(digit_match.group(1))
+    
+    # Extract experiment number (usually at the start or in the middle)
+    # Patterns: "5d64gdd" or "d64ids5" or just "5" somewhere
+    exp_nums = re.findall(r'(\d+)', stem)
+    if exp_nums:
+        # Take the first number that's not part of dimension or K value
+        for num in exp_nums:
+            num_int = int(num)
+            # Skip if it's likely a dimension size (32, 64, 128) or calibration (10, 100, 1000)
+            if num_int not in [10, 32, 64, 100, 128, 1000]:
+                config['experiment_num'] = num_int
+                break
+        
+        # If we didn't find it, take the first number
+        if config['experiment_num'] is None and exp_nums:
+            config['experiment_num'] = int(exp_nums[0])
     
     return config
-
-def get_config_description(dim_config):
-    """Get human-readable description of dimension config"""
-    if not dim_config or dim_config == 'orig':
-        return "Original (256D)"
-    
-    # Extract dimension and type
-    match = re.match(r'd(\d+)(.+)?', dim_config)
-    if match:
-        dim = match.group(1)
-        config_type = match.group(2) if match.group(2) else ""
-        
-        # Simple mapping for common types
-        type_mapping = {
-            "rel": "Remove Extra Layer",
-            "ids": "Increase Dimension Size",
-            "gdd": "Gradually Decrease Dimensions",
-            "": "Standard"
-        }
-        type_name = type_mapping.get(config_type, config_type.upper() if config_type else "Standard")
-        return f"{dim}D - {type_name}"
-    
-    return dim_config
-
-def get_architecture_text(dim_config):
-    """Get architecture text for display at bottom of graph"""
-    if not dim_config or dim_config not in ARCHITECTURE_CONFIGS:
-        # Default/unknown config
-        if dim_config == 'orig' or not dim_config:
-            return "Original Architecture\n4096 → 1024 → 256"
-        return f"Architecture: {dim_config}\n(Configuration details not available)"
-    
-    config = ARCHITECTURE_CONFIGS[dim_config]
-    name = config['name']
-    layers = config['layers']
-    layer_text = " → ".join(str(layer) for layer in layers)
-    
-    return f"{name}\n{layer_text}"
 
 def parse_log_file(log_path):
     """Parse a single log file to extract experiment metrics"""
@@ -188,6 +152,14 @@ def parse_log_file(log_path):
                     content = f.read()
     
     metrics = {}
+    
+    # Extract experiment info from the header
+    # "Experiment 1: Src=0% (0 samples), Tgt=100% (10 samples)"
+    exp_header = re.search(r'Experiment\s+(\d+):\s+Src=[\d.]+%\s+\((\d+)\s+samples?\),\s+Tgt=[\d.]+%\s+\((\d+)\s+samples?\)', content)
+    if exp_header:
+        metrics['experiment_num'] = int(exp_header.group(1))
+        metrics['src_samples'] = int(exp_header.group(2))
+        metrics['tgt_samples'] = int(exp_header.group(3))
     
     # Extract autoencoder dimensions from features loaded line
     ae_dim_match = re.search(r'features loaded\. Shape = \(\d+, (\d+)\)', content)
@@ -236,77 +208,121 @@ def parse_log_file(log_path):
     if tpr_match:
         metrics['tpr'] = float(tpr_match.group(1))
     
-    # Extract source and target samples (for the test)
-    run_section = re.search(r'\[STEP 3\].*?\[RUN 1\]', content, re.DOTALL)
-    if run_section:
-        section_text = run_section.group(0)
-        
-        # Look for CULane samples
-        src_matches = re.findall(r'CULane.*?\((\d+) samples\)', section_text)
-        if src_matches:
-            metrics['src_samples'] = int(src_matches[-1])
-        
-        # Look for Curvelanes samples  
-        tgt_matches = re.findall(r'Curvelanes.*?\((\d+) samples\)', section_text)
-        if tgt_matches:
-            metrics['tgt_samples'] = int(tgt_matches[-1])
-    
-    # Alternative: Look for the data shift test description line
-    if 'src_samples' not in metrics or 'tgt_samples' not in metrics:
-        shift_desc = re.search(r'\[STEP 3\] Data Shift Test:.*?\((\d+)\).*?Curvelanes.*?\((\d+)\).*?CULane', content)
-        if shift_desc:
-            metrics['tgt_samples'] = int(shift_desc.group(1))
-            metrics['src_samples'] = int(shift_desc.group(2))
-    
     return metrics if metrics else None
 
-def find_bash_script(log_path):
-    """Find the corresponding bash script for a log file"""
-    log_stem = log_path.stem
-    bash_path = log_path.parent / f"{log_stem}.sh"
-    return bash_path if bash_path.exists() else None
-
-def load_experiment_data(logs_dir, log_pattern='*.log'):
-    """Load all log files matching the pattern FROM A SINGLE DIRECTORY ONLY (not subdirectories)"""
-    data = {}
-    logs_path = Path(logs_dir)
+def get_config_description(dim_config):
+    """Get human-readable description of dimension config"""
+    if not dim_config or dim_config == 'orig':
+        return "Original (256D)"
     
-    if not logs_path.exists():
-        return data, [f"Directory not found: {logs_dir}"]
+    # Extract dimension and type
+    match = re.match(r'd(\d+)(.+)?', dim_config)
+    if match:
+        dim = match.group(1)
+        config_type = match.group(2) if match.group(2) else ""
+        
+        # Simple mapping for common types
+        type_mapping = {
+            "rel": "Remove Extra Layer",
+            "ids": "Increase Dimension Size",
+            "gdd": "Gradually Decrease Dimensions",
+            "": "Standard"
+        }
+        type_name = type_mapping.get(config_type, config_type.upper() if config_type else "Standard")
+        return f"{dim}D - {type_name}"
+    
+    return dim_config
+
+def get_architecture_text(dim_config):
+    """Get architecture text for display at bottom of graph"""
+    if not dim_config or dim_config not in ARCHITECTURE_CONFIGS:
+        # Default/unknown config
+        if dim_config == 'orig' or not dim_config:
+            return "Original Architecture\n4096 → 1024 → 256"
+        return f"Architecture: {dim_config}\n(Configuration details not available)"
+    
+    config = ARCHITECTURE_CONFIGS[dim_config]
+    name = config['name']
+    layers = config['layers']
+    layer_text = " → ".join(str(layer) for layer in layers)
+    
+    return f"{name}\n{layer_text}"
+
+def create_config_key(file_config, log_metrics):
+    """Create a unique key for grouping experiments by configuration"""
+    dim_config = file_config.get('dim_config', 'unknown')
+    src_calib = log_metrics.get('src_calib', file_config.get('calibration_samples', 'unknown'))
+    tgt_calib = log_metrics.get('tgt_calib', file_config.get('calibration_samples', 'unknown'))
+    ae_dim = log_metrics.get('autoencoder_dim', 'unknown')
+    
+    return f"{dim_config}__ae{ae_dim}_src{src_calib}_tgt{tgt_calib}"
+
+def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True):
+    """
+    Load all log files from multiple directories and group them by their actual configuration.
+    
+    Args:
+        logs_dirs: List of directory paths to search for log files
+        log_pattern: Pattern to match log files
+        recursive: Whether to search recursively
+    
+    Returns:
+        Dictionary where keys are configuration identifiers and values are experiment data.
+    """
+    if isinstance(logs_dirs, (str, Path)):
+        logs_dirs = [logs_dirs]
     
     errors = []
+    grouped_data = defaultdict(lambda: {'experiments': {}, 'metadata': {}, 'source_dirs': set()})
     
-    # CRITICAL: Only get .log files directly in THIS directory, not subdirectories
-    log_files = sorted([f for f in logs_path.iterdir() if f.is_file() and f.suffix == '.log'])
+    total_files = 0
+    all_log_files = []
     
-    if not log_files:
-        return data, [f"No log files found in {logs_dir}"]
-    
-    print(f"\nFound {len(log_files)} log files in {logs_dir}:")
-    for f in log_files:
-        print(f"  - {f.name}")
-    
-    print(f"\nProcessing files from {logs_dir}:")
-    
-    for log_file in log_files:
-        numbers = re.findall(r'(\d+)', log_file.stem)
-        if numbers:
-            exp_num = int(numbers[-1])
-        else:
-            exp_num = len(data) + 1
+    # Collect all log files from all directories
+    for logs_dir in logs_dirs:
+        logs_path = Path(logs_dir)
         
-        print(f"[Exp {exp_num:2d}] ", end='', flush=True)
+        if not logs_path.exists():
+            errors.append(f"Directory not found: {logs_dir}")
+            print(f"⚠ Directory not found: {logs_dir}")
+            continue
+        
+        # Get log files (recursively or not)
+        if recursive:
+            log_files = list(logs_path.rglob('*.log'))
+        else:
+            log_files = [f for f in logs_path.iterdir() if f.is_file() and f.suffix == '.log']
+        
+        for log_file in log_files:
+            all_log_files.append((log_file, logs_dir))
+        
+        print(f"Found {len(log_files)} log files in {logs_dir}")
+    
+    # Sort all log files by filename (not by directory)
+    all_log_files.sort(key=lambda x: x[0].name)
+    
+    total_files = len(all_log_files)
+    print(f"\nTotal files to process: {total_files}")
+    print(f"\nProcessing files (sorted by filename):")
+    
+    for log_file, source_dir in all_log_files:
+        # Extract configuration from filename
+        file_config = extract_config_from_filename(log_file.name)
+        
+        # Get relative path for display
+        try:
+            rel_path = log_file.relative_to(Path(source_dir))
+            display_path = str(rel_path)
+        except ValueError:
+            display_path = log_file.name
+        
+        print(f"[{log_file.name}] ", end='', flush=True)
         
         try:
             metrics = parse_log_file(log_file)
             
-            # Try to find and parse corresponding bash script
-            bash_script = find_bash_script(log_file)
-            bash_config = None
-            if bash_script:
-                bash_config = parse_bash_script(bash_script)
-                if bash_config:
-                    print(f"[Config: {bash_config.get('dim_config', 'N/A')}] ", end='', flush=True)
+            if file_config['dim_config'] != 'unknown':
+                print(f"[Config: {file_config['dim_config']}] ", end='', flush=True)
             
             if metrics:
                 src = metrics.get('src_samples', None)
@@ -317,29 +333,84 @@ def load_experiment_data(logs_dir, log_pattern='*.log'):
                 src_calib = metrics.get('src_calib', None)
                 tgt_calib = metrics.get('tgt_calib', None)
                 
+                # Use experiment number from log if available, otherwise from filename
+                exp_num = metrics.get('experiment_num', file_config.get('experiment_num', 0))
+                
                 if src is not None and tgt is not None and mmd is not None:
-                    # Merge bash config into metrics
-                    if bash_config:
-                        metrics['bash_config'] = bash_config
-                    data[exp_num] = metrics
-                    print(f"✓ (AE_Dim={ae_dim}, Src_Calib={src_calib}, Tgt_Calib={tgt_calib}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
+                    # Merge file config and metrics
+                    metrics['file_config'] = file_config
+                    metrics['dim_config'] = file_config['dim_config']
+                    
+                    # Create configuration key for grouping
+                    config_key = create_config_key(file_config, metrics)
+                    
+                    # Store experiment in appropriate group
+                    # Use filename as unique identifier
+                    unique_key = log_file.stem
+                    grouped_data[config_key]['experiments'][unique_key] = {
+                        'metrics': metrics,
+                        'file_path': log_file,
+                        'exp_num': exp_num,
+                        'source_dir': source_dir
+                    }
+                    
+                    # Track source directory
+                    grouped_data[config_key]['source_dirs'].add(str(Path(source_dir)))
+                    
+                    # Update metadata for this group
+                    if not grouped_data[config_key]['metadata']:
+                        grouped_data[config_key]['metadata'] = {
+                            'ae_dim': ae_dim,
+                            'src_calib': src_calib,
+                            'tgt_calib': tgt_calib,
+                            'dim_config': file_config['dim_config']
+                        }
+                    
+                    print(f"✓ Group: {config_key} (Exp={exp_num}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
                 else:
-                    error_msg = f"{log_file.name}: Missing required data (src={src}, tgt={tgt}, mmd={mmd})"
+                    error_msg = f"{display_path}: Missing required data (src={src}, tgt={tgt}, mmd={mmd})"
                     errors.append(error_msg)
                     print(f"⚠ MISSING: src={src}, tgt={tgt}, mmd={mmd}")
             else:
-                error_msg = f"{log_file.name}: Failed to parse"
+                error_msg = f"{display_path}: Failed to parse"
                 errors.append(error_msg)
                 print(f"✗ Failed to parse")
         except Exception as e:
-            error_msg = f"{log_file.name}: Exception - {str(e)}"
+            error_msg = f"{display_path}: Exception - {str(e)}"
             errors.append(error_msg)
             print(f"✗ Exception: {str(e)}")
     
-    return data, errors
+    # Convert defaultdict to regular dict and summarize
+    result = dict(grouped_data)
+    
+    # Convert sets to lists for JSON serialization
+    for config_key in result:
+        result[config_key]['source_dirs'] = list(result[config_key]['source_dirs'])
+    
+    print(f"\n{'='*60}")
+    print(f"GROUPING SUMMARY (from {len(logs_dirs)} source directories, {total_files} total files):")
+    print(f"{'='*60}")
+    for config_key, group_data in result.items():
+        n_experiments = len(group_data['experiments'])
+        metadata = group_data['metadata']
+        source_dirs = group_data['source_dirs']
+        
+        print(f"\nGroup: {config_key}")
+        print(f"  Configuration: {metadata.get('dim_config', 'unknown')}")
+        print(f"  AE Dimension: {metadata.get('ae_dim', 'unknown')}")
+        print(f"  Source Calibration: {metadata.get('src_calib', 'unknown')}")
+        print(f"  Target Calibration: {metadata.get('tgt_calib', 'unknown')}")
+        print(f"  Number of experiments: {n_experiments}")
+        print(f"  Source directories: {len(source_dirs)}")
+        for src_dir in source_dirs:
+            print(f"    - {src_dir}")
+    
+    return result, errors
 
-def extract_metrics(data):
-    """Convert parsed data into metrics arrays"""
+def extract_metrics_from_group(group_data):
+    """Convert grouped experiment data into metrics arrays"""
+    experiments = group_data['experiments']
+    
     metrics = {
         'experiment_num': [],
         'test_tpr': [],
@@ -353,14 +424,17 @@ def extract_metrics(data):
         'src_calib': [],
         'tgt_calib': [],
         'dim_config': [],
-        'bash_config': []
+        'file_paths': [],
+        'source_dirs': []
     }
     
-    for exp_num, exp_data in sorted(data.items()):
-        src = exp_data.get('src_samples', 0)
-        tgt = exp_data.get('tgt_samples', 0)
+    for unique_key, exp_data in sorted(experiments.items(), key=lambda x: x[1]['exp_num']):
+        exp_metrics = exp_data['metrics']
         
-        if 'test_avg_mmd' not in exp_data:
+        src = exp_metrics.get('src_samples', 0)
+        tgt = exp_metrics.get('tgt_samples', 0)
+        
+        if 'test_avg_mmd' not in exp_metrics:
             continue
         
         if src > 0:
@@ -368,22 +442,22 @@ def extract_metrics(data):
         else:
             ratio = float('inf') if tgt > 0 else 0
         
-        metrics['experiment_num'].append(exp_num)
-        metrics['test_tpr'].append(exp_data.get('tpr', 0))
-        metrics['test_avg_mmd'].append(exp_data.get('test_avg_mmd', 0))
-        metrics['test_std_mmd'].append(exp_data.get('test_std_mmd', 0))
+        metrics['experiment_num'].append(exp_data['exp_num'])
+        metrics['test_tpr'].append(exp_metrics.get('tpr', 0))
+        metrics['test_avg_mmd'].append(exp_metrics.get('test_avg_mmd', 0))
+        metrics['test_std_mmd'].append(exp_metrics.get('test_std_mmd', 0))
         metrics['src_samples'].append(src)
         metrics['tgt_samples'].append(tgt)
-        metrics['tau'].append(exp_data.get('tau', 0))
+        metrics['tau'].append(exp_metrics.get('tau', 0))
         metrics['ratio'].append(ratio)
-        metrics['autoencoder_dim'].append(exp_data.get('autoencoder_dim', 0))
-        metrics['src_calib'].append(exp_data.get('src_calib', 0))
-        metrics['tgt_calib'].append(exp_data.get('tgt_calib', 0))
+        metrics['autoencoder_dim'].append(exp_metrics.get('autoencoder_dim', 0))
+        metrics['src_calib'].append(exp_metrics.get('src_calib', 0))
+        metrics['tgt_calib'].append(exp_metrics.get('tgt_calib', 0))
         
-        bash_config = exp_data.get('bash_config', {})
-        dim_config = bash_config.get('dim_config', 'unknown') if bash_config else 'unknown'
+        dim_config = exp_metrics.get('dim_config', 'unknown')
         metrics['dim_config'].append(dim_config)
-        metrics['bash_config'].append(bash_config)
+        metrics['file_paths'].append(str(exp_data['file_path']))
+        metrics['source_dirs'].append(exp_data.get('source_dir', 'unknown'))
     
     return metrics
 
@@ -405,7 +479,7 @@ def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments, dim_config=No
         base += f"_{dim_config}"
     return base
 
-def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='experiment'):
+def plot_comprehensive_analysis(metrics, output_dir='figures', group_name='experiment'):
     """Generate comprehensive visualization of all experiments in multiple formats"""
     base_path = create_output_directories(output_dir)
     
@@ -424,34 +498,14 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     sorted_src_calib = [metrics['src_calib'][i] for i in sorted_indices]
     sorted_tgt_calib = [metrics['tgt_calib'][i] for i in sorted_indices]
     sorted_dim_config = [metrics['dim_config'][i] for i in sorted_indices]
+    sorted_file_paths = [metrics['file_paths'][i] for i in sorted_indices]
+    sorted_source_dirs = [metrics['source_dirs'][i] for i in sorted_indices]
     
-    # Get the most common values (mode)
-    ae_dim_mode = max(set(sorted_ae_dim), key=sorted_ae_dim.count) if sorted_ae_dim else 0
-    src_calib_mode = max(set(sorted_src_calib), key=sorted_src_calib.count) if sorted_src_calib else 0
-    tgt_calib_mode = max(set(sorted_tgt_calib), key=sorted_tgt_calib.count) if sorted_tgt_calib else 0
-    dim_config_mode = max(set(sorted_dim_config), key=sorted_dim_config.count) if sorted_dim_config else 'unknown'
-    
-    # VALIDATION: Check if all experiments have consistent calibration values
-    unique_src_calib = set(sorted_src_calib)
-    unique_tgt_calib = set(sorted_tgt_calib)
-    unique_ae_dim = set(sorted_ae_dim)
-    unique_dim_config = set(sorted_dim_config)
-    
-    warnings = []
-    if len(unique_src_calib) > 1 or len(unique_tgt_calib) > 1 or len(unique_ae_dim) > 1:
-        warnings.append(f"Inconsistent values in {folder_name}")
-        warnings.append(f"  Source calibration values: {unique_src_calib}")
-        warnings.append(f"  Target calibration values: {unique_tgt_calib}")
-        warnings.append(f"  Autoencoder dimensions: {unique_ae_dim}")
-        print(f"\n⚠️  WARNING: Inconsistent values detected in {folder_name}!")
-        print(f"   Source calibration values: {unique_src_calib}")
-        print(f"   Target calibration values: {unique_tgt_calib}")
-        print(f"   Autoencoder dimensions: {unique_ae_dim}")
-        print(f"   This suggests data from multiple experiment types are mixed!")
-    
-    if len(unique_dim_config) > 1:
-        warnings.append(f"  Multiple dimension configs: {unique_dim_config}")
-        print(f"   Multiple dimension configs: {unique_dim_config}")
+    # Get the most common values (mode) - should all be the same in a group
+    ae_dim_mode = sorted_ae_dim[0] if sorted_ae_dim else 0
+    src_calib_mode = sorted_src_calib[0] if sorted_src_calib else 0
+    tgt_calib_mode = sorted_tgt_calib[0] if sorted_tgt_calib else 0
+    dim_config_mode = sorted_dim_config[0] if sorted_dim_config else 'unknown'
     
     sequential_labels = [f"{i+1}" for i in range(n_experiments)]
     
@@ -526,12 +580,18 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
     
     # Scientific title with configuration information
     config_desc = get_config_description(dim_config_mode)
+    
+    # Count unique source directories
+    unique_sources = set(sorted_source_dirs)
+    n_sources = len(unique_sources)
+    source_note = f" (from {n_sources} source dir{'s' if n_sources > 1 else ''})" if n_sources > 1 else ""
+    
     plt.suptitle(
         f'Maximum Mean Discrepancy Analysis of Distribution Shift Detection\n' +
         f'Architecture: {config_desc} | ' +
         f'Source Samples: {src_calib_mode} | ' +
         f'Target Samples: {tgt_calib_mode} | ' +
-        f'N={n_experiments} Experiments', 
+        f'N={n_experiments} Experiments{source_note}', 
         fontsize=16, fontweight='bold', y=0.97
     )
     
@@ -567,126 +627,52 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', folder_name='expe
         
         print(f"✓ Saved {fmt.upper()}: {output_file}")
     
-    print(f"\nMapping (Sequential → Experiment) for {folder_name}:")
+    print(f"\nMapping (Sequential → Experiment) for {group_name}:")
     for i, actual_exp in enumerate(sorted_exp_num):
         if sorted_ratio[i] == float('inf'):
             ratio_str = '∞'
         else:
             ratio_str = f'{sorted_ratio[i]:.2f}'
         config_str = sorted_dim_config[i] if sorted_dim_config[i] != 'unknown' else 'N/A'
-        print(f"  {i+1:2d} → Exp{actual_exp:2d} (Config: {config_str}, AE_Dim: {sorted_ae_dim[i]}, Src_Calib: {sorted_src_calib[i]}, Tgt_Calib: {sorted_tgt_calib[i]}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
+        file_path = Path(sorted_file_paths[i])
+        source_dir = Path(sorted_source_dirs[i]).name if sorted_source_dirs[i] != 'unknown' else 'N/A'
+        print(f"  {i+1:2d} → Exp{actual_exp:2d} [{file_path.name}] from [{source_dir}] (Config: {config_str}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
     
     plt.close()
-    
-    return warnings
-
-def should_exclude_directory(dir_path, base_path, exclude_patterns):
-    """Check if a directory should be excluded based on exclusion patterns"""
-    dir_path = Path(dir_path)
-    base_path = Path(base_path)
-    
-    try:
-        relative_path = dir_path.relative_to(base_path)
-    except ValueError:
-        relative_path = dir_path
-    
-    for pattern in exclude_patterns:
-        pattern_path = Path(pattern)
-        if relative_path == pattern_path or pattern_path in relative_path.parents or str(pattern_path) in str(relative_path):
-            return True
-    
-    return False
-
-def find_log_directories(base_path='LocalBash', exclude_dirs=None):
-    """Find all directories (RECURSIVELY) in LocalBash that contain log files, excluding specified directories"""
-    base_path = Path(base_path)
-    
-    if exclude_dirs is None:
-        exclude_dirs = []
-    
-    exclude_patterns = []
-    for exclude_dir in exclude_dirs:
-        exclude_path = Path(exclude_dir)
-        try:
-            if exclude_path.is_absolute():
-                exclude_patterns.append(exclude_path.relative_to(base_path))
-            else:
-                exclude_patterns.append(exclude_path)
-        except ValueError:
-            exclude_patterns.append(exclude_path)
-    
-    if not base_path.exists():
-        print(f"❌ Base path not found: {base_path}")
-        return []
-    
-    log_dirs = []
-    excluded_dirs = []
-    
-    for root, dirs, files in os.walk(base_path):
-        root_path = Path(root)
-        
-        if should_exclude_directory(root_path, base_path, exclude_patterns):
-            excluded_dirs.append(root_path)
-            dirs[:] = []
-            continue
-        
-        log_files = [f for f in files if f.endswith('.log')]
-        if log_files:
-            log_dirs.append(root_path)
-            try:
-                rel_path = root_path.relative_to(base_path)
-                print(f"  Found directory with logs: {rel_path}")
-            except ValueError:
-                print(f"  Found directory with logs: {root_path}")
-    
-    if excluded_dirs:
-        print(f"\n  Excluded {len(excluded_dirs)} directories:")
-        for excluded in excluded_dirs[:5]:
-            try:
-                rel_path = excluded.relative_to(base_path)
-                print(f"    - {rel_path}")
-            except ValueError:
-                print(f"    - {excluded}")
-        if len(excluded_dirs) > 5:
-            print(f"    ... and {len(excluded_dirs) - 5} more")
-    
-    return sorted(log_dirs)
 
 def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(
-        description='Visualize experiment results from log files',
+        description='Visualize experiment results from log files (handles mixed/misplaced files from multiple directories)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Process a single directory
-  python visualizeGeneralized.py --log-path LocalBash/micro
+  # Process a single directory (groups files by configuration)
+  python visualize_mixed_shift_robust.py --log-path LocalBash/micro
   
-  # Process all directories in LocalBash RECURSIVELY (each gets its own graph)
-  python visualizeGeneralized.py --all-dirs --base-path LocalBash
+  # Process multiple directories (merges files by configuration)
+  python visualize_mixed_shift_robust.py --log-path LocalBash/RemoveExtraLayer LocalBash/GraduallyDecreaseDimensions
+  
+  # Process directory recursively
+  python visualize_mixed_shift_robust.py --log-path LocalBash --recursive
   
   # Process with custom output directory
-  python visualizeGeneralized.py --all-dirs --base-path LocalBash --output-dir results
+  python visualize_mixed_shift_robust.py --log-path LocalBash --recursive --output-dir results
         """
     )
     
     parser.add_argument(
         '--log-path',
         type=str,
-        help='Path to directory containing log files'
+        nargs='+',  # Accept multiple paths
+        required=True,
+        help='Path(s) to directory/directories containing log files (can specify multiple)'
     )
     
     parser.add_argument(
-        '--all-dirs',
+        '--recursive',
         action='store_true',
-        help='Process all directories in base-path that contain log files RECURSIVELY (each directory gets its own graph)'
-    )
-    
-    parser.add_argument(
-        '--base-path',
-        type=str,
-        default='LocalBash',
-        help='Base path to search for log directories (default: LocalBash)'
+        help='Search recursively for log files'
     )
     
     parser.add_argument(
@@ -705,74 +691,52 @@ Examples:
     
     args = parser.parse_args()
     
-    if not args.log_path and not args.all_dirs:
-        parser.error("Either --log-path or --all-dirs must be specified")
+    print(f"\n{'='*60}")
+    print(f"Processing log files from {len(args.log_path)} source director{'ies' if len(args.log_path) > 1 else 'y'}:")
+    for path in args.log_path:
+        print(f"  - {path}")
+    print(f"Recursive: {args.recursive}")
+    print(f"Output directory: {args.output_dir}")
+    print(f"{'='*60}")
     
-    exclude_dirs = ['CCE_IncorrectLog']
+    # Load and group experiments by configuration
+    grouped_data, errors = load_experiment_data_grouped(args.log_path, args.pattern, args.recursive)
     
-    all_errors = {}
-    all_warnings = {}
-    skipped_dirs = []
+    if errors:
+        print(f"\n⚠️  Encountered {len(errors)} errors during parsing:")
+        for error in errors[:10]:  # Show first 10 errors
+            print(f"   - {error}")
+        if len(errors) > 10:
+            print(f"   ... and {len(errors) - 10} more errors")
     
-    if args.all_dirs:
-        print(f"\n{'='*60}")
-        print(f"Searching RECURSIVELY in {args.base_path} for directories with .log files...")
-        print(f"Excluding: {', '.join(exclude_dirs)}")
-        print(f"{'='*60}")
-        log_directories = find_log_directories(args.base_path, exclude_dirs=exclude_dirs)
-        if not log_directories:
-            print(f"❌ No directories with log files found in {args.base_path}")
-            return
-        print(f"\n{'='*60}")
-        print(f"Found {len(log_directories)} directories with log files")
-        print(f"{'='*60}")
-    else:
-        log_directories = [Path(args.log_path)]
+    if not grouped_data:
+        print(f"\n❌ No valid experiment groups found!")
+        return
     
+    print(f"\n{'='*60}")
+    print(f"Found {len(grouped_data)} distinct experiment configurations")
+    print(f"{'='*60}")
+    
+    # Generate graphs for each group
     successful_graphs = 0
-    for log_dir in log_directories:
-        try:
-            folder_display = log_dir.relative_to(Path(args.base_path)) if args.all_dirs else log_dir
-        except:
-            folder_display = log_dir
+    for group_key, group_data in grouped_data.items():
+        print(f"\n{'='*60}")
+        print(f"GENERATING GRAPH FOR: {group_key}")
+        print(f"{'='*60}")
         
-        folder_name = str(folder_display).replace('/', '_').replace('\\', '_')
-        
-        print("\n" + "="*60)
-        print(f"PROCESSING: {folder_display}")
-        print("="*60)
-        print(f"Full path: {log_dir}")
-        print(f"Output dir: {args.output_dir}")
-        
-        data, errors = load_experiment_data(log_dir, args.pattern)
-        
-        if errors:
-            all_errors[str(folder_display)] = errors
-        
-        if not data:
-            print(f"\n❌ No valid data found in {folder_display}!")
-            skipped_dirs.append(str(folder_display))
-            continue
-        
-        print(f"\n✓ Successfully loaded {len(data)} experiments from {folder_display}")
-        
-        metrics = extract_metrics(data)
+        metrics = extract_metrics_from_group(group_data)
         
         if not metrics['experiment_num']:
-            print(f"\n❌ No valid metrics in {folder_display}!")
-            skipped_dirs.append(str(folder_display))
+            print(f"\n❌ No valid metrics in group {group_key}!")
             continue
         
-        print(f"✓ Processing {len(metrics['experiment_num'])} experiments from {folder_display}\n")
+        print(f"✓ Processing {len(metrics['experiment_num'])} experiments from group {group_key}\n")
         
-        warnings = plot_comprehensive_analysis(
+        plot_comprehensive_analysis(
             metrics, 
             output_dir=args.output_dir,
-            folder_name=folder_name
+            group_name=group_key
         )
-        
-        if warnings:
-            all_warnings[str(folder_display)] = warnings
         
         successful_graphs += 1
     
@@ -780,29 +744,11 @@ Examples:
     print("\n" + "="*60)
     print("SUMMARY")
     print("="*60)
-    print(f"✓ Successfully generated {successful_graphs} graphs")
+    print(f"✓ Successfully generated {successful_graphs} graphs from {len(grouped_data)} groups")
+    print(f"✓ Processed {len(args.log_path)} source director{'ies' if len(args.log_path) > 1 else 'y'}")
     
-    if skipped_dirs:
-        print(f"\n⚠️  Skipped {len(skipped_dirs)} directories (no valid data):")
-        for skipped in skipped_dirs:
-            print(f"   - {skipped}")
-    
-    if all_warnings:
-        print(f"\n⚠️  Warnings ({len(all_warnings)} directories with issues):")
-        for dir_name, warnings in all_warnings.items():
-            print(f"\n   {dir_name}:")
-            for warning in warnings:
-                print(f"      {warning}")
-    
-    if all_errors:
-        print(f"\n❌ Errors ({len(all_errors)} directories with errors):")
-        for dir_name, errors in all_errors.items():
-            print(f"\n   {dir_name}:")
-            for error in errors:
-                print(f"      {error}")
-    
-    if not all_warnings and not all_errors and not skipped_dirs:
-        print("\n✅ No errors or warnings!")
+    if errors:
+        print(f"\n⚠️  {len(errors)} files had parsing errors")
     
     print("\n" + "="*60)
     print(f"✓ All processing complete!")

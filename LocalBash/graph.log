@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 161066
+Slurm Job ID: 161419
 Running on host: node02
-Start Time: Tue Feb 10 01:44:30 PM EST 2026
+Start Time: Thu Feb 12 10:11:55 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,4 +21,1122 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Unit Test...
-slurmstepd-node02: error: *** JOB 161066 ON node02 CANCELLED AT 2026-02-10T13:44:39 ***
+
+============================================================
+Processing log files from 3 source directories:
+  - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+  - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions
+  - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+Recursive: True
+Output directory: figures_organized
+============================================================
+Found 66 log files in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+Found 33 log files in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions
+Found 165 log files in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Total files to process: 264
+
+Processing files (sorted by filename):
+[10d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=5.0%)
+[10d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[11d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[1d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[2d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=99.0%)
+[2d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=73.0%)
+[2d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[3d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
+[3d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
+[3d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
+[3d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=53.0%)
+[3d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=99.0%)
+[3d32relK1000.log] [Config: d32rel] ⚠ MISSING: src=200, tgt=800, mmd=None
+[3d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=47.0%)
+[3d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
+[3d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
+[3d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[4d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=46.0%)
+[4d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=0.0%)
+[4d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=99.0%)
+[4d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
+[4d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=92.0%)
+[4d32relK1000.log] [Config: d32rel] ⚠ MISSING: src=300, tgt=700, mmd=None
+[4d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=51.0%)
+[4d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
+[4d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
+[4d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[5d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=100.0%)
+[5d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=21.0%)
+[5d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=15.0%)
+[5d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=70.0%)
+[5d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=32.0%)
+[5d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=76.0%)
+[5d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=8.0%)
+[5d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=97.0%)
+[5d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=39.0%)
+[5d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[6d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
+[6d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=0.0%)
+[6d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
+[6d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=1.0%)
+[6d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=96.0%)
+[6d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=46.0%)
+[6d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
+[6d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=0.0%)
+[6d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=1.0%)
+[6d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
+[6d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=16.0%)
+[6d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[7d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=47.0%)
+[7d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=99.0%)
+[7d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
+[7d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=0.0%)
+[7d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
+[7d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=0.0%)
+[7d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=2.0%)
+[7d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=23.0%)
+[7d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
+[7d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=5.0%)
+[7d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=1.0%)
+[7d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=47.0%)
+[7d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
+[7d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=60.0%)
+[7d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=24.0%)
+[7d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=0.0%)
+[8d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
+[8d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
+[8d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
+[8d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=2.0%)
+[8d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
+[8d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=33.0%)
+[8d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
+[8d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=50.0%)
+[8d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
+[8d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[9d128gddK100.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d128gddK1000.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d128idsK100.log] [Config: d128ids] ✓ Group: d128ids__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d128idsK1000.log] [Config: d128ids] ✓ Group: d128ids__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d128relK100.log] [Config: d128rel] ✓ Group: d128rel__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d128relK1000.log] [Config: d128rel] ✓ Group: d128rel__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d32gddK100.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d32gddK1000.log] [Config: d32gdd] ✓ Group: d32gdd__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d32relK100.log] [Config: d32rel] ✓ Group: d32rel__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d32relK1000.log] [Config: d32rel] ✓ Group: d32rel__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d64gddK100.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d64gddK1000.log] [Config: d64gdd] ✓ Group: d64gdd__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d64idsK100.log] [Config: d64ids] ✓ Group: d64ids__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d64idsK1000.log] [Config: d64ids] ✓ Group: d64ids__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d64relK100.log] [Config: d64rel] ✓ Group: d64rel__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d64relK1000.log] [Config: d64rel] ✓ Group: d64rel__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[d128gdd1.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=100.0%)
+[d128gdd10.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=1.0%)
+[d128gdd11.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=2.0%)
+[d128gdd2.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=100.0%)
+[d128gdd3.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=83.0%)
+[d128gdd4.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=49.0%)
+[d128gdd5.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=57.0%)
+[d128gdd6.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=4.0%)
+[d128gdd7.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=25.0%)
+[d128gdd8.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=0.0%)
+[d128gdd9.log] [Config: d128gdd] ✓ Group: d128gdd__ae128_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=1.0%)
+[d128ids1.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=96.0%)
+[d128ids10.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=2.0%)
+[d128ids11.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=0.0%)
+[d128ids2.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=68.0%)
+[d128ids3.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=64.0%)
+[d128ids4.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=46.0%)
+[d128ids5.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=6.0%)
+[d128ids6.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=4.0%)
+[d128ids7.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=9.0%)
+[d128ids8.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=12.0%)
+[d128ids9.log] [Config: d128ids] ✓ Group: d128ids__ae128_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=11.0%)
+[d32gdd1.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=84.0%)
+[d32gdd10.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=0.0%)
+[d32gdd11.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=14.0%)
+[d32gdd2.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=62.0%)
+[d32gdd3.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=67.0%)
+[d32gdd4.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=34.0%)
+[d32gdd5.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=1.0%)
+[d32gdd6.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=4.0%)
+[d32gdd7.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=39.0%)
+[d32gdd8.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=0.0%)
+[d32gdd9.log] [Config: d32gdd] ✓ Group: d32gdd__ae32_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=7.0%)
+[d64gdd1.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=100.0%)
+[d64gdd10.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=2.0%)
+[d64gdd11.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=28.0%)
+[d64gdd2.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=91.0%)
+[d64gdd3.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=38.0%)
+[d64gdd4.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=1.0%)
+[d64gdd5.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=8.0%)
+[d64gdd6.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=15.0%)
+[d64gdd7.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=21.0%)
+[d64gdd8.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=16.0%)
+[d64gdd9.log] [Config: d64gdd] ✓ Group: d64gdd__ae64_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=4.0%)
+[d64ids1.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=88.0%)
+[d64ids10.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=3.0%)
+[d64ids11.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=1.0%)
+[d64ids2.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=92.0%)
+[d64ids3.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=47.0%)
+[d64ids4.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=6.0%)
+[d64ids5.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=10.0%)
+[d64ids6.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=13.0%)
+[d64ids7.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=2.0%)
+[d64ids8.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=13.0%)
+[d64ids9.log] [Config: d64ids] ✓ Group: d64ids__ae64_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=1.0%)
+[rel128TEN1.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=99.0%)
+[rel128TEN10.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=0.0%)
+[rel128TEN11.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=2.0%)
+[rel128TEN2.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=57.0%)
+[rel128TEN3.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=81.0%)
+[rel128TEN4.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=86.0%)
+[rel128TEN5.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=90.0%)
+[rel128TEN6.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=34.0%)
+[rel128TEN7.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=3.0%)
+[rel128TEN8.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=13.0%)
+[rel128TEN9.log] ✓ Group: unknown__ae128_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=7.0%)
+[rel32TEN1.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=53.0%)
+[rel32TEN10.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=7.0%)
+[rel32TEN11.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=6.0%)
+[rel32TEN2.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=29.0%)
+[rel32TEN3.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=85.0%)
+[rel32TEN4.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=84.0%)
+[rel32TEN5.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=9.0%)
+[rel32TEN6.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=2.0%)
+[rel32TEN7.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=9.0%)
+[rel32TEN8.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=24.0%)
+[rel32TEN9.log] ✓ Group: unknown__ae32_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=4.0%)
+[rel64TEN1.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=100.0%)
+[rel64TEN10.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=6.0%)
+[rel64TEN11.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=3.0%)
+[rel64TEN2.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=40.0%)
+[rel64TEN3.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=64.0%)
+[rel64TEN4.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=64.0%)
+[rel64TEN5.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=34.0%)
+[rel64TEN6.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=57.0%)
+[rel64TEN7.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=19.0%)
+[rel64TEN8.log] ✓ Group: unknown__ae64_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=6.0%)
+[rel64TEN9.log] The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+✓ Group: unknown__ae64_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=1.0%)
+
+============================================================
+GROUPING SUMMARY (from 3 source directories, 264 total files):
+============================================================
+
+Group: d128gdd__ae128_src100_tgt100
+  Configuration: d128gdd
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d128gdd__ae128_src1000_tgt1000
+  Configuration: d128gdd
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d128ids__ae128_src100_tgt100
+  Configuration: d128ids
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: d128ids__ae128_src1000_tgt1000
+  Configuration: d128ids
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: d128rel__ae128_src100_tgt100
+  Configuration: d128rel
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d128rel__ae128_src1000_tgt1000
+  Configuration: d128rel
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d32gdd__ae128_src100_tgt100
+  Configuration: d32gdd
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d32gdd__ae128_src1000_tgt1000
+  Configuration: d32gdd
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d32rel__ae128_src100_tgt100
+  Configuration: d32rel
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d32rel__ae128_src1000_tgt1000
+  Configuration: d32rel
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 9
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d64gdd__ae128_src100_tgt100
+  Configuration: d64gdd
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d64gdd__ae128_src1000_tgt1000
+  Configuration: d64gdd
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d64ids__ae128_src100_tgt100
+  Configuration: d64ids
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: d64ids__ae128_src1000_tgt1000
+  Configuration: d64ids
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: d64rel__ae128_src100_tgt100
+  Configuration: d64rel
+  AE Dimension: 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d64rel__ae128_src1000_tgt1000
+  Configuration: d64rel
+  AE Dimension: 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: d128gdd__ae128_src10_tgt10
+  Configuration: d128gdd
+  AE Dimension: 128
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions
+
+Group: d128ids__ae128_src10_tgt10
+  Configuration: d128ids
+  AE Dimension: 128
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: d32gdd__ae32_src10_tgt10
+  Configuration: d32gdd
+  AE Dimension: 32
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions
+
+Group: d64gdd__ae64_src10_tgt10
+  Configuration: d64gdd
+  AE Dimension: 64
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions
+
+Group: d64ids__ae64_src10_tgt10
+  Configuration: d64ids
+  AE Dimension: 64
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: unknown__ae128_src10_tgt10
+  Configuration: unknown
+  AE Dimension: 128
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: unknown__ae32_src10_tgt10
+  Configuration: unknown
+  AE Dimension: 32
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: unknown__ae64_src10_tgt10
+  Configuration: unknown
+  AE Dimension: 64
+  Source Calibration: 10
+  Target Calibration: 10
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+⚠️  Encountered 2 errors during parsing:
+   - thousand32d/3d32relK1000.log: Missing required data (src=200, tgt=800, mmd=None)
+   - thousand32d/4d32relK1000.log: Missing required data (src=300, tgt=700, mmd=None)
+
+============================================================
+Found 24 distinct experiment configurations
+============================================================
+
+============================================================
+GENERATING GRAPH FOR: d128gdd__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d128gdd__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d128gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d128gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d128gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d128gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d128gdd.eps
+
+Mapping (Sequential → Experiment) for d128gdd__ae128_src100_tgt100:
+   1 → Exp11 [11d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d128gddK100.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128gdd__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d128gdd__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d128gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d128gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d128gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d128gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d128gdd.eps
+
+Mapping (Sequential → Experiment) for d128gdd__ae128_src1000_tgt1000:
+   1 → Exp11 [11d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d128gddK1000.log] from [RemoveExtraLayer] (Config: d128gdd, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128ids__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d128ids__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d128ids.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d128ids.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d128ids.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d128ids.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d128ids.eps
+
+Mapping (Sequential → Experiment) for d128ids__ae128_src100_tgt100:
+   1 → Exp11 [11d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d128idsK100.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128ids__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d128ids__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d128ids.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d128ids.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d128ids.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d128ids.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d128ids.eps
+
+Mapping (Sequential → Experiment) for d128ids__ae128_src1000_tgt1000:
+   1 → Exp11 [11d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d128idsK1000.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128rel__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d128rel__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d128rel.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d128rel.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d128rel.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d128rel.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d128rel.eps
+
+Mapping (Sequential → Experiment) for d128rel__ae128_src100_tgt100:
+   1 → Exp11 [11d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d128relK100.log] from [RemoveExtraLayer] (Config: d128rel, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128rel__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d128rel__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d128rel.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d128rel.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d128rel.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d128rel.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d128rel.eps
+
+Mapping (Sequential → Experiment) for d128rel__ae128_src1000_tgt1000:
+   1 → Exp11 [11d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d128relK1000.log] from [RemoveExtraLayer] (Config: d128rel, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d32gdd__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d32gdd__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d32gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d32gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d32gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d32gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d32gdd.eps
+
+Mapping (Sequential → Experiment) for d32gdd__ae128_src100_tgt100:
+   1 → Exp11 [11d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d32gddK100.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d32gdd__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d32gdd__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d32gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d32gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d32gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d32gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d32gdd.eps
+
+Mapping (Sequential → Experiment) for d32gdd__ae128_src1000_tgt1000:
+   1 → Exp11 [11d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d32gddK1000.log] from [RemoveExtraLayer] (Config: d32gdd, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d32rel__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d32rel__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d32rel.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d32rel.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d32rel.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d32rel.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d32rel.eps
+
+Mapping (Sequential → Experiment) for d32rel__ae128_src100_tgt100:
+   1 → Exp11 [11d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d32relK100.log] from [RemoveExtraLayer] (Config: d32rel, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d32rel__ae128_src1000_tgt1000
+============================================================
+✓ Processing 9 experiments from group d32rel__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n9_d32rel.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n9_d32rel.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n9_d32rel.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n9_d32rel.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n9_d32rel.eps
+
+Mapping (Sequential → Experiment) for d32rel__ae128_src1000_tgt1000:
+   1 → Exp11 [11d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 2 [2d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 100, Tgt: 900, Ratio: 9.00)
+   9 → Exp 1 [1d32relK1000.log] from [RemoveExtraLayer] (Config: d32rel, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64gdd__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d64gdd__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d64gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d64gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d64gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d64gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d64gdd.eps
+
+Mapping (Sequential → Experiment) for d64gdd__ae128_src100_tgt100:
+   1 → Exp11 [11d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d64gddK100.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64gdd__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d64gdd__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d64gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d64gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d64gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d64gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d64gdd.eps
+
+Mapping (Sequential → Experiment) for d64gdd__ae128_src1000_tgt1000:
+   1 → Exp11 [11d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d64gddK1000.log] from [RemoveExtraLayer] (Config: d64gdd, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64ids__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d64ids__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d64ids.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d64ids.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d64ids.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d64ids.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d64ids.eps
+
+Mapping (Sequential → Experiment) for d64ids__ae128_src100_tgt100:
+   1 → Exp11 [11d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d64idsK100.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64ids__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d64ids__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d64ids.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d64ids.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d64ids.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d64ids.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d64ids.eps
+
+Mapping (Sequential → Experiment) for d64ids__ae128_src1000_tgt1000:
+   1 → Exp11 [11d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d64idsK1000.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64rel__ae128_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group d64rel__ae128_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src100_tgt100_n11_d64rel.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src100_tgt100_n11_d64rel.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src100_tgt100_n11_d64rel.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src100_tgt100_n11_d64rel.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src100_tgt100_n11_d64rel.eps
+
+Mapping (Sequential → Experiment) for d64rel__ae128_src100_tgt100:
+   1 → Exp11 [11d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d64relK100.log] from [RemoveExtraLayer] (Config: d64rel, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64rel__ae128_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group d64rel__ae128_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src1000_tgt1000_n11_d64rel.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src1000_tgt1000_n11_d64rel.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src1000_tgt1000_n11_d64rel.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src1000_tgt1000_n11_d64rel.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src1000_tgt1000_n11_d64rel.eps
+
+Mapping (Sequential → Experiment) for d64rel__ae128_src1000_tgt1000:
+   1 → Exp11 [11d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d64relK1000.log] from [RemoveExtraLayer] (Config: d64rel, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128gdd__ae128_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group d128gdd__ae128_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src10_tgt10_n11_d128gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src10_tgt10_n11_d128gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src10_tgt10_n11_d128gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src10_tgt10_n11_d128gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src10_tgt10_n11_d128gdd.eps
+
+Mapping (Sequential → Experiment) for d128gdd__ae128_src10_tgt10:
+   1 → Exp11 [d128gdd11.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [d128gdd10.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [d128gdd9.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [d128gdd8.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [d128gdd7.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [d128gdd6.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [d128gdd5.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [d128gdd4.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [d128gdd3.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [d128gdd2.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [d128gdd1.log] from [GraduallyDecreaseDimensions] (Config: d128gdd, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d128ids__ae128_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group d128ids__ae128_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src10_tgt10_n11_d128ids.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src10_tgt10_n11_d128ids.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src10_tgt10_n11_d128ids.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src10_tgt10_n11_d128ids.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src10_tgt10_n11_d128ids.eps
+
+Mapping (Sequential → Experiment) for d128ids__ae128_src10_tgt10:
+   1 → Exp11 [d128ids11.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [d128ids10.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [d128ids9.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [d128ids8.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [d128ids7.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [d128ids6.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [d128ids5.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [d128ids4.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [d128ids3.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [d128ids2.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [d128ids1.log] from [IncreaseDimentionallity] (Config: d128ids, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d32gdd__ae32_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group d32gdd__ae32_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim32_src10_tgt10_n11_d32gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim32_src10_tgt10_n11_d32gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim32_src10_tgt10_n11_d32gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim32_src10_tgt10_n11_d32gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim32_src10_tgt10_n11_d32gdd.eps
+
+Mapping (Sequential → Experiment) for d32gdd__ae32_src10_tgt10:
+   1 → Exp11 [d32gdd11.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [d32gdd10.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [d32gdd9.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [d32gdd8.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [d32gdd7.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [d32gdd6.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [d32gdd5.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [d32gdd4.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [d32gdd3.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [d32gdd2.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [d32gdd1.log] from [GraduallyDecreaseDimensions] (Config: d32gdd, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64gdd__ae64_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group d64gdd__ae64_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim64_src10_tgt10_n11_d64gdd.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim64_src10_tgt10_n11_d64gdd.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim64_src10_tgt10_n11_d64gdd.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim64_src10_tgt10_n11_d64gdd.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim64_src10_tgt10_n11_d64gdd.eps
+
+Mapping (Sequential → Experiment) for d64gdd__ae64_src10_tgt10:
+   1 → Exp11 [d64gdd11.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [d64gdd10.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [d64gdd9.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [d64gdd8.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [d64gdd7.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [d64gdd6.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [d64gdd5.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [d64gdd4.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [d64gdd3.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [d64gdd2.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [d64gdd1.log] from [GraduallyDecreaseDimensions] (Config: d64gdd, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: d64ids__ae64_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group d64ids__ae64_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim64_src10_tgt10_n11_d64ids.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim64_src10_tgt10_n11_d64ids.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim64_src10_tgt10_n11_d64ids.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim64_src10_tgt10_n11_d64ids.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim64_src10_tgt10_n11_d64ids.eps
+
+Mapping (Sequential → Experiment) for d64ids__ae64_src10_tgt10:
+   1 → Exp11 [d64ids11.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [d64ids10.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [d64ids9.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [d64ids8.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [d64ids7.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [d64ids6.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [d64ids5.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [d64ids4.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [d64ids3.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [d64ids2.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [d64ids1.log] from [IncreaseDimentionallity] (Config: d64ids, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: unknown__ae128_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group unknown__ae128_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim128_src10_tgt10_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim128_src10_tgt10_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim128_src10_tgt10_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim128_src10_tgt10_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src10_tgt10_n11.eps
+
+Mapping (Sequential → Experiment) for unknown__ae128_src10_tgt10:
+   1 → Exp11 [rel128TEN11.log] from [RemoveExtraLayer] (Config: N/A, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [rel128TEN10.log] from [RemoveExtraLayer] (Config: N/A, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [rel128TEN9.log] from [RemoveExtraLayer] (Config: N/A, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [rel128TEN8.log] from [RemoveExtraLayer] (Config: N/A, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [rel128TEN7.log] from [RemoveExtraLayer] (Config: N/A, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [rel128TEN6.log] from [RemoveExtraLayer] (Config: N/A, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [rel128TEN5.log] from [RemoveExtraLayer] (Config: N/A, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [rel128TEN4.log] from [RemoveExtraLayer] (Config: N/A, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [rel128TEN3.log] from [RemoveExtraLayer] (Config: N/A, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [rel128TEN2.log] from [RemoveExtraLayer] (Config: N/A, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [rel128TEN1.log] from [RemoveExtraLayer] (Config: N/A, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: unknown__ae32_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group unknown__ae32_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim32_src10_tgt10_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim32_src10_tgt10_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim32_src10_tgt10_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim32_src10_tgt10_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim32_src10_tgt10_n11.eps
+
+Mapping (Sequential → Experiment) for unknown__ae32_src10_tgt10:
+   1 → Exp11 [rel32TEN11.log] from [RemoveExtraLayer] (Config: N/A, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [rel32TEN10.log] from [RemoveExtraLayer] (Config: N/A, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [rel32TEN9.log] from [RemoveExtraLayer] (Config: N/A, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [rel32TEN8.log] from [RemoveExtraLayer] (Config: N/A, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [rel32TEN7.log] from [RemoveExtraLayer] (Config: N/A, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [rel32TEN6.log] from [RemoveExtraLayer] (Config: N/A, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [rel32TEN5.log] from [RemoveExtraLayer] (Config: N/A, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [rel32TEN4.log] from [RemoveExtraLayer] (Config: N/A, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [rel32TEN3.log] from [RemoveExtraLayer] (Config: N/A, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [rel32TEN2.log] from [RemoveExtraLayer] (Config: N/A, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [rel32TEN1.log] from [RemoveExtraLayer] (Config: N/A, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: unknown__ae64_src10_tgt10
+============================================================
+✓ Processing 11 experiments from group unknown__ae64_src10_tgt10
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_dim64_src10_tgt10_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_dim64_src10_tgt10_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_dim64_src10_tgt10_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_dim64_src10_tgt10_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_dim64_src10_tgt10_n11.eps
+
+Mapping (Sequential → Experiment) for unknown__ae64_src10_tgt10:
+   1 → Exp11 [rel64TEN11.log] from [RemoveExtraLayer] (Config: N/A, Src: 10, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [rel64TEN10.log] from [RemoveExtraLayer] (Config: N/A, Src: 9, Tgt: 1, Ratio: 0.11)
+   3 → Exp 9 [rel64TEN9.log] from [RemoveExtraLayer] (Config: N/A, Src: 8, Tgt: 2, Ratio: 0.25)
+   4 → Exp 8 [rel64TEN8.log] from [RemoveExtraLayer] (Config: N/A, Src: 7, Tgt: 3, Ratio: 0.43)
+   5 → Exp 7 [rel64TEN7.log] from [RemoveExtraLayer] (Config: N/A, Src: 6, Tgt: 4, Ratio: 0.67)
+   6 → Exp 6 [rel64TEN6.log] from [RemoveExtraLayer] (Config: N/A, Src: 5, Tgt: 5, Ratio: 1.00)
+   7 → Exp 5 [rel64TEN5.log] from [RemoveExtraLayer] (Config: N/A, Src: 4, Tgt: 6, Ratio: 1.50)
+   8 → Exp 4 [rel64TEN4.log] from [RemoveExtraLayer] (Config: N/A, Src: 3, Tgt: 7, Ratio: 2.33)
+   9 → Exp 3 [rel64TEN3.log] from [RemoveExtraLayer] (Config: N/A, Src: 2, Tgt: 8, Ratio: 4.00)
+  10 → Exp 2 [rel64TEN2.log] from [RemoveExtraLayer] (Config: N/A, Src: 1, Tgt: 9, Ratio: 9.00)
+  11 → Exp 1 [rel64TEN1.log] from [RemoveExtraLayer] (Config: N/A, Src: 0, Tgt: 10, Ratio: ∞)
+
+============================================================
+SUMMARY
+============================================================
+✓ Successfully generated 24 graphs from 24 groups
+✓ Processed 3 source directories
+
+⚠️  2 files had parsing errors
+
+============================================================
+✓ All processing complete!
+============================================================
+Done!
