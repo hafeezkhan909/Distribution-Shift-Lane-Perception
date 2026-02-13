@@ -1,0 +1,69 @@
+Logging to: find_missing_logs_20260212_232654.log
+>>> Scanning for .sh files...
+Found 264 .sh scripts
+>>> Extracting expected log names from .sh scripts...
+Extracted 264 expected log names
+>>> Scanning for actual .log files...
+Found 264 .log files
+>>> Computing missing logs (expected but not found)...
+Missing logs: 0
+>>> Computing orphan logs (found but not referenced by any .sh)...
+Orphan logs: 0
+
+===== SUMMARY =====
+Slurm scripts:   264
+Expected logs:   264
+Found logs:      264
+Missing logs:    0
+Orphan logs:     0
+
+First 20 missing (log_name):
+
+First 20 orphan (log_name):
+
+Detail: expected log -> source .sh (first 20)
+10d128gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/thousand128d/10d128gddK1000.sh
+10d128gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/hundred128d/10d128gddK100.sh
+10d128idsK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/thousand128d/10d128idsK1000.sh
+10d128idsK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/hundred128d/10d128idsK100.sh
+10d128relK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand128d/10d128relK1000.sh
+10d128relK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/hundred128d/10d128relK100.sh
+10d32gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/thousand32d/10d32gddK1000.sh
+10d32gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/hundred32d/10d32gddK100.sh
+10d32relK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d32relK1000.sh
+10d32relK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/hundred32d/10d32relK100.sh
+10d64gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/thousand64d/10d64gddK1000.sh
+10d64gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/hundred64d/10d64gddK100.sh
+10d64idsK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/thousand64d/10d64idsK1000.sh
+10d64idsK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/hundred64d/10d64idsK100.sh
+10d64relK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand64d/10d64relK1000.sh
+10d64relK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/hundred64d/10d64relK100.sh
+11d128gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/thousand128d/11d128gddK1000.sh
+11d128gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions/hundred128d/11d128gddK100.sh
+11d128idsK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/thousand128d/11d128idsK1000.sh
+11d128idsK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/hundred128d/11d128idsK100.sh
+
+Detail: orphan log -> path (first 20)
+10d128gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d128gddK1000.log
+10d128gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d128gddK100.log
+10d128idsK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/thousand128d/10d128idsK1000.log
+10d128idsK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/hundred128d/10d128idsK100.log
+10d128relK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand128d/10d128relK1000.log
+10d128relK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/hundred128d/10d128relK100.log
+10d32gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d32gddK1000.log
+10d32gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d32gddK100.log
+10d32relK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d32relK1000.log
+10d32relK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/hundred32d/10d32relK100.log
+10d64gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d64gddK1000.log
+10d64gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/10d64gddK100.log
+10d64idsK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/thousand64d/10d64idsK1000.log
+10d64idsK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/hundred64d/10d64idsK100.log
+10d64relK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand64d/10d64relK1000.log
+10d64relK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/hundred64d/10d64relK100.log
+11d128gddK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/11d128gddK1000.log
+11d128gddK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer/thousand32d/11d128gddK100.log
+11d128idsK1000.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/thousand128d/11d128idsK1000.log
+11d128idsK100.log|/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/hundred128d/11d128idsK100.log
+
+Done. Full log at: find_missing_logs_20260212_232654.log
+Done!

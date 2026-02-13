@@ -32,10 +32,10 @@ cd /home1/adoyle2025/Distribution-Shift-Lane-Perception
 echo "Starting Unit Test..."
 
 python3 visGen2.py \
-  --log-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity \
-             /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions \
-             /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer \
+  --log-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments \
+  --sh-path  /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments \
   --recursive \
-  --output-dir figures_organized
+  --output-dir figures_organized \
+  --expect-groups 24
 
 echo "Done!"
