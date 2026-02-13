@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-Visualize Mixed Shift Experiment Results (Robust Version)
-Handles mixed/misplaced log files by grouping them based on their actual configuration
-extracted from filename, log content, and Slurm job scripts (truth source for dConfig/sample sizes).
+Visualize Mixed Shift Experiment Results (Robust Version with Slurm truth mapping)
+- Discovers all Slurm .sh files, parses their ground-truth configs (dConfig, samples, num_runs, output log).
+- Builds a mapping log_filename -> truth_from_sh.
+- Reads .log files for MMD/TPR/tau and merges with truth (truth wins for configs; log wins for metrics).
+- Warns on missing logs for a .sh, and on logs without a matching .sh.
 """
 
 import re
@@ -13,63 +15,30 @@ from collections import defaultdict
 
 import numpy as np
 import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
-# Set style
+# ---------------------------------------------------------------------------
+# Styles and configs
+# ---------------------------------------------------------------------------
 plt.rcParams['figure.figsize'] = (15, 10)
 plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
 
-# Architecture configurations
 ARCHITECTURE_CONFIGS = {
-    "d128rel": {
-        "name": "Remove Extra Layer",
-        "layers": [4096, 1024, 128]
-    },
-    "d64rel": {
-        "name": "Remove Extra Layer",
-        "layers": [4096, 1024, 64]
-    },
-    "d32rel": {
-        "name": "Remove Extra Layer",
-        "layers": [4096, 1024, 32]
-    },
-    "d128gdd": {
-        "name": "Gradually Decrease Dimensions",
-        "layers": [4096, 512, 128]
-    },
-    "d64gdd": {
-        "name": "Gradually Decrease Dimensions",
-        "layers": [4096, 512, 64]
-    },
-    "d32gdd": {
-        "name": "Gradually Decrease Dimensions",
-        "layers": [4096, 512, 32]
-    },
-    "d64ids": {
-        "name": "Increase Dimension Size",
-        "layers": [4096, 1024, 256, 64]
-    },
-    "d128ids": {
-        "name": "Increase Dimension Size",
-        "layers": [4096, 1024, 256, 128]
-    },
-    "d32ids": {
-        "name": "Increase Dimension Size",
-        "layers": [4096, 1024, 256, 32]
-    },
-    "d32": {
-        "name": "32D Standard",
-        "layers": [4096, 1024, 256, 32]
-    },
-    "orig": {
-        "name": "Original Architecture",
-        "layers": [4096, 1024, 256]
-    }
+    "d128rel": {"name": "Remove Extra Layer", "layers": [4096, 1024, 128]},
+    "d64rel": {"name": "Remove Extra Layer", "layers": [4096, 1024, 64]},
+    "d32rel": {"name": "Remove Extra Layer", "layers": [4096, 1024, 32]},
+    "d128gdd": {"name": "Gradually Decrease Dimensions", "layers": [4096, 512, 128]},
+    "d64gdd": {"name": "Gradually Decrease Dimensions", "layers": [4096, 512, 64]},
+    "d32gdd": {"name": "Gradually Decrease Dimensions", "layers": [4096, 512, 32]},
+    "d64ids": {"name": "Increase Dimension Size", "layers": [4096, 1024, 256, 64]},
+    "d128ids": {"name": "Increase Dimension Size", "layers": [4096, 1024, 256, 128]},
+    "d32ids": {"name": "Increase Dimension Size", "layers": [4096, 1024, 256, 32]},
+    "d32": {"name": "32D Standard", "layers": [4096, 1024, 256, 32]},
+    "orig": {"name": "Original Architecture", "layers": [4096, 1024, 256]},
 }
 
-# --- Slurm parsing support ---
+# Slurm argument patterns
 SLURM_ARG_PATTERNS = {
     'dconfig': r'--dConfig\s+([A-Za-z0-9_]+)',
     'src_samples': r'--src_samples\s+(\d+)',
@@ -77,10 +46,16 @@ SLURM_ARG_PATTERNS = {
     'ratio_src_samples': r'--ratio_src_samples\s+(\d+)',
     'ratio_tgt_samples': r'--ratio_tgt_samples\s+(\d+)',
     'num_runs': r'--num_runs\s+(\d+)',
+    'file_name': r'--file_name\s+"?([\w\.-]+)"?',
+    'output': r'#SBATCH\s+--output\s+([^\s]+)',
 }
+OUTPUT_REDIRECT_PATTERN = r'>\s*([^\s]+\.log)'
 
-def parse_slurm_script(script_path):
-    """Parse a Slurm bash script for ground-truth args."""
+# ---------------------------------------------------------------------------
+# Helpers: Slurm parsing
+# ---------------------------------------------------------------------------
+def parse_slurm_script(script_path: Path):
+    """Parse a Slurm bash script for ground-truth args and output log name."""
     try:
         with open(script_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -93,334 +68,229 @@ def parse_slurm_script(script_path):
         if m:
             val = m.group(1)
             out[key] = int(val) if val.isdigit() else val
+
+    # Try to catch shell redirect like: python ... > something.log
+    redir = re.search(OUTPUT_REDIRECT_PATTERN, content)
+    if redir and 'output' not in out:
+        out['output'] = redir.group(1)
     return out
 
-def find_matching_slurm(log_file: Path, search_dirs):
+def discover_slurm_truth(sh_paths):
     """
-    Try to find a .sh whose name contains the log stem or vice versa.
-    Search in the log's directory and provided search roots.
+    Discover all .sh files, build mapping log_filename -> truth dict.
+    Returns (truth_map, warnings)
     """
-    candidates = []
-    stem = log_file.stem  # e.g., 1d128relK100
-    # 1) Same directory glob
-    candidates += list(log_file.parent.glob("*.sh"))
-    # 2) Provided search roots
-    for d in search_dirs:
-        dpath = Path(d)
-        if dpath.is_dir():
-            candidates += list(dpath.glob("*.sh"))
-    # Heuristic: pick first that contains the stem
-    for c in candidates:
-        if stem in c.name or c.stem in stem:
-            return c
-    return None
+    truth = {}
+    warnings = []
+    sh_files = []
+    for p in sh_paths:
+        pth = Path(p)
+        if pth.is_file() and pth.suffix == '.sh':
+            sh_files.append(pth)
+        elif pth.is_dir():
+            sh_files.extend(pth.rglob('*.sh'))
+    print(f"Discovered {len(sh_files)} slurm scripts")
 
+    for sh in sh_files:
+        parsed = parse_slurm_script(sh)
+        if not parsed:
+            warnings.append(f"{sh}: could not parse Slurm script")
+            continue
+        log_name = parsed.get('output') or parsed.get('file_name')
+        if not log_name:
+            warnings.append(f"{sh}: no #SBATCH --output or file_name found; cannot map to log")
+            continue
+        log_basename = Path(log_name).name
+        parsed['__source_sh'] = str(sh)
+        truth[log_basename] = parsed
+    return truth, warnings
+
+# ---------------------------------------------------------------------------
+# Helpers: filename-based config extraction (fallback)
+# ---------------------------------------------------------------------------
 def extract_config_from_filename(filename):
-    """
-    Extract configuration from filename pattern.
-    
-    Patterns:
-    - d64ids = 64 dimensions, increase dimension size
-    - d128gdd = 128 dimensions, gradually decrease dimensions
-    - d32rel = 32 dimensions, remove extra layer
-    - K100 = 100 samples, K1000 = 1000 samples, no K = 10 samples
-    
-    Examples:
-    - d64idsK100.log
-    - d128gdd10.log (10 samples, no K)
-    - 5d64gddK1000.log
-    """
     stem = Path(filename).stem
-    
     config = {
         'dim_config': 'unknown',
-        'arch_type': 'unknown',  # Just the type: ids, gdd, rel
+        'arch_type': 'unknown',
         'calibration_samples': 'unknown',
         'experiment_num': None
     }
-    
-    # Extract dimension configuration (d64ids, d128gdd, d32rel, etc.)
-    # Pattern: look for dXXXyyy where XXX is digits and yyy is letters
     dim_match = re.search(r'd(\d+)(ids|gdd|rel)', stem, re.IGNORECASE)
     if dim_match:
         dim_size = dim_match.group(1)
         dim_type = dim_match.group(2).lower()
         config['dim_config'] = f"d{dim_size}{dim_type}"
-        config['arch_type'] = dim_type  # Store just the type (ids, gdd, rel)
-    
-    # Extract calibration samples (K100, K1000, or just digits)
-    # First try K pattern
+        config['arch_type'] = dim_type
     k_match = re.search(r'K(\d+)', stem)
     if k_match:
         config['calibration_samples'] = int(k_match.group(1))
     else:
-        # Try to find just digits at the end (for 10 sample case)
-        # Look for pattern like "d64gdd10" or "5d64gdd10"
         digit_match = re.search(r'd\d+(?:ids|gdd|rel)(\d+)', stem)
         if digit_match:
             config['calibration_samples'] = int(digit_match.group(1))
-    
-    # Extract experiment number (usually at the start or in the middle)
-    # Patterns: "5d64gdd" or "d64ids5" or just "5" somewhere
     exp_nums = re.findall(r'(\d+)', stem)
     if exp_nums:
-        # Take the first number that's not part of dimension or K value
         for num in exp_nums:
             num_int = int(num)
-            # Skip if it's likely a dimension size (32, 64, 128) or calibration (10, 100, 1000)
             if num_int not in [10, 32, 64, 100, 128, 1000]:
                 config['experiment_num'] = num_int
                 break
-        
-        # If we didn't find it, take the first number
         if config['experiment_num'] is None and exp_nums:
             config['experiment_num'] = int(exp_nums[0])
-    
     return config
 
+# ---------------------------------------------------------------------------
+# Helpers: log parsing
+# ---------------------------------------------------------------------------
 def parse_log_file(log_path):
-    """Parse a single log file to extract experiment metrics"""
     try:
-        # Try UTF-8 first
         with open(log_path, 'r', encoding='utf-8') as f:
             content = f.read()
     except UnicodeDecodeError:
         try:
-            # Try latin-1 as fallback
             with open(log_path, 'r', encoding='latin-1') as f:
                 content = f.read()
         except UnicodeDecodeError:
-            try:
-                # Try cp1252 (Windows encoding)
-                with open(log_path, 'r', encoding='cp1252') as f:
-                    content = f.read()
-            except Exception:
-                # Last resort: read with errors='ignore'
-                with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
-                    content = f.read()
-    
+            with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
+                content = f.read()
     metrics = {}
-    
-    # Extract experiment info from the header
-    # "Experiment 1: Src=0% (0 samples), Tgt=100% (10 samples)"
     exp_header = re.search(r'Experiment\s+(\d+):\s+Src=[\d.]+%\s+\((\d+)\s+samples?\),\s+Tgt=[\d.]+%\s+\((\d+)\s+samples?\)', content)
     if exp_header:
         metrics['experiment_num'] = int(exp_header.group(1))
         metrics['src_samples'] = int(exp_header.group(2))
         metrics['tgt_samples'] = int(exp_header.group(3))
-    
-    # Extract autoencoder dimensions from features loaded line
-    # This is the ACTUAL dimension loaded, not the intended one
     ae_dim_match = re.search(r'features loaded\. Shape = \(\d+, (\d+)\)', content)
     if ae_dim_match:
         metrics['autoencoder_dim'] = int(ae_dim_match.group(1))
-    
-    # Also check for intended dimensionality from the config line
     intended_dim_match = re.search(r'\[ResNet-AE\] dimensionallity: (\d+)', content)
     if intended_dim_match:
         metrics['intended_dim'] = int(intended_dim_match.group(1))
-    
-    # Extract source calibration samples (from CULane features loaded line)
     src_calib_match = re.search(r'CULane features loaded\. Shape = \((\d+), \d+\)', content)
     if src_calib_match:
         metrics['src_calib'] = int(src_calib_match.group(1))
-    else:
-        # Alternative: look for the CULane samples line before features loaded
-        src_calib_alt = re.search(r'CULane\).*?\((\d+) samples\).*?features loaded', content, re.DOTALL)
-        if src_calib_alt:
-            metrics['src_calib'] = int(src_calib_alt.group(1))
-    
-    # Extract target calibration samples (from "Total combined samples" line)
     tgt_calib_match = re.search(r'Total combined samples: (\d+)', content)
     if tgt_calib_match:
         metrics['tgt_calib'] = int(tgt_calib_match.group(1))
-    
-    # Extract Tau
     tau_match = re.search(r'\[RESULT\] τ\([\d.]+\) = ([\d.]+)', content)
     if tau_match:
         metrics['tau'] = float(tau_match.group(1))
-    
-    # Extract calibration MMD
     calib_match = re.search(r'Mean MMD \(same-distribution\): ([\d.]+) ± ([\d.]+)', content)
     if calib_match:
         metrics['calib_mmd'] = float(calib_match.group(1))
         metrics['calib_std'] = float(calib_match.group(2))
-    
-    # Extract sanity check MMD
     sanity_match = re.search(r'\[SANITY CHECK\] MMD.*? = ([\d.]+)', content)
     if sanity_match:
         metrics['sanity_mmd'] = float(sanity_match.group(1))
-    
-    # Extract test results
     test_avg_match = re.search(r'Average MMD: ([\d.]+) ± ([\d.]+)', content)
     if test_avg_match:
         metrics['test_avg_mmd'] = float(test_avg_match.group(1))
         metrics['test_std_mmd'] = float(test_avg_match.group(2))
-    
-    # Extract TPR
     tpr_match = re.search(r'TPR \(true positive rate\) over \d+ runs: ([\d.]+)%', content)
     if tpr_match:
         metrics['tpr'] = float(tpr_match.group(1))
-    
     return metrics if metrics else None
 
+# ---------------------------------------------------------------------------
+# Grouping helpers
+# ---------------------------------------------------------------------------
 def get_config_description(arch_type, ae_dim):
-    """
-    Get human-readable description of dimension config.
-    
-    Args:
-        arch_type: Architecture type from filename (ids, gdd, rel)
-        ae_dim: Actual autoencoder dimension from log file
-    """
     if not arch_type or arch_type == 'unknown':
         return f"{ae_dim}D - Original" if ae_dim != 'unknown' else "Unknown"
-    
-    # Simple mapping for common types
-    type_mapping = {
-        "rel": "Remove Extra Layer",
-        "ids": "Increase Dimension Size",
-        "gdd": "Gradually Decrease Dimensions",
-    }
+    type_mapping = {"rel": "Remove Extra Layer", "ids": "Increase Dimension Size", "gdd": "Gradually Decrease Dimensions"}
     type_name = type_mapping.get(arch_type, arch_type.upper())
     return f"{ae_dim}D - {type_name}"
 
 def get_architecture_text(arch_type, ae_dim):
-    """
-    Get architecture text for display at bottom of graph.
-    Uses the architecture type from filename and actual dimension from log.
-    """
-    # Build a config key to look up in ARCHITECTURE_CONFIGS
     config_key = f"d{ae_dim}{arch_type}" if arch_type != 'unknown' else f"d{ae_dim}"
-    
     if config_key in ARCHITECTURE_CONFIGS:
         config = ARCHITECTURE_CONFIGS[config_key]
         name = config['name']
         layers = config['layers']
         layer_text = " → ".join(str(layer) for layer in layers)
         return f"{name}\n{layer_text}"
-    
-    # Fallback: construct from type
-    type_mapping = {
-        "rel": "Remove Extra Layer",
-        "ids": "Increase Dimension Size",
-        "gdd": "Gradually Decrease Dimensions",
-    }
+    type_mapping = {"rel": "Remove Extra Layer", "ids": "Increase Dimension Size", "gdd": "Gradually Decrease Dimensions"}
     type_name = type_mapping.get(arch_type, "Unknown Architecture")
     return f"{type_name}\n(Configuration: {ae_dim}D)"
 
 def create_config_key(file_config, log_metrics):
-    """
-    Create a unique key for grouping experiments by configuration.
-    Uses architecture type from filename and actual dimensions from log,
-    but prefers Slurm dConfig truth when available.
-    """
     arch_type = file_config.get('arch_type', log_metrics.get('arch_type', 'unknown'))
     ae_dim = log_metrics.get('autoencoder_dim', 'unknown')
-
-    # If Slurm provided a dim_config, use its numeric part
     if 'dim_config' in file_config and file_config['dim_config'] != 'unknown':
         dim_key = file_config['dim_config']
         dim_num = re.search(r'd(\d+)', dim_key, re.IGNORECASE)
         if dim_num:
             ae_dim = int(dim_num.group(1))
-
     src_calib = log_metrics.get('src_calib', file_config.get('calibration_samples', file_config.get('src_samples_truth', 'unknown')))
     tgt_calib = log_metrics.get('tgt_calib', file_config.get('calibration_samples', file_config.get('tgt_samples_truth', 'unknown')))
-    
     config_descriptor = f"{arch_type}{ae_dim}d" if arch_type != 'unknown' else f"{ae_dim}d"
-    
     return f"{config_descriptor}__ae{ae_dim}_src{src_calib}_tgt{tgt_calib}"
 
-def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True):
-    """
-    Load all log files from multiple directories and group them by their actual configuration.
-    
-    Args:
-        logs_dirs: List of directory paths to search for log files
-        log_pattern: Pattern to match log files
-        recursive: Whether to search recursively
-    
-    Returns:
-        Dictionary where keys are configuration identifiers and values are experiment data.
-    """
-    if isinstance(logs_dirs, (str, Path)):
-        logs_dirs = [logs_dirs]
-    
+# ---------------------------------------------------------------------------
+# Load and group data
+# ---------------------------------------------------------------------------
+def load_experiment_data_grouped(logs_dirs, sh_dirs, log_pattern='*.log', recursive=True):
     errors = []
     warnings = []
-    grouped_data = defaultdict(lambda: {'experiments': {}, 'metadata': {}, 'source_dirs': set()})
-    
-    total_files = 0
+
+    # Discover Slurm truth
+    slurm_truth, slurm_warnings = discover_slurm_truth(sh_dirs)
+    warnings.extend(slurm_warnings)
+
+    # Collect log files
     all_log_files = []
-    
-    # Collect all log files from all directories
     for logs_dir in logs_dirs:
         logs_path = Path(logs_dir)
-        
         if not logs_path.exists():
             errors.append(f"Directory not found: {logs_dir}")
             print(f"⚠ Directory not found: {logs_dir}")
             continue
-        
-        # Get log files (recursively or not)
         if recursive:
-            log_files = list(logs_path.rglob('*.log'))
+            log_files = list(logs_path.rglob(log_pattern))
         else:
-            log_files = [f for f in logs_path.iterdir() if f.is_file() and f.suffix == '.log']
-        
+            log_files = [f for f in logs_path.iterdir() if f.is_file() and f.match(log_pattern)]
         for log_file in log_files:
             all_log_files.append((log_file, logs_dir))
-        
         print(f"Found {len(log_files)} log files in {logs_dir}")
-    
-    # Sort all log files by filename (not by directory)
     all_log_files.sort(key=lambda x: x[0].name)
-    
     total_files = len(all_log_files)
-    print(f"\nTotal files to process: {total_files}")
-    print(f"\nProcessing files (sorted by filename):")
-    
+    print(f"\nTotal log files to process: {total_files}")
+
+    grouped_data = defaultdict(lambda: {'experiments': {}, 'metadata': {}, 'source_dirs': set()})
+    seen_logs = set()
+
     for log_file, source_dir in all_log_files:
-        # Extract configuration from filename
+        seen_logs.add(log_file.name)
+        # Start with filename-based config
         file_config = extract_config_from_filename(log_file.name)
 
-        # NEW: attempt to find and parse a matching .sh to get truth overrides
-        slurm_script = find_matching_slurm(log_file, logs_dirs)
-        slurm_args = parse_slurm_script(slurm_script) if slurm_script else {}
+        # If Slurm truth is available for this log filename, override configs
+        if log_file.name in slurm_truth:
+            truth = slurm_truth[log_file.name]
+            if 'dconfig' in truth:
+                file_config['dim_config'] = truth['dconfig']
+                m_arch = re.search(r'(ids|gdd|rel)', truth['dconfig'], re.IGNORECASE)
+                if m_arch:
+                    file_config['arch_type'] = m_arch.group(1).lower()
+            if 'src_samples' in truth:
+                file_config['src_samples_truth'] = truth['src_samples']
+            if 'tgt_samples' in truth:
+                file_config['tgt_samples_truth'] = truth['tgt_samples']
+            if 'ratio_src_samples' in truth:
+                file_config['ratio_src_truth'] = truth['ratio_src_samples']
+            if 'ratio_tgt_samples' in truth:
+                file_config['ratio_tgt_truth'] = truth['ratio_tgt_samples']
+            if 'num_runs' in truth:
+                file_config['num_runs_truth'] = truth['num_runs']
+            file_config['__source_sh'] = truth.get('__source_sh')
 
-        # Apply slurm “truth” overrides to file_config
-        if 'dconfig' in slurm_args:
-            file_config['dim_config'] = slurm_args['dconfig']
-            # infer arch_type from suffix (ids/gdd/rel) if present
-            m_arch = re.search(r'(ids|gdd|rel)', slurm_args['dconfig'], re.IGNORECASE)
-            if m_arch:
-                file_config['arch_type'] = m_arch.group(1).lower()
-        if 'src_samples' in slurm_args:
-            file_config['src_samples_truth'] = slurm_args['src_samples']
-        if 'tgt_samples' in slurm_args:
-            file_config['tgt_samples_truth'] = slurm_args['tgt_samples']
-        if 'ratio_src_samples' in slurm_args:
-            file_config['ratio_src_truth'] = slurm_args['ratio_src_samples']
-        if 'ratio_tgt_samples' in slurm_args:
-            file_config['ratio_tgt_truth'] = slurm_args['ratio_tgt_samples']
-        if 'num_runs' in slurm_args:
-            file_config['num_runs_truth'] = slurm_args['num_runs']
-        
-        # Get relative path for display
-        try:
-            rel_path = log_file.relative_to(Path(source_dir))
-            display_path = str(rel_path)
-        except ValueError:
-            display_path = log_file.name
-        
+        display_path = log_file.name
         print(f"[{log_file.name}] ", end='', flush=True)
-        
+
         try:
             metrics = parse_log_file(log_file)
-            
             if file_config['arch_type'] != 'unknown':
                 print(f"[Type: {file_config['arch_type']}] ", end='', flush=True)
-            
             if metrics:
                 src = metrics.get('src_samples', None)
                 tgt = metrics.get('tgt_samples', None)
@@ -430,50 +300,35 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
                 intended_dim = metrics.get('intended_dim', None)
                 src_calib = metrics.get('src_calib', None)
                 tgt_calib = metrics.get('tgt_calib', None)
-                
-                # Check for dimension mismatch and warn
-                if intended_dim is not None and ae_dim is not None and intended_dim != ae_dim:
-                    warning_msg = f"{display_path}: Dimension mismatch! Intended={intended_dim}D, Loaded={ae_dim}D"
-                    warnings.append(warning_msg)
-                    print(f"⚠️ [DIM MISMATCH: intended {intended_dim}D, loaded {ae_dim}D] ", end='', flush=True)
 
-                # Truth overrides from slurm script
+                if intended_dim is not None and ae_dim is not None and intended_dim != ae_dim:
+                    warnings.append(f"{display_path}: Dimension mismatch! Intended={intended_dim}D, Loaded={ae_dim}D")
+                    print(f"⚠️ [DIM MISMATCH intended {intended_dim}D, loaded {ae_dim}D] ", end='', flush=True)
+
+                # Truth overrides from Slurm
                 if 'src_samples_truth' in file_config:
+                    if src is not None and file_config['src_samples_truth'] != src:
+                        warnings.append(f"{display_path}: src_samples mismatch log={src} sh={file_config['src_samples_truth']}")
                     metrics['src_samples'] = file_config['src_samples_truth']
                 if 'tgt_samples_truth' in file_config:
+                    if tgt is not None and file_config['tgt_samples_truth'] != tgt:
+                        warnings.append(f"{display_path}: tgt_samples mismatch log={tgt} sh={file_config['tgt_samples_truth']}")
                     metrics['tgt_samples'] = file_config['tgt_samples_truth']
                 if 'num_runs_truth' in file_config:
                     metrics['num_runs'] = file_config['num_runs_truth']
-
-                # Dimension truth override from slurm (dConfig)
                 if 'dim_config' in file_config and file_config['dim_config'] != 'unknown':
                     metrics['dim_config'] = file_config['dim_config']
                     metrics['arch_type'] = file_config.get('arch_type', metrics.get('arch_type', 'unknown'))
 
-                # Warn if mismatch between log and slurm truth for samples
-                if 'src_samples_truth' in file_config and src is not None and file_config['src_samples_truth'] != src:
-                    warnings.append(f"{display_path}: src_samples mismatch log={src} slurm={file_config['src_samples_truth']}")
-                if 'tgt_samples_truth' in file_config and tgt is not None and file_config['tgt_samples_truth'] != tgt:
-                    warnings.append(f"{display_path}: tgt_samples mismatch log={tgt} slurm={file_config['tgt_samples_truth']}")
+                # Refresh src/tgt after overrides
+                src = metrics.get('src_samples', None)
+                tgt = metrics.get('tgt_samples', None)
 
-                # Use experiment number from log if available, otherwise from filename
                 exp_num = metrics.get('experiment_num', file_config.get('experiment_num', 0))
-                
-                if metrics.get('src_samples') is not None:
-                    src = metrics.get('src_samples')
-                if metrics.get('tgt_samples') is not None:
-                    tgt = metrics.get('tgt_samples')
-
                 if src is not None and tgt is not None and mmd is not None:
-                    # Merge file config and metrics
                     metrics['file_config'] = file_config
                     metrics['arch_type'] = file_config.get('arch_type', metrics.get('arch_type', 'unknown'))
-                    
-                    # Create configuration key for grouping
                     config_key = create_config_key(file_config, metrics)
-                    
-                    # Store experiment in appropriate group
-                    # Use filename as unique identifier
                     unique_key = log_file.stem
                     grouped_data[config_key]['experiments'][unique_key] = {
                         'metrics': metrics,
@@ -481,11 +336,7 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
                         'exp_num': exp_num,
                         'source_dir': source_dir
                     }
-                    
-                    # Track source directory
                     grouped_data[config_key]['source_dirs'].add(str(Path(source_dir)))
-                    
-                    # Update metadata for this group
                     if not grouped_data[config_key]['metadata']:
                         grouped_data[config_key]['metadata'] = {
                             'ae_dim': ae_dim,
@@ -493,36 +344,34 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
                             'tgt_calib': tgt_calib,
                             'arch_type': metrics.get('arch_type', file_config.get('arch_type', 'unknown'))
                         }
-                    
                     print(f"✓ Group: {config_key} (Exp={exp_num}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
                 else:
-                    error_msg = f"{display_path}: Missing required data (src={src}, tgt={tgt}, mmd={mmd})"
-                    errors.append(error_msg)
+                    errors.append(f"{display_path}: Missing required data (src={src}, tgt={tgt}, mmd={mmd})")
                     print(f"⚠ MISSING: src={src}, tgt={tgt}, mmd={mmd}")
             else:
-                error_msg = f"{display_path}: Failed to parse"
-                errors.append(error_msg)
+                errors.append(f"{display_path}: Failed to parse")
                 print(f"✗ Failed to parse")
         except Exception as e:
-            error_msg = f"{display_path}: Exception - {str(e)}"
-            errors.append(error_msg)
+            errors.append(f"{display_path}: Exception - {str(e)}")
             print(f"✗ Exception: {str(e)}")
-    
-    # Convert defaultdict to regular dict and summarize
+
+    # Warn about slurm scripts whose logs were not found
+    for log_basename, truth in slurm_truth.items():
+        if log_basename not in seen_logs:
+            warnings.append(f"Slurm {truth.get('__source_sh','(unknown)')} points to missing log: {log_basename}")
+
+    # Finalize grouped data
     result = dict(grouped_data)
-    
-    # Convert sets to lists for JSON serialization
     for config_key in result:
         result[config_key]['source_dirs'] = list(result[config_key]['source_dirs'])
-    
-    print(f"\n{'='*60}")
-    print(f"GROUPING SUMMARY (from {len(logs_dirs)} source directories, {total_files} total files):")
-    print(f"{'='*60}")
+
+    print("\n" + "="*60)
+    print(f"GROUPING SUMMARY (from {len(logs_dirs)} log roots, {total_files} log files)")
+    print("="*60)
     for config_key, group_data in result.items():
         n_experiments = len(group_data['experiments'])
         metadata = group_data['metadata']
         source_dirs = group_data['source_dirs']
-        
         print(f"\nGroup: {config_key}")
         print(f"  Architecture Type: {metadata.get('arch_type', 'unknown')}")
         print(f"  AE Dimension (actual): {metadata.get('ae_dim', 'unknown')}")
@@ -532,22 +381,23 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
         print(f"  Source directories: {len(source_dirs)}")
         for src_dir in source_dirs:
             print(f"    - {src_dir}")
-    
+
     if warnings:
-        print(f"\n{'='*60}")
+        print("\n" + "="*60)
         print(f"⚠️  WARNINGS ({len(warnings)} detected):")
-        print(f"{'='*60}")
-        for warning in warnings[:20]:  # Show first 20
-            print(f"  {warning}")
-        if len(warnings) > 20:
-            print(f"  ... and {len(warnings) - 20} more warnings")
-    
+        print("="*60)
+        for w in warnings[:50]:
+            print(f"  {w}")
+        if len(warnings) > 50:
+            print(f"  ... and {len(warnings) - 50} more")
+
     return result, errors
 
+# ---------------------------------------------------------------------------
+# Metrics extraction and plotting
+# ---------------------------------------------------------------------------
 def extract_metrics_from_group(group_data):
-    """Convert grouped experiment data into metrics arrays"""
     experiments = group_data['experiments']
-    
     metrics = {
         'experiment_num': [],
         'test_tpr': [],
@@ -564,21 +414,13 @@ def extract_metrics_from_group(group_data):
         'file_paths': [],
         'source_dirs': []
     }
-    
     for unique_key, exp_data in sorted(experiments.items(), key=lambda x: x[1]['exp_num']):
         exp_metrics = exp_data['metrics']
-        
         src = exp_metrics.get('src_samples', 0)
         tgt = exp_metrics.get('tgt_samples', 0)
-        
         if 'test_avg_mmd' not in exp_metrics:
             continue
-        
-        if src > 0:
-            ratio = tgt / src
-        else:
-            ratio = float('inf') if tgt > 0 else 0
-        
+        ratio = tgt / src if src > 0 else (float('inf') if tgt > 0 else 0)
         metrics['experiment_num'].append(exp_data['exp_num'])
         metrics['test_tpr'].append(exp_metrics.get('tpr', 0))
         metrics['test_avg_mmd'].append(exp_metrics.get('test_avg_mmd', 0))
@@ -590,28 +432,19 @@ def extract_metrics_from_group(group_data):
         metrics['autoencoder_dim'].append(exp_metrics.get('autoencoder_dim', 0))
         metrics['src_calib'].append(exp_metrics.get('src_calib', 0))
         metrics['tgt_calib'].append(exp_metrics.get('tgt_calib', 0))
-        
         arch_type = exp_metrics.get('arch_type', 'unknown')
         metrics['arch_type'].append(arch_type)
         metrics['file_paths'].append(str(exp_data['file_path']))
         metrics['source_dirs'].append(exp_data.get('source_dir', 'unknown'))
-    
     return metrics
 
 def create_output_directories(base_dir='figures'):
-    """Create output directories for each image format"""
     base_path = Path(base_dir)
-    formats = ['svg', 'png', 'jpeg', 'pdf', 'eps']
-    
-    for fmt in formats:
-        format_path = base_path / fmt
-        format_path.mkdir(parents=True, exist_ok=True)
-    
+    for fmt in ['svg', 'png', 'jpeg', 'pdf', 'eps']:
+        (base_path / fmt).mkdir(parents=True, exist_ok=True)
     return base_path
 
 def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments, arch_type=None):
-    """Generate a descriptive filename based on experiment parameters"""
-    # Use architecture type and actual dimension
     if arch_type and arch_type != 'unknown':
         base = f"mmd_analysis_{arch_type}_dim{ae_dim}_src{src_calib}_tgt{tgt_calib}_n{n_experiments}"
     else:
@@ -619,13 +452,12 @@ def generate_filename(ae_dim, src_calib, tgt_calib, n_experiments, arch_type=Non
     return base
 
 def plot_comprehensive_analysis(metrics, output_dir='figures', group_name='experiment'):
-    """Generate comprehensive visualization of all experiments in multiple formats"""
     base_path = create_output_directories(output_dir)
-    
+
     sorted_indices = np.argsort(metrics['ratio'])
     n_experiments = len(metrics['experiment_num'])
     x_positions = np.arange(n_experiments)
-    
+
     sorted_exp_num = [metrics['experiment_num'][i] for i in sorted_indices]
     sorted_ratio = [metrics['ratio'][i] for i in sorted_indices]
     sorted_tpr = [metrics['test_tpr'][i] for i in sorted_indices]
@@ -639,28 +471,22 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', group_name='exper
     sorted_arch_type = [metrics['arch_type'][i] for i in sorted_indices]
     sorted_file_paths = [metrics['file_paths'][i] for i in sorted_indices]
     sorted_source_dirs = [metrics['source_dirs'][i] for i in sorted_indices]
-    
-    # Get the most common values (mode) - should all be the same in a group
+
     ae_dim_mode = sorted_ae_dim[0] if sorted_ae_dim else 0
     src_calib_mode = sorted_src_calib[0] if sorted_src_calib else 0
     tgt_calib_mode = sorted_tgt_calib[0] if sorted_tgt_calib else 0
     arch_type_mode = sorted_arch_type[0] if sorted_arch_type else 'unknown'
-    
     sequential_labels = [f"{i+1}" for i in range(n_experiments)]
-    
-    # Create figure with extra space at bottom for architecture text
+
     fig = plt.figure(figsize=(18, 8))
-    
-    # 1. TPR
+
+    # TPR
     ax1 = plt.subplot(1, 3, 1)
     colors = ['#06A77D' if tpr == 100 else '#D62828' for tpr in sorted_tpr]
     bars = plt.bar(x_positions, sorted_tpr, color=colors, alpha=0.7, edgecolor='black', linewidth=1.5)
-    
-    for i, (bar, tpr) in enumerate(zip(bars, sorted_tpr)):
+    for bar, tpr in zip(bars, sorted_tpr):
         height = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2., height + 1,
-                f'{tpr:.0f}%', ha='center', va='bottom', fontsize=9, fontweight='bold')
-    
+        plt.text(bar.get_x() + bar.get_width()/2., height + 1, f'{tpr:.0f}%', ha='center', va='bottom', fontsize=9, fontweight='bold')
     plt.xlabel('Experiment Number (Ordered by Ratio)', fontsize=13, fontweight='bold')
     plt.ylabel('TPR (%)', fontsize=14, fontweight='bold')
     plt.title('True Positive Rate', fontsize=16, fontweight='bold', pad=15)
@@ -669,45 +495,30 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', group_name='exper
     plt.ylim([0, 110])
     plt.grid(True, alpha=0.3, axis='y')
     plt.legend(fontsize=11)
-    
-    # 2. MMD
+
+    # MMD
     ax2 = plt.subplot(1, 3, 2)
     plt.plot(x_positions, sorted_avg_mmd, 'o-', linewidth=2.5, markersize=10, color='#F18F01', label='Average MMD')
     plt.plot(x_positions, sorted_tau, 's--', linewidth=2, markersize=8, color='#2E86AB', alpha=0.7, label='Tau (Threshold)')
-    
     plt.xlabel('Experiment Number (Ordered by Ratio)', fontsize=13, fontweight='bold')
     plt.ylabel('MMD Value', fontsize=14, fontweight='bold')
     plt.title('Average MMD vs Sample Ratio', fontsize=16, fontweight='bold', pad=15)
     plt.xticks(x_positions, sequential_labels, fontsize=10)
     plt.grid(True, alpha=0.3)
     plt.legend(fontsize=11, loc='best')
-    
-    # 3. Samples
+
+    # Samples
     ax3 = plt.subplot(1, 3, 3)
     width = 0.25
     bars1 = plt.bar(x_positions - width/2, sorted_src, width, label='Source Samples', alpha=0.8, color='#06A77D', edgecolor='black')
     bars2 = plt.bar(x_positions + width/2, sorted_tgt, width, label='Target Samples', alpha=0.8, color='#F18F01', edgecolor='black')
-    
     max_height = max(max(sorted_src), max(sorted_tgt)) if sorted_src and sorted_tgt else 1
-    
     for i, (bar1, bar2) in enumerate(zip(bars1, bars2)):
-        height1 = bar1.get_height()
-        height2 = bar2.get_height()
-        
-        plt.text(bar1.get_x() + bar1.get_width()/2., height1 + max_height * 0.015,
-                f'{int(sorted_src[i])}', ha='center', va='bottom', fontsize=8, fontweight='bold', color='#06A77D')
-        
-        plt.text(bar2.get_x() + bar2.get_width()/2., height2 + max_height * 0.015,
-                f'{int(sorted_tgt[i])}', ha='center', va='bottom', fontsize=8, fontweight='bold', color='#F18F01')
-    
+        plt.text(bar1.get_x() + bar1.get_width()/2., bar1.get_height() + max_height * 0.015, f'{int(sorted_src[i])}', ha='center', va='bottom', fontsize=8, fontweight='bold', color='#06A77D')
+        plt.text(bar2.get_x() + bar2.get_width()/2., bar2.get_height() + max_height * 0.015, f'{int(sorted_tgt[i])}', ha='center', va='bottom', fontsize=8, fontweight='bold', color='#F18F01')
     for i in range(len(sorted_exp_num)):
-        if sorted_ratio[i] == float('inf'):
-            ratio_text = '∞'
-        else:
-            ratio_text = f'{sorted_ratio[i]:.2f}'
-        plt.text(x_positions[i], -max_height * 0.08, ratio_text, 
-                ha='center', va='top', fontsize=8, style='italic', color='#555')
-    
+        ratio_text = '∞' if sorted_ratio[i] == float('inf') else f'{sorted_ratio[i]:.2f}'
+        plt.text(x_positions[i], -max_height * 0.08, ratio_text, ha='center', va='top', fontsize=8, style='italic', color='#555')
     plt.xlabel('Experiment Number (Ordered by Ratio)\n(Ratio shown below)', fontsize=13, fontweight='bold')
     plt.ylabel('Number of Samples', fontsize=14, fontweight='bold')
     plt.title('Source vs Target Samples', fontsize=16, fontweight='bold', pad=15)
@@ -716,181 +527,126 @@ def plot_comprehensive_analysis(metrics, output_dir='figures', group_name='exper
     plt.ylim([-max_height * 0.12, max_height * 1.08])
     plt.legend(fontsize=11, loc='best')
     plt.grid(True, alpha=0.3, axis='y')
-    
-    # Scientific title with configuration information
+
     config_desc = get_config_description(arch_type_mode, ae_dim_mode)
-    
-    # Count unique source directories
     unique_sources = set(sorted_source_dirs)
     n_sources = len(unique_sources)
     source_note = f" (from {n_sources} source dir{'s' if n_sources > 1 else ''})" if n_sources > 1 else ""
-    
     plt.suptitle(
-        f'Maximum Mean Discrepancy Analysis of Distribution Shift Detection\n' +
-        f'Architecture: {config_desc} | ' +
-        f'Source Samples: {src_calib_mode} | ' +
-        f'Target Samples: {tgt_calib_mode} | ' +
-        f'N={n_experiments} Experiments{source_note}', 
+        f'Maximum Mean Discrepancy Analysis of Distribution Shift Detection\n'
+        f'Architecture: {config_desc} | '
+        f'Source Samples: {src_calib_mode} | '
+        f'Target Samples: {tgt_calib_mode} | '
+        f'N={n_experiments} Experiments{source_note}',
         fontsize=16, fontweight='bold', y=0.97
     )
-    
-    # Add architecture text at the bottom
+
     arch_text = get_architecture_text(arch_type_mode, ae_dim_mode)
-    fig.text(0.5, 0.02, arch_text, 
+    fig.text(0.5, 0.02, arch_text,
              ha='center', va='bottom',
              fontsize=13, fontweight='bold',
              bbox=dict(boxstyle='round,pad=0.5', facecolor='lightgray', alpha=0.3))
-    
+
     plt.tight_layout(rect=[0, 0.06, 1, 0.94])
-    
-    # Generate descriptive filename
+
     base_filename = generate_filename(ae_dim_mode, src_calib_mode, tgt_calib_mode, n_experiments, arch_type_mode)
-    
-    # Save in multiple formats
-    formats = {
-        'svg': {'dpi': None},
-        'png': {'dpi': 300},
-        'jpeg': {'dpi': 300},
-        'pdf': {'dpi': None},
-        'eps': {'dpi': None}
-    }
-    
+    formats = {'svg': {'dpi': None}, 'png': {'dpi': 300}, 'jpeg': {'dpi': 300}, 'pdf': {'dpi': None}, 'eps': {'dpi': None}}
     for fmt, params in formats.items():
         output_filename = f'{base_filename}.{fmt}'
         output_file = base_path / fmt / output_filename
-        
         if params['dpi']:
             plt.savefig(output_file, dpi=params['dpi'], bbox_inches='tight', format=fmt)
         else:
             plt.savefig(output_file, bbox_inches='tight', format=fmt)
-        
         print(f"✓ Saved {fmt.upper()}: {output_file}")
-    
+
     print(f"\nMapping (Sequential → Experiment) for {group_name}:")
     for i, actual_exp in enumerate(sorted_exp_num):
-        if sorted_ratio[i] == float('inf'):
-            ratio_str = '∞'
-        else:
-            ratio_str = f'{sorted_ratio[i]:.2f}'
+        ratio_str = '∞' if sorted_ratio[i] == float('inf') else f'{sorted_ratio[i]:.2f}'
         arch_str = sorted_arch_type[i] if sorted_arch_type[i] != 'unknown' else 'N/A'
         file_path = Path(sorted_file_paths[i])
         source_dir = Path(sorted_source_dirs[i]).name if sorted_source_dirs[i] != 'unknown' else 'N/A'
         print(f"  {i+1:2d} → Exp{actual_exp:2d} [{file_path.name}] from [{source_dir}] (Type: {arch_str}, Dim: {sorted_ae_dim[i]}, Src: {sorted_src[i]}, Tgt: {sorted_tgt[i]}, Ratio: {ratio_str})")
-    
+
     plt.close()
 
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 def main():
-    """Main execution function"""
     parser = argparse.ArgumentParser(
-        description='Visualize experiment results from log files (handles mixed/misplaced files from multiple directories)',
+        description='Visualize experiment results using Slurm truth + log metrics',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
-Examples:
-  # Process a single directory (groups files by configuration)
-  python visualize_mixed_shift_robust.py --log-path LocalBash/micro
-  
-  # Process multiple directories (merges files by configuration)
-  python visualize_mixed_shift_robust.py --log-path LocalBash/RemoveExtraLayer LocalBash/GraduallyDecreaseDimensions
-  
-  # Process directory recursively
-  python visualize_mixed_shift_robust.py --log-path LocalBash --recursive
-  
-  # Process with custom output directory
-  python visualize_mixed_shift_robust.py --log-path LocalBash --recursive --output-dir results
+Example:
+  python visualize_shift_results.py \\
+    --log-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity \\
+               /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/GraduallyDecreaseDimensions \\
+               /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer \\
+    --sh-path  /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash \\
+    --recursive \\
+    --output-dir figures_organized
         """
     )
-    
-    parser.add_argument(
-        '--log-path',
-        type=str,
-        nargs='+',  # Accept multiple paths
-        required=True,
-        help='Path(s) to directory/directories containing log files (can specify multiple)'
-    )
-    
-    parser.add_argument(
-        '--recursive',
-        action='store_true',
-        help='Search recursively for log files'
-    )
-    
-    parser.add_argument(
-        '--output-dir',
-        type=str,
-        default='figures',
-        help='Directory to save output figures (default: figures)'
-    )
-    
-    parser.add_argument(
-        '--pattern',
-        type=str,
-        default='*.log',
-        help='Glob pattern for log files (default: *.log)'
-    )
-    
+    parser.add_argument('--log-path', type=str, nargs='+', required=True, help='Path(s) to directories containing log files')
+    parser.add_argument('--sh-path', type=str, nargs='+', help='Path(s) to search for Slurm .sh files (defaults to log-path)', default=None)
+    parser.add_argument('--recursive', action='store_true', help='Search recursively for log files')
+    parser.add_argument('--output-dir', type=str, default='figures', help='Directory to save output figures')
+    parser.add_argument('--pattern', type=str, default='*.log', help='Glob pattern for log files (default: *.log)')
     args = parser.parse_args()
-    
-    print(f"\n{'='*60}")
-    print(f"Processing log files from {len(args.log_path)} source director{'ies' if len(args.log_path) > 1 else 'y'}:")
-    for path in args.log_path:
-        print(f"  - {path}")
+
+    sh_paths = args.sh_path if args.sh_path else args.log_path
+
+    print("\n" + "="*60)
+    print(f"Processing log files from {len(args.log_path)} root(s)")
+    for p in args.log_path:
+        print(f"  - {p}")
+    print(f"Slurm search roots: {', '.join(sh_paths)}")
     print(f"Recursive: {args.recursive}")
     print(f"Output directory: {args.output_dir}")
-    print(f"{'='*60}")
-    
-    # Load and group experiments by configuration
-    grouped_data, errors = load_experiment_data_grouped(args.log_path, args.pattern, args.recursive)
-    
+    print("="*60)
+
+    grouped_data, errors = load_experiment_data_grouped(args.log_path, sh_paths, args.pattern, args.recursive)
+
     if errors:
         print(f"\n⚠️  Encountered {len(errors)} errors during parsing:")
-        for error in errors[:10]:  # Show first 10 errors
-            print(f"   - {error}")
-        if len(errors) > 10:
-            print(f"   ... and {len(errors) - 10} more errors")
-    
+        for e in errors[:20]:
+            print(f"   - {e}")
+        if len(errors) > 20:
+            print(f"   ... and {len(errors) - 20} more")
+
     if not grouped_data:
-        print(f"\n❌ No valid experiment groups found!")
+        print("\n❌ No valid experiment groups found!")
         return
-    
-    print(f"\n{'='*60}")
+
+    print("\n" + "="*60)
     print(f"Found {len(grouped_data)} distinct experiment configurations")
-    print(f"{'='*60}")
-    
-    # Generate graphs for each group
+    print("="*60)
+
     successful_graphs = 0
     for group_key, group_data in grouped_data.items():
-        print(f"\n{'='*60}")
+        print("\n" + "="*60)
         print(f"GENERATING GRAPH FOR: {group_key}")
-        print(f"{'='*60}")
-        
+        print("="*60)
         metrics = extract_metrics_from_group(group_data)
-        
         if not metrics['experiment_num']:
-            print(f"\n❌ No valid metrics in group {group_key}!")
+            print(f"❌ No valid metrics in group {group_key}!")
             continue
-        
         print(f"✓ Processing {len(metrics['experiment_num'])} experiments from group {group_key}\n")
-        
-        plot_comprehensive_analysis(
-            metrics, 
-            output_dir=args.output_dir,
-            group_name=group_key
-        )
-        
+        plot_comprehensive_analysis(metrics, output_dir=args.output_dir, group_name=group_key)
         successful_graphs += 1
-    
-    # Print summary
+
     print("\n" + "="*60)
     print("SUMMARY")
     print("="*60)
     print(f"✓ Successfully generated {successful_graphs} graphs from {len(grouped_data)} groups")
-    print(f"✓ Processed {len(args.log_path)} source director{'ies' if len(args.log_path) > 1 else 'y'}")
-    
+    print(f"✓ Processed {len(args.log_path)} log root(s)")
+
     if errors:
         print(f"\n⚠️  {len(errors)} files had parsing errors")
-    
+
     print("\n" + "="*60)
-    print(f"✓ All processing complete!")
+    print("✓ All processing complete!")
     print("="*60)
 
 if __name__ == "__main__":
