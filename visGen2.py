@@ -2,7 +2,7 @@
 """
 Visualize Mixed Shift Experiment Results (Robust Version)
 Handles mixed/misplaced log files by grouping them based on their actual configuration
-extracted from filename and log content.
+extracted from filename, log content, and Slurm job scripts (truth source for dConfig/sample sizes).
 """
 
 import re
@@ -68,6 +68,52 @@ ARCHITECTURE_CONFIGS = {
         "layers": [4096, 1024, 256]
     }
 }
+
+# --- Slurm parsing support ---
+SLURM_ARG_PATTERNS = {
+    'dconfig': r'--dConfig\s+([A-Za-z0-9_]+)',
+    'src_samples': r'--src_samples\s+(\d+)',
+    'tgt_samples': r'--tgt_samples\s+(\d+)',
+    'ratio_src_samples': r'--ratio_src_samples\s+(\d+)',
+    'ratio_tgt_samples': r'--ratio_tgt_samples\s+(\d+)',
+    'num_runs': r'--num_runs\s+(\d+)',
+}
+
+def parse_slurm_script(script_path):
+    """Parse a Slurm bash script for ground-truth args."""
+    try:
+        with open(script_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+    except Exception:
+        return {}
+
+    out = {}
+    for key, pat in SLURM_ARG_PATTERNS.items():
+        m = re.search(pat, content)
+        if m:
+            val = m.group(1)
+            out[key] = int(val) if val.isdigit() else val
+    return out
+
+def find_matching_slurm(log_file: Path, search_dirs):
+    """
+    Try to find a .sh whose name contains the log stem or vice versa.
+    Search in the log's directory and provided search roots.
+    """
+    candidates = []
+    stem = log_file.stem  # e.g., 1d128relK100
+    # 1) Same directory glob
+    candidates += list(log_file.parent.glob("*.sh"))
+    # 2) Provided search roots
+    for d in search_dirs:
+        dpath = Path(d)
+        if dpath.is_dir():
+            candidates += list(dpath.glob("*.sh"))
+    # Heuristic: pick first that contains the stem
+    for c in candidates:
+        if stem in c.name or c.stem in stem:
+            return c
+    return None
 
 def extract_config_from_filename(filename):
     """
@@ -265,17 +311,22 @@ def get_architecture_text(arch_type, ae_dim):
 def create_config_key(file_config, log_metrics):
     """
     Create a unique key for grouping experiments by configuration.
-    Uses architecture type from filename and actual dimensions from log.
+    Uses architecture type from filename and actual dimensions from log,
+    but prefers Slurm dConfig truth when available.
     """
-    # Get architecture type from filename (ids, gdd, rel)
-    arch_type = file_config.get('arch_type', 'unknown')
-    
-    # Get ACTUAL dimensions from log file
+    arch_type = file_config.get('arch_type', log_metrics.get('arch_type', 'unknown'))
     ae_dim = log_metrics.get('autoencoder_dim', 'unknown')
-    src_calib = log_metrics.get('src_calib', file_config.get('calibration_samples', 'unknown'))
-    tgt_calib = log_metrics.get('tgt_calib', file_config.get('calibration_samples', 'unknown'))
+
+    # If Slurm provided a dim_config, use its numeric part
+    if 'dim_config' in file_config and file_config['dim_config'] != 'unknown':
+        dim_key = file_config['dim_config']
+        dim_num = re.search(r'd(\d+)', dim_key, re.IGNORECASE)
+        if dim_num:
+            ae_dim = int(dim_num.group(1))
+
+    src_calib = log_metrics.get('src_calib', file_config.get('calibration_samples', file_config.get('src_samples_truth', 'unknown')))
+    tgt_calib = log_metrics.get('tgt_calib', file_config.get('calibration_samples', file_config.get('tgt_samples_truth', 'unknown')))
     
-    # Build config key using arch type and actual dimensions
     config_descriptor = f"{arch_type}{ae_dim}d" if arch_type != 'unknown' else f"{ae_dim}d"
     
     return f"{config_descriptor}__ae{ae_dim}_src{src_calib}_tgt{tgt_calib}"
@@ -332,6 +383,28 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
     for log_file, source_dir in all_log_files:
         # Extract configuration from filename
         file_config = extract_config_from_filename(log_file.name)
+
+        # NEW: attempt to find and parse a matching .sh to get truth overrides
+        slurm_script = find_matching_slurm(log_file, logs_dirs)
+        slurm_args = parse_slurm_script(slurm_script) if slurm_script else {}
+
+        # Apply slurm “truth” overrides to file_config
+        if 'dconfig' in slurm_args:
+            file_config['dim_config'] = slurm_args['dconfig']
+            # infer arch_type from suffix (ids/gdd/rel) if present
+            m_arch = re.search(r'(ids|gdd|rel)', slurm_args['dconfig'], re.IGNORECASE)
+            if m_arch:
+                file_config['arch_type'] = m_arch.group(1).lower()
+        if 'src_samples' in slurm_args:
+            file_config['src_samples_truth'] = slurm_args['src_samples']
+        if 'tgt_samples' in slurm_args:
+            file_config['tgt_samples_truth'] = slurm_args['tgt_samples']
+        if 'ratio_src_samples' in slurm_args:
+            file_config['ratio_src_truth'] = slurm_args['ratio_src_samples']
+        if 'ratio_tgt_samples' in slurm_args:
+            file_config['ratio_tgt_truth'] = slurm_args['ratio_tgt_samples']
+        if 'num_runs' in slurm_args:
+            file_config['num_runs_truth'] = slurm_args['num_runs']
         
         # Get relative path for display
         try:
@@ -363,14 +436,38 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
                     warning_msg = f"{display_path}: Dimension mismatch! Intended={intended_dim}D, Loaded={ae_dim}D"
                     warnings.append(warning_msg)
                     print(f"⚠️ [DIM MISMATCH: intended {intended_dim}D, loaded {ae_dim}D] ", end='', flush=True)
-                
+
+                # Truth overrides from slurm script
+                if 'src_samples_truth' in file_config:
+                    metrics['src_samples'] = file_config['src_samples_truth']
+                if 'tgt_samples_truth' in file_config:
+                    metrics['tgt_samples'] = file_config['tgt_samples_truth']
+                if 'num_runs_truth' in file_config:
+                    metrics['num_runs'] = file_config['num_runs_truth']
+
+                # Dimension truth override from slurm (dConfig)
+                if 'dim_config' in file_config and file_config['dim_config'] != 'unknown':
+                    metrics['dim_config'] = file_config['dim_config']
+                    metrics['arch_type'] = file_config.get('arch_type', metrics.get('arch_type', 'unknown'))
+
+                # Warn if mismatch between log and slurm truth for samples
+                if 'src_samples_truth' in file_config and src is not None and file_config['src_samples_truth'] != src:
+                    warnings.append(f"{display_path}: src_samples mismatch log={src} slurm={file_config['src_samples_truth']}")
+                if 'tgt_samples_truth' in file_config and tgt is not None and file_config['tgt_samples_truth'] != tgt:
+                    warnings.append(f"{display_path}: tgt_samples mismatch log={tgt} slurm={file_config['tgt_samples_truth']}")
+
                 # Use experiment number from log if available, otherwise from filename
                 exp_num = metrics.get('experiment_num', file_config.get('experiment_num', 0))
                 
+                if metrics.get('src_samples') is not None:
+                    src = metrics.get('src_samples')
+                if metrics.get('tgt_samples') is not None:
+                    tgt = metrics.get('tgt_samples')
+
                 if src is not None and tgt is not None and mmd is not None:
                     # Merge file config and metrics
                     metrics['file_config'] = file_config
-                    metrics['arch_type'] = file_config['arch_type']
+                    metrics['arch_type'] = file_config.get('arch_type', metrics.get('arch_type', 'unknown'))
                     
                     # Create configuration key for grouping
                     config_key = create_config_key(file_config, metrics)
@@ -394,7 +491,7 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
                             'ae_dim': ae_dim,
                             'src_calib': src_calib,
                             'tgt_calib': tgt_calib,
-                            'arch_type': file_config['arch_type']
+                            'arch_type': metrics.get('arch_type', file_config.get('arch_type', 'unknown'))
                         }
                     
                     print(f"✓ Group: {config_key} (Exp={exp_num}, Src={src}, Tgt={tgt}, TPR={tpr}%)")
@@ -438,7 +535,7 @@ def load_experiment_data_grouped(logs_dirs, log_pattern='*.log', recursive=True)
     
     if warnings:
         print(f"\n{'='*60}")
-        print(f"⚠️  WARNINGS ({len(warnings)} dimension mismatches detected):")
+        print(f"⚠️  WARNINGS ({len(warnings)} detected):")
         print(f"{'='*60}")
         for warning in warnings[:20]:  # Show first 20
             print(f"  {warning}")

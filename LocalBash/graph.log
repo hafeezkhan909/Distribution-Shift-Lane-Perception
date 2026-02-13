@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 161420
+Slurm Job ID: 161430
 Running on host: node02
-Start Time: Thu Feb 12 10:25:21 PM EST 2026
+Start Time: Thu Feb 12 10:56:26 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -39,267 +39,267 @@ Total files to process: 264
 Processing files (sorted by filename):
 [10d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
 [10d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=5.0%)
-[10d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
-[10d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
-[10d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
-[10d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
-[10d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
-[10d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
-[10d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
-[10d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=10, Src=100, Tgt=100, TPR=5.0%)
+[10d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=10, Src=1000, Tgt=1000, TPR=0.0%)
+[10d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=10, Src=100, Tgt=100, TPR=0.0%)
+[10d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=10, Src=1000, Tgt=1000, TPR=0.0%)
+[10d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=10, Src=100, Tgt=100, TPR=0.0%)
+[10d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=10, Src=1000, Tgt=1000, TPR=0.0%)
+[10d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=10, Src=90, Tgt=10, TPR=0.0%)
+[10d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=10, Src=900, Tgt=100, TPR=0.0%)
+[10d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=10, Src=100, Tgt=100, TPR=0.0%)
+[10d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=10, Src=1000, Tgt=1000, TPR=0.0%)
+[10d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=10, Src=100, Tgt=100, TPR=0.0%)
+[10d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=10, Src=1000, Tgt=1000, TPR=0.0%)
 [11d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
 [11d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
-[11d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
-[11d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=100, TPR=0.0%)
+[11d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=1000, TPR=0.0%)
+[11d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=11, Src=100, Tgt=100, TPR=0.0%)
+[11d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=11, Src=1000, Tgt=1000, TPR=0.0%)
+[11d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=11, Src=100, Tgt=100, TPR=0.0%)
+[11d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=11, Src=1000, Tgt=1000, TPR=0.0%)
+[11d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=11, Src=100, Tgt=0, TPR=0.0%)
+[11d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=11, Src=1000, Tgt=0, TPR=0.0%)
+[11d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=11, Src=100, Tgt=100, TPR=0.0%)
+[11d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=11, Src=1000, Tgt=1000, TPR=0.0%)
+[11d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=11, Src=100, Tgt=100, TPR=0.0%)
+[11d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=11, Src=1000, Tgt=1000, TPR=0.0%)
 [1d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
 [1d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
-[1d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
-[1d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=1, Src=100, Tgt=100, TPR=100.0%)
+[1d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=1, Src=1000, Tgt=1000, TPR=100.0%)
+[1d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=1, Src=100, Tgt=100, TPR=100.0%)
+[1d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=1, Src=1000, Tgt=1000, TPR=100.0%)
+[1d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=1, Src=100, Tgt=100, TPR=100.0%)
+[1d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=1, Src=1000, Tgt=1000, TPR=100.0%)
+[1d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=1, Src=0, Tgt=100, TPR=100.0%)
+[1d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=1, Src=0, Tgt=1000, TPR=100.0%)
+[1d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=1, Src=100, Tgt=100, TPR=100.0%)
+[1d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=1, Src=1000, Tgt=1000, TPR=100.0%)
+[1d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=1, Src=100, Tgt=100, TPR=100.0%)
+[1d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=1, Src=1000, Tgt=1000, TPR=100.0%)
 [2d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
 [2d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=99.0%)
-[2d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
-[2d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
-[2d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
-[2d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=73.0%)
-[2d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
-[2d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
-[2d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
-[2d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=2, Src=100, Tgt=100, TPR=99.0%)
+[2d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=2, Src=1000, Tgt=1000, TPR=100.0%)
+[2d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=2, Src=100, Tgt=100, TPR=100.0%)
+[2d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=2, Src=1000, Tgt=1000, TPR=100.0%)
+[2d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=100.0%)
+[2d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=2, Src=100, Tgt=100, TPR=100.0%)
+[2d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=2, Src=1000, Tgt=1000, TPR=100.0%)
+[2d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=2, Src=10, Tgt=90, TPR=73.0%)
+[2d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=2, Src=100, Tgt=900, TPR=100.0%)
+[2d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=2, Src=100, Tgt=100, TPR=100.0%)
+[2d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=2, Src=1000, Tgt=1000, TPR=100.0%)
+[2d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=2, Src=100, Tgt=100, TPR=100.0%)
+[2d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=2, Src=1000, Tgt=1000, TPR=100.0%)
 [3d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
 [3d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
-[3d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
-[3d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
-[3d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
-[3d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
-[3d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=53.0%)
-[3d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
-[3d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=99.0%)
-[3d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ⚠ MISSING: src=200, tgt=800, mmd=None
-[3d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=47.0%)
-[3d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
-[3d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
-[3d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
-[3d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=100.0%)
-[3d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=3, Src=100, Tgt=100, TPR=100.0%)
+[3d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=3, Src=1000, Tgt=1000, TPR=100.0%)
+[3d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=3, Src=100, Tgt=100, TPR=100.0%)
+[3d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=3, Src=1000, Tgt=1000, TPR=100.0%)
+[3d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=53.0%)
+[3d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=3, Src=100, Tgt=100, TPR=99.0%)
+[3d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ⚠ MISSING: src=1000, tgt=1000, mmd=None
+[3d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=3, Src=20, Tgt=80, TPR=47.0%)
+[3d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=3, Src=200, Tgt=800, TPR=100.0%)
+[3d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=3, Src=100, Tgt=100, TPR=100.0%)
+[3d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=3, Src=1000, Tgt=1000, TPR=100.0%)
+[3d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=3, Src=100, Tgt=100, TPR=100.0%)
+[3d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=3, Src=1000, Tgt=1000, TPR=100.0%)
 [4d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=46.0%)
 [4d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
-[4d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=0.0%)
-[4d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
-[4d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=99.0%)
-[4d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
-[4d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
-[4d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
-[4d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=92.0%)
-[4d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ⚠ MISSING: src=300, tgt=700, mmd=None
-[4d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=51.0%)
-[4d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
-[4d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
-[4d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
-[4d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
-[4d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=4, Src=100, Tgt=100, TPR=0.0%)
+[4d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=4, Src=1000, Tgt=1000, TPR=100.0%)
+[4d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=4, Src=100, Tgt=100, TPR=99.0%)
+[4d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=4, Src=1000, Tgt=1000, TPR=100.0%)
+[4d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=100.0%)
+[4d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=4, Src=100, Tgt=100, TPR=92.0%)
+[4d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ⚠ MISSING: src=1000, tgt=1000, mmd=None
+[4d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=4, Src=30, Tgt=70, TPR=51.0%)
+[4d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=4, Src=300, Tgt=700, TPR=100.0%)
+[4d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=4, Src=100, Tgt=100, TPR=100.0%)
+[4d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=4, Src=1000, Tgt=1000, TPR=100.0%)
+[4d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=4, Src=100, Tgt=100, TPR=100.0%)
+[4d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=4, Src=1000, Tgt=1000, TPR=100.0%)
 [5d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=100.0%)
 [5d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
-[5d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=21.0%)
-[5d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
-[5d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=15.0%)
-[5d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
-[5d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=70.0%)
-[5d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
-[5d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=32.0%)
-[5d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
-[5d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=76.0%)
-[5d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
-[5d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=8.0%)
-[5d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=97.0%)
-[5d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=39.0%)
-[5d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=5, Src=100, Tgt=100, TPR=21.0%)
+[5d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=5, Src=1000, Tgt=1000, TPR=100.0%)
+[5d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=5, Src=100, Tgt=100, TPR=15.0%)
+[5d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=5, Src=1000, Tgt=1000, TPR=100.0%)
+[5d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=70.0%)
+[5d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=5, Src=100, Tgt=100, TPR=32.0%)
+[5d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=5, Src=1000, Tgt=1000, TPR=100.0%)
+[5d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=5, Src=40, Tgt=60, TPR=76.0%)
+[5d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=5, Src=400, Tgt=600, TPR=100.0%)
+[5d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=5, Src=100, Tgt=100, TPR=8.0%)
+[5d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=5, Src=1000, Tgt=1000, TPR=97.0%)
+[5d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=5, Src=100, Tgt=100, TPR=39.0%)
+[5d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=5, Src=1000, Tgt=1000, TPR=100.0%)
 [6d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
 [6d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=0.0%)
-[6d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
-[6d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
-[6d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=1.0%)
-[6d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=96.0%)
-[6d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=46.0%)
-[6d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
-[6d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
-[6d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=0.0%)
-[6d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=1.0%)
-[6d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
-[6d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=0.0%)
-[6d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
-[6d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=16.0%)
-[6d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=6, Src=100, Tgt=100, TPR=0.0%)
+[6d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=6, Src=1000, Tgt=1000, TPR=100.0%)
+[6d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=6, Src=100, Tgt=100, TPR=1.0%)
+[6d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=6, Src=1000, Tgt=1000, TPR=96.0%)
+[6d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=46.0%)
+[6d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=6, Src=100, Tgt=100, TPR=0.0%)
+[6d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=6, Src=1000, Tgt=1000, TPR=0.0%)
+[6d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=6, Src=50, Tgt=50, TPR=1.0%)
+[6d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=6, Src=500, Tgt=500, TPR=100.0%)
+[6d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=6, Src=100, Tgt=100, TPR=0.0%)
+[6d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=6, Src=1000, Tgt=1000, TPR=100.0%)
+[6d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=6, Src=100, Tgt=100, TPR=16.0%)
+[6d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=6, Src=1000, Tgt=1000, TPR=100.0%)
 [7d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=47.0%)
 [7d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=99.0%)
-[7d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
-[7d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=0.0%)
-[7d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
-[7d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=0.0%)
-[7d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=2.0%)
-[7d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=23.0%)
-[7d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
-[7d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=5.0%)
-[7d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=1.0%)
-[7d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=47.0%)
-[7d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=0.0%)
-[7d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=60.0%)
-[7d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=24.0%)
-[7d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=0.0%)
+[7d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=7, Src=100, Tgt=100, TPR=0.0%)
+[7d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=7, Src=1000, Tgt=1000, TPR=0.0%)
+[7d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=7, Src=100, Tgt=100, TPR=0.0%)
+[7d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=7, Src=1000, Tgt=1000, TPR=0.0%)
+[7d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=2.0%)
+[7d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=23.0%)
+[7d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=7, Src=100, Tgt=100, TPR=0.0%)
+[7d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=7, Src=1000, Tgt=1000, TPR=5.0%)
+[7d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=7, Src=60, Tgt=40, TPR=1.0%)
+[7d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=7, Src=600, Tgt=400, TPR=47.0%)
+[7d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=7, Src=100, Tgt=100, TPR=0.0%)
+[7d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=7, Src=1000, Tgt=1000, TPR=60.0%)
+[7d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=7, Src=100, Tgt=100, TPR=24.0%)
+[7d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=7, Src=1000, Tgt=1000, TPR=0.0%)
 [8d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
 [8d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
-[8d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
-[8d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
-[8d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
-[8d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
-[8d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=2.0%)
-[8d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
-[8d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
-[8d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
-[8d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=33.0%)
-[8d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
-[8d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
-[8d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=50.0%)
-[8d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=0.0%)
-[8d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=8, Src=100, Tgt=100, TPR=0.0%)
+[8d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=8, Src=1000, Tgt=1000, TPR=0.0%)
+[8d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=8, Src=100, Tgt=100, TPR=0.0%)
+[8d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=8, Src=1000, Tgt=1000, TPR=0.0%)
+[8d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=2.0%)
+[8d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=8, Src=100, Tgt=100, TPR=0.0%)
+[8d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=8, Src=1000, Tgt=1000, TPR=0.0%)
+[8d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=8, Src=70, Tgt=30, TPR=33.0%)
+[8d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=8, Src=700, Tgt=300, TPR=0.0%)
+[8d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=8, Src=100, Tgt=100, TPR=0.0%)
+[8d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=8, Src=1000, Tgt=1000, TPR=50.0%)
+[8d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=8, Src=100, Tgt=100, TPR=0.0%)
+[8d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=8, Src=1000, Tgt=1000, TPR=0.0%)
 [9d128gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
 [9d128gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[9d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
-[9d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
-[d128gdd1.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=100.0%)
-[d128gdd10.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=1.0%)
-[d128gdd11.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=2.0%)
-[d128gdd2.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=100.0%)
-[d128gdd3.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=83.0%)
-[d128gdd4.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=49.0%)
-[d128gdd5.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=57.0%)
-[d128gdd6.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=4.0%)
-[d128gdd7.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=25.0%)
-[d128gdd8.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=0.0%)
-[d128gdd9.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=1.0%)
-[d128ids1.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=96.0%)
-[d128ids10.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=2.0%)
-[d128ids11.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=0.0%)
-[d128ids2.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=68.0%)
-[d128ids3.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=64.0%)
-[d128ids4.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=46.0%)
-[d128ids5.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=6.0%)
-[d128ids6.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=4.0%)
-[d128ids7.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=9.0%)
-[d128ids8.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=12.0%)
-[d128ids9.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=11.0%)
-[d32gdd1.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=84.0%)
-[d32gdd10.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=0.0%)
-[d32gdd11.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=14.0%)
-[d32gdd2.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=62.0%)
-[d32gdd3.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=67.0%)
-[d32gdd4.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=34.0%)
-[d32gdd5.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=1.0%)
-[d32gdd6.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=4.0%)
-[d32gdd7.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=39.0%)
-[d32gdd8.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=0.0%)
-[d32gdd9.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=7.0%)
-[d64gdd1.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=100.0%)
-[d64gdd10.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=2.0%)
-[d64gdd11.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=28.0%)
-[d64gdd2.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=91.0%)
-[d64gdd3.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=38.0%)
-[d64gdd4.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=1.0%)
-[d64gdd5.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=8.0%)
-[d64gdd6.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=15.0%)
-[d64gdd7.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=21.0%)
-[d64gdd8.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=16.0%)
-[d64gdd9.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=4.0%)
-[d64ids1.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=88.0%)
-[d64ids10.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=3.0%)
-[d64ids11.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=1.0%)
-[d64ids2.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=92.0%)
-[d64ids3.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=47.0%)
-[d64ids4.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=6.0%)
-[d64ids5.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=10.0%)
-[d64ids6.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=13.0%)
-[d64ids7.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=2.0%)
-[d64ids8.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=13.0%)
-[d64ids9.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=1.0%)
-[rel128TEN1.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=99.0%)
-[rel128TEN10.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=0.0%)
-[rel128TEN11.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=2.0%)
-[rel128TEN2.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=57.0%)
-[rel128TEN3.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=81.0%)
-[rel128TEN4.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=86.0%)
-[rel128TEN5.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=90.0%)
-[rel128TEN6.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=34.0%)
-[rel128TEN7.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=3.0%)
-[rel128TEN8.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=13.0%)
-[rel128TEN9.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=7.0%)
-[rel32TEN1.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=53.0%)
-[rel32TEN10.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=7.0%)
-[rel32TEN11.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=6.0%)
-[rel32TEN2.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=29.0%)
-[rel32TEN3.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=85.0%)
-[rel32TEN4.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=84.0%)
-[rel32TEN5.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=9.0%)
-[rel32TEN6.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=2.0%)
-[rel32TEN7.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=9.0%)
-[rel32TEN8.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=24.0%)
-[rel32TEN9.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=4.0%)
-[rel64TEN1.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=1, Src=0, Tgt=10, TPR=100.0%)
-[rel64TEN10.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=10, Src=9, Tgt=1, TPR=6.0%)
-[rel64TEN11.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=0, TPR=3.0%)
-[rel64TEN2.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=2, Src=1, Tgt=9, TPR=40.0%)
-[rel64TEN3.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=3, Src=2, Tgt=8, TPR=64.0%)
-[rel64TEN4.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=4, Src=3, Tgt=7, TPR=64.0%)
-[rel64TEN5.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=5, Src=4, Tgt=6, TPR=34.0%)
-[rel64TEN6.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=6, Src=5, Tgt=5, TPR=57.0%)
-[rel64TEN7.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=7, Src=6, Tgt=4, TPR=19.0%)
-[rel64TEN8.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=8, Src=7, Tgt=3, TPR=6.0%)
+[9d128idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src100_tgt100 (Exp=9, Src=100, Tgt=100, TPR=0.0%)
+[9d128idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src1000_tgt1000 (Exp=9, Src=1000, Tgt=1000, TPR=0.0%)
+[9d128relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src100_tgt100 (Exp=9, Src=100, Tgt=100, TPR=0.0%)
+[9d128relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel128d__ae128_src1000_tgt1000 (Exp=9, Src=1000, Tgt=1000, TPR=0.0%)
+[9d32gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d32gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd32d__ae32_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d32relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src100_tgt100 (Exp=9, Src=100, Tgt=100, TPR=0.0%)
+[9d32relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel32d__ae32_src1000_tgt1000 (Exp=9, Src=1000, Tgt=1000, TPR=0.0%)
+[9d64gddK100.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src100_tgt100 (Exp=9, Src=80, Tgt=20, TPR=0.0%)
+[9d64gddK1000.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd64d__ae64_src1000_tgt1000 (Exp=9, Src=800, Tgt=200, TPR=0.0%)
+[9d64idsK100.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src100_tgt100 (Exp=9, Src=100, Tgt=100, TPR=0.0%)
+[9d64idsK1000.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids64d__ae64_src1000_tgt1000 (Exp=9, Src=1000, Tgt=1000, TPR=0.0%)
+[9d64relK100.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src100_tgt100 (Exp=9, Src=100, Tgt=100, TPR=0.0%)
+[9d64relK1000.log] [Type: rel] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: rel64d__ae64_src1000_tgt1000 (Exp=9, Src=1000, Tgt=1000, TPR=0.0%)
+[d128gdd1.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=100.0%)
+[d128gdd10.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=1.0%)
+[d128gdd11.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=2.0%)
+[d128gdd2.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=100.0%)
+[d128gdd3.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=83.0%)
+[d128gdd4.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=49.0%)
+[d128gdd5.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=57.0%)
+[d128gdd6.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=4.0%)
+[d128gdd7.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=25.0%)
+[d128gdd8.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=0.0%)
+[d128gdd9.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: gdd128d__ae128_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=1.0%)
+[d128ids1.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=96.0%)
+[d128ids10.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=2.0%)
+[d128ids11.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=0.0%)
+[d128ids2.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=68.0%)
+[d128ids3.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=64.0%)
+[d128ids4.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=46.0%)
+[d128ids5.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=6.0%)
+[d128ids6.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=4.0%)
+[d128ids7.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=9.0%)
+[d128ids8.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=12.0%)
+[d128ids9.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: ids128d__ae128_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=11.0%)
+[d32gdd1.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=84.0%)
+[d32gdd10.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=0.0%)
+[d32gdd11.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=14.0%)
+[d32gdd2.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=62.0%)
+[d32gdd3.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=67.0%)
+[d32gdd4.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=34.0%)
+[d32gdd5.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=1.0%)
+[d32gdd6.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=4.0%)
+[d32gdd7.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=39.0%)
+[d32gdd8.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=0.0%)
+[d32gdd9.log] [Type: gdd] ✓ Group: gdd32d__ae32_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=7.0%)
+[d64gdd1.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=100.0%)
+[d64gdd10.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=2.0%)
+[d64gdd11.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=28.0%)
+[d64gdd2.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=91.0%)
+[d64gdd3.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=38.0%)
+[d64gdd4.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=1.0%)
+[d64gdd5.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=8.0%)
+[d64gdd6.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=15.0%)
+[d64gdd7.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=21.0%)
+[d64gdd8.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=16.0%)
+[d64gdd9.log] [Type: gdd] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: gdd64d__ae64_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=4.0%)
+[d64ids1.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=88.0%)
+[d64ids10.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=3.0%)
+[d64ids11.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=1.0%)
+[d64ids2.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=92.0%)
+[d64ids3.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=47.0%)
+[d64ids4.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=6.0%)
+[d64ids5.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=10.0%)
+[d64ids6.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=13.0%)
+[d64ids7.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=2.0%)
+[d64ids8.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=13.0%)
+[d64ids9.log] [Type: ids] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: ids64d__ae64_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=1.0%)
+[rel128TEN1.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=99.0%)
+[rel128TEN10.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=0.0%)
+[rel128TEN11.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=2.0%)
+[rel128TEN2.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=57.0%)
+[rel128TEN3.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=81.0%)
+[rel128TEN4.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=86.0%)
+[rel128TEN5.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=90.0%)
+[rel128TEN6.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=34.0%)
+[rel128TEN7.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=3.0%)
+[rel128TEN8.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=13.0%)
+[rel128TEN9.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 128D] ✓ Group: 128d__ae128_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=7.0%)
+[rel32TEN1.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=53.0%)
+[rel32TEN10.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=7.0%)
+[rel32TEN11.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=6.0%)
+[rel32TEN2.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=29.0%)
+[rel32TEN3.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=85.0%)
+[rel32TEN4.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=84.0%)
+[rel32TEN5.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=9.0%)
+[rel32TEN6.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=2.0%)
+[rel32TEN7.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=9.0%)
+[rel32TEN8.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=24.0%)
+[rel32TEN9.log] ✓ Group: 32d__ae32_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=4.0%)
+[rel64TEN1.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=1, Src=10, Tgt=10, TPR=100.0%)
+[rel64TEN10.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=10, Src=10, Tgt=10, TPR=6.0%)
+[rel64TEN11.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=11, Src=10, Tgt=10, TPR=3.0%)
+[rel64TEN2.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=2, Src=10, Tgt=10, TPR=40.0%)
+[rel64TEN3.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=3, Src=10, Tgt=10, TPR=64.0%)
+[rel64TEN4.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=4, Src=10, Tgt=10, TPR=64.0%)
+[rel64TEN5.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=5, Src=10, Tgt=10, TPR=34.0%)
+[rel64TEN6.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=6, Src=10, Tgt=10, TPR=57.0%)
+[rel64TEN7.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=7, Src=10, Tgt=10, TPR=19.0%)
+[rel64TEN8.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] ✓ Group: 64d__ae64_src10_tgt10 (Exp=8, Src=10, Tgt=10, TPR=6.0%)
 [rel64TEN9.log] ⚠️ [DIM MISMATCH: intended 32D, loaded 64D] The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
 The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
 The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
@@ -314,7 +314,17 @@ The PostScript backend does not support transparency; partially transparent arti
 The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
 The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
 The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
-✓ Group: 64d__ae64_src10_tgt10 (Exp=9, Src=8, Tgt=2, TPR=1.0%)
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+The PostScript backend does not support transparency; partially transparent artists will be rendered opaque.
+✓ Group: 64d__ae64_src10_tgt10 (Exp=9, Src=10, Tgt=10, TPR=1.0%)
 
 ============================================================
 GROUPING SUMMARY (from 3 source directories, 264 total files):
@@ -325,7 +335,7 @@ Group: gdd128d__ae128_src100_tgt100
   AE Dimension (actual): 128
   Source Calibration: 100
   Target Calibration: 100
-  Number of experiments: 33
+  Number of experiments: 11
   Source directories: 1
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
 
@@ -334,7 +344,7 @@ Group: gdd128d__ae128_src1000_tgt1000
   AE Dimension (actual): 128
   Source Calibration: 1000
   Target Calibration: 1000
-  Number of experiments: 33
+  Number of experiments: 11
   Source directories: 1
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
 
@@ -343,7 +353,7 @@ Group: ids128d__ae128_src100_tgt100
   AE Dimension (actual): 128
   Source Calibration: 100
   Target Calibration: 100
-  Number of experiments: 22
+  Number of experiments: 11
   Source directories: 1
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
 
@@ -352,7 +362,7 @@ Group: ids128d__ae128_src1000_tgt1000
   AE Dimension (actual): 128
   Source Calibration: 1000
   Target Calibration: 1000
-  Number of experiments: 22
+  Number of experiments: 11
   Source directories: 1
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
 
@@ -361,7 +371,7 @@ Group: rel128d__ae128_src100_tgt100
   AE Dimension (actual): 128
   Source Calibration: 100
   Target Calibration: 100
-  Number of experiments: 33
+  Number of experiments: 11
   Source directories: 1
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
 
@@ -370,7 +380,97 @@ Group: rel128d__ae128_src1000_tgt1000
   AE Dimension (actual): 128
   Source Calibration: 1000
   Target Calibration: 1000
-  Number of experiments: 31
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: gdd32d__ae32_src100_tgt100
+  Architecture Type: gdd
+  AE Dimension (actual): 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: gdd32d__ae32_src1000_tgt1000
+  Architecture Type: gdd
+  AE Dimension (actual): 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: rel32d__ae32_src100_tgt100
+  Architecture Type: rel
+  AE Dimension (actual): 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: rel32d__ae32_src1000_tgt1000
+  Architecture Type: rel
+  AE Dimension (actual): 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 9
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: gdd64d__ae64_src100_tgt100
+  Architecture Type: gdd
+  AE Dimension (actual): 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: gdd64d__ae64_src1000_tgt1000
+  Architecture Type: gdd
+  AE Dimension (actual): 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: ids64d__ae64_src100_tgt100
+  Architecture Type: ids
+  AE Dimension (actual): 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: ids64d__ae64_src1000_tgt1000
+  Architecture Type: ids
+  AE Dimension (actual): 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity
+
+Group: rel64d__ae64_src100_tgt100
+  Architecture Type: rel
+  AE Dimension (actual): 128
+  Source Calibration: 100
+  Target Calibration: 100
+  Number of experiments: 11
+  Source directories: 1
+    - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
+
+Group: rel64d__ae64_src1000_tgt1000
+  Architecture Type: rel
+  AE Dimension (actual): 128
+  Source Calibration: 1000
+  Target Calibration: 1000
+  Number of experiments: 11
   Source directories: 1
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
 
@@ -447,289 +547,419 @@ Group: 64d__ae64_src10_tgt10
     - /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/RemoveExtraLayer
 
 ============================================================
-⚠️  WARNINGS (242 dimension mismatches detected):
+⚠️  WARNINGS (602 detected):
 ============================================================
   thousand32d/10d128gddK100.log: Dimension mismatch! Intended=32D, Loaded=128D
   thousand32d/10d128gddK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
   hundred128d/10d128idsK100.log: Dimension mismatch! Intended=32D, Loaded=128D
+  hundred128d/10d128idsK100.log: src_samples mismatch log=90 slurm=100
+  hundred128d/10d128idsK100.log: tgt_samples mismatch log=10 slurm=100
   thousand128d/10d128idsK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
+  thousand128d/10d128idsK1000.log: src_samples mismatch log=900 slurm=1000
+  thousand128d/10d128idsK1000.log: tgt_samples mismatch log=100 slurm=1000
   hundred128d/10d128relK100.log: Dimension mismatch! Intended=32D, Loaded=128D
+  hundred128d/10d128relK100.log: src_samples mismatch log=90 slurm=100
+  hundred128d/10d128relK100.log: tgt_samples mismatch log=10 slurm=100
   thousand128d/10d128relK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
+  thousand128d/10d128relK1000.log: src_samples mismatch log=900 slurm=1000
+  thousand128d/10d128relK1000.log: tgt_samples mismatch log=100 slurm=1000
   thousand32d/10d32gddK100.log: Dimension mismatch! Intended=32D, Loaded=128D
   thousand32d/10d32gddK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
   hundred32d/10d32relK100.log: Dimension mismatch! Intended=32D, Loaded=128D
+  hundred32d/10d32relK100.log: src_samples mismatch log=90 slurm=100
+  hundred32d/10d32relK100.log: tgt_samples mismatch log=10 slurm=100
   thousand32d/10d32relK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand32d/10d64gddK100.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand32d/10d64gddK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
-  hundred64d/10d64idsK100.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand64d/10d64idsK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
-  hundred64d/10d64relK100.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand64d/10d64relK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand32d/11d128gddK100.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand32d/11d128gddK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
-  hundred128d/11d128idsK100.log: Dimension mismatch! Intended=32D, Loaded=128D
-  thousand128d/11d128idsK1000.log: Dimension mismatch! Intended=32D, Loaded=128D
-  ... and 222 more warnings
+  ... and 582 more warnings
 
 ⚠️  Encountered 2 errors during parsing:
-   - thousand32d/3d32relK1000.log: Missing required data (src=200, tgt=800, mmd=None)
-   - thousand32d/4d32relK1000.log: Missing required data (src=300, tgt=700, mmd=None)
+   - thousand32d/3d32relK1000.log: Missing required data (src=1000, tgt=1000, mmd=None)
+   - thousand32d/4d32relK1000.log: Missing required data (src=1000, tgt=1000, mmd=None)
 
 ============================================================
-Found 14 distinct experiment configurations
+Found 24 distinct experiment configurations
 ============================================================
 
 ============================================================
 GENERATING GRAPH FOR: gdd128d__ae128_src100_tgt100
 ============================================================
-✓ Processing 33 experiments from group gdd128d__ae128_src100_tgt100
+✓ Processing 11 experiments from group gdd128d__ae128_src100_tgt100
 
-✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src100_tgt100_n33.svg
-✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src100_tgt100_n33.png
-✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src100_tgt100_n33.jpeg
-✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src100_tgt100_n33.pdf
-✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src100_tgt100_n33.eps
+✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src100_tgt100_n11.eps
 
 Mapping (Sequential → Experiment) for gdd128d__ae128_src100_tgt100:
    1 → Exp11 [11d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   2 → Exp11 [11d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   3 → Exp11 [11d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   4 → Exp10 [10d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   5 → Exp10 [10d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   6 → Exp10 [10d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   7 → Exp 9 [9d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-   8 → Exp 9 [9d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-   9 → Exp 9 [9d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-  10 → Exp 8 [8d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-  11 → Exp 8 [8d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-  12 → Exp 8 [8d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-  13 → Exp 7 [7d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  14 → Exp 7 [7d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  15 → Exp 7 [7d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  16 → Exp 6 [6d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  17 → Exp 6 [6d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  18 → Exp 6 [6d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  19 → Exp 5 [5d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  20 → Exp 5 [5d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  21 → Exp 5 [5d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  22 → Exp 4 [4d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  23 → Exp 4 [4d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  24 → Exp 4 [4d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  25 → Exp 3 [3d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  26 → Exp 3 [3d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  27 → Exp 3 [3d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  28 → Exp 2 [2d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  29 → Exp 2 [2d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  30 → Exp 2 [2d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  31 → Exp 1 [1d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
-  32 → Exp 1 [1d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
-  33 → Exp 1 [1d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
+   2 → Exp10 [10d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d128gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
 
 ============================================================
 GENERATING GRAPH FOR: gdd128d__ae128_src1000_tgt1000
 ============================================================
-✓ Processing 33 experiments from group gdd128d__ae128_src1000_tgt1000
+✓ Processing 11 experiments from group gdd128d__ae128_src1000_tgt1000
 
-✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src1000_tgt1000_n33.svg
-✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src1000_tgt1000_n33.png
-✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src1000_tgt1000_n33.jpeg
-✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src1000_tgt1000_n33.pdf
-✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src1000_tgt1000_n33.eps
+✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.eps
 
 Mapping (Sequential → Experiment) for gdd128d__ae128_src1000_tgt1000:
    1 → Exp11 [11d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   2 → Exp11 [11d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   3 → Exp11 [11d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   4 → Exp10 [10d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   5 → Exp10 [10d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   6 → Exp10 [10d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   7 → Exp 9 [9d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-   8 → Exp 9 [9d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-   9 → Exp 9 [9d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-  10 → Exp 8 [8d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-  11 → Exp 8 [8d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-  12 → Exp 8 [8d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-  13 → Exp 7 [7d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  14 → Exp 7 [7d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  15 → Exp 7 [7d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  16 → Exp 6 [6d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  17 → Exp 6 [6d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  18 → Exp 6 [6d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  19 → Exp 5 [5d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  20 → Exp 5 [5d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  21 → Exp 5 [5d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  22 → Exp 4 [4d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  23 → Exp 4 [4d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  24 → Exp 4 [4d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  25 → Exp 3 [3d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  26 → Exp 3 [3d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  27 → Exp 3 [3d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  28 → Exp 2 [2d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  29 → Exp 2 [2d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  30 → Exp 2 [2d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  31 → Exp 1 [1d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
-  32 → Exp 1 [1d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
-  33 → Exp 1 [1d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
+   2 → Exp10 [10d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d128gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
 
 ============================================================
 GENERATING GRAPH FOR: ids128d__ae128_src100_tgt100
 ============================================================
-✓ Processing 22 experiments from group ids128d__ae128_src100_tgt100
+✓ Processing 11 experiments from group ids128d__ae128_src100_tgt100
 
-✓ Saved SVG: figures_organized/svg/mmd_analysis_ids_dim128_src100_tgt100_n22.svg
-✓ Saved PNG: figures_organized/png/mmd_analysis_ids_dim128_src100_tgt100_n22.png
-✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_ids_dim128_src100_tgt100_n22.jpeg
-✓ Saved PDF: figures_organized/pdf/mmd_analysis_ids_dim128_src100_tgt100_n22.pdf
-✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src100_tgt100_n22.eps
+✓ Saved SVG: figures_organized/svg/mmd_analysis_ids_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_ids_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_ids_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_ids_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src100_tgt100_n11.eps
 
 Mapping (Sequential → Experiment) for ids128d__ae128_src100_tgt100:
-   1 → Exp11 [11d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   2 → Exp11 [11d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   3 → Exp10 [10d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   4 → Exp10 [10d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   5 → Exp 9 [9d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-   6 → Exp 9 [9d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-   7 → Exp 8 [8d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-   8 → Exp 8 [8d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-   9 → Exp 7 [7d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  10 → Exp 7 [7d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  11 → Exp 6 [6d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  12 → Exp 6 [6d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  13 → Exp 5 [5d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  14 → Exp 5 [5d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  15 → Exp 4 [4d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  16 → Exp 4 [4d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  17 → Exp 3 [3d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  18 → Exp 3 [3d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  19 → Exp 2 [2d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  20 → Exp 2 [2d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  21 → Exp 1 [1d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
-  22 → Exp 1 [1d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
+   1 → Exp 1 [1d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   2 → Exp 2 [2d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   3 → Exp 3 [3d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   4 → Exp 4 [4d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   5 → Exp 5 [5d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   6 → Exp 6 [6d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   7 → Exp 7 [7d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   8 → Exp 8 [8d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   9 → Exp 9 [9d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  10 → Exp10 [10d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  11 → Exp11 [11d128idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: ids128d__ae128_src1000_tgt1000
 ============================================================
-✓ Processing 22 experiments from group ids128d__ae128_src1000_tgt1000
+✓ Processing 11 experiments from group ids128d__ae128_src1000_tgt1000
 
-✓ Saved SVG: figures_organized/svg/mmd_analysis_ids_dim128_src1000_tgt1000_n22.svg
-✓ Saved PNG: figures_organized/png/mmd_analysis_ids_dim128_src1000_tgt1000_n22.png
-✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_ids_dim128_src1000_tgt1000_n22.jpeg
-✓ Saved PDF: figures_organized/pdf/mmd_analysis_ids_dim128_src1000_tgt1000_n22.pdf
-✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src1000_tgt1000_n22.eps
+✓ Saved SVG: figures_organized/svg/mmd_analysis_ids_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_ids_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_ids_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_ids_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src1000_tgt1000_n11.eps
 
 Mapping (Sequential → Experiment) for ids128d__ae128_src1000_tgt1000:
-   1 → Exp11 [11d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   2 → Exp11 [11d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   3 → Exp10 [10d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   4 → Exp10 [10d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   5 → Exp 9 [9d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-   6 → Exp 9 [9d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-   7 → Exp 8 [8d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-   8 → Exp 8 [8d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-   9 → Exp 7 [7d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  10 → Exp 7 [7d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  11 → Exp 6 [6d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  12 → Exp 6 [6d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  13 → Exp 5 [5d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  14 → Exp 5 [5d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  15 → Exp 4 [4d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  16 → Exp 4 [4d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  17 → Exp 3 [3d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  18 → Exp 3 [3d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  19 → Exp 2 [2d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  20 → Exp 2 [2d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  21 → Exp 1 [1d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
-  22 → Exp 1 [1d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
+   1 → Exp 1 [1d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   2 → Exp 2 [2d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   3 → Exp 3 [3d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   4 → Exp 4 [4d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   5 → Exp 5 [5d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   6 → Exp 6 [6d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   7 → Exp 7 [7d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   8 → Exp 8 [8d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   9 → Exp 9 [9d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  10 → Exp10 [10d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  11 → Exp11 [11d128idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: rel128d__ae128_src100_tgt100
 ============================================================
-✓ Processing 33 experiments from group rel128d__ae128_src100_tgt100
+✓ Processing 11 experiments from group rel128d__ae128_src100_tgt100
 
-✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src100_tgt100_n33.svg
-✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src100_tgt100_n33.png
-✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src100_tgt100_n33.jpeg
-✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src100_tgt100_n33.pdf
-✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src100_tgt100_n33.eps
+✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src100_tgt100_n11.eps
 
 Mapping (Sequential → Experiment) for rel128d__ae128_src100_tgt100:
-   1 → Exp11 [11d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   2 → Exp11 [11d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   3 → Exp11 [11d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
-   4 → Exp10 [10d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   5 → Exp10 [10d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   6 → Exp10 [10d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
-   7 → Exp 9 [9d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-   8 → Exp 9 [9d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-   9 → Exp 9 [9d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
-  10 → Exp 8 [8d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-  11 → Exp 8 [8d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-  12 → Exp 8 [8d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
-  13 → Exp 7 [7d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  14 → Exp 7 [7d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  15 → Exp 7 [7d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
-  16 → Exp 6 [6d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  17 → Exp 6 [6d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  18 → Exp 6 [6d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
-  19 → Exp 5 [5d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  20 → Exp 5 [5d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  21 → Exp 5 [5d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
-  22 → Exp 4 [4d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  23 → Exp 4 [4d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  24 → Exp 4 [4d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
-  25 → Exp 3 [3d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  26 → Exp 3 [3d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  27 → Exp 3 [3d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
-  28 → Exp 2 [2d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  29 → Exp 2 [2d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  30 → Exp 2 [2d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
-  31 → Exp 1 [1d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
-  32 → Exp 1 [1d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
-  33 → Exp 1 [1d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
+   1 → Exp 1 [1d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   2 → Exp 2 [2d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   3 → Exp 3 [3d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   4 → Exp 4 [4d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   5 → Exp 5 [5d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   6 → Exp 6 [6d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   7 → Exp 7 [7d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   8 → Exp 8 [8d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   9 → Exp 9 [9d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  10 → Exp10 [10d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  11 → Exp11 [11d128relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: rel128d__ae128_src1000_tgt1000
 ============================================================
-✓ Processing 31 experiments from group rel128d__ae128_src1000_tgt1000
+✓ Processing 11 experiments from group rel128d__ae128_src1000_tgt1000
 
-✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src1000_tgt1000_n31.svg
-✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src1000_tgt1000_n31.png
-✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src1000_tgt1000_n31.jpeg
-✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src1000_tgt1000_n31.pdf
-✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src1000_tgt1000_n31.eps
+✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src1000_tgt1000_n11.eps
 
 Mapping (Sequential → Experiment) for rel128d__ae128_src1000_tgt1000:
-   1 → Exp11 [11d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   2 → Exp11 [11d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   3 → Exp11 [11d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
-   4 → Exp10 [10d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   5 → Exp10 [10d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   6 → Exp10 [10d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
-   7 → Exp 9 [9d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-   8 → Exp 9 [9d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-   9 → Exp 9 [9d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
-  10 → Exp 8 [8d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-  11 → Exp 8 [8d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-  12 → Exp 8 [8d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
-  13 → Exp 7 [7d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  14 → Exp 7 [7d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  15 → Exp 7 [7d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
-  16 → Exp 6 [6d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  17 → Exp 6 [6d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  18 → Exp 6 [6d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
-  19 → Exp 5 [5d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  20 → Exp 5 [5d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  21 → Exp 5 [5d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
-  22 → Exp 4 [4d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  23 → Exp 4 [4d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
-  24 → Exp 3 [3d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  25 → Exp 3 [3d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
-  26 → Exp 2 [2d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  27 → Exp 2 [2d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  28 → Exp 2 [2d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
-  29 → Exp 1 [1d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
-  30 → Exp 1 [1d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
-  31 → Exp 1 [1d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
+   1 → Exp 1 [1d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   2 → Exp 2 [2d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   3 → Exp 3 [3d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   4 → Exp 4 [4d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   5 → Exp 5 [5d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   6 → Exp 6 [6d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   7 → Exp 7 [7d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   8 → Exp 8 [8d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   9 → Exp 9 [9d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  10 → Exp10 [10d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  11 → Exp11 [11d128relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+
+============================================================
+GENERATING GRAPH FOR: gdd32d__ae32_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group gdd32d__ae32_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src100_tgt100_n11.eps
+
+Mapping (Sequential → Experiment) for gdd32d__ae32_src100_tgt100:
+   1 → Exp11 [11d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d32gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: gdd32d__ae32_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group gdd32d__ae32_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.eps
+
+Mapping (Sequential → Experiment) for gdd32d__ae32_src1000_tgt1000:
+   1 → Exp11 [11d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d32gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: rel32d__ae32_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group rel32d__ae32_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src100_tgt100_n11.eps
+
+Mapping (Sequential → Experiment) for rel32d__ae32_src100_tgt100:
+   1 → Exp 1 [1d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   2 → Exp 2 [2d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   3 → Exp 3 [3d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   4 → Exp 4 [4d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   5 → Exp 5 [5d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   6 → Exp 6 [6d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   7 → Exp 7 [7d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   8 → Exp 8 [8d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   9 → Exp 9 [9d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  10 → Exp10 [10d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  11 → Exp11 [11d32relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+
+============================================================
+GENERATING GRAPH FOR: rel32d__ae32_src1000_tgt1000
+============================================================
+✓ Processing 9 experiments from group rel32d__ae32_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src1000_tgt1000_n9.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src1000_tgt1000_n9.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src1000_tgt1000_n9.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src1000_tgt1000_n9.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src1000_tgt1000_n9.eps
+
+Mapping (Sequential → Experiment) for rel32d__ae32_src1000_tgt1000:
+   1 → Exp 1 [1d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   2 → Exp 2 [2d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   3 → Exp 5 [5d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   4 → Exp 6 [6d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   5 → Exp 7 [7d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   6 → Exp 8 [8d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   7 → Exp 9 [9d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   8 → Exp10 [10d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   9 → Exp11 [11d32relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+
+============================================================
+GENERATING GRAPH FOR: gdd64d__ae64_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group gdd64d__ae64_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src100_tgt100_n11.eps
+
+Mapping (Sequential → Experiment) for gdd64d__ae64_src100_tgt100:
+   1 → Exp11 [11d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 90, Tgt: 10, Ratio: 0.11)
+   3 → Exp 9 [9d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 80, Tgt: 20, Ratio: 0.25)
+   4 → Exp 8 [8d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 70, Tgt: 30, Ratio: 0.43)
+   5 → Exp 7 [7d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 60, Tgt: 40, Ratio: 0.67)
+   6 → Exp 6 [6d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 50, Tgt: 50, Ratio: 1.00)
+   7 → Exp 5 [5d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 40, Tgt: 60, Ratio: 1.50)
+   8 → Exp 4 [4d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 30, Tgt: 70, Ratio: 2.33)
+   9 → Exp 3 [3d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 20, Tgt: 80, Ratio: 4.00)
+  10 → Exp 2 [2d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 10, Tgt: 90, Ratio: 9.00)
+  11 → Exp 1 [1d64gddK100.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 100, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: gdd64d__ae64_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group gdd64d__ae64_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src1000_tgt1000_n11.eps
+
+Mapping (Sequential → Experiment) for gdd64d__ae64_src1000_tgt1000:
+   1 → Exp11 [11d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 1000, Tgt: 0, Ratio: 0.00)
+   2 → Exp10 [10d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 900, Tgt: 100, Ratio: 0.11)
+   3 → Exp 9 [9d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 800, Tgt: 200, Ratio: 0.25)
+   4 → Exp 8 [8d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 700, Tgt: 300, Ratio: 0.43)
+   5 → Exp 7 [7d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 600, Tgt: 400, Ratio: 0.67)
+   6 → Exp 6 [6d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 500, Tgt: 500, Ratio: 1.00)
+   7 → Exp 5 [5d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 400, Tgt: 600, Ratio: 1.50)
+   8 → Exp 4 [4d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 300, Tgt: 700, Ratio: 2.33)
+   9 → Exp 3 [3d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 200, Tgt: 800, Ratio: 4.00)
+  10 → Exp 2 [2d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 100, Tgt: 900, Ratio: 9.00)
+  11 → Exp 1 [1d64gddK1000.log] from [RemoveExtraLayer] (Type: gdd, Dim: 128, Src: 0, Tgt: 1000, Ratio: ∞)
+
+============================================================
+GENERATING GRAPH FOR: ids64d__ae64_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group ids64d__ae64_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_ids_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_ids_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_ids_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_ids_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src100_tgt100_n11.eps
+
+Mapping (Sequential → Experiment) for ids64d__ae64_src100_tgt100:
+   1 → Exp 1 [1d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   2 → Exp 2 [2d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   3 → Exp 3 [3d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   4 → Exp 4 [4d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   5 → Exp 5 [5d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   6 → Exp 6 [6d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   7 → Exp 7 [7d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   8 → Exp 8 [8d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   9 → Exp 9 [9d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  10 → Exp10 [10d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  11 → Exp11 [11d64idsK100.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+
+============================================================
+GENERATING GRAPH FOR: ids64d__ae64_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group ids64d__ae64_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_ids_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_ids_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_ids_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_ids_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src1000_tgt1000_n11.eps
+
+Mapping (Sequential → Experiment) for ids64d__ae64_src1000_tgt1000:
+   1 → Exp 1 [1d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   2 → Exp 2 [2d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   3 → Exp 3 [3d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   4 → Exp 4 [4d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   5 → Exp 5 [5d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   6 → Exp 6 [6d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   7 → Exp 7 [7d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   8 → Exp 8 [8d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   9 → Exp 9 [9d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  10 → Exp10 [10d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  11 → Exp11 [11d64idsK1000.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+
+============================================================
+GENERATING GRAPH FOR: rel64d__ae64_src100_tgt100
+============================================================
+✓ Processing 11 experiments from group rel64d__ae64_src100_tgt100
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src100_tgt100_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src100_tgt100_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src100_tgt100_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src100_tgt100_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src100_tgt100_n11.eps
+
+Mapping (Sequential → Experiment) for rel64d__ae64_src100_tgt100:
+   1 → Exp 1 [1d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   2 → Exp 2 [2d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   3 → Exp 3 [3d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   4 → Exp 4 [4d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   5 → Exp 5 [5d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   6 → Exp 6 [6d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   7 → Exp 7 [7d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   8 → Exp 8 [8d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+   9 → Exp 9 [9d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  10 → Exp10 [10d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+  11 → Exp11 [11d64relK100.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 100, Tgt: 100, Ratio: 1.00)
+
+============================================================
+GENERATING GRAPH FOR: rel64d__ae64_src1000_tgt1000
+============================================================
+✓ Processing 11 experiments from group rel64d__ae64_src1000_tgt1000
+
+✓ Saved SVG: figures_organized/svg/mmd_analysis_rel_dim128_src1000_tgt1000_n11.svg
+✓ Saved PNG: figures_organized/png/mmd_analysis_rel_dim128_src1000_tgt1000_n11.png
+✓ Saved JPEG: figures_organized/jpeg/mmd_analysis_rel_dim128_src1000_tgt1000_n11.jpeg
+✓ Saved PDF: figures_organized/pdf/mmd_analysis_rel_dim128_src1000_tgt1000_n11.pdf
+✓ Saved EPS: figures_organized/eps/mmd_analysis_rel_dim128_src1000_tgt1000_n11.eps
+
+Mapping (Sequential → Experiment) for rel64d__ae64_src1000_tgt1000:
+   1 → Exp 1 [1d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   2 → Exp 2 [2d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   3 → Exp 3 [3d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   4 → Exp 4 [4d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   5 → Exp 5 [5d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   6 → Exp 6 [6d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   7 → Exp 7 [7d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   8 → Exp 8 [8d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+   9 → Exp 9 [9d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  10 → Exp10 [10d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
+  11 → Exp11 [11d64relK1000.log] from [RemoveExtraLayer] (Type: rel, Dim: 128, Src: 1000, Tgt: 1000, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: gdd128d__ae128_src10_tgt10
@@ -743,17 +973,17 @@ GENERATING GRAPH FOR: gdd128d__ae128_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim128_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for gdd128d__ae128_src10_tgt10:
-   1 → Exp11 [d128gdd11.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [d128gdd10.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [d128gdd9.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [d128gdd8.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [d128gdd7.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [d128gdd6.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [d128gdd5.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [d128gdd4.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [d128gdd3.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [d128gdd2.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [d128gdd1.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [d128gdd1.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [d128gdd2.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [d128gdd3.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [d128gdd4.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [d128gdd5.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [d128gdd6.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [d128gdd7.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [d128gdd8.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [d128gdd9.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [d128gdd10.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [d128gdd11.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: ids128d__ae128_src10_tgt10
@@ -767,17 +997,17 @@ GENERATING GRAPH FOR: ids128d__ae128_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim128_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for ids128d__ae128_src10_tgt10:
-   1 → Exp11 [d128ids11.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [d128ids10.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [d128ids9.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [d128ids8.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [d128ids7.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [d128ids6.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [d128ids5.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [d128ids4.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [d128ids3.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [d128ids2.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [d128ids1.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [d128ids1.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [d128ids2.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [d128ids3.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [d128ids4.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [d128ids5.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [d128ids6.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [d128ids7.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [d128ids8.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [d128ids9.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [d128ids10.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [d128ids11.log] from [IncreaseDimentionallity] (Type: ids, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: gdd32d__ae32_src10_tgt10
@@ -791,17 +1021,17 @@ GENERATING GRAPH FOR: gdd32d__ae32_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim32_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for gdd32d__ae32_src10_tgt10:
-   1 → Exp11 [d32gdd11.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [d32gdd10.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [d32gdd9.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [d32gdd8.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [d32gdd7.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [d32gdd6.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [d32gdd5.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [d32gdd4.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [d32gdd3.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [d32gdd2.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [d32gdd1.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [d32gdd1.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [d32gdd2.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [d32gdd3.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [d32gdd4.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [d32gdd5.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [d32gdd6.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [d32gdd7.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [d32gdd8.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [d32gdd9.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [d32gdd10.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [d32gdd11.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: gdd64d__ae64_src10_tgt10
@@ -815,17 +1045,17 @@ GENERATING GRAPH FOR: gdd64d__ae64_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_gdd_dim64_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for gdd64d__ae64_src10_tgt10:
-   1 → Exp11 [d64gdd11.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [d64gdd10.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [d64gdd9.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [d64gdd8.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [d64gdd7.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [d64gdd6.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [d64gdd5.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [d64gdd4.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [d64gdd3.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [d64gdd2.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [d64gdd1.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [d64gdd1.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [d64gdd2.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [d64gdd3.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [d64gdd4.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [d64gdd5.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [d64gdd6.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [d64gdd7.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [d64gdd8.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [d64gdd9.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [d64gdd10.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [d64gdd11.log] from [GraduallyDecreaseDimensions] (Type: gdd, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: ids64d__ae64_src10_tgt10
@@ -839,17 +1069,17 @@ GENERATING GRAPH FOR: ids64d__ae64_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_ids_dim64_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for ids64d__ae64_src10_tgt10:
-   1 → Exp11 [d64ids11.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [d64ids10.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [d64ids9.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [d64ids8.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [d64ids7.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [d64ids6.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [d64ids5.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [d64ids4.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [d64ids3.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [d64ids2.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [d64ids1.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [d64ids1.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [d64ids2.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [d64ids3.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [d64ids4.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [d64ids5.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [d64ids6.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [d64ids7.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [d64ids8.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [d64ids9.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [d64ids10.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [d64ids11.log] from [IncreaseDimentionallity] (Type: ids, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: 128d__ae128_src10_tgt10
@@ -863,17 +1093,17 @@ GENERATING GRAPH FOR: 128d__ae128_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_dim128_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for 128d__ae128_src10_tgt10:
-   1 → Exp11 [rel128TEN11.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [rel128TEN10.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [rel128TEN9.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [rel128TEN8.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [rel128TEN7.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [rel128TEN6.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [rel128TEN5.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [rel128TEN4.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [rel128TEN3.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [rel128TEN2.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [rel128TEN1.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [rel128TEN1.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [rel128TEN2.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [rel128TEN3.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [rel128TEN4.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [rel128TEN5.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [rel128TEN6.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [rel128TEN7.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [rel128TEN8.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [rel128TEN9.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [rel128TEN10.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [rel128TEN11.log] from [RemoveExtraLayer] (Type: N/A, Dim: 128, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: 32d__ae32_src10_tgt10
@@ -887,17 +1117,17 @@ GENERATING GRAPH FOR: 32d__ae32_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_dim32_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for 32d__ae32_src10_tgt10:
-   1 → Exp11 [rel32TEN11.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [rel32TEN10.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [rel32TEN9.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [rel32TEN8.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [rel32TEN7.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [rel32TEN6.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [rel32TEN5.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [rel32TEN4.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [rel32TEN3.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [rel32TEN2.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [rel32TEN1.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [rel32TEN1.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [rel32TEN2.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [rel32TEN3.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [rel32TEN4.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [rel32TEN5.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [rel32TEN6.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [rel32TEN7.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [rel32TEN8.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [rel32TEN9.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [rel32TEN10.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [rel32TEN11.log] from [RemoveExtraLayer] (Type: N/A, Dim: 32, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 GENERATING GRAPH FOR: 64d__ae64_src10_tgt10
@@ -911,22 +1141,22 @@ GENERATING GRAPH FOR: 64d__ae64_src10_tgt10
 ✓ Saved EPS: figures_organized/eps/mmd_analysis_dim64_src10_tgt10_n11.eps
 
 Mapping (Sequential → Experiment) for 64d__ae64_src10_tgt10:
-   1 → Exp11 [rel64TEN11.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 0, Ratio: 0.00)
-   2 → Exp10 [rel64TEN10.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 9, Tgt: 1, Ratio: 0.11)
-   3 → Exp 9 [rel64TEN9.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 8, Tgt: 2, Ratio: 0.25)
-   4 → Exp 8 [rel64TEN8.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 7, Tgt: 3, Ratio: 0.43)
-   5 → Exp 7 [rel64TEN7.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 6, Tgt: 4, Ratio: 0.67)
-   6 → Exp 6 [rel64TEN6.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 5, Tgt: 5, Ratio: 1.00)
-   7 → Exp 5 [rel64TEN5.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 4, Tgt: 6, Ratio: 1.50)
-   8 → Exp 4 [rel64TEN4.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 3, Tgt: 7, Ratio: 2.33)
-   9 → Exp 3 [rel64TEN3.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 2, Tgt: 8, Ratio: 4.00)
-  10 → Exp 2 [rel64TEN2.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 1, Tgt: 9, Ratio: 9.00)
-  11 → Exp 1 [rel64TEN1.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 0, Tgt: 10, Ratio: ∞)
+   1 → Exp 1 [rel64TEN1.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   2 → Exp 2 [rel64TEN2.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   3 → Exp 3 [rel64TEN3.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   4 → Exp 4 [rel64TEN4.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   5 → Exp 5 [rel64TEN5.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   6 → Exp 6 [rel64TEN6.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   7 → Exp 7 [rel64TEN7.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   8 → Exp 8 [rel64TEN8.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+   9 → Exp 9 [rel64TEN9.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+  10 → Exp10 [rel64TEN10.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
+  11 → Exp11 [rel64TEN11.log] from [RemoveExtraLayer] (Type: N/A, Dim: 64, Src: 10, Tgt: 10, Ratio: 1.00)
 
 ============================================================
 SUMMARY
 ============================================================
-✓ Successfully generated 14 graphs from 14 groups
+✓ Successfully generated 24 graphs from 24 groups
 ✓ Processed 3 source directories
 
 ⚠️  2 files had parsing errors
