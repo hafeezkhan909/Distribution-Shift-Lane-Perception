@@ -31,7 +31,7 @@ cd /home1/adoyle2025/Distribution-Shift-Lane-Perception/
 
 echo "Starting Unit Test..."
 
-python3 visGen2.py --base-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments \
+python3 visGen2.py --base-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash \
   --output-dir figures6
 
 echo "Done!"

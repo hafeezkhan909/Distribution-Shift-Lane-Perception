@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
-Visualize Mixed Shift Experiment Results
-- Title: Distribution Shift Study
+Visualize Mixed Shift Experiment Results (FLAGGED LOGS ONLY)
+- Filters for logs containing: "19792893109391"
+- Groups experiments by parsing FILENAMES instead of folders.
 - Graphs: 4 Panels (TPR, Raw MMD, Delta MMD, Sample Composition)
+- X-Axis Flow: 100% Source (Clean) -> 100% Target (Shifted)
 """
 
 import re
@@ -13,9 +15,11 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from collections import defaultdict
 
-# Global Configuration
-# Widened figure size to (28, 10) to fit 4 graphs comfortably
+# --- Global Configuration ---
+TARGET_FLAG = "19792893109391"
+
 plt.rcParams['figure.figsize'] = (28, 10) 
 plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
 
@@ -26,41 +30,44 @@ ARCH_STRINGS = {
     "orig": "4096 -> 1024 -> 256 -> 128", "d32": "4096 -> 1024 -> 256 -> 32",
 }
 
-def camel_to_title(text):
-    """Converts CamelCase or underscore_strings to Title Case."""
-    text = text.replace('_', ' ')
-    return re.sub(r'(?<!^)(?<!\s)(?=[A-Z])', ' ', text).strip()
+def get_method_name(arch_key):
+    k = arch_key.lower()
+    if "rel" in k: return "Remove Extra Layer"
+    if "gdd" in k: return "Gradually Decrease Dimensions"
+    if "ids" in k: return "Increase Dimensionality"
+    if "orig" in k: return "Original"
+    if "d32" == k: return "Base 32"
+    return "Unknown Architecture"
 
-def parse_bash_script(bash_path):
-    if not bash_path.exists(): return {}
-    try:
-        with open(bash_path, 'r', encoding='utf-8', errors='ignore') as f:
-            content = f.read()
-    except Exception: return {}
-    
-    config = {}
-    dconfig_match = re.search(r'--dConfig\s+"([^"]+)"', content)
-    dconf = dconfig_match.group(1) if dconfig_match else "orig"
-    config['arch_key'] = dconf
-    
-    dim_match = re.search(r'd(\d+)', dconf)
-    if dim_match:
-        config['dims'] = dim_match.group(1)
-    else:
-        config['dims'] = "32" if "d32" in dconf else "128"
-    
-    return config
-
+# --- Parsing Logic ---
 def parse_log_file(log_path):
     try:
         with open(log_path, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
+            
+        # --- CRITICAL FLAG CHECK ---
+        if TARGET_FLAG not in content:
+            return None
+            
     except Exception: return None
     
-    metrics = {}
-    k_match = re.search(r'K(\d+)', log_path.stem)
-    metrics['sample_size'] = k_match.group(1) if k_match else "Unknown"
+    # Parse filename for grouping (e.g., d128rel_K100_Exp1.log)
+    filename = log_path.name
+    match = re.match(r'^([a-zA-Z0-9]+)_K(\d+)_Exp(\d+)', filename)
+    if not match:
+        return None
+        
+    config_str = match.group(1)
+    k_val = int(match.group(2))
+    exp_num = int(match.group(3))
 
+    metrics = {
+        'config_str': config_str,
+        'sample_size': k_val,
+        'exp_num': exp_num,
+    }
+
+    # Extract Data
     tau = re.search(r'\[RESULT\] τ\([\d.]+\) = ([\d.]+)', content)
     mmd = re.search(r'Average MMD: ([\d.]+) ± ([\d.]+)', content)
     tpr = re.search(r'TPR \(true positive rate\) over \d+ runs: ([\d.]+)%', content)
@@ -74,30 +81,36 @@ def parse_log_file(log_path):
     
     return metrics if 'avg_mmd' in metrics else None
 
-def load_folder_data(logs_dir):
-    experiments = []
-    path = Path(logs_dir)
-    log_files = sorted([f for f in path.iterdir() if f.is_file() and f.suffix == '.log'])
+def load_all_data(base_path):
+    grouped_data = defaultdict(list)
+    valid_logs = 0
+
+    print(f"Scanning for logs with flag: {TARGET_FLAG}...")
     
-    parent_folder_name = path.parent.name
-    
-    for log_file in log_files:
-        metrics = parse_log_file(log_file)
+    for path in Path(base_path).rglob('*.log'):
+        metrics = parse_log_file(path)
         if metrics:
-            bash_file = path / f"{log_file.stem}.sh"
-            metrics['bash'] = parse_bash_script(bash_file)
-            metrics['parent_folder'] = parent_folder_name
-            experiments.append(metrics)
+            group_key = (metrics['config_str'], metrics['sample_size'])
+            grouped_data[group_key].append(metrics)
+            valid_logs += 1
+
+    print(f"  > Found {valid_logs} valid logs grouped into {len(grouped_data)} configurations.")
+    return grouped_data
+
+# --- Drawing Logic ---
+def plot_comprehensive_analysis(group_key, experiments, output_dir):
+    if not experiments: return
     
+    config_str, sample_size = group_key
+    
+    # --- CRITICAL FIX: Sort by Source Samples Descending (100% Source -> 100% Target) ---
     experiments.sort(key=lambda x: x.get('src_samples', 0), reverse=True)
     
+    # Re-index the IDs purely for aesthetic graphing (1 to N)
     for i, exp in enumerate(experiments):
         exp['id'] = i + 1
-        
-    return experiments
-
-def plot_comprehensive_analysis(experiments, output_dir, folder_name):
-    if not experiments: return
+    # -------------------------------------------------------------------------------------
+    
     n = len(experiments)
     x = np.arange(n)
     
@@ -110,14 +123,14 @@ def plot_comprehensive_analysis(experiments, output_dir, folder_name):
     tgts = [e.get('tgt_samples', 0) for e in experiments]
     ids = [e.get('id', 0) for e in experiments]
     
-    config = experiments[0].get('bash', {})
-    raw_title = experiments[0].get('parent_folder', "Unknown")
-    pretty_arch = camel_to_title(raw_title)
-    dims = config.get('dims', "???")
-    sample_size = experiments[0].get('sample_size', "Unknown")
-    arch_str = ARCH_STRINGS.get(config.get('arch_key', 'orig'), "Architecture Not Found")
+    pretty_arch = get_method_name(config_str)
+    
+    # Extract Dims from config string
+    dim_match = re.search(r'd(\d+)', config_str)
+    dims = int(dim_match.group(1)) if dim_match else (32 if 'd32' in config_str else 128)
+    
+    arch_str = ARCH_STRINGS.get(config_str, "Architecture Not Found")
 
-    # MODIFIED: Changed 3 to 4 subplots
     fig, (ax1, ax_raw, ax2, ax3) = plt.subplots(1, 4, figsize=(28, 9))
 
     # --- Panel 1: TPR ---
@@ -131,14 +144,13 @@ def plot_comprehensive_analysis(experiments, output_dir, folder_name):
     ax1.set_xticklabels([f"{i}" for i in ids])
     ax1.set_xlabel("Experiment Number", fontsize=11)
 
-    # --- Panel 2 (NEW): Raw MMD vs Tau ---
+    # --- Panel 2: Raw MMD vs Tau ---
     ax_raw.errorbar(x, mmds, yerr=stds, fmt='o-', color='#2E86AB', label='Avg MMD', capsize=4)
     ax_raw.plot(x, taus, 'r--', label=r'Threshold ($\tau$)', linewidth=2)
     ax_raw.set_title('Raw MMD vs. Threshold', fontweight='bold', fontsize=14)
     ax_raw.set_ylabel('MMD Value', fontsize=12)
     ax_raw.legend(loc='upper left', frameon=True)
     ax_raw.set_xticks(x)
-    # Applied Experiment Number labels to the new graph as requested
     ax_raw.set_xticklabels([f"{i}" for i in ids])
     ax_raw.set_xlabel("Experiment Number", fontsize=11)
 
@@ -161,46 +173,47 @@ def plot_comprehensive_analysis(experiments, output_dir, folder_name):
     ax3.set_title('Sample Composition (Stacked)', fontweight='bold', fontsize=14)
     ax3.set_ylabel('Samples', fontsize=12)
     
-    # Legend BELOW the graph
     ax3.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), ncol=2, frameon=False, fontsize=11)
-    
     ax3.set_xticks(x)
     ax3.set_xticklabels([f"{i}" for i in ids])
     ax3.set_xlabel("Experiment Number", fontsize=11)
 
     # --- Layout & Titles ---
     plt.suptitle("Distribution Shift Study", fontsize=26, fontweight='bold', y=0.98)
-    subtitle_str = f"{pretty_arch} | {dims} Dimensions | Sample Size: {sample_size}"
-    plt.figtext(0.5, 0.93, subtitle_str, ha='center', fontsize=18, fontstyle='italic', color='#333333')
+    subtitle_str = f"{pretty_arch} ({config_str}) | {dims} Dimensions | Sample Size: {sample_size}"
+    plt.figtext(0.5, 0.90, subtitle_str, ha='center', fontsize=18, fontstyle='italic', color='#333333')
 
     # Architecture Footer
-    fig.text(0.5, 0.02, f"Network Architecture: {arch_str}", ha='center', fontsize=14, fontweight='bold', 
+    fig.text(0.5, 0.05, f"Network Architecture: {arch_str}", ha='center', fontsize=14, fontweight='bold', 
              bbox=dict(facecolor='#FBFCFC', alpha=0.9, edgecolor='#AEB6BF', boxstyle='round,pad=1'))
 
-    # Adjusted layout to fit 4 columns
     plt.tight_layout(rect=[0.02, 0.10, 0.98, 0.91])
     
     out_path = Path(output_dir)
     out_path.mkdir(parents=True, exist_ok=True)
-    plt.savefig(out_path / f"{folder_name}_summary.png", dpi=300)
+    
+    # Save with a clear filename
+    save_name = f"{config_str}_K{sample_size}_summary.png"
+    plt.savefig(out_path / save_name, dpi=300)
     plt.close()
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--base-path', type=str, required=True)
+    parser.add_argument('--base-path', type=str, required=True, help="Root folder to scan")
     parser.add_argument('--output-dir', type=str, default='figures')
-    parser.add_argument('--all-dirs', action='store_true')
     args = parser.parse_args()
 
-    for root, dirs, files in os.walk(args.base_path):
-        if any(f.endswith('.log') for f in files):
-            log_dir = Path(root)
-            data = load_folder_data(log_dir)
-            if data:
-                folder_id = str(log_dir.relative_to(args.base_path)).replace('/', '_').replace('\\', '_')
-                if not folder_id or folder_id == ".": folder_id = log_dir.name
-                plot_comprehensive_analysis(data, args.output_dir, folder_id)
-                print(f"✓ Generated: {folder_id}")
+    grouped_data = load_all_data(args.base_path)
+    
+    if not grouped_data:
+        print(f"No log files found containing the flag: {TARGET_FLAG}")
+        return
+
+    for group_key, experiments in grouped_data.items():
+        if len(experiments) > 0:
+            plot_comprehensive_analysis(group_key, experiments, args.output_dir)
+            config_str, sample_size = group_key
+            print(f"✓ Generated Graph: {config_str}_K{sample_size}")
 
 if __name__ == "__main__":
     main()

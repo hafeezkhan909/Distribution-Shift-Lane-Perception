@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 162357
-Running on host: node09
-Start Time: Mon Feb 16 02:19:26 PM EST 2026
+Slurm Job ID: 163434
+Running on host: node01
+Start Time: Wed Feb 18 10:33:12 PM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,28 +21,33 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Unit Test...
-✓ Generated: RemoveExtraLayer_ten32d
-✓ Generated: RemoveExtraLayer_thousand32d
-✓ Generated: RemoveExtraLayer_hundred32d
-✓ Generated: RemoveExtraLayer_thousand128d
-✓ Generated: RemoveExtraLayer_thousand64d
-✓ Generated: RemoveExtraLayer_hundred64d
-✓ Generated: RemoveExtraLayer_ten64d
-✓ Generated: RemoveExtraLayer_ten128d
-✓ Generated: RemoveExtraLayer_hundred128d
-✓ Generated: GraduallyDecreaseDimensions_ten32d
-✓ Generated: GraduallyDecreaseDimensions_thousand64d
-✓ Generated: GraduallyDecreaseDimensions_hundred64d
-✓ Generated: GraduallyDecreaseDimensions_thousand128d
-✓ Generated: GraduallyDecreaseDimensions_hundred128d
-✓ Generated: GraduallyDecreaseDimensions_ten64d
-✓ Generated: GraduallyDecreaseDimensions_hundred32d
-✓ Generated: GraduallyDecreaseDimensions_thousand32d
-✓ Generated: GraduallyDecreaseDimensions_ten128d
-✓ Generated: IncreaseDimentionallity_ten64d
-✓ Generated: IncreaseDimentionallity_thousand128d
-✓ Generated: IncreaseDimentionallity_thousand64d
-✓ Generated: IncreaseDimentionallity_hundred64d
-✓ Generated: IncreaseDimentionallity_ten128d
-✓ Generated: IncreaseDimentionallity_hundred128d
+Scanning for logs with flag: 19792893109391...
+  > Found 297 valid logs grouped into 27 configurations.
+✓ Generated Graph: d64rel_K100
+✓ Generated Graph: d64gdd_K100
+✓ Generated Graph: d32_K100
+✓ Generated Graph: d64gdd_K10
+✓ Generated Graph: d64ids_K1000
+✓ Generated Graph: d32_K10
+✓ Generated Graph: d64gdd_K1000
+✓ Generated Graph: d32rel_K10
+✓ Generated Graph: d32gdd_K1000
+✓ Generated Graph: d32rel_K1000
+✓ Generated Graph: d32gdd_K100
+✓ Generated Graph: d32gdd_K10
+✓ Generated Graph: d32_K1000
+✓ Generated Graph: d128ids_K10
+✓ Generated Graph: d128ids_K100
+✓ Generated Graph: d128rel_K1000
+✓ Generated Graph: d64rel_K10
+✓ Generated Graph: d64rel_K1000
+✓ Generated Graph: d32rel_K100
+✓ Generated Graph: d128rel_K100
+✓ Generated Graph: d128gdd_K10
+✓ Generated Graph: d128ids_K1000
+✓ Generated Graph: d128rel_K10
+✓ Generated Graph: d128gdd_K100
+✓ Generated Graph: d64ids_K10
+✓ Generated Graph: d128gdd_K1000
+✓ Generated Graph: d64ids_K100
 Done!

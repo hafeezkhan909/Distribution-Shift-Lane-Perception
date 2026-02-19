@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --output=distributionShiftAssistNoBatchSize.log
 #SBATCH --partition=gpu2
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=16        # Request 16 CPUs (4 per GPU is a good ratio)
 #SBATCH --mem=128G                # Increase memory to handle larger batches
 #
@@ -43,10 +43,9 @@ python shift_concat_experiment.py \
     --tgt_samples 10 \
     --ratio_src_samples 0 \
     --ratio_tgt_samples 10 \
-    --num_runs 10 \
+    --num_runs 100 \
     --block_idx 4 \
     --seed_base 32 \
-    --batch_size 0 \
     --file_name "noBatchSize.json"
 
 echo "----------------------------------------------------"

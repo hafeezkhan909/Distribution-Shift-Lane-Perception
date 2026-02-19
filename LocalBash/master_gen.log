@@ -1,0 +1,145 @@
+----------------------------------------------------
+Slurm Job ID: 162700
+Running on host: node01
+Start Time: Wed Feb 18 09:36:08 AM EST 2026
+----------------------------------------------------
+========================================
+Generating scripts for: d128rel | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d128rel_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d128rel_K10
+========================================
+Generating scripts for: d128rel | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d128rel_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d128rel_K100
+========================================
+Generating scripts for: d128rel | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d128rel_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d128rel_K1000
+========================================
+Generating scripts for: d64rel | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d64rel_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d64rel_K10
+========================================
+Generating scripts for: d64rel | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d64rel_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d64rel_K100
+========================================
+Generating scripts for: d64rel | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d64rel_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d64rel_K1000
+========================================
+Generating scripts for: d32rel | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d32rel_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d32rel_K10
+========================================
+Generating scripts for: d32rel | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d32rel_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d32rel_K100
+========================================
+Generating scripts for: d32rel | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d32rel_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/RemoveExtraLayer/d32rel_K1000
+========================================
+Generating scripts for: d128gdd | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d128gdd_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d128gdd_K10
+========================================
+Generating scripts for: d128gdd | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d128gdd_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d128gdd_K100
+========================================
+Generating scripts for: d128gdd | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d128gdd_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d128gdd_K1000
+========================================
+Generating scripts for: d64gdd | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d64gdd_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d64gdd_K10
+========================================
+Generating scripts for: d64gdd | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d64gdd_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d64gdd_K100
+========================================
+Generating scripts for: d64gdd | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d64gdd_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d64gdd_K1000
+========================================
+Generating scripts for: d32gdd | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d32gdd_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d32gdd_K10
+========================================
+Generating scripts for: d32gdd | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d32gdd_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d32gdd_K100
+========================================
+Generating scripts for: d32gdd | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d32gdd_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/GraduallyDecreaseDimensions/d32gdd_K1000
+========================================
+Generating scripts for: d64ids | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d64ids_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d64ids_K10
+========================================
+Generating scripts for: d64ids | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d64ids_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d64ids_K100
+========================================
+Generating scripts for: d64ids | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d64ids_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d64ids_K1000
+========================================
+Generating scripts for: d128ids | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d128ids_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d128ids_K10
+========================================
+Generating scripts for: d128ids | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d128ids_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d128ids_K100
+========================================
+Generating scripts for: d128ids | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d128ids_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/IncreaseDimensionality/d128ids_K1000
+========================================
+Generating scripts for: d32 | K=10
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/Base32/d32_K10
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/Base32/d32_K10
+========================================
+Generating scripts for: d32 | K=100
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/Base32/d32_K100
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/Base32/d32_K100
+========================================
+Generating scripts for: d32 | K=1000
+Output Dir: /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/Base32/d32_K1000
+========================================
+Generated 11 scripts in /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2/Base32/d32_K1000
+----------------------------------------------------
+All Generations Complete.
+To run everything (WARNING: ~300 jobs):
+  find /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2 -name "*.sh" -exec sbatch {} \;
+----------------------------------------------------

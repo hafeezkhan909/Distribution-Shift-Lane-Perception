@@ -1,15 +1,14 @@
 #!/bin/bash
 
 # --- Slurm Job Configuration ---
-#SBATCH --job-name=bashGen
+#SBATCH --job-name=MasterGen
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --output=bashGen.log
+#SBATCH --output=master_gen.log
 #SBATCH --partition=eternity
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=8GB
-#
-    
+
 # --- Job Execution ---
 echo "----------------------------------------------------"
 echo "Slurm Job ID: $SLURM_JOB_ID"
@@ -17,41 +16,61 @@ echo "Running on host: $(hostname)"
 echo "Start Time: $(date)"
 echo "----------------------------------------------------"
 
-# Configuration
-K=10  # Total samples (can be changed to any multiple of 10)
-srcSamples=10
-SCRIPT_PREFIX="d128ids"
-OUTPUT_DIR="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/IncreaseDimentionallity/ten128d"
+# Base Path
+BASE_DIR="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/DRExperiments2"
 
-# Create output directory if it doesn't exist
-mkdir -p "$OUTPUT_DIR"
+# 1. Define the lists to iterate over
+configs=("d128rel" "d64rel" "d32rel" "d128gdd" "d64gdd" "d32gdd" "d64ids" "d128ids" "d32")
+sample_sizes=(10 100 1000)
 
-echo "========================================"
-echo "Generating ratio experiment scripts..."
-echo "Total samples (k): $K"
-echo "========================================"
+# 2. Iterate over Configs
+for config in "${configs[@]}"; do
+    
+    # Determine parent folder name based on config type for organization
+    case "$config" in
+        *"ids"*) type_dir="IncreaseDimensionality" ;;
+        *"rel"*) type_dir="RemoveExtraLayer" ;;
+        *"gdd"*) type_dir="GraduallyDecreaseDimensions" ;;
+        "d32")   type_dir="Base32" ;;
+        *)       type_dir="Misc" ;;
+    esac
 
-# Calculate number of experiments (0% to 100% in 10% steps = 11 experiments)
-exp_num=1
+    # 3. Iterate over Sample Sizes (K)
+    for K in "${sample_sizes[@]}"; do
+        
+        # Setup variables for this batch
+        srcSamples=$K
+        SCRIPT_PREFIX="${config}"
+        
+        # Create a unique output directory: LocalBash/Type/Config_Size
+        # Example: LocalBash/IncreaseDimensionality/d128ids_K10
+        OUTPUT_DIR="${BASE_DIR}/${type_dir}/${config}_K${K}"
+        mkdir -p "$OUTPUT_DIR"
 
-# Iterate from 0% to 100% source samples (in 10% increments)
-for src_percent in {0..100..10}; do
-    # Calculate target percent (complement to 100%)
-    tgt_percent=$((100 - src_percent))
-    
-    # Calculate actual sample counts
-    ratio_src=$((K * src_percent / 100))
-    ratio_tgt=$((K * tgt_percent / 100))
-    
-    # Define script filename
-    script_name="${OUTPUT_DIR}/${SCRIPT_PREFIX}${exp_num}.sh"
-    log_name="${SCRIPT_PREFIX}${exp_num}.log"
-    job_name="${SCRIPT_PREFIX}${exp_num}"
-    
-    echo "Creating Experiment ${exp_num}: Src=${src_percent}% (${ratio_src}), Tgt=${tgt_percent}% (${ratio_tgt})"
-    
-    # Generate the script
-    cat > "$script_name" << EOF
+        echo "========================================"
+        echo "Generating scripts for: $config | K=$K"
+        echo "Output Dir: $OUTPUT_DIR"
+        echo "========================================"
+
+        # Inner Loop: Generate the 11 Ratio Experiments (0% to 100%)
+        exp_num=1
+        
+        for src_percent in {0..100..10}; do
+            # Calculate target percent (complement to 100%)
+            tgt_percent=$((100 - src_percent))
+            
+            # Calculate actual sample counts
+            ratio_src=$((K * src_percent / 100))
+            ratio_tgt=$((K * tgt_percent / 100))
+            
+            # Define file names
+            # Using K${K} in filename ensures uniqueness if files are moved later
+            script_name="${OUTPUT_DIR}/${SCRIPT_PREFIX}_K${K}_Exp${exp_num}.sh"
+            log_name="${SCRIPT_PREFIX}_K${K}_Exp${exp_num}.log"
+            job_name="${SCRIPT_PREFIX}_K${K}_E${exp_num}"
+            
+            # Generate the script content
+            cat > "$script_name" << EOF
 #!/bin/bash
 
 # --- Slurm Job Configuration ---
@@ -60,19 +79,18 @@ for src_percent in {0..100..10}; do
 #SBATCH --ntasks=1
 #SBATCH --output=${log_name}
 #SBATCH --partition=gpu2
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
-#
-    
+
 # --- Job Execution ---
 echo "----------------------------------------------------"
 echo "Slurm Job ID: \$SLURM_JOB_ID"
 echo "Running on host: \$(hostname)"
 echo "Start Time: \$(date)"
-echo "Experiment ${exp_num}: Src=${src_percent}% (${ratio_src} samples), Tgt=${tgt_percent}% (${ratio_tgt} samples)"
+echo "Config: ${config} | Samples: ${K}"
+echo "Experiment ${exp_num}: Src=${src_percent}% (${ratio_src}), Tgt=${tgt_percent}% (${ratio_tgt})"
 echo "----------------------------------------------------"
-
 
 export PYTHONNOUSERSITE=1
 
@@ -101,30 +119,28 @@ python shift_concat_experiment.py \\
     --num_runs 100 \\
     --block_idx 4 \\
     --seed_base 32 \\
-    --batch_size 2048 \\
-    --dConfig "d128ids" \\
+    --batch_size 512 \\
+    --dConfig "${SCRIPT_PREFIX}" \\
     --save_all_image_paths True \\
-    --file_name "${SCRIPT_PREFIX}.json"
+    --file_name "${SCRIPT_PREFIX}_K${K}.json"
 
 echo "----------------------------------------------------"
 echo "Job finished: \$(date)"
 echo "----------------------------------------------------"
 EOF
-    
-    # Increment experiment number
-    exp_num=$((exp_num + 1))
+            
+            # Make executable (optional but good practice)
+            chmod +x "$script_name"
+            
+            exp_num=$((exp_num + 1))
+        done
+        
+        echo "Generated $((exp_num - 1)) scripts in $OUTPUT_DIR"
+    done
 done
 
-echo "========================================"
-echo "Generated $((exp_num - 1)) scripts successfully!"
-echo ""
-echo "Generated files:"
-ls -1 ${OUTPUT_DIR}/${SCRIPT_PREFIX}*.sh
-echo ""
-echo "To submit all jobs:"
-echo "  for script in ${SCRIPT_PREFIX}*.sh; do sbatch \$script; done"
-echo ""
-echo "To submit individually:"
-for i in $(seq 1 $((exp_num - 1))); do
-    echo "  sbatch ${SCRIPT_PREFIX}${i}.sh"
-done
+echo "----------------------------------------------------"
+echo "All Generations Complete."
+echo "To run everything (WARNING: ~300 jobs):"
+echo "  find ${BASE_DIR} -name \"*.sh\" -exec sbatch {} \;"
+echo "----------------------------------------------------"
