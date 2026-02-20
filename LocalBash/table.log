@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 163471
+Slurm Job ID: 163474
 Running on host: node01
-Start Time: Thu Feb 19 11:22:21 AM EST 2026
+Start Time: Thu Feb 19 11:29:24 AM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,6 +21,5 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Table Generation...
-Scanning for logs with flag: 19792893109391...
-  > Found 297 valid logs.
+✓ Table generated at: figures6/flagged_summary_table.png
 Done!
