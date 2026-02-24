@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 163474
+Slurm Job ID: 163807
 Running on host: node01
-Start Time: Thu Feb 19 11:29:24 AM EST 2026
+Start Time: Tue Feb 24 11:18:24 AM EST 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,5 +21,5 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Table Generation...
-✓ Table generated at: figures6/flagged_summary_table.png
+✓ Generated absolute-grid LaTeX table at: tables/latex_summary_table.png
 Done!

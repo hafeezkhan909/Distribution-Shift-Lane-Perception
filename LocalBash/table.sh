@@ -32,6 +32,6 @@ cd /home1/adoyle2025/Distribution-Shift-Lane-Perception/
 echo "Starting Table Generation..."
 
 python3 tableGen.py --base-path /home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash \
-  --output-dir figures6
+  --output-dir tables
 
 echo "Done!"
