@@ -1,7 +1,7 @@
 import os
 
 # --- Configuration & Paths ---
-BASE_ROOT = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/ModelExperiments/Phase 1"
+BASE_ROOT = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/ModelExperiments/Phase 2"
 PROJECT_DIR = "/home1/adoyle2025/Distribution-Shift-Lane-Perception"
 CONDA_PROFILE = "/home1/adoyle2025/miniconda3/etc/profile.d/conda.sh"
 
@@ -60,7 +60,7 @@ conda activate ml_project
 
 cd {proj_dir}
 
-python model_experiment.py \\
+python model_experimentP2.py \\
     --source_dir {src_dir} \\
     --target_dir {tgt_dir} \\
     --source_list_path {src_list} \\
@@ -99,11 +99,11 @@ def main():
                     # BACKWARDS COMPATIBILITY LOGIC
                     if src_label == tgt_label:
                         # Revert exactly to your old standard (e.g., 10Samples_ImageNetModel_CurvelanesData)
-                        job_id = f"{n}Samples_{model_str}Model_{src_label}Data"
+                        job_id = f"P2{n}Samples_{model_str}Model_{src_label}Data"
                         file_name = f"{src_label}_{model_str}M{n}.sh"
                     else:
                         # Append the cross-distribution identifier to stop overwrites
-                        job_id = f"{n}Samples_{model_str}Model_{src_label}2{tgt_label}Data"
+                        job_id = f"P2{n}Samples_{model_str}Model_{src_label}2{tgt_label}Data"
                         file_name = f"{src_label}2{tgt_label}_{model_str}M{n}.sh"
 
                     file_path = os.path.join(exp_output_dir, file_name)
