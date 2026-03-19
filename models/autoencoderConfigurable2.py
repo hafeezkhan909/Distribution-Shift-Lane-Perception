@@ -2,16 +2,43 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
+import autoencoderConfigs
 
 
 class ConvAutoencoderFC(nn.Module):
-    def __init__(self, latent_dim=512, pretrained=True):
+    def __init__(self, latent_dim=512, configs=autoencoderConfigs.AutoEncoderWeights.IMAGE_NET):
         super().__init__()
 
         # -------- Pretrained ResNet encoder --------
-        backbone = models.resnet18(
-            weights=models.ResNet18_Weights.IMAGENET1K_V1 if pretrained else None
-        )
+        if configs == autoencoderConfigs.AutoEncoderWeights.IMAGE_NET:
+            # Load ImageNet pretrained weights (UAE setting)
+            backbone = models.resnet18(
+                weights=models.ResNet18_Weights.IMAGENET1K_V1
+            )
+        elif configs == autoencoderConfigs.AutoEncoderWeights.RANDOM_WEIGHTS:
+            # Load random weights (untrained ResNet)
+            backbone = models.resnet18()
+        elif configs == autoencoderConfigs.AutoEncoderWeights.CU_LANE:
+            # Load CU Lane pretrained weights
+            # TODO: replace with actual path
+            backbone = models.resnet18()
+            checkpoint = torch.load("path_to_cu_lane_weights.pth")
+            backbone.load_state_dict(checkpoint["model_state_dict"])
+        elif configs == autoencoderConfigs.AutoEncoderWeights.CURVELANES:   
+            # Load CurveLanes pretrained weights
+            # TODO: replace with actual path
+            backbone = models.resnet18()
+            checkpoint = torch.load("path_to_curvelanes_weights.pth")
+            backbone.load_state_dict(checkpoint["model_state_dict"])
+        elif configs == autoencoderConfigs.AutoEncoderWeights.ASSIST_TAXI:
+            # Load ASSIST-Taxi pretrained weights
+            # TODO: replace with actual path
+            backbone = models.resnet18()
+            checkpoint = torch.load("path_to_assist_taxi_weights.pth")
+            backbone.load_state_dict(checkpoint["model_state_dict"])
+        else:
+            raise ValueError(f"Unsupported config: {configs}")
+        
         layers = list(backbone.children())[
             :-2
         ]  # Remove avgpool and fc layers (keep convs)
