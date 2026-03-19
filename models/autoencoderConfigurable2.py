@@ -10,6 +10,9 @@ class Conf2ConvAutoencoderFC(nn.Module):
         super().__init__()
 
         print("[Autoencoder] - Training Trial 1 - 3.19.26")
+        
+        # We will store the path here and load it AT THE END
+        checkpoint_path = None
 
         # -------- Pretrained ResNet encoder --------
         if configs == autoencoderConfigs.AutoEncoderWeights.IMAGE_NET:
@@ -21,23 +24,18 @@ class Conf2ConvAutoencoderFC(nn.Module):
             # Load random weights (untrained ResNet)
             backbone = models.resnet18()
         elif configs == autoencoderConfigs.AutoEncoderWeights.CU_LANE:
-            # Load CU Lane pretrained weights
-            # TODO: replace with actual path
+            # Load empty backbone, will populate at the end
             backbone = models.resnet18()
-            checkpoint = torch.load("/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/CULane/autoencoder_CULane_epoch_50.pth")
-            backbone.load_state_dict(checkpoint["model_state_dict"])
+            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/CULane/autoencoder_CULane_epoch_50.pth"
         elif configs == autoencoderConfigs.AutoEncoderWeights.CURVELANES:   
-            # Load CurveLanes pretrained weights
-            # TODO: replace with actual path
+            # Load empty backbone, will populate at the end
             backbone = models.resnet18()
-            checkpoint = torch.load("/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Curvelanes/autoencoder_Curvelanes_epoch_50.pth")
-            backbone.load_state_dict(checkpoint["model_state_dict"])
+            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Curvelanes/autoencoder_Curvelanes_epoch_50.pth"
         elif configs == autoencoderConfigs.AutoEncoderWeights.ASSIST_TAXI:
-            # Load ASSIST-Taxi pretrained weights
-            # TODO: replace with actual path
+            # Load empty backbone, will populate at the end
+            # TODO: Find the best checkpoint for this one
             backbone = models.resnet18()
-            checkpoint = torch.load("path_to_assist_taxi_weights.pth")
-            backbone.load_state_dict(checkpoint["model_state_dict"])
+            checkpoint_path = "path_to_assist_taxi_weights.pth"
         else:
             raise ValueError(f"Unsupported config: {configs}")
         
@@ -93,6 +91,13 @@ class Conf2ConvAutoencoderFC(nn.Module):
             nn.ConvTranspose2d(32, 3, 4, stride=2, padding=1),  # 3x512x512
             nn.Sigmoid(),
         )
+        
+        # -------- LOAD WEIGHTS AT THE END --------
+        if checkpoint_path is not None:
+            # map_location="cpu" ensures it loads safely into RAM before moving to GPU
+            checkpoint = torch.load(checkpoint_path, map_location="cpu")
+            self.load_state_dict(checkpoint["model_state_dict"])
+            print(f"Successfully loaded full Autoencoder weights from {checkpoint_path}")
 
     def encode(self, x):
         """Encode image → latent vector"""
@@ -117,7 +122,7 @@ class Conf2ConvAutoencoderFC(nn.Module):
 
 
 if __name__ == "__main__":
-    model = ResNetAutoencoder(latent_dim=512, pretrained=True)
+    model = Conf2ConvAutoencoderFC(latent_dim=512)
     x = torch.randn(2, 3, 512, 512)
     out, z = model(x)
     print(f"[ResNet-AE] input: {x.shape}, latent: {z.shape}, recon: {out.shape}")
