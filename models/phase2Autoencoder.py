@@ -4,31 +4,49 @@ import torch.nn.functional as F
 from torchvision import models
 from models import autoencoderConfigs
 
-class Conf2ConvAutoencoderFC(nn.Module):
+class ConfP2ConvAutoencoderFC(nn.Module):
     def __init__(self, latent_dim=32, configs=autoencoderConfigs.AutoEncoderWeights.IMAGE_NET):
         super().__init__()
 
         print(f"[Autoencoder] - Phase 2 - Latent Dim: {latent_dim}")
 
+        # We will store the path here and load it AT THE END
+        checkpoint_path = None
+
         # -------- Pretrained ResNet encoder --------
         if configs == autoencoderConfigs.AutoEncoderWeights.IMAGE_NET:
-            backbone = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+            # Load ImageNet pretrained weights (UAE setting)
+            backbone = models.resnet18(
+                weights=models.ResNet18_Weights.IMAGENET1K_V1
+            )
         elif configs == autoencoderConfigs.AutoEncoderWeights.RANDOM_WEIGHTS:
+            # Load random weights (untrained ResNet)
             backbone = models.resnet18()
         elif configs == autoencoderConfigs.AutoEncoderWeights.CU_LANE:
+            # Load empty backbone, will populate at the end
             backbone = models.resnet18()
-            checkpoint = torch.load("/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/CULane/autoencoder_CULane_epoch_50.pth")
-            backbone.load_state_dict(checkpoint["model_state_dict"])
+            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Phase2/CULane/P2autoencoder_CULane_epoch_50.pth"
         elif configs == autoencoderConfigs.AutoEncoderWeights.CURVELANES:   
+            # Load empty backbone, will populate at the end
             backbone = models.resnet18()
-            checkpoint = torch.load("/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Curvelanes/autoencoder_Curvelanes_epoch_50.pth")
-            backbone.load_state_dict(checkpoint["model_state_dict"])
+            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Phase2/Curvelanes/P2autoencoder_Curvelanes_epoch_50.pth"
+        elif configs == autoencoderConfigs.AutoEncoderWeights.ASSIST_TAXI:
+            # Load empty backbone, will populate at the end
+            backbone = models.resnet18()
+            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Phase2/AssistTaxi/P2autoencoder_AssistTaxi_epoch_50.pth"
         else:
             raise ValueError(f"Unsupported config: {configs}")
         
-        # Keep conv layers (output for 512x512 is 512x16x16)
-        layers = list(backbone.children())[:-2] 
-        self.encoder_conv = nn.Sequential(*layers)
+        layers = list(backbone.children())[
+            :-2
+        ]  # Remove avgpool and fc layers (keep convs)
+        self.encoder_conv = nn.Sequential(*layers)  # Output: (B, 512, H/32, W/32)
+
+        # Freeze BatchNorm stats if using pretrained weights (UAE setting)
+        for m in self.encoder_conv.modules():
+            if isinstance(m, nn.BatchNorm2d):
+                m.eval()
+                m.requires_grad_(False)
 
         # New: Spatial Reduction Layer
         # 16x16 -> 4x4 (Factor of 16 reduction)
@@ -73,6 +91,13 @@ class Conf2ConvAutoencoderFC(nn.Module):
             nn.ConvTranspose2d(32, 3, 4, stride=2, padding=1),     # 3x512x512
             nn.Sigmoid(),
         )
+
+        # -------- LOAD WEIGHTS AT THE END --------
+        if checkpoint_path is not None:
+            # map_location="cpu" ensures it loads safely into RAM before moving to GPU
+            checkpoint = torch.load(checkpoint_path, map_location="cpu")
+            self.load_state_dict(checkpoint["model_state_dict"])
+            print(f"Successfully loaded full Autoencoder weights from {checkpoint_path}")
 
     def encode(self, x):
         h = self.encoder_conv(x)      # (B, 512, 16, 16)
