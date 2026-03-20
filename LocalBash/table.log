@@ -1,7 +1,7 @@
 ----------------------------------------------------
-Slurm Job ID: 180006
+Slurm Job ID: 180348
 Running on host: node14
-Start Time: Thu Mar 19 09:01:32 PM EDT 2026
+Start Time: Fri Mar 20 12:10:37 AM EDT 2026
 ----------------------------------------------------
 Initializing conda for script...
 Conda environment activated and isolated:
@@ -21,11 +21,17 @@ test_env                 /home1/adoyle2025/miniconda3/envs/test_env
 tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
 
 Starting Table Gen...
-/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:94: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:107: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
   df_numeric = df.replace("In Progress", np.nan).apply(pd.to_numeric)
-/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:94: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:107: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
   df_numeric = df.replace("In Progress", np.nan).apply(pd.to_numeric)
-/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:94: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:107: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  df_numeric = df.replace("In Progress", np.nan).apply(pd.to_numeric)
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:107: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  df_numeric = df.replace("In Progress", np.nan).apply(pd.to_numeric)
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:107: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
+  df_numeric = df.replace("In Progress", np.nan).apply(pd.to_numeric)
+/home1/adoyle2025/Distribution-Shift-Lane-Perception/figure_generation_tools/modelExperimentTableGenerator.py:107: FutureWarning: Downcasting behavior in `replace` is deprecated and will be removed in a future version. To retain the old behavior, explicitly call `result.infer_objects(copy=False)`. To opt-in to the future behavior, set `pd.set_option('future.no_silent_downcasting', True)`
   df_numeric = df.replace("In Progress", np.nan).apply(pd.to_numeric)
 Processing Phase 1 - 10 Samples...
   -> Saved LaTeX Table: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase1/Table_Phase1_10Samples.tex
@@ -36,4 +42,13 @@ Processing Phase 1 - 100 Samples...
 Processing Phase 1 - 1000 Samples...
   -> Saved LaTeX Table: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase1/Table_Phase1_1000Samples.tex
   -> Saved Heatmap Figure: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase1/Figure_Phase1_1000Samples.png
+Processing Phase 2 - 10 Samples...
+  -> Saved LaTeX Table: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase2/Table_Phase2_10Samples.tex
+  -> Saved Heatmap Figure: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase2/Figure_Phase2_10Samples.png
+Processing Phase 2 - 100 Samples...
+  -> Saved LaTeX Table: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase2/Table_Phase2_100Samples.tex
+  -> Saved Heatmap Figure: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase2/Figure_Phase2_100Samples.png
+Processing Phase 2 - 1000 Samples...
+  -> Saved LaTeX Table: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase2/Table_Phase2_1000Samples.tex
+  -> Saved Heatmap Figure: /home1/adoyle2025/Distribution-Shift-Lane-Perception/ModelExperimentFigures/Phase2/Figure_Phase2_1000Samples.png
 Done!
