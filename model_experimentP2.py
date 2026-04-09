@@ -7,9 +7,14 @@ from models import autoencoderConfigs
 import argparse
 
 from utils.mmd_test import mmd_test
+from utils.energy_test import energy_test
 from data.data_builder import get_dataloader, get_seeded_random_dataloader
 from data.data_logging import JsonExperimentManager, JsonStyle, JsonDict
 import warnings
+
+# Force deterministic behavior for reproducibility
+torch.use_deterministic_algorithms(True)
+torch.manual_seed(42)
 
 
 # ---------Feature extraction---------
@@ -59,7 +64,10 @@ class ShiftExperiment:
         file_location: str = "./",
         file_style: JsonStyle = 4,
         save_all_image_paths: bool = False,
-        modelStr: str = ""
+        modelStr: str = "",
+        permutation_test_iterations: int = 1000,
+        latent_dim: int = 32,
+        test_type: str = "MMD",
     ):
         print("Fixed Flag: 4/1/26")
         self.modelStr = modelStr
@@ -77,6 +85,9 @@ class ShiftExperiment:
         self.alpha = alpha
         self.seed_base = seed_base
         self.save_all_image_paths = save_all_image_paths
+        self.permutation_test_iterations = permutation_test_iterations
+        self.latent_dim = latent_dim
+        self.test_type = test_type
 
         # --- Data Logger ---
         self.datalogger = JsonExperimentManager(
@@ -99,6 +110,9 @@ class ShiftExperiment:
             "tau_threshold_percentile": 100 * (1 - alpha),
             "seed_base": seed_base,
             "alpha": alpha,
+            "deterministic": True,
+            "permutation_test_iterations": permutation_test_iterations,
+            "latent_dim": latent_dim,
         }
 
         self.loggerExperimentalData: JsonDict = {}
@@ -107,6 +121,12 @@ class ShiftExperiment:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         num_gpus = torch.cuda.device_count()
         print(f"CUDA Available: {torch.cuda.is_available()} | Total GPUs Found: {num_gpus}")
+
+        # Deterministic behavior for reproducibility
+        if torch.cuda.is_available():
+            torch.backends.cudnn.deterministic = True
+            torch.backends.cudnn.benchmark = False
+            torch.cuda.manual_seed(42)
         
         # --- Model Initialization ---
         print("\nInitializing autoencoder...")
@@ -129,7 +149,7 @@ class ShiftExperiment:
         else:
             raise ValueError(f"Unsupported model config: {self.modelStr}")
         
-        base_model = ConfP2ConvAutoencoderFC(configs=modelConf).to(self.device)
+        base_model = ConfP2ConvAutoencoderFC(configs=modelConf, latent_dim=self.latent_dim).to(self.device)
 
         # Multi-GPU setup
         if torch.cuda.device_count() > 1:
@@ -165,6 +185,7 @@ class ShiftExperiment:
         print(f"[STEP 1] Calibration using {self.source_dir}...")
         calibrationData["Uses"] = self.source_dir
         null_stats = []
+        p_values = []
         all_image_dirs = {}
 
         for i in trange(self.num_calib, desc="Calibrating"):
@@ -187,7 +208,13 @@ class ShiftExperiment:
                 self.model, calib_src_test_loader, self.device
             )
 
-            t_stat = mmd_test(self.src_feats, calib_src_test_feats)
+            if self.test_type == "MMD":
+                t_stat, p_value = mmd_test(self.src_feats, calib_src_test_feats, iterations=self.permutation_test_iterations)
+            elif self.test_type == "ENERGY":
+                t_stat, p_value = energy_test(self.src_feats, calib_src_test_feats, iterations=self.permutation_test_iterations)
+            if self.permutation_test_iterations > 0:
+                print(f"  P-Value: {p_value:.6f}\n")
+                p_values.append(float(p_value))
             null_stats.append(t_stat)
 
         self.null_stats = np.array(null_stats)
@@ -195,13 +222,22 @@ class ShiftExperiment:
 
         print(f"\n[RESULT] τ({1 - self.alpha:.2f}) = {self.tau:.6f}")
         print(
-            f"Mean MMD (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n"
+            f"Mean {self.test_type} (same-distribution): {self.null_stats.mean():.6f} ± {self.null_stats.std():.6f}\n"
         )
+
         calibrationData["Result"] = {
             "Tau": float(self.tau),
-            "Mean MMD": float(self.null_stats.mean()),
-            "MMD (std)": float(self.null_stats.std()),
+            "Mean " + self.test_type: float(self.null_stats.mean()),
+            self.test_type + " (std)": float(self.null_stats.std()),
         }
+
+        if self.permutation_test_iterations > 0:
+            avgPVal = np.array(p_values).mean()
+            print(f"Average P-Value: {avgPVal:.6f}\n")
+            print(f"Calibration P-Values: {p_values}\n")
+            calibrationData["Result"]["Average P-Value"] = float(avgPVal)
+            calibrationData["Result"]["P-Values"] = p_values
+
         self.loggerExperimentalData["Calibration"] = calibrationData
 
     # STEP 2 — Sanity Check
@@ -224,14 +260,20 @@ class ShiftExperiment:
 
         sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
 
-        mmd_val = mmd_test(self.src_feats, sanity_src_feats)
+        if self.test_type == "MMD":
+            mmd_val, p_value = mmd_test(self.src_feats, sanity_src_feats, iterations=self.permutation_test_iterations)
+        elif self.test_type == "ENERGY":
+            mmd_val, p_value = energy_test(self.src_feats, sanity_src_feats, iterations=self.permutation_test_iterations)
 
         print(
-            f"[SANITY CHECK] MMD(A = {self.source_dir}, B = {self.source_dir}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
+            f"[SANITY CHECK] {self.test_type}(A = {self.source_dir}, B = {self.source_dir}) = {mmd_val:.6f}, τ = {self.tau:.6f}"
         )
+        if self.permutation_test_iterations > 0:
+            print(f"  P-Value: {p_value}\n")
+            sanityCheckData["P-Value"] = float(p_value)
         sanityCheckData["Results"] = {
-            "Sanity Check Definition": f"MMD(A = {self.source_dir}, B = {self.source_dir})",
-            "MMD": float(mmd_val),
+            "Sanity Check Definition": f"{self.test_type}(A = {self.source_dir}, B = {self.source_dir})",
+            self.test_type: float(mmd_val),
             "Tau": float(self.tau),
         }
 
@@ -241,7 +283,7 @@ class ShiftExperiment:
         else:
             sanityCheckData["Shift Detected"] = bool(True)
             print("False shift detected.\n")
-            warnings.warn("False shift detected in sanity check - MMD exceeded threshold", UserWarning)
+            warnings.warn("False shift detected in sanity check - " + self.test_type + " exceeded threshold", UserWarning)
 
         self.loggerExperimentalData["Sanity Check"] = sanityCheckData
 
@@ -278,15 +320,21 @@ class ShiftExperiment:
             tgt_feats_cross = extract_features(
                 self.model, tgt_loader_cross, self.device
             )
-            mmd_cross = mmd_test(self.src_feats, tgt_feats_cross)
+            if self.test_type == "MMD":
+                mmd_cross, p_value = mmd_test(self.src_feats, tgt_feats_cross, iterations=self.permutation_test_iterations)
+            elif self.test_type == "ENERGY":
+                mmd_cross, p_value = energy_test(self.src_feats, tgt_feats_cross, iterations=self.permutation_test_iterations)
 
             mmd_values.append(mmd_cross)
             detected: bool = mmd_cross > self.tau
             tpr_list.append(int(detected))
 
-            print(f"[RUN {i+1}] MMD={mmd_cross:.6f} {'✅ Detected' if detected else '❌ Not Detected'}")
+            print(f"[RUN {i+1}] {self.test_type}={mmd_cross:.6f} {'✅ Detected' if detected else '❌ Not Detected'}")
+            if self.permutation_test_iterations > 0:
+                print(f"  P-Value: {p_value}\n")
+                testData["P-Value"] = float(p_value)
             testData["Run"] = int(i + 1)
-            testData["MMD"] = float(mmd_cross)
+            testData[self.test_type] = float(mmd_cross)
             testData["Shift Detected"] = bool(detected)
 
             if self.save_all_image_paths:
@@ -298,13 +346,13 @@ class ShiftExperiment:
 
         tpr_result = np.mean(tpr_list)
         print("\n[RESULTS] Data Shift detection summary")
-        print(f"Average MMD: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
+        print(f"Average {self.test_type}: {np.mean(mmd_values):.6f} ± {np.std(mmd_values):.6f}")
         print(
             f"TPR (true positive rate) over {self.num_runs} runs: {tpr_result*100:.2f}%"
         )
         dataShiftTestData["TPR"] = float(tpr_result * 100)
-        dataShiftTestData["Step (c) Mean MMD"] = float(np.mean(mmd_values))
-        dataShiftTestData["Step (c) Mean MMD (std)"] = float(np.std(mmd_values))
+        dataShiftTestData["Step (c) Mean " + self.test_type] = float(np.mean(mmd_values))
+        dataShiftTestData["Step (c) Mean " + self.test_type + " (std)"] = float(np.std(mmd_values))
         self.loggerExperimentalData["Data Shift Test Data"] = dataShiftTestData
 
     # RUN EVERYTHING
@@ -351,8 +399,11 @@ if __name__ == "__main__":
     parser.add_argument("--num_calib", type=int, default=100)
     parser.add_argument("--alpha", type=float, default=0.05)
     parser.add_argument("--seed_base", type=int, default=42)
+    parser.add_argument("--permutation_test_iterations", type=int, default=1000)
+    parser.add_argument("--latent_dim", type=int, default=32)
     parser.add_argument("--save_all_image_paths", type=bool, default=False)
     parser.add_argument("--modelStr", type=str, default="")
+    parser.add_argument("--test_type", type=str, default="MMD")
     parser.add_argument(
         "--file_location",
         type=str,
