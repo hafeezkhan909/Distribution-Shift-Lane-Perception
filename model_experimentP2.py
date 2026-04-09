@@ -159,6 +159,29 @@ class ShiftExperiment:
             self.model = base_model
             print("Using single GPU/CPU.")
 
+    # --- LATENT CACHING HELPER ---
+    def _get_or_extract_features(self, loader, list_path, num_samples, seed):
+        """
+        Checks for cached encodings on disk. If they exist, load them.
+        If not, run inference via extract_features() and save them to disk.
+        """
+        cache_base = "/home1/adoyle2025/Datasets/Encodings"
+        # Separate directories by Model String and Latent Dimensionality
+        cache_dir = os.path.join(cache_base, str(self.modelStr), f"dim_{self.latent_dim}")
+        os.makedirs(cache_dir, exist_ok=True)
+
+        # Create a unique, safe filename (e.g., datasets_CULane_list_train_txt_n1000_seed42.npy)
+        safe_list_name = os.path.normpath(list_path).replace(os.sep, "_").replace(".", "_")
+        file_name = f"{safe_list_name}_n{num_samples}_seed{seed}.npy"
+        file_path = os.path.join(cache_dir, file_name)
+
+        if os.path.exists(file_path):
+            return np.load(file_path)
+        else:
+            feats = extract_features(self.model, loader, self.device)
+            np.save(file_path, feats)
+            return feats
+
     # STEP 0 — Load Source Features
     def load_source_features(self):
         loaderReturn = get_dataloader(
@@ -170,7 +193,10 @@ class ShiftExperiment:
         )
         loader = loaderReturn[0]
         image_paths = loaderReturn[1]
-        self.src_feats = extract_features(self.model, loader, self.device)
+        
+        # Replaced extract_features with the caching helper
+        self.src_feats = self._get_or_extract_features(loader, self.source_list_dir, self.src_samples, "base")
+        
         print(f"{self.source_dir} features loaded. Shape = {self.src_feats.shape}\n")
         self.loggerExperimentalData["Source Training Feature Shape"] = list(
             self.src_feats.shape
@@ -204,8 +230,9 @@ class ShiftExperiment:
 
             all_image_dirs[f"Calibrating with seed {seed}"] = dataloaderReturn[1]
 
-            calib_src_test_feats = extract_features(
-                self.model, calib_src_test_loader, self.device
+            # Replaced extract_features with the caching helper
+            calib_src_test_feats = self._get_or_extract_features(
+                calib_src_test_loader, self.source_list_dir, self.tgt_samples, seed
             )
 
             if self.test_type == "MMD":
@@ -258,7 +285,10 @@ class ShiftExperiment:
         sanity_src_loader = loaderReturn[0]
         sanityCheckData["Image Paths"] = loaderReturn[1]
 
-        sanity_src_feats = extract_features(self.model, sanity_src_loader, self.device)
+        # Replaced extract_features with the caching helper
+        sanity_src_feats = self._get_or_extract_features(
+            sanity_src_loader, self.source_list_dir, self.tgt_samples, int(self.seed_base + self.num_calib)
+        )
 
         if self.test_type == "MMD":
             mmd_val, p_value = mmd_test(self.src_feats, sanity_src_feats, iterations=self.permutation_test_iterations)
@@ -317,9 +347,12 @@ class ShiftExperiment:
             tgt_loader_cross = loaderReturn[0]
             testData["Image Paths"] = loaderReturn[1]
             testData["Seed"] = seed
-            tgt_feats_cross = extract_features(
-                self.model, tgt_loader_cross, self.device
+            
+            # Replaced extract_features with the caching helper
+            tgt_feats_cross = self._get_or_extract_features(
+                tgt_loader_cross, self.target_list_dir, self.tgt_samples, seed
             )
+            
             if self.test_type == "MMD":
                 mmd_cross, p_value = mmd_test(self.src_feats, tgt_feats_cross, iterations=self.permutation_test_iterations)
             elif self.test_type == "ENERGY":
