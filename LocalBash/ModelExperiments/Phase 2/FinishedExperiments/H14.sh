@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # --- Slurm Job Configuration ---
-#SBATCH --job-name=P2CULaneTrain2CULaneTest100ImageNet
+#SBATCH --job-name=P2CurvelanesTrain2CurvelanesValid100ImageNet
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --output="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/ModelExperiments/Phase 2/ImageNetModel/10/P2CULaneTrain2CULaneTest100ImageNet.log"
+#SBATCH --output="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/ModelExperiments/Phase 2/ImageNetModel/10/P2CurvelanesTrain2CurvelanesValid100ImageNet.log"
 #SBATCH --partition=gpu2
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=16
@@ -25,10 +25,10 @@ conda activate ml_project
 cd /home1/adoyle2025/Distribution-Shift-Lane-Perception
 
 python model_experimentP2.py \
-    --source_dir /home1/adoyle2025/Datasets/Datasets/CULane \
-    --target_dir /home1/adoyle2025/Datasets/Datasets/CULane \
-    --source_list_path /home1/adoyle2025/Datasets/Datasets/CULane/list/train.txt \
-    --target_list_path /home1/adoyle2025/Datasets/Datasets/CULane/list/test.txt \
+    --source_dir /home1/adoyle2025/Datasets/Datasets/Curvelanes/train \
+    --target_dir /home1/adoyle2025/Datasets/Datasets/Curvelanes/valid \
+    --source_list_path /home1/adoyle2025/Datasets/Datasets/Curvelanes/train/train.txt \
+    --target_list_path /home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/valid.txt \
     --src_samples 100 \
     --tgt_samples 100 \
     --num_runs 100 \
@@ -36,7 +36,7 @@ python model_experimentP2.py \
     --seed_base 32 \
     --batch_size 64 \
     --file_location "/home1/adoyle2025/Distribution-Shift-Lane-Perception/logs/ModelExperiments/P2" \
-    --file_name "P2CULaneTrain2CULaneTest100ImageNet.json" \
+    --file_name "P2CurvelanesTrain2CurvelanesValid100ImageNet.json" \
     --modelStr "ImageNet"
 
 echo "----------------------------------------------------"

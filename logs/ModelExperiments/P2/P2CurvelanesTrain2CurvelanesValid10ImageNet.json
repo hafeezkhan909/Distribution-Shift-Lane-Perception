@@ -1,0 +1,97 @@
+{
+    "experiments": [
+        {
+            "arguments": {
+                "CodeMark": "4/1/2026",
+                "source_dir": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train",
+                "target_dir": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid",
+                "source_list_path": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/train.txt",
+                "target_list_path": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/valid.txt",
+                "src_samples": 10,
+                "tgt_samples": 10,
+                "num_runs": 100,
+                "block_idx": 4,
+                "batch_size": 64,
+                "image_size": 512,
+                "num_calib": 100,
+                "tau_threshold_percentile": 95.0,
+                "seed_base": 32,
+                "alpha": 0.05,
+                "deterministic": true
+            },
+            "data": {
+                "Source Training Feature Shape": [
+                    10,
+                    32
+                ],
+                "Source Training Feature Image Paths": [
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/53f2771cab514d2f6d2dc832671231b4.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/7e0d1056f6423e9b97a2cc8ca9afcd63.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/cba960c50382782b29b8ec203a5fe865.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/d8b5c90ef0a5225c5217c093c55ee361.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/febcb47bc5f7d981d53ecd5ab2e5415f.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/423e561d0579e6a0962260e12549ae0d.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/6614ec71a8bb07b5e862ff2d88a19842.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/1576e08e69f81d9c8e6192ca87ada093.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/5f8840977d0f04b6fed39a28a4a20163.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/2d1dbe09f9c36c140f5de0f951168f2b.jpg"
+                ],
+                "Calibration": {
+                    "Uses": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train",
+                    "Result": {
+                        "Tau": 0.04398566335439682,
+                        "Mean MMD": 0.008326731324195862,
+                        "MMD (std)": 0.017798274683593164
+                    }
+                },
+                "Sanity Check": {
+                    "Image Paths": [
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/44a2eb7e577589e982e160aedf631251.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/bb6c20d46d73c1f6e8bdffd1c10382fb.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/66a434e5748b3d778496e78856c9c4f7.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/d09b0e9c7721923f41c9861c0ef6ad98.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/7e629e3e1d00e005a79b759f6cb31400.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/d64585cf3c14eca1c4de18e2d9a8de79.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/7b8778f640a349ddce0af2f7bed78e12.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/9248050277bbe4e810f0da039b2c9d6a.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/a7a7178b8f1d760addaa20ace43c7842.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train/images/14ae404e59690e6dadd149e60c3e20d8.jpg"
+                    ],
+                    "Results": {
+                        "Sanity Check Definition": "MMD(A = /home1/adoyle2025/Datasets/Datasets/Curvelanes/train, B = /home1/adoyle2025/Datasets/Datasets/Curvelanes/train)",
+                        "MMD": 0.06828799843788147,
+                        "Tau": 0.04398566335439682
+                    },
+                    "Shift Detected": true
+                },
+                "Data Shift Test Data": {
+                    "Data Shift Test Definition": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/train to /home1/adoyle2025/Datasets/Datasets/Curvelanes/valid",
+                    "Runs": 100,
+                    "Individual Test Data": [
+                        {
+                            "Image Paths": [
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/df78fb8d8c0ad7b3d7b0f8fcda3ca1ed.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/878c2427729ba2c7f912d2fe873b51d5.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/ebb72d8ac064e55992f4ec33724b4727.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/588c547b26823e612b8882a05d0c78cb.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/36251f1894a119e128f67d3483be4e5c.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/2f69afd6058adda368b892c10d3bc0b6.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/ec209778bd7d2e7089a26c2cb498649e.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/53d4916ead22472c9b306c92ad078cb6.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/768eb91e4fc7c3da3de88bf629c5cc4e.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/98546da103dad4b784c29a51aeb5162a.jpg"
+                            ],
+                            "Seed": 132,
+                            "Run": 1,
+                            "MMD": 0.03233036398887634,
+                            "Shift Detected": false
+                        }
+                    ],
+                    "TPR": 7.000000000000001,
+                    "Step (c) Mean MMD": 0.013266282677650452,
+                    "Step (c) Mean MMD (std)": 0.020380653723938335
+                }
+            }
+        }
+    ]
+}

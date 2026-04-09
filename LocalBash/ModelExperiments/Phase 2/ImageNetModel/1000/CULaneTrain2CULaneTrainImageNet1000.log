@@ -4,7 +4,6 @@ Running on host: $(hostname)
 Experiment: CULaneTrain2CULaneTrainImageNet1000
 ----------------------------------------------------
 Fixed Flag: 4/1/26
-[Data Logger] File not found. Creating new file at /home1/adoyle2025/Distribution-Shift-Lane-Perception/logs/ModelExperiments/P2/CULaneTrain2CULaneTrainImageNet1000.json
 CUDA Available: True | Total GPUs Found: 1
 
 Initializing autoencoder...
@@ -15,124 +14,124 @@ Using single GPU/CPU.
 /home1/adoyle2025/Datasets/Datasets/CULane features loaded. Shape = (1000, 32)
 
 [STEP 1] Calibration using /home1/adoyle2025/Datasets/Datasets/CULane...
-Calibrating:   0%|          | 0/100 [00:00<?, ?it/s]Calibrating:   1%|          | 1/100 [00:04<07:49,  4.74s/it]Calibrating:   2%|▏         | 2/100 [00:09<07:20,  4.50s/it]Calibrating:   3%|▎         | 3/100 [00:14<07:37,  4.71s/it]Calibrating:   4%|▍         | 4/100 [00:18<07:30,  4.69s/it]Calibrating:   5%|▌         | 5/100 [00:23<07:17,  4.61s/it]Calibrating:   6%|▌         | 6/100 [00:27<07:09,  4.57s/it]Calibrating:   7%|▋         | 7/100 [00:31<06:57,  4.49s/it]Calibrating:   8%|▊         | 8/100 [00:36<06:49,  4.45s/it]Calibrating:   9%|▉         | 9/100 [00:40<06:39,  4.39s/it]Calibrating:  10%|█         | 10/100 [00:45<06:41,  4.46s/it]Calibrating:  11%|█         | 11/100 [00:49<06:31,  4.40s/it]Calibrating:  12%|█▏        | 12/100 [00:53<06:29,  4.43s/it]Calibrating:  13%|█▎        | 13/100 [00:58<06:19,  4.37s/it]Calibrating:  14%|█▍        | 14/100 [01:02<06:12,  4.33s/it]Calibrating:  15%|█▌        | 15/100 [01:07<06:16,  4.42s/it]Calibrating:  16%|█▌        | 16/100 [01:11<06:11,  4.42s/it]Calibrating:  17%|█▋        | 17/100 [01:15<06:06,  4.42s/it]Calibrating:  18%|█▊        | 18/100 [01:20<06:03,  4.43s/it]Calibrating:  19%|█▉        | 19/100 [01:24<06:00,  4.45s/it]Calibrating:  20%|██        | 20/100 [01:29<05:51,  4.40s/it]Calibrating:  21%|██        | 21/100 [01:33<05:41,  4.32s/it]Calibrating:  22%|██▏       | 22/100 [01:37<05:34,  4.29s/it]Calibrating:  23%|██▎       | 23/100 [01:41<05:27,  4.26s/it]Calibrating:  24%|██▍       | 24/100 [01:46<05:25,  4.29s/it]Calibrating:  25%|██▌       | 25/100 [01:50<05:21,  4.29s/it]Calibrating:  26%|██▌       | 26/100 [01:54<05:25,  4.40s/it]Calibrating:  27%|██▋       | 27/100 [01:59<05:18,  4.37s/it]Calibrating:  28%|██▊       | 28/100 [02:03<05:14,  4.37s/it]Calibrating:  29%|██▉       | 29/100 [02:07<05:09,  4.36s/it]Calibrating:  30%|███       | 30/100 [02:12<05:07,  4.39s/it]Calibrating:  31%|███       | 31/100 [02:16<05:02,  4.39s/it]Calibrating:  32%|███▏      | 32/100 [02:21<04:55,  4.35s/it]Calibrating:  33%|███▎      | 33/100 [02:25<04:54,  4.40s/it]Calibrating:  34%|███▍      | 34/100 [02:29<04:45,  4.33s/it]Calibrating:  35%|███▌      | 35/100 [02:34<04:42,  4.35s/it]Calibrating:  36%|███▌      | 36/100 [02:38<04:34,  4.30s/it]Calibrating:  37%|███▋      | 37/100 [02:42<04:30,  4.29s/it]Calibrating:  38%|███▊      | 38/100 [02:46<04:23,  4.25s/it]Calibrating:  39%|███▉      | 39/100 [02:50<04:18,  4.23s/it]Calibrating:  40%|████      | 40/100 [02:55<04:20,  4.34s/it]Calibrating:  41%|████      | 41/100 [03:00<04:20,  4.41s/it]Calibrating:  42%|████▏     | 42/100 [03:04<04:12,  4.36s/it]Calibrating:  43%|████▎     | 43/100 [03:08<04:07,  4.35s/it]Calibrating:  44%|████▍     | 44/100 [03:12<04:01,  4.31s/it]Calibrating:  45%|████▌     | 45/100 [03:17<03:54,  4.27s/it]Calibrating:  46%|████▌     | 46/100 [03:21<03:49,  4.26s/it]Calibrating:  47%|████▋     | 47/100 [03:25<03:47,  4.29s/it]Calibrating:  48%|████▊     | 48/100 [03:30<03:45,  4.33s/it]Calibrating:  49%|████▉     | 49/100 [03:34<03:40,  4.33s/it]Calibrating:  50%|█████     | 50/100 [03:38<03:33,  4.28s/it]Calibrating:  51%|█████     | 51/100 [03:43<03:31,  4.32s/it]Calibrating:  52%|█████▏    | 52/100 [03:47<03:25,  4.27s/it]Calibrating:  53%|█████▎    | 53/100 [03:51<03:18,  4.23s/it]Calibrating:  54%|█████▍    | 54/100 [03:55<03:16,  4.27s/it]Calibrating:  55%|█████▌    | 55/100 [03:59<03:11,  4.25s/it]Calibrating:  56%|█████▌    | 56/100 [04:04<03:06,  4.23s/it]Calibrating:  57%|█████▋    | 57/100 [04:08<03:01,  4.22s/it]Calibrating:  58%|█████▊    | 58/100 [04:12<02:56,  4.21s/it]Calibrating:  59%|█████▉    | 59/100 [04:16<02:54,  4.25s/it]Calibrating:  60%|██████    | 60/100 [04:21<02:52,  4.32s/it]Calibrating:  61%|██████    | 61/100 [04:25<02:47,  4.30s/it]Calibrating:  62%|██████▏   | 62/100 [04:29<02:43,  4.31s/it]Calibrating:  63%|██████▎   | 63/100 [04:34<02:40,  4.34s/it]Calibrating:  64%|██████▍   | 64/100 [04:38<02:34,  4.29s/it]Calibrating:  65%|██████▌   | 65/100 [04:43<02:35,  4.45s/it]Calibrating:  66%|██████▌   | 66/100 [04:47<02:29,  4.39s/it]Calibrating:  67%|██████▋   | 67/100 [04:51<02:25,  4.41s/it]Calibrating:  68%|██████▊   | 68/100 [04:56<02:20,  4.41s/it]Calibrating:  69%|██████▉   | 69/100 [05:00<02:14,  4.35s/it]Calibrating:  70%|███████   | 70/100 [05:04<02:09,  4.31s/it]Calibrating:  71%|███████   | 71/100 [05:09<02:05,  4.33s/it]Calibrating:  72%|███████▏  | 72/100 [05:13<02:00,  4.30s/it]Calibrating:  73%|███████▎  | 73/100 [05:17<01:54,  4.25s/it]Calibrating:  74%|███████▍  | 74/100 [05:21<01:51,  4.27s/it]Calibrating:  75%|███████▌  | 75/100 [05:26<01:46,  4.25s/it]Calibrating:  76%|███████▌  | 76/100 [05:30<01:41,  4.23s/it]Calibrating:  77%|███████▋  | 77/100 [05:34<01:39,  4.31s/it]Calibrating:  78%|███████▊  | 78/100 [05:38<01:33,  4.25s/it]Calibrating:  79%|███████▉  | 79/100 [05:42<01:28,  4.21s/it]Calibrating:  80%|████████  | 80/100 [05:47<01:23,  4.17s/it]Calibrating:  81%|████████  | 81/100 [05:51<01:19,  4.21s/it]Calibrating:  82%|████████▏ | 82/100 [05:55<01:15,  4.22s/it]Calibrating:  83%|████████▎ | 83/100 [05:59<01:12,  4.25s/it]Calibrating:  84%|████████▍ | 84/100 [06:04<01:07,  4.21s/it]Calibrating:  85%|████████▌ | 85/100 [06:08<01:03,  4.23s/it]Calibrating:  86%|████████▌ | 86/100 [06:12<00:58,  4.20s/it]Calibrating:  87%|████████▋ | 87/100 [06:16<00:54,  4.22s/it]Calibrating:  88%|████████▊ | 88/100 [06:20<00:50,  4.20s/it]Calibrating:  89%|████████▉ | 89/100 [06:25<00:46,  4.24s/it]Calibrating:  90%|█████████ | 90/100 [06:29<00:43,  4.32s/it]Calibrating:  91%|█████████ | 91/100 [06:33<00:38,  4.27s/it]Calibrating:  92%|█████████▏| 92/100 [06:38<00:34,  4.35s/it]Calibrating:  93%|█████████▎| 93/100 [06:42<00:30,  4.30s/it]Calibrating:  94%|█████████▍| 94/100 [06:46<00:25,  4.25s/it]Calibrating:  95%|█████████▌| 95/100 [06:50<00:21,  4.22s/it]Calibrating:  96%|█████████▌| 96/100 [06:55<00:16,  4.25s/it]Calibrating:  97%|█████████▋| 97/100 [06:59<00:12,  4.26s/it]Calibrating:  98%|█████████▊| 98/100 [07:03<00:08,  4.24s/it]Calibrating:  99%|█████████▉| 99/100 [07:08<00:04,  4.33s/it]Calibrating: 100%|██████████| 100/100 [07:12<00:00,  4.27s/it]Calibrating: 100%|██████████| 100/100 [07:12<00:00,  4.32s/it]
+Calibrating:   0%|          | 0/100 [00:00<?, ?it/s]Calibrating:   1%|          | 1/100 [00:08<13:48,  8.37s/it]Calibrating:   2%|▏         | 2/100 [00:16<13:16,  8.12s/it]Calibrating:   3%|▎         | 3/100 [00:24<12:54,  7.98s/it]Calibrating:   4%|▍         | 4/100 [00:31<12:13,  7.64s/it]Calibrating:   5%|▌         | 5/100 [00:38<12:06,  7.65s/it]Calibrating:   6%|▌         | 6/100 [00:46<12:02,  7.69s/it]Calibrating:   7%|▋         | 7/100 [00:54<12:04,  7.79s/it]Calibrating:   8%|▊         | 8/100 [01:02<11:49,  7.71s/it]Calibrating:   9%|▉         | 9/100 [01:09<11:25,  7.54s/it]Calibrating:  10%|█         | 10/100 [01:16<11:13,  7.48s/it]Calibrating:  11%|█         | 11/100 [01:23<10:55,  7.36s/it]Calibrating:  12%|█▏        | 12/100 [01:30<10:31,  7.18s/it]Calibrating:  13%|█▎        | 13/100 [01:37<10:21,  7.14s/it]Calibrating:  14%|█▍        | 14/100 [01:47<11:20,  7.92s/it]Calibrating:  15%|█▌        | 15/100 [01:54<10:56,  7.72s/it]Calibrating:  16%|█▌        | 16/100 [02:01<10:32,  7.53s/it]Calibrating:  17%|█▋        | 17/100 [02:08<10:05,  7.30s/it]Calibrating:  18%|█▊        | 18/100 [02:15<09:51,  7.21s/it]Calibrating:  19%|█▉        | 19/100 [02:22<09:39,  7.15s/it]Calibrating:  20%|██        | 20/100 [02:29<09:17,  6.96s/it]Calibrating:  21%|██        | 21/100 [02:35<08:59,  6.83s/it]Calibrating:  22%|██▏       | 22/100 [02:41<08:44,  6.72s/it]Calibrating:  23%|██▎       | 23/100 [02:48<08:34,  6.68s/it]Calibrating:  24%|██▍       | 24/100 [02:55<08:23,  6.63s/it]Calibrating:  25%|██▌       | 25/100 [03:01<08:11,  6.56s/it]Calibrating:  26%|██▌       | 26/100 [03:07<08:03,  6.54s/it]Calibrating:  27%|██▋       | 27/100 [03:14<08:02,  6.61s/it]Calibrating:  28%|██▊       | 28/100 [03:21<07:53,  6.57s/it]Calibrating:  29%|██▉       | 29/100 [03:27<07:41,  6.49s/it]Calibrating:  30%|███       | 30/100 [03:33<07:30,  6.44s/it]Calibrating:  31%|███       | 31/100 [03:39<07:12,  6.27s/it]Calibrating:  32%|███▏      | 32/100 [03:45<06:58,  6.16s/it]Calibrating:  33%|███▎      | 33/100 [03:51<06:55,  6.21s/it]Calibrating:  34%|███▍      | 34/100 [03:58<06:50,  6.21s/it]Calibrating:  35%|███▌      | 35/100 [04:04<06:38,  6.13s/it]Calibrating:  36%|███▌      | 36/100 [04:09<06:27,  6.05s/it]Calibrating:  37%|███▋      | 37/100 [04:15<06:20,  6.04s/it]Calibrating:  38%|███▊      | 38/100 [04:21<06:08,  5.95s/it]Calibrating:  39%|███▉      | 39/100 [04:27<06:04,  5.98s/it]Calibrating:  40%|████      | 40/100 [04:33<05:58,  5.97s/it]Calibrating:  41%|████      | 41/100 [04:39<05:48,  5.91s/it]Calibrating:  42%|████▏     | 42/100 [04:45<05:45,  5.95s/it]Calibrating:  43%|████▎     | 43/100 [04:51<05:37,  5.92s/it]Calibrating:  44%|████▍     | 44/100 [04:57<05:27,  5.85s/it]Calibrating:  45%|████▌     | 45/100 [05:02<05:15,  5.73s/it]Calibrating:  46%|████▌     | 46/100 [05:08<05:13,  5.80s/it]Calibrating:  47%|████▋     | 47/100 [05:13<05:02,  5.70s/it]Calibrating:  48%|████▊     | 48/100 [05:19<04:54,  5.65s/it]Calibrating:  49%|████▉     | 49/100 [05:25<04:53,  5.76s/it]Calibrating:  50%|█████     | 50/100 [05:31<04:48,  5.76s/it]Calibrating:  51%|█████     | 51/100 [05:37<04:43,  5.78s/it]Calibrating:  52%|█████▏    | 52/100 [05:42<04:35,  5.74s/it]Calibrating:  53%|█████▎    | 53/100 [05:48<04:27,  5.69s/it]Calibrating:  54%|█████▍    | 54/100 [05:54<04:24,  5.76s/it]Calibrating:  55%|█████▌    | 55/100 [05:59<04:14,  5.66s/it]Calibrating:  56%|█████▌    | 56/100 [06:05<04:07,  5.63s/it]Calibrating:  57%|█████▋    | 57/100 [06:10<03:59,  5.56s/it]Calibrating:  58%|█████▊    | 58/100 [06:16<03:52,  5.54s/it]Calibrating:  59%|█████▉    | 59/100 [06:21<03:45,  5.50s/it]Calibrating:  60%|██████    | 60/100 [06:26<03:39,  5.48s/it]Calibrating:  61%|██████    | 61/100 [06:32<03:30,  5.40s/it]Calibrating:  62%|██████▏   | 62/100 [06:37<03:23,  5.35s/it]Calibrating:  63%|██████▎   | 63/100 [06:42<03:14,  5.26s/it]Calibrating:  64%|██████▍   | 64/100 [06:47<03:07,  5.22s/it]Calibrating:  65%|██████▌   | 65/100 [06:52<03:02,  5.22s/it]Calibrating:  66%|██████▌   | 66/100 [06:57<02:55,  5.15s/it]Calibrating:  67%|██████▋   | 67/100 [07:03<02:51,  5.19s/it]Calibrating:  68%|██████▊   | 68/100 [07:08<02:46,  5.19s/it]Calibrating:  69%|██████▉   | 69/100 [07:13<02:42,  5.24s/it]Calibrating:  70%|███████   | 70/100 [07:18<02:35,  5.19s/it]Calibrating:  71%|███████   | 71/100 [07:23<02:30,  5.20s/it]Calibrating:  72%|███████▏  | 72/100 [07:29<02:27,  5.28s/it]Calibrating:  73%|███████▎  | 73/100 [07:34<02:22,  5.26s/it]Calibrating:  74%|███████▍  | 74/100 [07:39<02:14,  5.16s/it]Calibrating:  75%|███████▌  | 75/100 [07:44<02:06,  5.06s/it]Calibrating:  76%|███████▌  | 76/100 [07:49<02:01,  5.07s/it]Calibrating:  77%|███████▋  | 77/100 [07:54<01:56,  5.05s/it]Calibrating:  78%|███████▊  | 78/100 [07:59<01:51,  5.08s/it]Calibrating:  79%|███████▉  | 79/100 [08:04<01:47,  5.11s/it]Calibrating:  80%|████████  | 80/100 [08:09<01:41,  5.06s/it]Calibrating:  81%|████████  | 81/100 [08:14<01:37,  5.12s/it]Calibrating:  82%|████████▏ | 82/100 [08:20<01:31,  5.11s/it]Calibrating:  83%|████████▎ | 83/100 [08:24<01:25,  5.05s/it]Calibrating:  84%|████████▍ | 84/100 [08:29<01:18,  4.92s/it]Calibrating:  85%|████████▌ | 85/100 [08:34<01:13,  4.91s/it]Calibrating:  86%|████████▌ | 86/100 [08:39<01:08,  4.91s/it]Calibrating:  87%|████████▋ | 87/100 [08:44<01:03,  4.87s/it]Calibrating:  88%|████████▊ | 88/100 [08:49<00:58,  4.90s/it]Calibrating:  89%|████████▉ | 89/100 [08:53<00:53,  4.86s/it]Calibrating:  90%|█████████ | 90/100 [08:58<00:47,  4.78s/it]Calibrating:  91%|█████████ | 91/100 [09:03<00:42,  4.75s/it]Calibrating:  92%|█████████▏| 92/100 [09:08<00:38,  4.86s/it]Calibrating:  93%|█████████▎| 93/100 [09:13<00:34,  4.87s/it]Calibrating:  94%|█████████▍| 94/100 [09:17<00:28,  4.82s/it]Calibrating:  95%|█████████▌| 95/100 [09:22<00:23,  4.77s/it]Calibrating:  96%|█████████▌| 96/100 [09:27<00:19,  4.90s/it]Calibrating:  97%|█████████▋| 97/100 [09:32<00:14,  4.85s/it]Calibrating:  98%|█████████▊| 98/100 [09:37<00:09,  4.78s/it]Calibrating:  99%|█████████▉| 99/100 [09:41<00:04,  4.75s/it]Calibrating: 100%|██████████| 100/100 [09:46<00:00,  4.65s/it]Calibrating: 100%|██████████| 100/100 [09:46<00:00,  5.86s/it]
 
-[RESULT] τ(0.95) = 0.032453
-Mean MMD (same-distribution): 0.030183 ± 0.001338
+[RESULT] τ(0.95) = 0.036224
+Mean MMD (same-distribution): 0.033988 ± 0.001527
 
 [STEP 2] Sanity Check...
-[SANITY CHECK] MMD(A = /home1/adoyle2025/Datasets/Datasets/CULane, B = /home1/adoyle2025/Datasets/Datasets/CULane) = 0.030297, τ = 0.032453
+[SANITY CHECK] MMD(A = /home1/adoyle2025/Datasets/Datasets/CULane, B = /home1/adoyle2025/Datasets/Datasets/CULane) = 0.030777, τ = 0.036224
 No shift detected.
 
 [STEP 3] Data Shift Test: /home1/adoyle2025/Datasets/Datasets/CULane to /home1/adoyle2025/Datasets/Datasets/CULanea
 
-Shift Testing:   0%|          | 0/100 [00:00<?, ?it/s]Shift Testing:   1%|          | 1/100 [00:04<06:53,  4.18s/it][RUN 1] MMD=0.028303 ❌ Not Detected
-Shift Testing:   2%|▏         | 2/100 [00:08<06:55,  4.24s/it][RUN 2] MMD=0.030351 ❌ Not Detected
-Shift Testing:   3%|▎         | 3/100 [00:12<06:46,  4.19s/it][RUN 3] MMD=0.027998 ❌ Not Detected
-Shift Testing:   4%|▍         | 4/100 [00:17<06:51,  4.29s/it][RUN 4] MMD=0.030269 ❌ Not Detected
-Shift Testing:   5%|▌         | 5/100 [00:21<06:48,  4.30s/it][RUN 5] MMD=0.029538 ❌ Not Detected
-Shift Testing:   6%|▌         | 6/100 [00:25<06:39,  4.25s/it][RUN 6] MMD=0.030246 ❌ Not Detected
-Shift Testing:   7%|▋         | 7/100 [00:29<06:29,  4.19s/it][RUN 7] MMD=0.029696 ❌ Not Detected
-Shift Testing:   8%|▊         | 8/100 [00:33<06:18,  4.11s/it][RUN 8] MMD=0.029266 ❌ Not Detected
-Shift Testing:   9%|▉         | 9/100 [00:37<06:12,  4.10s/it][RUN 9] MMD=0.031222 ❌ Not Detected
-Shift Testing:  10%|█         | 10/100 [00:41<06:06,  4.07s/it][RUN 10] MMD=0.028594 ❌ Not Detected
-Shift Testing:  11%|█         | 11/100 [00:45<06:03,  4.09s/it][RUN 11] MMD=0.029435 ❌ Not Detected
-Shift Testing:  12%|█▏        | 12/100 [00:49<05:58,  4.08s/it][RUN 12] MMD=0.030311 ❌ Not Detected
-Shift Testing:  13%|█▎        | 13/100 [00:54<06:10,  4.26s/it][RUN 13] MMD=0.026954 ❌ Not Detected
-Shift Testing:  14%|█▍        | 14/100 [00:58<06:06,  4.26s/it][RUN 14] MMD=0.030847 ❌ Not Detected
-Shift Testing:  15%|█▌        | 15/100 [01:03<06:04,  4.28s/it][RUN 15] MMD=0.030563 ❌ Not Detected
-Shift Testing:  16%|█▌        | 16/100 [01:07<06:00,  4.29s/it][RUN 16] MMD=0.032576 ✅ Detected
-Shift Testing:  17%|█▋        | 17/100 [01:11<05:51,  4.23s/it][RUN 17] MMD=0.031082 ❌ Not Detected
-Shift Testing:  18%|█▊        | 18/100 [01:15<05:50,  4.27s/it][RUN 18] MMD=0.030210 ❌ Not Detected
-Shift Testing:  19%|█▉        | 19/100 [01:19<05:39,  4.19s/it][RUN 19] MMD=0.030609 ❌ Not Detected
-Shift Testing:  20%|██        | 20/100 [01:23<05:32,  4.16s/it][RUN 20] MMD=0.031552 ❌ Not Detected
-Shift Testing:  21%|██        | 21/100 [01:28<05:27,  4.15s/it][RUN 21] MMD=0.028920 ❌ Not Detected
-Shift Testing:  22%|██▏       | 22/100 [01:32<05:24,  4.16s/it][RUN 22] MMD=0.030250 ❌ Not Detected
-Shift Testing:  23%|██▎       | 23/100 [01:36<05:14,  4.09s/it][RUN 23] MMD=0.029005 ❌ Not Detected
-Shift Testing:  24%|██▍       | 24/100 [01:40<05:16,  4.17s/it][RUN 24] MMD=0.030980 ❌ Not Detected
-Shift Testing:  25%|██▌       | 25/100 [01:44<05:12,  4.16s/it][RUN 25] MMD=0.028293 ❌ Not Detected
-Shift Testing:  26%|██▌       | 26/100 [01:49<05:15,  4.26s/it][RUN 26] MMD=0.027696 ❌ Not Detected
-Shift Testing:  27%|██▋       | 27/100 [01:53<05:17,  4.35s/it][RUN 27] MMD=0.028901 ❌ Not Detected
-Shift Testing:  28%|██▊       | 28/100 [01:57<05:03,  4.21s/it][RUN 28] MMD=0.029749 ❌ Not Detected
-Shift Testing:  29%|██▉       | 29/100 [02:01<04:58,  4.21s/it][RUN 29] MMD=0.030888 ❌ Not Detected
-Shift Testing:  30%|███       | 30/100 [02:05<04:51,  4.16s/it][RUN 30] MMD=0.030010 ❌ Not Detected
-Shift Testing:  31%|███       | 31/100 [02:09<04:42,  4.09s/it][RUN 31] MMD=0.027931 ❌ Not Detected
-Shift Testing:  32%|███▏      | 32/100 [02:13<04:40,  4.13s/it][RUN 32] MMD=0.031049 ❌ Not Detected
-Shift Testing:  33%|███▎      | 33/100 [02:18<04:43,  4.23s/it][RUN 33] MMD=0.030588 ❌ Not Detected
-Shift Testing:  34%|███▍      | 34/100 [02:22<04:34,  4.16s/it][RUN 34] MMD=0.028351 ❌ Not Detected
-Shift Testing:  35%|███▌      | 35/100 [02:26<04:33,  4.21s/it][RUN 35] MMD=0.032447 ❌ Not Detected
-Shift Testing:  36%|███▌      | 36/100 [02:30<04:25,  4.15s/it][RUN 36] MMD=0.030891 ❌ Not Detected
-Shift Testing:  37%|███▋      | 37/100 [02:34<04:21,  4.14s/it][RUN 37] MMD=0.031108 ❌ Not Detected
-Shift Testing:  38%|███▊      | 38/100 [02:39<04:17,  4.16s/it][RUN 38] MMD=0.030308 ❌ Not Detected
-Shift Testing:  39%|███▉      | 39/100 [02:43<04:17,  4.23s/it][RUN 39] MMD=0.028599 ❌ Not Detected
-Shift Testing:  40%|████      | 40/100 [02:48<04:19,  4.32s/it][RUN 40] MMD=0.029500 ❌ Not Detected
-Shift Testing:  41%|████      | 41/100 [02:52<04:17,  4.36s/it][RUN 41] MMD=0.030982 ❌ Not Detected
-Shift Testing:  42%|████▏     | 42/100 [02:56<04:08,  4.29s/it][RUN 42] MMD=0.029939 ❌ Not Detected
-Shift Testing:  43%|████▎     | 43/100 [03:00<04:04,  4.30s/it][RUN 43] MMD=0.031822 ❌ Not Detected
-Shift Testing:  44%|████▍     | 44/100 [03:05<04:03,  4.34s/it][RUN 44] MMD=0.028483 ❌ Not Detected
-Shift Testing:  45%|████▌     | 45/100 [03:09<03:55,  4.29s/it][RUN 45] MMD=0.033026 ✅ Detected
-Shift Testing:  46%|████▌     | 46/100 [03:13<03:50,  4.27s/it][RUN 46] MMD=0.031557 ❌ Not Detected
-Shift Testing:  47%|████▋     | 47/100 [03:18<03:47,  4.29s/it][RUN 47] MMD=0.031450 ❌ Not Detected
-Shift Testing:  48%|████▊     | 48/100 [03:22<03:43,  4.30s/it][RUN 48] MMD=0.031056 ❌ Not Detected
-Shift Testing:  49%|████▉     | 49/100 [03:26<03:39,  4.30s/it][RUN 49] MMD=0.030815 ❌ Not Detected
-Shift Testing:  50%|█████     | 50/100 [03:31<03:35,  4.31s/it][RUN 50] MMD=0.030875 ❌ Not Detected
-Shift Testing:  51%|█████     | 51/100 [03:35<03:33,  4.36s/it][RUN 51] MMD=0.031313 ❌ Not Detected
-Shift Testing:  52%|█████▏    | 52/100 [03:39<03:27,  4.33s/it][RUN 52] MMD=0.032866 ✅ Detected
-Shift Testing:  53%|█████▎    | 53/100 [03:43<03:18,  4.23s/it][RUN 53] MMD=0.033410 ✅ Detected
-Shift Testing:  54%|█████▍    | 54/100 [03:47<03:13,  4.21s/it][RUN 54] MMD=0.029372 ❌ Not Detected
-Shift Testing:  55%|█████▌    | 55/100 [03:52<03:11,  4.25s/it][RUN 55] MMD=0.030972 ❌ Not Detected
-Shift Testing:  56%|█████▌    | 56/100 [03:56<03:04,  4.19s/it][RUN 56] MMD=0.030715 ❌ Not Detected
-Shift Testing:  57%|█████▋    | 57/100 [04:00<03:03,  4.27s/it][RUN 57] MMD=0.030350 ❌ Not Detected
-Shift Testing:  58%|█████▊    | 58/100 [04:04<02:57,  4.23s/it][RUN 58] MMD=0.030136 ❌ Not Detected
-Shift Testing:  59%|█████▉    | 59/100 [04:09<02:54,  4.25s/it][RUN 59] MMD=0.029189 ❌ Not Detected
-Shift Testing:  60%|██████    | 60/100 [04:13<02:48,  4.21s/it][RUN 60] MMD=0.029893 ❌ Not Detected
-Shift Testing:  61%|██████    | 61/100 [04:17<02:43,  4.20s/it][RUN 61] MMD=0.033314 ✅ Detected
-Shift Testing:  62%|██████▏   | 62/100 [04:21<02:39,  4.19s/it][RUN 62] MMD=0.028572 ❌ Not Detected
-Shift Testing:  63%|██████▎   | 63/100 [04:25<02:34,  4.17s/it][RUN 63] MMD=0.030278 ❌ Not Detected
-Shift Testing:  64%|██████▍   | 64/100 [04:29<02:29,  4.14s/it][RUN 64] MMD=0.028768 ❌ Not Detected
-Shift Testing:  65%|██████▌   | 65/100 [04:34<02:27,  4.22s/it][RUN 65] MMD=0.031184 ❌ Not Detected
-Shift Testing:  66%|██████▌   | 66/100 [04:38<02:22,  4.20s/it][RUN 66] MMD=0.031308 ❌ Not Detected
-Shift Testing:  67%|██████▋   | 67/100 [04:42<02:18,  4.20s/it][RUN 67] MMD=0.032414 ❌ Not Detected
-Shift Testing:  68%|██████▊   | 68/100 [04:46<02:13,  4.17s/it][RUN 68] MMD=0.029140 ❌ Not Detected
-Shift Testing:  69%|██████▉   | 69/100 [04:51<02:10,  4.22s/it][RUN 69] MMD=0.029470 ❌ Not Detected
-Shift Testing:  70%|███████   | 70/100 [04:55<02:06,  4.21s/it][RUN 70] MMD=0.031017 ❌ Not Detected
-Shift Testing:  71%|███████   | 71/100 [04:59<02:04,  4.29s/it][RUN 71] MMD=0.030144 ❌ Not Detected
-Shift Testing:  72%|███████▏  | 72/100 [05:03<01:59,  4.27s/it][RUN 72] MMD=0.029244 ❌ Not Detected
-Shift Testing:  73%|███████▎  | 73/100 [05:08<01:53,  4.22s/it][RUN 73] MMD=0.030111 ❌ Not Detected
-Shift Testing:  74%|███████▍  | 74/100 [05:12<01:50,  4.26s/it][RUN 74] MMD=0.031483 ❌ Not Detected
-Shift Testing:  75%|███████▌  | 75/100 [05:16<01:44,  4.19s/it][RUN 75] MMD=0.031582 ❌ Not Detected
-Shift Testing:  76%|███████▌  | 76/100 [05:20<01:40,  4.17s/it][RUN 76] MMD=0.030829 ❌ Not Detected
-Shift Testing:  77%|███████▋  | 77/100 [05:24<01:35,  4.15s/it][RUN 77] MMD=0.031070 ❌ Not Detected
-Shift Testing:  78%|███████▊  | 78/100 [05:28<01:31,  4.14s/it][RUN 78] MMD=0.031176 ❌ Not Detected
-Shift Testing:  79%|███████▉  | 79/100 [05:33<01:28,  4.21s/it][RUN 79] MMD=0.029574 ❌ Not Detected
-Shift Testing:  80%|████████  | 80/100 [05:37<01:25,  4.25s/it][RUN 80] MMD=0.029897 ❌ Not Detected
-Shift Testing:  81%|████████  | 81/100 [05:41<01:20,  4.23s/it][RUN 81] MMD=0.031791 ❌ Not Detected
-Shift Testing:  82%|████████▏ | 82/100 [05:45<01:15,  4.20s/it][RUN 82] MMD=0.031661 ❌ Not Detected
-Shift Testing:  83%|████████▎ | 83/100 [05:49<01:10,  4.17s/it][RUN 83] MMD=0.028970 ❌ Not Detected
-Shift Testing:  84%|████████▍ | 84/100 [05:54<01:06,  4.16s/it][RUN 84] MMD=0.028700 ❌ Not Detected
-Shift Testing:  85%|████████▌ | 85/100 [05:58<01:02,  4.19s/it][RUN 85] MMD=0.030766 ❌ Not Detected
-Shift Testing:  86%|████████▌ | 86/100 [06:02<00:58,  4.16s/it][RUN 86] MMD=0.029896 ❌ Not Detected
-Shift Testing:  87%|████████▋ | 87/100 [06:06<00:53,  4.12s/it][RUN 87] MMD=0.030007 ❌ Not Detected
-Shift Testing:  88%|████████▊ | 88/100 [06:10<00:49,  4.10s/it][RUN 88] MMD=0.027683 ❌ Not Detected
-Shift Testing:  89%|████████▉ | 89/100 [06:14<00:45,  4.09s/it][RUN 89] MMD=0.027295 ❌ Not Detected
-Shift Testing:  90%|█████████ | 90/100 [06:18<00:41,  4.18s/it][RUN 90] MMD=0.029705 ❌ Not Detected
-Shift Testing:  91%|█████████ | 91/100 [06:23<00:37,  4.13s/it][RUN 91] MMD=0.029089 ❌ Not Detected
-Shift Testing:  92%|█████████▏| 92/100 [06:27<00:32,  4.12s/it][RUN 92] MMD=0.031234 ❌ Not Detected
-Shift Testing:  93%|█████████▎| 93/100 [06:31<00:29,  4.21s/it][RUN 93] MMD=0.030502 ❌ Not Detected
-Shift Testing:  94%|█████████▍| 94/100 [06:35<00:24,  4.17s/it][RUN 94] MMD=0.031209 ❌ Not Detected
-Shift Testing:  95%|█████████▌| 95/100 [06:39<00:20,  4.11s/it][RUN 95] MMD=0.027541 ❌ Not Detected
-Shift Testing:  96%|█████████▌| 96/100 [06:43<00:16,  4.13s/it][RUN 96] MMD=0.028332 ❌ Not Detected
-Shift Testing:  97%|█████████▋| 97/100 [06:47<00:12,  4.12s/it][RUN 97] MMD=0.030455 ❌ Not Detected
-Shift Testing:  98%|█████████▊| 98/100 [06:51<00:08,  4.14s/it][RUN 98] MMD=0.029156 ❌ Not Detected
-Shift Testing:  99%|█████████▉| 99/100 [06:56<00:04,  4.14s/it][RUN 99] MMD=0.030431 ❌ Not Detected
-Shift Testing: 100%|██████████| 100/100 [07:00<00:00,  4.19s/it]Shift Testing: 100%|██████████| 100/100 [07:00<00:00,  4.20s/it]
-[RUN 100] MMD=0.030006 ❌ Not Detected
+Shift Testing:   0%|          | 0/100 [00:00<?, ?it/s]Shift Testing:   1%|          | 1/100 [00:04<06:46,  4.10s/it][RUN 1] MMD=0.030777 ❌ Not Detected
+Shift Testing:   2%|▏         | 2/100 [00:08<07:08,  4.38s/it][RUN 2] MMD=0.033995 ❌ Not Detected
+Shift Testing:   3%|▎         | 3/100 [00:13<07:25,  4.60s/it][RUN 3] MMD=0.032793 ❌ Not Detected
+Shift Testing:   4%|▍         | 4/100 [00:18<07:25,  4.65s/it][RUN 4] MMD=0.035216 ❌ Not Detected
+Shift Testing:   5%|▌         | 5/100 [00:22<07:19,  4.63s/it][RUN 5] MMD=0.035034 ❌ Not Detected
+Shift Testing:   6%|▌         | 6/100 [00:27<07:13,  4.61s/it][RUN 6] MMD=0.035703 ❌ Not Detected
+Shift Testing:   7%|▋         | 7/100 [00:31<07:03,  4.56s/it][RUN 7] MMD=0.033321 ❌ Not Detected
+Shift Testing:   8%|▊         | 8/100 [00:36<07:09,  4.67s/it][RUN 8] MMD=0.031768 ❌ Not Detected
+Shift Testing:   9%|▉         | 9/100 [00:41<07:14,  4.77s/it][RUN 9] MMD=0.032553 ❌ Not Detected
+Shift Testing:  10%|█         | 10/100 [00:46<07:05,  4.72s/it][RUN 10] MMD=0.035435 ❌ Not Detected
+Shift Testing:  11%|█         | 11/100 [00:50<06:54,  4.66s/it][RUN 11] MMD=0.034889 ❌ Not Detected
+Shift Testing:  12%|█▏        | 12/100 [00:55<06:59,  4.77s/it][RUN 12] MMD=0.035176 ❌ Not Detected
+Shift Testing:  13%|█▎        | 13/100 [01:00<06:45,  4.67s/it][RUN 13] MMD=0.030237 ❌ Not Detected
+Shift Testing:  14%|█▍        | 14/100 [01:05<06:50,  4.77s/it][RUN 14] MMD=0.033698 ❌ Not Detected
+Shift Testing:  15%|█▌        | 15/100 [01:10<06:42,  4.73s/it][RUN 15] MMD=0.034425 ❌ Not Detected
+Shift Testing:  16%|█▌        | 16/100 [01:14<06:36,  4.72s/it][RUN 16] MMD=0.038149 ✅ Detected
+Shift Testing:  17%|█▋        | 17/100 [01:19<06:33,  4.75s/it][RUN 17] MMD=0.033938 ❌ Not Detected
+Shift Testing:  18%|█▊        | 18/100 [01:24<06:33,  4.79s/it][RUN 18] MMD=0.035690 ❌ Not Detected
+Shift Testing:  19%|█▉        | 19/100 [01:29<06:29,  4.81s/it][RUN 19] MMD=0.032857 ❌ Not Detected
+Shift Testing:  20%|██        | 20/100 [01:34<06:32,  4.91s/it][RUN 20] MMD=0.033948 ❌ Not Detected
+Shift Testing:  21%|██        | 21/100 [01:38<06:18,  4.79s/it][RUN 21] MMD=0.034039 ❌ Not Detected
+Shift Testing:  22%|██▏       | 22/100 [01:43<06:17,  4.84s/it][RUN 22] MMD=0.034360 ❌ Not Detected
+Shift Testing:  23%|██▎       | 23/100 [01:48<06:06,  4.76s/it][RUN 23] MMD=0.034892 ❌ Not Detected
+Shift Testing:  24%|██▍       | 24/100 [01:53<06:10,  4.87s/it][RUN 24] MMD=0.035541 ❌ Not Detected
+Shift Testing:  25%|██▌       | 25/100 [01:58<06:09,  4.93s/it][RUN 25] MMD=0.032525 ❌ Not Detected
+Shift Testing:  26%|██▌       | 26/100 [02:03<06:01,  4.89s/it][RUN 26] MMD=0.033686 ❌ Not Detected
+Shift Testing:  27%|██▋       | 27/100 [02:08<05:57,  4.90s/it][RUN 27] MMD=0.031485 ❌ Not Detected
+Shift Testing:  28%|██▊       | 28/100 [02:12<05:42,  4.76s/it][RUN 28] MMD=0.034836 ❌ Not Detected
+Shift Testing:  29%|██▉       | 29/100 [02:17<05:46,  4.88s/it][RUN 29] MMD=0.034651 ❌ Not Detected
+Shift Testing:  30%|███       | 30/100 [02:22<05:38,  4.83s/it][RUN 30] MMD=0.034755 ❌ Not Detected
+Shift Testing:  31%|███       | 31/100 [02:27<05:33,  4.84s/it][RUN 31] MMD=0.035238 ❌ Not Detected
+Shift Testing:  32%|███▏      | 32/100 [02:32<05:28,  4.82s/it][RUN 32] MMD=0.031056 ❌ Not Detected
+Shift Testing:  33%|███▎      | 33/100 [02:36<05:11,  4.65s/it][RUN 33] MMD=0.034233 ❌ Not Detected
+Shift Testing:  34%|███▍      | 34/100 [02:41<05:07,  4.66s/it][RUN 34] MMD=0.035446 ❌ Not Detected
+Shift Testing:  35%|███▌      | 35/100 [02:45<04:58,  4.60s/it][RUN 35] MMD=0.035235 ❌ Not Detected
+Shift Testing:  36%|███▌      | 36/100 [02:50<04:50,  4.55s/it][RUN 36] MMD=0.034272 ❌ Not Detected
+Shift Testing:  37%|███▋      | 37/100 [02:54<04:42,  4.49s/it][RUN 37] MMD=0.032589 ❌ Not Detected
+Shift Testing:  38%|███▊      | 38/100 [02:58<04:34,  4.43s/it][RUN 38] MMD=0.036528 ✅ Detected
+Shift Testing:  39%|███▉      | 39/100 [03:03<04:36,  4.54s/it][RUN 39] MMD=0.029898 ❌ Not Detected
+Shift Testing:  40%|████      | 40/100 [03:08<04:33,  4.56s/it][RUN 40] MMD=0.034125 ❌ Not Detected
+Shift Testing:  41%|████      | 41/100 [03:12<04:32,  4.62s/it][RUN 41] MMD=0.032591 ❌ Not Detected
+Shift Testing:  42%|████▏     | 42/100 [03:17<04:24,  4.57s/it][RUN 42] MMD=0.035443 ❌ Not Detected
+Shift Testing:  43%|████▎     | 43/100 [03:22<04:31,  4.75s/it][RUN 43] MMD=0.034496 ❌ Not Detected
+Shift Testing:  44%|████▍     | 44/100 [03:28<04:46,  5.11s/it][RUN 44] MMD=0.032952 ❌ Not Detected
+Shift Testing:  45%|████▌     | 45/100 [03:33<04:31,  4.93s/it][RUN 45] MMD=0.033274 ❌ Not Detected
+Shift Testing:  46%|████▌     | 46/100 [03:37<04:25,  4.92s/it][RUN 46] MMD=0.033590 ❌ Not Detected
+Shift Testing:  47%|████▋     | 47/100 [03:42<04:17,  4.86s/it][RUN 47] MMD=0.034729 ❌ Not Detected
+Shift Testing:  48%|████▊     | 48/100 [03:47<04:11,  4.84s/it][RUN 48] MMD=0.034187 ❌ Not Detected
+Shift Testing:  49%|████▉     | 49/100 [03:52<04:05,  4.81s/it][RUN 49] MMD=0.035292 ❌ Not Detected
+Shift Testing:  50%|█████     | 50/100 [03:56<03:56,  4.73s/it][RUN 50] MMD=0.033324 ❌ Not Detected
+Shift Testing:  51%|█████     | 51/100 [04:01<03:54,  4.80s/it][RUN 51] MMD=0.032872 ❌ Not Detected
+Shift Testing:  52%|█████▏    | 52/100 [04:06<03:49,  4.78s/it][RUN 52] MMD=0.031863 ❌ Not Detected
+Shift Testing:  53%|█████▎    | 53/100 [04:11<03:45,  4.80s/it][RUN 53] MMD=0.033553 ❌ Not Detected
+Shift Testing:  54%|█████▍    | 54/100 [04:15<03:38,  4.76s/it][RUN 54] MMD=0.034341 ❌ Not Detected
+Shift Testing:  55%|█████▌    | 55/100 [04:20<03:33,  4.74s/it][RUN 55] MMD=0.033281 ❌ Not Detected
+Shift Testing:  56%|█████▌    | 56/100 [04:25<03:30,  4.78s/it][RUN 56] MMD=0.035186 ❌ Not Detected
+Shift Testing:  57%|█████▋    | 57/100 [04:30<03:25,  4.77s/it][RUN 57] MMD=0.032427 ❌ Not Detected
+Shift Testing:  58%|█████▊    | 58/100 [04:34<03:19,  4.74s/it][RUN 58] MMD=0.034271 ❌ Not Detected
+Shift Testing:  59%|█████▉    | 59/100 [04:39<03:11,  4.66s/it][RUN 59] MMD=0.034293 ❌ Not Detected
+Shift Testing:  60%|██████    | 60/100 [04:44<03:07,  4.68s/it][RUN 60] MMD=0.031164 ❌ Not Detected
+Shift Testing:  61%|██████    | 61/100 [04:48<02:57,  4.55s/it][RUN 61] MMD=0.033605 ❌ Not Detected
+Shift Testing:  62%|██████▏   | 62/100 [04:52<02:53,  4.56s/it][RUN 62] MMD=0.032320 ❌ Not Detected
+Shift Testing:  63%|██████▎   | 63/100 [04:57<02:47,  4.54s/it][RUN 63] MMD=0.034516 ❌ Not Detected
+Shift Testing:  64%|██████▍   | 64/100 [05:01<02:43,  4.55s/it][RUN 64] MMD=0.034462 ❌ Not Detected
+Shift Testing:  65%|██████▌   | 65/100 [05:06<02:36,  4.48s/it][RUN 65] MMD=0.032127 ❌ Not Detected
+Shift Testing:  66%|██████▌   | 66/100 [05:10<02:32,  4.49s/it][RUN 66] MMD=0.035568 ❌ Not Detected
+Shift Testing:  67%|██████▋   | 67/100 [05:15<02:27,  4.46s/it][RUN 67] MMD=0.034383 ❌ Not Detected
+Shift Testing:  68%|██████▊   | 68/100 [05:19<02:20,  4.39s/it][RUN 68] MMD=0.033131 ❌ Not Detected
+Shift Testing:  69%|██████▉   | 69/100 [05:23<02:16,  4.42s/it][RUN 69] MMD=0.033935 ❌ Not Detected
+Shift Testing:  70%|███████   | 70/100 [05:28<02:13,  4.45s/it][RUN 70] MMD=0.033336 ❌ Not Detected
+Shift Testing:  71%|███████   | 71/100 [05:33<02:10,  4.49s/it][RUN 71] MMD=0.034384 ❌ Not Detected
+Shift Testing:  72%|███████▏  | 72/100 [05:37<02:05,  4.48s/it][RUN 72] MMD=0.032192 ❌ Not Detected
+Shift Testing:  73%|███████▎  | 73/100 [05:41<02:00,  4.45s/it][RUN 73] MMD=0.037384 ✅ Detected
+Shift Testing:  74%|███████▍  | 74/100 [05:46<01:54,  4.39s/it][RUN 74] MMD=0.032824 ❌ Not Detected
+Shift Testing:  75%|███████▌  | 75/100 [05:50<01:49,  4.37s/it][RUN 75] MMD=0.031216 ❌ Not Detected
+Shift Testing:  76%|███████▌  | 76/100 [05:55<01:47,  4.46s/it][RUN 76] MMD=0.033279 ❌ Not Detected
+Shift Testing:  77%|███████▋  | 77/100 [05:59<01:42,  4.44s/it][RUN 77] MMD=0.032273 ❌ Not Detected
+Shift Testing:  78%|███████▊  | 78/100 [06:03<01:37,  4.43s/it][RUN 78] MMD=0.030545 ❌ Not Detected
+Shift Testing:  79%|███████▉  | 79/100 [06:08<01:35,  4.55s/it][RUN 79] MMD=0.034835 ❌ Not Detected
+Shift Testing:  80%|████████  | 80/100 [06:13<01:30,  4.53s/it][RUN 80] MMD=0.033339 ❌ Not Detected
+Shift Testing:  81%|████████  | 81/100 [06:17<01:24,  4.45s/it][RUN 81] MMD=0.031999 ❌ Not Detected
+Shift Testing:  82%|████████▏ | 82/100 [06:22<01:20,  4.49s/it][RUN 82] MMD=0.032652 ❌ Not Detected
+Shift Testing:  83%|████████▎ | 83/100 [06:26<01:15,  4.45s/it][RUN 83] MMD=0.033890 ❌ Not Detected
+Shift Testing:  84%|████████▍ | 84/100 [06:31<01:11,  4.49s/it][RUN 84] MMD=0.035433 ❌ Not Detected
+Shift Testing:  85%|████████▌ | 85/100 [06:35<01:05,  4.39s/it][RUN 85] MMD=0.034113 ❌ Not Detected
+Shift Testing:  86%|████████▌ | 86/100 [06:39<01:01,  4.39s/it][RUN 86] MMD=0.034003 ❌ Not Detected
+Shift Testing:  87%|████████▋ | 87/100 [06:43<00:56,  4.37s/it][RUN 87] MMD=0.035498 ❌ Not Detected
+Shift Testing:  88%|████████▊ | 88/100 [06:48<00:52,  4.33s/it][RUN 88] MMD=0.034527 ❌ Not Detected
+Shift Testing:  89%|████████▉ | 89/100 [06:52<00:47,  4.31s/it][RUN 89] MMD=0.032922 ❌ Not Detected
+Shift Testing:  90%|█████████ | 90/100 [06:56<00:43,  4.34s/it][RUN 90] MMD=0.033439 ❌ Not Detected
+Shift Testing:  91%|█████████ | 91/100 [07:01<00:39,  4.40s/it][RUN 91] MMD=0.033940 ❌ Not Detected
+Shift Testing:  92%|█████████▏| 92/100 [07:05<00:34,  4.30s/it][RUN 92] MMD=0.035156 ❌ Not Detected
+Shift Testing:  93%|█████████▎| 93/100 [07:09<00:29,  4.26s/it][RUN 93] MMD=0.035639 ❌ Not Detected
+Shift Testing:  94%|█████████▍| 94/100 [07:13<00:25,  4.24s/it][RUN 94] MMD=0.035054 ❌ Not Detected
+Shift Testing:  95%|█████████▌| 95/100 [07:18<00:21,  4.25s/it][RUN 95] MMD=0.031848 ❌ Not Detected
+Shift Testing:  96%|█████████▌| 96/100 [07:22<00:17,  4.32s/it][RUN 96] MMD=0.032421 ❌ Not Detected
+Shift Testing:  97%|█████████▋| 97/100 [07:26<00:12,  4.27s/it][RUN 97] MMD=0.035787 ❌ Not Detected
+Shift Testing:  98%|█████████▊| 98/100 [07:31<00:08,  4.33s/it][RUN 98] MMD=0.032197 ❌ Not Detected
+Shift Testing:  99%|█████████▉| 99/100 [07:35<00:04,  4.36s/it][RUN 99] MMD=0.033462 ❌ Not Detected
+Shift Testing: 100%|██████████| 100/100 [07:39<00:00,  4.35s/it]Shift Testing: 100%|██████████| 100/100 [07:39<00:00,  4.60s/it]
+[RUN 100] MMD=0.031760 ❌ Not Detected
 
 [RESULTS] Data Shift detection summary
-Average MMD: 0.030183 ± 0.001338
-TPR (true positive rate) over 100 runs: 5.00%
-[Data Logger] Added new experiment. Total experiments: 1
-[W401 22:25:55.965175133 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+Average MMD: 0.033775 ± 0.001508
+TPR (true positive rate) over 100 runs: 3.00%
+[Data Logger] Added new experiment. Total experiments: 2
+[W403 14:16:52.110169982 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
 ----------------------------------------------------
 Job finished: $(date)
 ----------------------------------------------------

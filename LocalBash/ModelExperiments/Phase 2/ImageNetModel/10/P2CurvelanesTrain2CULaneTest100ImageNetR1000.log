@@ -1,0 +1,16 @@
+----------------------------------------------------
+Slurm Job ID: $SLURM_JOB_ID
+Running on host: Florida Tech HPC
+----------------------------------------------------
+Fixed Flag: 4/1/26
+CUDA Available: True | Total GPUs Found: 1
+
+Initializing autoencoder...
+Using ImageNet pretrained weights for the autoencoder.
+[Autoencoder] - Phase 2 - Latent Dim: 128
+Using single GPU/CPU.
+[INFO] (/home1/adoyle2025/Datasets/Datasets/Curvelanes/train) → [0:100] (100 samples)
+/home1/adoyle2025/Datasets/Datasets/Curvelanes/train features loaded. Shape = (100, 128)
+
+[STEP 1] Calibration using /home1/adoyle2025/Datasets/Datasets/Curvelanes/train...
+Calibrating:   0%|          | 0/1000 [00:00<?, ?it/s]Calibrating:   0%|          | 1/1000 [00:03<53:40,  3.22s/it]Calibrating:   0%|          | 2/1000 [00:06<54:37,  3.28s/it]Calibrating:   0%|          | 3/1000 [00:09<54:29,  3.28s/it]Calibrating:   0%|          | 4/1000 [00:12<53:26,  3.22s/it]Calibrating:   0%|          | 5/1000 [00:16<53:38,  3.23s/it]Calibrating:   1%|          | 6/1000 [00:19<52:58,  3.20s/it]Calibrating:   1%|          | 7/1000 [00:22<52:24,  3.17s/it]Calibrating:   1%|          | 8/1000 [00:25<51:31,  3.12s/it]Calibrating:   1%|          | 9/1000 [00:28<51:34,  3.12s/it]Calibrating:   1%|          | 10/1000 [00:31<51:33,  3.12s/it]Calibrating:   1%|          | 11/1000 [00:34<51:40,  3.13s/it]Calibrating:   1%|          | 12/1000 [00:37<51:23,  3.12s/it]Calibrating:   1%|▏         | 13/1000 [00:41<50:59,  3.10s/it]Calibrating:   1%|▏         | 14/1000 [00:44<51:57,  3.16s/it]Calibrating:   2%|▏         | 15/1000 [00:47<52:43,  3.21s/it]Calibrating:   2%|▏         | 16/1000 [00:50<52:12,  3.18s/it]Calibrating:   2%|▏         | 17/1000 [00:53<51:52,  3.17s/it]slurmstepd-gpu08: error: *** JOB 222599 ON gpu08 CANCELLED AT 2026-04-07T21:47:04 ***

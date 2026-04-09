@@ -1,0 +1,97 @@
+{
+    "experiments": [
+        {
+            "arguments": {
+                "CodeMark": "4/1/2026",
+                "source_dir": "/home1/adoyle2025/Datasets/Datasets/CULane",
+                "target_dir": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid",
+                "source_list_path": "/home1/adoyle2025/Datasets/Datasets/CULane/list/train.txt",
+                "target_list_path": "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/valid.txt",
+                "src_samples": 10,
+                "tgt_samples": 10,
+                "num_runs": 100,
+                "block_idx": 4,
+                "batch_size": 64,
+                "image_size": 512,
+                "num_calib": 100,
+                "tau_threshold_percentile": 95.0,
+                "seed_base": 32,
+                "alpha": 0.05,
+                "deterministic": true
+            },
+            "data": {
+                "Source Training Feature Shape": [
+                    10,
+                    32
+                ],
+                "Source Training Feature Image Paths": [
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00000.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00030.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00060.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00090.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00120.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00150.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00180.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00210.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00240.jpg",
+                    "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05151649_0422.MP4/00270.jpg"
+                ],
+                "Calibration": {
+                    "Uses": "/home1/adoyle2025/Datasets/Datasets/CULane",
+                    "Result": {
+                        "Tau": 0.40783401280641557,
+                        "Mean MMD": 0.35394893020391466,
+                        "MMD (std)": 0.03710384790742525
+                    }
+                },
+                "Sanity Check": {
+                    "Image Paths": [
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_161_90frame/06031541_0856.MP4/02520.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05161338_0570.MP4/02655.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_161_90frame/06031249_0845.MP4/03870.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05161032_0508.MP4/02355.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05161427_0582.MP4/01395.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05160947_0493.MP4/01755.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05161753_0647.MP4/01155.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05161238_0550.MP4/01725.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_182_30frame/06011222_0178.MP4/05100.jpg",
+                        "/home1/adoyle2025/Datasets/Datasets/CULane/driver_23_30frame/05160911_0481.MP4/01305.jpg"
+                    ],
+                    "Results": {
+                        "Sanity Check Definition": "MMD(A = /home1/adoyle2025/Datasets/Datasets/CULane, B = /home1/adoyle2025/Datasets/Datasets/CULane)",
+                        "MMD": 0.40569114685058594,
+                        "Tau": 0.40783401280641557
+                    },
+                    "Shift Detected": false
+                },
+                "Data Shift Test Data": {
+                    "Data Shift Test Definition": "/home1/adoyle2025/Datasets/Datasets/CULane to /home1/adoyle2025/Datasets/Datasets/Curvelanes/valid",
+                    "Runs": 100,
+                    "Individual Test Data": [
+                        {
+                            "Image Paths": [
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/df78fb8d8c0ad7b3d7b0f8fcda3ca1ed.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/878c2427729ba2c7f912d2fe873b51d5.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/ebb72d8ac064e55992f4ec33724b4727.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/588c547b26823e612b8882a05d0c78cb.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/36251f1894a119e128f67d3483be4e5c.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/2f69afd6058adda368b892c10d3bc0b6.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/ec209778bd7d2e7089a26c2cb498649e.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/53d4916ead22472c9b306c92ad078cb6.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/768eb91e4fc7c3da3de88bf629c5cc4e.jpg",
+                                "/home1/adoyle2025/Datasets/Datasets/Curvelanes/valid/images/98546da103dad4b784c29a51aeb5162a.jpg"
+                            ],
+                            "Seed": 132,
+                            "Run": 1,
+                            "MMD": 0.5416855812072754,
+                            "Shift Detected": true
+                        }
+                    ],
+                    "TPR": 85.0,
+                    "Step (c) Mean MMD": 0.45379161447286603,
+                    "Step (c) Mean MMD (std)": 0.04542061327749767
+                }
+            }
+        }
+    ]
+}
