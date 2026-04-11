@@ -4,7 +4,7 @@
 #SBATCH --job-name=B1MMDAggCU_Lane
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --output="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/MMDAgg/CULaneTrain2CULaneTrainCU_Lane100.log"
+#SBATCH --output="/home1/adoyle2025/Distribution-Shift-Lane-Perception/LocalBash/MMDAgg/CULaneTrain2CULaneTrainDistill100.log"
 #SBATCH --partition=gpu2
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=16
@@ -16,7 +16,7 @@
 echo "----------------------------------------------------"
 echo "Slurm Job ID: \$SLURM_JOB_ID"
 echo "Running on host: \$(hostname)"
-echo "Experiment: CULaneTrain2CULaneTrainCU_Lane100"
+echo "Experiment: CULaneTrain2CULaneTrainDistill100"
 echo "----------------------------------------------------"
 
 export PYTHONNOUSERSITE=1
@@ -28,6 +28,8 @@ export TF_CPP_MIN_LOG_LEVEL=3
 source /home1/adoyle2025/miniconda3/etc/profile.d/conda.sh
 
 conda activate ml_project
+
+python -m pip install "numpy<2.0.0"
 
 cd /home1/adoyle2025/Distribution-Shift-Lane-Perception
 
@@ -47,8 +49,8 @@ python model_experimentP2.py \
     --test_type "MMDAgg" \
     --permutation_test_iterations 0 \
     --file_location "/home1/adoyle2025/Distribution-Shift-Lane-Perception/logs/ModelExperiments/P2" \
-    --file_name "CULaneTrain2CULaneTrainCU_Lane100.json" \
-    --modelStr "CU_Lane"
+    --file_name "CULaneTrain2CULaneTrainDistill100.json" \
+    --modelStr "DISTILL"
 
 echo "----------------------------------------------------"
 echo "Job finished: \$(date)"

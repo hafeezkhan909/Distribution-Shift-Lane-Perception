@@ -1,0 +1,243 @@
+----------------------------------------------------
+Slurm Job ID: $SLURM_JOB_ID
+Running on host: Florida Tech HPC
+----------------------------------------------------
+Fixed Flag: 4/9/2026
+CUDA Available: True | Total GPUs Found: 1
+
+Initializing autoencoder...
+Using Distilled pretrained weights for the autoencoder.
+[Autoencoder] - Phase 2 - Latent Dim: 32
+Successfully loaded full Autoencoder weights from /home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Distillation/CULane/Distill_AE_CULane_epoch_50.pth
+Using single GPU/CPU.
+
+[STEP 0] Encoding and caching all dataset features...
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [0:100] (100 samples)
+/home1/adoyle2025/Datasets/Datasets/CULane features loaded. Shape = (100, 32)
+
+-> Source features loaded. Shape = (100, 32)
+Preloading Calibration Sets:   0%|          | 0/100 [00:00<?, ?it/s]Preloading Calibration Sets:   2%|▏         | 2/100 [00:00<00:07, 13.71it/s]Preloading Calibration Sets:   4%|▍         | 4/100 [00:00<00:07, 13.63it/s]Preloading Calibration Sets:   6%|▌         | 6/100 [00:00<00:06, 14.78it/s]Preloading Calibration Sets:   8%|▊         | 8/100 [00:00<00:06, 15.00it/s]Preloading Calibration Sets:  10%|█         | 10/100 [00:00<00:05, 15.58it/s]Preloading Calibration Sets:  12%|█▏        | 12/100 [00:00<00:05, 16.39it/s]Preloading Calibration Sets:  14%|█▍        | 14/100 [00:00<00:05, 16.77it/s]Preloading Calibration Sets:  16%|█▌        | 16/100 [00:00<00:04, 17.50it/s]Preloading Calibration Sets:  18%|█▊        | 18/100 [00:01<00:04, 17.78it/s]Preloading Calibration Sets:  20%|██        | 20/100 [00:01<00:04, 17.63it/s]Preloading Calibration Sets:  22%|██▏       | 22/100 [00:01<00:04, 17.97it/s]Preloading Calibration Sets:  24%|██▍       | 24/100 [00:01<00:04, 18.54it/s]Preloading Calibration Sets:  27%|██▋       | 27/100 [00:01<00:03, 19.48it/s]Preloading Calibration Sets:  30%|███       | 30/100 [00:01<00:03, 20.38it/s]Preloading Calibration Sets:  33%|███▎      | 33/100 [00:01<00:03, 20.38it/s]Preloading Calibration Sets:  36%|███▌      | 36/100 [00:01<00:03, 20.33it/s]Preloading Calibration Sets:  39%|███▉      | 39/100 [00:02<00:02, 20.80it/s]Preloading Calibration Sets:  42%|████▏     | 42/100 [00:02<00:02, 21.01it/s]Preloading Calibration Sets:  45%|████▌     | 45/100 [00:02<00:02, 21.76it/s]Preloading Calibration Sets:  48%|████▊     | 48/100 [00:02<00:02, 20.32it/s]Preloading Calibration Sets:  51%|█████     | 51/100 [00:02<00:02, 20.01it/s]Preloading Calibration Sets:  54%|█████▍    | 54/100 [00:02<00:02, 20.41it/s]Preloading Calibration Sets:  57%|█████▋    | 57/100 [00:03<00:02, 20.56it/s]Preloading Calibration Sets:  60%|██████    | 60/100 [00:03<00:01, 20.28it/s]Preloading Calibration Sets:  63%|██████▎   | 63/100 [00:03<00:01, 20.08it/s]Preloading Calibration Sets:  66%|██████▌   | 66/100 [00:03<00:01, 20.52it/s]Preloading Calibration Sets:  69%|██████▉   | 69/100 [00:03<00:01, 20.16it/s]Preloading Calibration Sets:  72%|███████▏  | 72/100 [00:03<00:01, 20.01it/s]Preloading Calibration Sets:  75%|███████▌  | 75/100 [00:03<00:01, 20.48it/s]Preloading Calibration Sets:  78%|███████▊  | 78/100 [00:04<00:01, 21.35it/s]Preloading Calibration Sets:  81%|████████  | 81/100 [00:04<00:00, 19.94it/s]Preloading Calibration Sets:  84%|████████▍ | 84/100 [00:04<00:00, 20.32it/s]Preloading Calibration Sets:  87%|████████▋ | 87/100 [00:04<00:00, 20.61it/s]Preloading Calibration Sets:  90%|█████████ | 90/100 [00:04<00:00, 20.63it/s]Preloading Calibration Sets:  93%|█████████▎| 93/100 [00:04<00:00, 21.06it/s]Preloading Calibration Sets:  96%|█████████▌| 96/100 [00:04<00:00, 20.38it/s]Preloading Calibration Sets:  99%|█████████▉| 99/100 [00:05<00:00, 20.81it/s]Preloading Calibration Sets: 100%|██████████| 100/100 [00:05<00:00, 19.58it/s]
+-> Sanity Check features loaded.
+Preloading Target Sets:   0%|          | 0/100 [00:00<?, ?it/s]Preloading Target Sets:   3%|▎         | 3/100 [00:00<00:03, 27.03it/s]Preloading Target Sets:   7%|▋         | 7/100 [00:00<00:02, 32.70it/s]Preloading Target Sets:  11%|█         | 11/100 [00:00<00:02, 35.65it/s]Preloading Target Sets:  15%|█▌        | 15/100 [00:00<00:02, 31.98it/s]Preloading Target Sets:  19%|█▉        | 19/100 [00:00<00:02, 29.13it/s]Preloading Target Sets:  22%|██▏       | 22/100 [00:00<00:02, 28.73it/s]Preloading Target Sets:  25%|██▌       | 25/100 [00:00<00:02, 28.04it/s]Preloading Target Sets:  28%|██▊       | 28/100 [00:00<00:02, 25.81it/s]Preloading Target Sets:  31%|███       | 31/100 [00:01<00:02, 25.10it/s]Preloading Target Sets:  34%|███▍      | 34/100 [00:01<00:02, 24.06it/s]Preloading Target Sets:  37%|███▋      | 37/100 [00:01<00:02, 24.06it/s]Preloading Target Sets:  40%|████      | 40/100 [00:01<00:02, 25.19it/s]Preloading Target Sets:  43%|████▎     | 43/100 [00:01<00:02, 24.64it/s]Preloading Target Sets:  46%|████▌     | 46/100 [00:01<00:02, 25.23it/s]Preloading Target Sets:  49%|████▉     | 49/100 [00:01<00:01, 25.56it/s]Preloading Target Sets:  52%|█████▏    | 52/100 [00:01<00:01, 26.01it/s]Preloading Target Sets:  55%|█████▌    | 55/100 [00:02<00:01, 25.04it/s]Preloading Target Sets:  58%|█████▊    | 58/100 [00:02<00:01, 25.02it/s]Preloading Target Sets:  61%|██████    | 61/100 [00:02<00:01, 24.40it/s]Preloading Target Sets:  64%|██████▍   | 64/100 [00:02<00:01, 25.61it/s]Preloading Target Sets:  68%|██████▊   | 68/100 [00:02<00:01, 25.45it/s]Preloading Target Sets:  72%|███████▏  | 72/100 [00:02<00:01, 26.46it/s]Preloading Target Sets:  75%|███████▌  | 75/100 [00:02<00:00, 25.84it/s]Preloading Target Sets:  78%|███████▊  | 78/100 [00:02<00:00, 25.10it/s]Preloading Target Sets:  81%|████████  | 81/100 [00:03<00:00, 25.55it/s]Preloading Target Sets:  84%|████████▍ | 84/100 [00:03<00:00, 25.19it/s]Preloading Target Sets:  87%|████████▋ | 87/100 [00:03<00:00, 24.12it/s]Preloading Target Sets:  90%|█████████ | 90/100 [00:03<00:00, 24.38it/s]Preloading Target Sets:  93%|█████████▎| 93/100 [00:03<00:00, 25.12it/s]Preloading Target Sets:  96%|█████████▌| 96/100 [00:03<00:00, 25.49it/s]Preloading Target Sets:  99%|█████████▉| 99/100 [00:03<00:00, 25.21it/s]Preloading Target Sets: 100%|██████████| 100/100 [00:03<00:00, 26.00it/s]
+
+[STEP 1] Calibration using /home1/adoyle2025/Datasets/Datasets/CULane (Multithreaded)...
+Calculating Calibration:   0%|          | 0/100 [00:00<?, ?it/s]Calculating Calibration: 100%|██████████| 100/100 [00:00<00:00, 1119.57it/s]
+
+[RESULT] τ(0.95) = 4.004991
+Mean ENERGY (same-distribution): 3.594973 ± 0.230765
+
+[STEP 2] Sanity Check...
+[SANITY CHECK] ENERGY(A = /home1/adoyle2025/Datasets/Datasets/CULane, B = /home1/adoyle2025/Datasets/Datasets/CULane) = 3.312087, τ = 4.004991
+No shift detected.
+
+[STEP 3] Data Shift Test: /home1/adoyle2025/Datasets/Datasets/CULane to /home1/adoyle2025/Datasets/Datasets/CULane
+
+Calculating Shifts:   0%|          | 0/100 [00:00<?, ?it/s]Calculating Shifts: 100%|██████████| 100/100 [00:00<00:00, 1686.00it/s]
+
+[RUN 3] ENERGY=4.480840 ✅ Detected
+
+[RUN 5] ENERGY=4.013973 ✅ Detected
+
+[RUN 2] ENERGY=4.493602 ✅ Detected
+
+[RUN 4] ENERGY=4.201695 ✅ Detected
+
+[RUN 9] ENERGY=4.436822 ✅ Detected
+
+[RUN 1] ENERGY=4.423737 ✅ Detected
+
+[RUN 11] ENERGY=4.422421 ✅ Detected
+
+[RUN 6] ENERGY=4.410026 ✅ Detected
+
+[RUN 8] ENERGY=4.030807 ✅ Detected
+
+[RUN 16] ENERGY=4.072581 ✅ Detected
+
+[RUN 10] ENERGY=3.928421 ❌ Not Detected
+
+[RUN 7] ENERGY=4.331563 ✅ Detected
+
+[RUN 25] ENERGY=3.856015 ❌ Not Detected
+
+[RUN 15] ENERGY=4.229923 ✅ Detected
+
+[RUN 13] ENERGY=4.619577 ✅ Detected
+
+[RUN 12] ENERGY=4.251879 ✅ Detected
+
+[RUN 14] ENERGY=4.183340 ✅ Detected
+
+[RUN 17] ENERGY=3.949744 ❌ Not Detected
+
+[RUN 35] ENERGY=4.463958 ✅ Detected
+
+[RUN 29] ENERGY=4.271828 ✅ Detected
+
+[RUN 28] ENERGY=4.168915 ✅ Detected
+
+[RUN 19] ENERGY=4.577281 ✅ Detected
+
+[RUN 23] ENERGY=4.501702 ✅ Detected
+
+[RUN 40] ENERGY=4.010542 ✅ Detected
+
+[RUN 21] ENERGY=4.240748 ✅ Detected
+
+[RUN 31] ENERGY=4.105615 ✅ Detected
+
+[RUN 22] ENERGY=3.946338 ❌ Not Detected
+
+[RUN 34] ENERGY=4.219401 ✅ Detected
+
+[RUN 45] ENERGY=4.166760 ✅ Detected
+
+[RUN 18] ENERGY=4.399339 ✅ Detected
+
+[RUN 26] ENERGY=4.543656 ✅ Detected
+
+[RUN 52] ENERGY=4.214107 ✅ Detected
+
+[RUN 44] ENERGY=3.939777 ❌ Not Detected
+
+[RUN 27] ENERGY=4.195298 ✅ Detected
+
+[RUN 51] ENERGY=4.139811 ✅ Detected
+
+[RUN 42] ENERGY=4.856254 ✅ Detected
+
+[RUN 20] ENERGY=3.780921 ❌ Not Detected
+
+[RUN 38] ENERGY=4.387346 ✅ Detected
+
+[RUN 36] ENERGY=4.237891 ✅ Detected
+
+[RUN 41] ENERGY=3.912682 ❌ Not Detected
+
+[RUN 47] ENERGY=4.179389 ✅ Detected
+
+[RUN 32] ENERGY=4.429588 ✅ Detected
+
+[RUN 43] ENERGY=4.419926 ✅ Detected
+
+[RUN 46] ENERGY=3.850765 ❌ Not Detected
+
+[RUN 49] ENERGY=4.331394 ✅ Detected
+
+[RUN 30] ENERGY=3.910699 ❌ Not Detected
+
+[RUN 24] ENERGY=4.021527 ✅ Detected
+
+[RUN 33] ENERGY=4.186120 ✅ Detected
+
+[RUN 39] ENERGY=4.442372 ✅ Detected
+
+[RUN 53] ENERGY=4.039384 ✅ Detected
+
+[RUN 56] ENERGY=4.068704 ✅ Detected
+
+[RUN 54] ENERGY=4.076270 ✅ Detected
+
+[RUN 57] ENERGY=4.076733 ✅ Detected
+
+[RUN 48] ENERGY=4.279105 ✅ Detected
+
+[RUN 50] ENERGY=3.953726 ❌ Not Detected
+
+[RUN 37] ENERGY=3.979234 ❌ Not Detected
+
+[RUN 59] ENERGY=4.321082 ✅ Detected
+
+[RUN 60] ENERGY=4.614056 ✅ Detected
+
+[RUN 61] ENERGY=4.125208 ✅ Detected
+
+[RUN 58] ENERGY=4.236811 ✅ Detected
+
+[RUN 67] ENERGY=4.465609 ✅ Detected
+
+[RUN 55] ENERGY=4.802837 ✅ Detected
+
+[RUN 64] ENERGY=4.307968 ✅ Detected
+
+[RUN 62] ENERGY=4.319524 ✅ Detected
+
+[RUN 63] ENERGY=4.447438 ✅ Detected
+
+[RUN 68] ENERGY=3.974592 ❌ Not Detected
+
+[RUN 75] ENERGY=3.978644 ❌ Not Detected
+
+[RUN 71] ENERGY=4.110505 ✅ Detected
+
+[RUN 72] ENERGY=4.369350 ✅ Detected
+
+[RUN 77] ENERGY=3.993523 ❌ Not Detected
+
+[RUN 73] ENERGY=4.012024 ✅ Detected
+
+[RUN 80] ENERGY=4.049838 ✅ Detected
+
+[RUN 82] ENERGY=4.485151 ✅ Detected
+
+[RUN 84] ENERGY=3.808588 ❌ Not Detected
+
+[RUN 66] ENERGY=4.225654 ✅ Detected
+
+[RUN 87] ENERGY=4.070755 ✅ Detected
+
+[RUN 76] ENERGY=4.340299 ✅ Detected
+
+[RUN 74] ENERGY=4.287329 ✅ Detected
+
+[RUN 86] ENERGY=3.989156 ❌ Not Detected
+
+[RUN 78] ENERGY=4.287828 ✅ Detected
+
+[RUN 69] ENERGY=4.424167 ✅ Detected
+
+[RUN 70] ENERGY=3.772601 ❌ Not Detected
+
+[RUN 83] ENERGY=3.949718 ❌ Not Detected
+
+[RUN 65] ENERGY=4.005557 ✅ Detected
+
+[RUN 85] ENERGY=3.962714 ❌ Not Detected
+
+[RUN 79] ENERGY=4.399405 ✅ Detected
+
+[RUN 88] ENERGY=4.127136 ✅ Detected
+
+[RUN 81] ENERGY=4.079937 ✅ Detected
+
+[RUN 89] ENERGY=4.244995 ✅ Detected
+
+[RUN 92] ENERGY=4.602518 ✅ Detected
+
+[RUN 94] ENERGY=4.265715 ✅ Detected
+
+[RUN 99] ENERGY=4.174791 ✅ Detected
+
+[RUN 91] ENERGY=4.115350 ✅ Detected
+
+[RUN 98] ENERGY=4.491690 ✅ Detected
+
+[RUN 90] ENERGY=4.153464 ✅ Detected
+
+[RUN 93] ENERGY=4.153819 ✅ Detected
+
+[RUN 100] ENERGY=4.090253 ✅ Detected
+
+[RUN 95] ENERGY=4.080280 ✅ Detected
+
+[RUN 97] ENERGY=4.479198 ✅ Detected
+
+[RUN 96] ENERGY=3.729150 ❌ Not Detected
+
+[RESULTS] Data Shift detection summary
+Average ENERGY: 4.207883 ± 0.227901
+TPR (true positive rate) over 100 runs: 80.00%
+[Data Logger] Added new experiment. Total experiments: 2
+----------------------------------------------------
+Job finished: $(date)
+----------------------------------------------------

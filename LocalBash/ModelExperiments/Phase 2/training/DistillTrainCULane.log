@@ -1,0 +1,28 @@
+----------------------------------------------------
+Slurm Job ID: 223539
+Running on host: gpu08
+Start Time: Thu Apr  9 01:38:10 AM EDT 2026
+----------------------------------------------------
+Initializing conda for script...
+Conda environment activated and isolated:
+
+# conda environments:
+#
+# * -> active
+# + -> frozen
+base                     /home1/adoyle2025/miniconda3
+clrernet                 /home1/adoyle2025/miniconda3/envs/clrernet
+distribution_shift_perception     /home1/adoyle2025/miniconda3/envs/distribution_shift_perception
+dslp_env                 /home1/adoyle2025/miniconda3/envs/dslp_env
+lane_env_cpu             /home1/adoyle2025/miniconda3/envs/lane_env_cpu
+lane_perception_test     /home1/adoyle2025/miniconda3/envs/lane_perception_test
+ml_project           *   /home1/adoyle2025/miniconda3/envs/ml_project
+test_env                 /home1/adoyle2025/miniconda3/envs/test_env
+tf_a100                  /home1/adoyle2025/miniconda3/envs/tf_a100
+
+Starting Distillation Training...
+Error: Could not find 'clrernet' modules in /home1/adoyle2025/CLRerNet-Runtime-Monitor-for-Lane-Detection.
+Ensure the CLRerNet repo is properly cloned and PYTHONPATH includes the root.
+----------------------------------------------------
+Job finished: Thu Apr  9 01:38:17 AM EDT 2026
+----------------------------------------------------

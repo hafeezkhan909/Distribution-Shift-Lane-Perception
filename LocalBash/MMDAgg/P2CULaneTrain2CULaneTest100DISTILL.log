@@ -1,0 +1,243 @@
+----------------------------------------------------
+Slurm Job ID: $SLURM_JOB_ID
+Running on host: Florida Tech HPC
+----------------------------------------------------
+Fixed Flag: 4/9/2026
+CUDA Available: True | Total GPUs Found: 1
+
+Initializing autoencoder...
+Using Distilled pretrained weights for the autoencoder.
+[Autoencoder] - Phase 2 - Latent Dim: 32
+Successfully loaded full Autoencoder weights from /home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Distillation/CULane/Distill_AE_CULane_epoch_50.pth
+Using single GPU/CPU.
+
+[STEP 0] Encoding and caching all dataset features...
+[INFO] (/home1/adoyle2025/Datasets/Datasets/CULane) → [0:100] (100 samples)
+/home1/adoyle2025/Datasets/Datasets/CULane features loaded. Shape = (100, 32)
+
+-> Source features loaded. Shape = (100, 32)
+Preloading Calibration Sets:   0%|          | 0/100 [00:00<?, ?it/s]Preloading Calibration Sets:   2%|▏         | 2/100 [00:00<00:05, 17.34it/s]Preloading Calibration Sets:   5%|▌         | 5/100 [00:00<00:04, 19.69it/s]Preloading Calibration Sets:   7%|▋         | 7/100 [00:00<00:05, 18.20it/s]Preloading Calibration Sets:   9%|▉         | 9/100 [00:00<00:04, 18.63it/s]Preloading Calibration Sets:  12%|█▏        | 12/100 [00:00<00:04, 20.64it/s]Preloading Calibration Sets:  15%|█▌        | 15/100 [00:00<00:04, 20.41it/s]Preloading Calibration Sets:  18%|█▊        | 18/100 [00:00<00:03, 22.95it/s]Preloading Calibration Sets:  21%|██        | 21/100 [00:00<00:03, 23.16it/s]Preloading Calibration Sets:  24%|██▍       | 24/100 [00:01<00:03, 21.27it/s]Preloading Calibration Sets:  27%|██▋       | 27/100 [00:01<00:03, 20.92it/s]Preloading Calibration Sets:  30%|███       | 30/100 [00:01<00:03, 21.05it/s]Preloading Calibration Sets:  33%|███▎      | 33/100 [00:01<00:03, 21.61it/s]Preloading Calibration Sets:  36%|███▌      | 36/100 [00:01<00:02, 23.19it/s]Preloading Calibration Sets:  40%|████      | 40/100 [00:01<00:02, 26.01it/s]Preloading Calibration Sets:  44%|████▍     | 44/100 [00:01<00:01, 28.15it/s]Preloading Calibration Sets:  44%|████▍     | 44/100 [00:20<00:01, 28.15it/s]Preloading Calibration Sets:  47%|████▋     | 47/100 [00:59<04:34,  5.18s/it]Preloading Calibration Sets:  48%|████▊     | 48/100 [01:52<09:10, 10.59s/it]Preloading Calibration Sets:  49%|████▉     | 49/100 [02:44<13:58, 16.44s/it]Preloading Calibration Sets:  50%|█████     | 50/100 [03:38<18:51, 22.64s/it]Preloading Calibration Sets:  51%|█████     | 51/100 [04:32<23:28, 28.75s/it]Preloading Calibration Sets:  52%|█████▏    | 52/100 [05:27<27:30, 34.40s/it]Preloading Calibration Sets:  53%|█████▎    | 53/100 [06:21<30:32, 38.99s/it]Preloading Calibration Sets:  54%|█████▍    | 54/100 [07:15<32:43, 42.69s/it]Preloading Calibration Sets:  55%|█████▌    | 55/100 [08:09<34:15, 45.68s/it]Preloading Calibration Sets:  56%|█████▌    | 56/100 [09:03<35:11, 47.99s/it]Preloading Calibration Sets:  57%|█████▋    | 57/100 [09:57<35:45, 49.89s/it]Preloading Calibration Sets:  58%|█████▊    | 58/100 [10:51<35:43, 51.05s/it]Preloading Calibration Sets:  59%|█████▉    | 59/100 [11:45<35:28, 51.91s/it]Preloading Calibration Sets:  60%|██████    | 60/100 [12:40<35:02, 52.57s/it]Preloading Calibration Sets:  61%|██████    | 61/100 [13:34<34:26, 52.98s/it]Preloading Calibration Sets:  62%|██████▏   | 62/100 [14:30<34:08, 53.90s/it]Preloading Calibration Sets:  63%|██████▎   | 63/100 [15:24<33:24, 54.18s/it]Preloading Calibration Sets:  64%|██████▍   | 64/100 [16:19<32:36, 54.34s/it]Preloading Calibration Sets:  65%|██████▌   | 65/100 [17:15<32:01, 54.90s/it]Preloading Calibration Sets:  66%|██████▌   | 66/100 [18:10<31:02, 54.78s/it]Preloading Calibration Sets:  67%|██████▋   | 67/100 [19:05<30:15, 55.02s/it]Preloading Calibration Sets:  68%|██████▊   | 68/100 [20:00<29:11, 54.73s/it]Preloading Calibration Sets:  69%|██████▉   | 69/100 [20:54<28:16, 54.73s/it]Preloading Calibration Sets:  70%|███████   | 70/100 [21:47<27:07, 54.25s/it]Preloading Calibration Sets:  71%|███████   | 71/100 [22:41<26:07, 54.05s/it]Preloading Calibration Sets:  72%|███████▏  | 72/100 [23:35<25:15, 54.13s/it]Preloading Calibration Sets:  73%|███████▎  | 73/100 [24:29<24:17, 53.99s/it]Preloading Calibration Sets:  74%|███████▍  | 74/100 [25:22<23:18, 53.80s/it]Preloading Calibration Sets:  75%|███████▌  | 75/100 [26:17<22:28, 53.93s/it]Preloading Calibration Sets:  76%|███████▌  | 76/100 [27:10<21:31, 53.79s/it]Preloading Calibration Sets:  77%|███████▋  | 77/100 [28:04<20:38, 53.85s/it]Preloading Calibration Sets:  78%|███████▊  | 78/100 [28:58<19:46, 53.94s/it]Preloading Calibration Sets:  79%|███████▉  | 79/100 [29:52<18:53, 53.98s/it]Preloading Calibration Sets:  80%|████████  | 80/100 [30:46<17:56, 53.84s/it]Preloading Calibration Sets:  81%|████████  | 81/100 [31:39<17:01, 53.77s/it]Preloading Calibration Sets:  82%|████████▏ | 82/100 [32:33<16:08, 53.79s/it]Preloading Calibration Sets:  83%|████████▎ | 83/100 [33:27<15:16, 53.93s/it]Preloading Calibration Sets:  84%|████████▍ | 84/100 [34:21<14:23, 53.94s/it]Preloading Calibration Sets:  85%|████████▌ | 85/100 [35:15<13:29, 53.97s/it]Preloading Calibration Sets:  86%|████████▌ | 86/100 [36:09<12:35, 53.95s/it]Preloading Calibration Sets:  87%|████████▋ | 87/100 [37:03<11:38, 53.73s/it]Preloading Calibration Sets:  88%|████████▊ | 88/100 [37:57<10:46, 53.85s/it]Preloading Calibration Sets:  89%|████████▉ | 89/100 [38:50<09:51, 53.81s/it]Preloading Calibration Sets:  90%|█████████ | 90/100 [39:44<08:57, 53.73s/it]Preloading Calibration Sets:  91%|█████████ | 91/100 [40:38<08:03, 53.68s/it]Preloading Calibration Sets:  92%|█████████▏| 92/100 [41:31<07:09, 53.70s/it]Preloading Calibration Sets:  93%|█████████▎| 93/100 [42:25<06:16, 53.74s/it]Preloading Calibration Sets:  94%|█████████▍| 94/100 [43:19<05:22, 53.75s/it]Preloading Calibration Sets:  95%|█████████▌| 95/100 [44:13<04:28, 53.76s/it]Preloading Calibration Sets:  96%|█████████▌| 96/100 [45:06<03:35, 53.76s/it]Preloading Calibration Sets:  97%|█████████▋| 97/100 [46:00<02:41, 53.78s/it]Preloading Calibration Sets:  98%|█████████▊| 98/100 [46:54<01:47, 53.76s/it]Preloading Calibration Sets:  99%|█████████▉| 99/100 [47:47<00:53, 53.63s/it]Preloading Calibration Sets: 100%|██████████| 100/100 [48:41<00:00, 53.56s/it]Preloading Calibration Sets: 100%|██████████| 100/100 [48:41<00:00, 29.21s/it]
+-> Sanity Check features loaded.
+Preloading Target Sets:   0%|          | 0/100 [00:00<?, ?it/s]Preloading Target Sets:   1%|          | 1/100 [00:55<1:31:37, 55.53s/it]Preloading Target Sets:   2%|▏         | 2/100 [01:51<1:30:40, 55.51s/it]Preloading Target Sets:   3%|▎         | 3/100 [02:47<1:30:11, 55.79s/it]Preloading Target Sets:   4%|▍         | 4/100 [03:47<1:31:56, 57.47s/it]Preloading Target Sets:   5%|▌         | 5/100 [04:42<1:29:52, 56.77s/it]Preloading Target Sets:   6%|▌         | 6/100 [05:38<1:28:09, 56.28s/it]Preloading Target Sets:   7%|▋         | 7/100 [06:33<1:26:54, 56.07s/it]Preloading Target Sets:   8%|▊         | 8/100 [07:29<1:25:52, 56.00s/it]Preloading Target Sets:   9%|▉         | 9/100 [08:24<1:24:38, 55.81s/it]Preloading Target Sets:  10%|█         | 10/100 [09:20<1:23:36, 55.74s/it]Preloading Target Sets:  11%|█         | 11/100 [10:15<1:22:13, 55.44s/it]Preloading Target Sets:  12%|█▏        | 12/100 [11:10<1:21:25, 55.52s/it]Preloading Target Sets:  13%|█▎        | 13/100 [12:07<1:20:46, 55.71s/it]Preloading Target Sets:  14%|█▍        | 14/100 [13:03<1:19:58, 55.79s/it]Preloading Target Sets:  15%|█▌        | 15/100 [13:58<1:18:52, 55.68s/it]Preloading Target Sets:  16%|█▌        | 16/100 [14:54<1:18:07, 55.80s/it]Preloading Target Sets:  17%|█▋        | 17/100 [15:50<1:17:01, 55.68s/it]Preloading Target Sets:  18%|█▊        | 18/100 [16:45<1:16:13, 55.78s/it]Preloading Target Sets:  19%|█▉        | 19/100 [17:41<1:15:10, 55.69s/it]Preloading Target Sets:  20%|██        | 20/100 [18:36<1:14:04, 55.56s/it]Preloading Target Sets:  21%|██        | 21/100 [19:32<1:13:18, 55.67s/it]Preloading Target Sets:  22%|██▏       | 22/100 [20:29<1:12:38, 55.88s/it]Preloading Target Sets:  23%|██▎       | 23/100 [21:24<1:11:30, 55.72s/it]Preloading Target Sets:  24%|██▍       | 24/100 [22:20<1:10:35, 55.73s/it]Preloading Target Sets:  25%|██▌       | 25/100 [23:15<1:09:31, 55.62s/it]Preloading Target Sets:  26%|██▌       | 26/100 [24:10<1:08:25, 55.48s/it]Preloading Target Sets:  27%|██▋       | 27/100 [25:05<1:07:14, 55.27s/it]Preloading Target Sets:  28%|██▊       | 28/100 [26:02<1:06:51, 55.72s/it]Preloading Target Sets:  29%|██▉       | 29/100 [26:58<1:06:01, 55.79s/it]Preloading Target Sets:  30%|███       | 30/100 [27:53<1:04:57, 55.68s/it]Preloading Target Sets:  31%|███       | 31/100 [28:48<1:03:49, 55.50s/it]Preloading Target Sets:  32%|███▏      | 32/100 [29:44<1:02:51, 55.47s/it]Preloading Target Sets:  33%|███▎      | 33/100 [30:39<1:01:52, 55.41s/it]Preloading Target Sets:  34%|███▍      | 34/100 [31:35<1:01:14, 55.68s/it]Preloading Target Sets:  35%|███▌      | 35/100 [32:31<1:00:15, 55.63s/it]Preloading Target Sets:  36%|███▌      | 36/100 [33:26<59:19, 55.62s/it]  Preloading Target Sets:  37%|███▋      | 37/100 [34:21<58:07, 55.36s/it]Preloading Target Sets:  38%|███▊      | 38/100 [35:16<57:00, 55.17s/it]Preloading Target Sets:  39%|███▉      | 39/100 [36:12<56:22, 55.46s/it]Preloading Target Sets:  40%|████      | 40/100 [37:08<55:32, 55.53s/it]Preloading Target Sets:  41%|████      | 41/100 [38:03<54:39, 55.58s/it]Preloading Target Sets:  42%|████▏     | 42/100 [38:58<53:35, 55.45s/it]Preloading Target Sets:  43%|████▎     | 43/100 [39:53<52:28, 55.23s/it]Preloading Target Sets:  44%|████▍     | 44/100 [40:48<51:28, 55.15s/it]Preloading Target Sets:  45%|████▌     | 45/100 [41:43<50:28, 55.06s/it]Preloading Target Sets:  46%|████▌     | 46/100 [42:38<49:33, 55.07s/it]Preloading Target Sets:  47%|████▋     | 47/100 [43:33<48:41, 55.12s/it]Preloading Target Sets:  48%|████▊     | 48/100 [44:28<47:40, 55.02s/it]Preloading Target Sets:  49%|████▉     | 49/100 [45:24<46:56, 55.22s/it]Preloading Target Sets:  50%|█████     | 50/100 [46:21<46:29, 55.79s/it]Preloading Target Sets:  51%|█████     | 51/100 [47:19<46:10, 56.54s/it]Preloading Target Sets:  52%|█████▏    | 52/100 [48:16<45:14, 56.55s/it]Preloading Target Sets:  53%|█████▎    | 53/100 [49:13<44:31, 56.83s/it]Preloading Target Sets:  54%|█████▍    | 54/100 [50:11<43:53, 57.25s/it]Preloading Target Sets:  55%|█████▌    | 55/100 [51:08<42:47, 57.05s/it]Preloading Target Sets:  56%|█████▌    | 56/100 [52:04<41:32, 56.65s/it]Preloading Target Sets:  57%|█████▋    | 57/100 [52:59<40:23, 56.35s/it]Preloading Target Sets:  58%|█████▊    | 58/100 [53:55<39:12, 56.00s/it]Preloading Target Sets:  59%|█████▉    | 59/100 [54:49<37:58, 55.56s/it]Preloading Target Sets:  60%|██████    | 60/100 [55:44<36:56, 55.42s/it]Preloading Target Sets:  61%|██████    | 61/100 [56:40<36:01, 55.42s/it]Preloading Target Sets:  62%|██████▏   | 62/100 [57:35<35:03, 55.36s/it]Preloading Target Sets:  63%|██████▎   | 63/100 [58:30<34:08, 55.37s/it]Preloading Target Sets:  64%|██████▍   | 64/100 [59:25<33:09, 55.28s/it]Preloading Target Sets:  65%|██████▌   | 65/100 [1:00:20<32:06, 55.04s/it]Preloading Target Sets:  66%|██████▌   | 66/100 [1:01:14<31:04, 54.84s/it]Preloading Target Sets:  67%|██████▋   | 67/100 [1:02:09<30:10, 54.87s/it]Preloading Target Sets:  68%|██████▊   | 68/100 [1:03:09<30:04, 56.38s/it]Preloading Target Sets:  69%|██████▉   | 69/100 [1:04:11<29:58, 58.02s/it]Preloading Target Sets:  70%|███████   | 70/100 [1:05:08<28:54, 57.82s/it]Preloading Target Sets:  71%|███████   | 71/100 [1:06:07<28:06, 58.16s/it]Preloading Target Sets:  72%|███████▏  | 72/100 [1:07:06<27:10, 58.23s/it]Preloading Target Sets:  73%|███████▎  | 73/100 [1:08:03<26:09, 58.13s/it]Preloading Target Sets:  74%|███████▍  | 74/100 [1:08:58<24:45, 57.13s/it]Preloading Target Sets:  75%|███████▌  | 75/100 [1:09:53<23:31, 56.47s/it]Preloading Target Sets:  76%|███████▌  | 76/100 [1:10:48<22:22, 55.92s/it]Preloading Target Sets:  77%|███████▋  | 77/100 [1:11:43<21:24, 55.84s/it]Preloading Target Sets:  78%|███████▊  | 78/100 [1:12:38<20:21, 55.51s/it]Preloading Target Sets:  79%|███████▉  | 79/100 [1:13:33<19:22, 55.36s/it]Preloading Target Sets:  80%|████████  | 80/100 [1:14:28<18:25, 55.25s/it]Preloading Target Sets:  81%|████████  | 81/100 [1:15:23<17:28, 55.18s/it]Preloading Target Sets:  82%|████████▏ | 82/100 [1:16:18<16:33, 55.17s/it]Preloading Target Sets:  83%|████████▎ | 83/100 [1:17:13<15:35, 55.02s/it]Preloading Target Sets:  84%|████████▍ | 84/100 [1:18:08<14:38, 54.91s/it]Preloading Target Sets:  85%|████████▌ | 85/100 [1:19:04<13:48, 55.21s/it]Preloading Target Sets:  86%|████████▌ | 86/100 [1:19:58<12:49, 54.99s/it]Preloading Target Sets:  87%|████████▋ | 87/100 [1:20:53<11:52, 54.82s/it]Preloading Target Sets:  88%|████████▊ | 88/100 [1:21:47<10:56, 54.71s/it]Preloading Target Sets:  89%|████████▉ | 89/100 [1:22:43<10:05, 55.09s/it]Preloading Target Sets:  90%|█████████ | 90/100 [1:23:38<09:11, 55.18s/it]Preloading Target Sets:  91%|█████████ | 91/100 [1:24:33<08:15, 55.09s/it]Preloading Target Sets:  92%|█████████▏| 92/100 [1:25:27<07:18, 54.85s/it]Preloading Target Sets:  93%|█████████▎| 93/100 [1:26:22<06:22, 54.66s/it]Preloading Target Sets:  94%|█████████▍| 94/100 [1:27:16<05:27, 54.52s/it]Preloading Target Sets:  95%|█████████▌| 95/100 [1:28:11<04:33, 54.77s/it]Preloading Target Sets:  96%|█████████▌| 96/100 [1:29:06<03:38, 54.68s/it]Preloading Target Sets:  97%|█████████▋| 97/100 [1:30:00<02:43, 54.55s/it]Preloading Target Sets:  98%|█████████▊| 98/100 [1:30:54<01:48, 54.45s/it]Preloading Target Sets:  99%|█████████▉| 99/100 [1:31:51<00:55, 55.10s/it]Preloading Target Sets: 100%|██████████| 100/100 [1:32:45<00:00, 54.91s/it]Preloading Target Sets: 100%|██████████| 100/100 [1:32:45<00:00, 55.66s/it]
+
+[STEP 1] Calibration using /home1/adoyle2025/Datasets/Datasets/CULane (Multithreaded)...
+Calculating Calibration:   0%|          | 0/100 [00:00<?, ?it/s]Calculating Calibration:   1%|          | 1/100 [00:01<02:10,  1.31s/it]Calculating Calibration:  65%|██████▌   | 65/100 [00:01<00:00, 63.19it/s]Calculating Calibration: 100%|██████████| 100/100 [00:01<00:00, 68.66it/s]
+
+[RESULT] τ(0.95) = 0.099948
+Mean MMDAgg (same-distribution): 0.098892 ± 0.000863
+
+[STEP 2] Sanity Check...
+[SANITY CHECK] MMDAgg(A = /home1/adoyle2025/Datasets/Datasets/CULane, B = /home1/adoyle2025/Datasets/Datasets/CULane) = 0.098573, τ = 0.099948
+No shift detected.
+
+[STEP 3] Data Shift Test: /home1/adoyle2025/Datasets/Datasets/CULane to /home1/adoyle2025/Datasets/Datasets/CULane
+
+Calculating Shifts:   0%|          | 0/100 [00:00<?, ?it/s]Calculating Shifts: 100%|██████████| 100/100 [00:00<00:00, 1195.57it/s]
+
+[RUN 4] MMDAgg=0.099079 ❌ Not Detected
+
+[RUN 7] MMDAgg=0.099122 ❌ Not Detected
+
+[RUN 16] MMDAgg=0.098816 ❌ Not Detected
+
+[RUN 9] MMDAgg=0.098473 ❌ Not Detected
+
+[RUN 2] MMDAgg=0.100197 ✅ Detected
+
+[RUN 17] MMDAgg=0.098952 ❌ Not Detected
+
+[RUN 18] MMDAgg=0.098690 ❌ Not Detected
+
+[RUN 6] MMDAgg=0.098996 ❌ Not Detected
+
+[RUN 14] MMDAgg=0.099366 ❌ Not Detected
+
+[RUN 8] MMDAgg=0.098367 ❌ Not Detected
+
+[RUN 3] MMDAgg=0.098780 ❌ Not Detected
+
+[RUN 11] MMDAgg=0.098707 ❌ Not Detected
+
+[RUN 10] MMDAgg=0.097918 ❌ Not Detected
+
+[RUN 13] MMDAgg=0.099404 ❌ Not Detected
+
+[RUN 5] MMDAgg=0.098532 ❌ Not Detected
+
+[RUN 12] MMDAgg=0.098641 ❌ Not Detected
+
+[RUN 1] MMDAgg=0.099102 ❌ Not Detected
+
+[RUN 15] MMDAgg=0.098647 ❌ Not Detected
+
+[RUN 21] MMDAgg=0.098800 ❌ Not Detected
+
+[RUN 23] MMDAgg=0.098757 ❌ Not Detected
+
+[RUN 19] MMDAgg=0.099678 ❌ Not Detected
+
+[RUN 22] MMDAgg=0.098100 ❌ Not Detected
+
+[RUN 24] MMDAgg=0.098245 ❌ Not Detected
+
+[RUN 25] MMDAgg=0.098016 ❌ Not Detected
+
+[RUN 20] MMDAgg=0.098403 ❌ Not Detected
+
+[RUN 27] MMDAgg=0.098254 ❌ Not Detected
+
+[RUN 32] MMDAgg=0.099975 ✅ Detected
+
+[RUN 26] MMDAgg=0.099999 ✅ Detected
+
+[RUN 34] MMDAgg=0.098392 ❌ Not Detected
+
+[RUN 28] MMDAgg=0.098321 ❌ Not Detected
+
+[RUN 33] MMDAgg=0.097668 ❌ Not Detected
+
+[RUN 35] MMDAgg=0.098609 ❌ Not Detected
+
+[RUN 29] MMDAgg=0.099139 ❌ Not Detected
+
+[RUN 30] MMDAgg=0.097760 ❌ Not Detected
+
+[RUN 38] MMDAgg=0.099429 ❌ Not Detected
+
+[RUN 40] MMDAgg=0.098098 ❌ Not Detected
+
+[RUN 41] MMDAgg=0.097935 ❌ Not Detected
+
+[RUN 39] MMDAgg=0.099828 ❌ Not Detected
+
+[RUN 36] MMDAgg=0.099438 ❌ Not Detected
+
+[RUN 37] MMDAgg=0.097934 ❌ Not Detected
+
+[RUN 45] MMDAgg=0.098798 ❌ Not Detected
+
+[RUN 31] MMDAgg=0.097671 ❌ Not Detected
+
+[RUN 44] MMDAgg=0.098097 ❌ Not Detected
+
+[RUN 43] MMDAgg=0.098483 ❌ Not Detected
+
+[RUN 53] MMDAgg=0.099038 ❌ Not Detected
+
+[RUN 50] MMDAgg=0.097862 ❌ Not Detected
+
+[RUN 54] MMDAgg=0.098917 ❌ Not Detected
+
+[RUN 46] MMDAgg=0.098486 ❌ Not Detected
+
+[RUN 48] MMDAgg=0.098904 ❌ Not Detected
+
+[RUN 52] MMDAgg=0.098495 ❌ Not Detected
+
+[RUN 49] MMDAgg=0.099788 ❌ Not Detected
+
+[RUN 42] MMDAgg=0.099422 ❌ Not Detected
+
+[RUN 58] MMDAgg=0.098406 ❌ Not Detected
+
+[RUN 47] MMDAgg=0.099256 ❌ Not Detected
+
+[RUN 51] MMDAgg=0.098621 ❌ Not Detected
+
+[RUN 57] MMDAgg=0.098273 ❌ Not Detected
+
+[RUN 55] MMDAgg=0.100499 ✅ Detected
+
+[RUN 60] MMDAgg=0.099123 ❌ Not Detected
+
+[RUN 65] MMDAgg=0.098095 ❌ Not Detected
+
+[RUN 56] MMDAgg=0.097872 ❌ Not Detected
+
+[RUN 67] MMDAgg=0.099694 ❌ Not Detected
+
+[RUN 63] MMDAgg=0.099688 ❌ Not Detected
+
+[RUN 61] MMDAgg=0.098452 ❌ Not Detected
+
+[RUN 59] MMDAgg=0.098476 ❌ Not Detected
+
+[RUN 66] MMDAgg=0.098997 ❌ Not Detected
+
+[RUN 70] MMDAgg=0.097738 ❌ Not Detected
+
+[RUN 68] MMDAgg=0.098432 ❌ Not Detected
+
+[RUN 69] MMDAgg=0.099240 ❌ Not Detected
+
+[RUN 75] MMDAgg=0.098171 ❌ Not Detected
+
+[RUN 79] MMDAgg=0.098958 ❌ Not Detected
+
+[RUN 76] MMDAgg=0.098455 ❌ Not Detected
+
+[RUN 73] MMDAgg=0.097897 ❌ Not Detected
+
+[RUN 72] MMDAgg=0.099540 ❌ Not Detected
+
+[RUN 64] MMDAgg=0.098164 ❌ Not Detected
+
+[RUN 62] MMDAgg=0.098940 ❌ Not Detected
+
+[RUN 84] MMDAgg=0.098007 ❌ Not Detected
+
+[RUN 89] MMDAgg=0.098741 ❌ Not Detected
+
+[RUN 80] MMDAgg=0.098114 ❌ Not Detected
+
+[RUN 74] MMDAgg=0.098944 ❌ Not Detected
+
+[RUN 81] MMDAgg=0.097976 ❌ Not Detected
+
+[RUN 88] MMDAgg=0.099038 ❌ Not Detected
+
+[RUN 71] MMDAgg=0.098552 ❌ Not Detected
+
+[RUN 78] MMDAgg=0.098855 ❌ Not Detected
+
+[RUN 83] MMDAgg=0.098801 ❌ Not Detected
+
+[RUN 85] MMDAgg=0.097789 ❌ Not Detected
+
+[RUN 93] MMDAgg=0.098898 ❌ Not Detected
+
+[RUN 77] MMDAgg=0.098106 ❌ Not Detected
+
+[RUN 86] MMDAgg=0.098455 ❌ Not Detected
+
+[RUN 87] MMDAgg=0.099072 ❌ Not Detected
+
+[RUN 95] MMDAgg=0.099270 ❌ Not Detected
+
+[RUN 82] MMDAgg=0.099441 ❌ Not Detected
+
+[RUN 90] MMDAgg=0.098726 ❌ Not Detected
+
+[RUN 94] MMDAgg=0.098255 ❌ Not Detected
+
+[RUN 92] MMDAgg=0.100662 ✅ Detected
+
+[RUN 100] MMDAgg=0.098177 ❌ Not Detected
+
+[RUN 91] MMDAgg=0.098986 ❌ Not Detected
+
+[RUN 98] MMDAgg=0.099285 ❌ Not Detected
+
+[RUN 99] MMDAgg=0.098904 ❌ Not Detected
+
+[RUN 96] MMDAgg=0.097792 ❌ Not Detected
+
+[RUN 97] MMDAgg=0.099942 ❌ Not Detected
+
+[RESULTS] Data Shift detection summary
+Average MMDAgg: 0.098743 ± 0.000649
+TPR (true positive rate) over 100 runs: 5.00%
+[Data Logger] Added new experiment. Total experiments: 1
+----------------------------------------------------
+Job finished: $(date)
+----------------------------------------------------
