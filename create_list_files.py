@@ -44,34 +44,46 @@ def process_directory(base_path):
         for exp_idx, experiment in enumerate(experiments):
             # Get arguments for experiment type
             arg_block = experiment.get("arguments", {})
-            source = arg_block["source_dir"].replace("/home1/adoyle2025/Datasets/Datasets/", "").replace("/", "_")
-            target = arg_block["target_dir"].replace("/home1/adoyle2025/Datasets/Datasets/", "").replace("/", "_")
+            
+            # Use .get() with a default empty string just in case source/target are missing
+            source_raw = arg_block.get("source_dir", "")
+            target_raw = arg_block.get("target_dir", "")
+            
+            source = source_raw.replace("/home1/adoyle2025/Datasets/Datasets/", "").replace("/", "_")
+            target = target_raw.replace("/home1/adoyle2025/Datasets/Datasets/", "").replace("/", "_")
 
             # 1-based indexing for folder names (Experiment_1, Experiment_2, etc.)
-            exp_dir_path = os.path.join(json_dir_path, f"{source}_to_{target}")
+            exp_dir_path = os.path.join(json_dir_path, f"{source}_to_{target}_{exp_idx + 1}")
             os.makedirs(exp_dir_path, exist_ok=True)
-            
-            # --- Dynamically extract prefixes from arguments ---
-            args_block = experiment.get("arguments", {})
-            source_dir = args_block.get("source_dir", "")
-            target_dir = args_block.get("target_dir", "")
             
             # Build the dynamic list, ignoring empty strings and avoiding duplicates
             dynamic_prefixes = []
-            if source_dir:
-                dynamic_prefixes.append(source_dir)
-            if target_dir and target_dir not in dynamic_prefixes:
-                dynamic_prefixes.append(target_dir)
+            if source_raw:
+                dynamic_prefixes.append(source_raw)
+            if target_raw and target_raw not in dynamic_prefixes:
+                dynamic_prefixes.append(target_raw)
             
             # Use a set to store unique paths for the Concat file
             concat_paths = set() 
             
             data_block = experiment.get("data", {})
             for test_name, test_data in data_block.items():
+                
+                # --- FINAL FIX APPLIED HERE ---
+                # If test_data isn't a dictionary, it can't contain "Individual Test Data". Skip it.
+                if not isinstance(test_data, dict):
+                    continue
+                    
                 individual_tests = test_data.get("Individual Test Data", [])
                 
                 # Iterate through each run
                 for run in individual_tests:
+                    
+                    # Make sure the run is actually a dictionary before calling .get()
+                    if not isinstance(run, dict):
+                        continue
+                    # ------------------------------
+                    
                     run_id = run.get("Run", "Unknown")
                     paths = run.get("Image Paths", [])
                     
