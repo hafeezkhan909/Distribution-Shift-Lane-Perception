@@ -3,6 +3,7 @@ import json
 import glob
 import argparse
 
+
 def process_json_file(json_path, base_path=None):
     filename = os.path.basename(json_path)
 
@@ -15,7 +16,7 @@ def process_json_file(json_path, base_path=None):
 
     # Load the JSON
     try:
-        with open(json_path, 'r') as f:
+        with open(json_path, "r") as f:
             schema = json.load(f)
     except Exception as e:
         print(f"Error loading {filename}: {e}")
@@ -40,13 +41,16 @@ def process_json_file(json_path, base_path=None):
         target_raw = arg_block.get("target_list_path", "")
 
         # 1-based indexing for folder names (Experiment_1, Experiment_2, etc.)
-        exp_dir_path = os.path.join(json_dir_path, f"{source_raw}_to_{target_raw}_{exp_idx + 1}")
+        exp_dir_path = os.path.join(
+            json_dir_path, f"{source_raw}_to_{target_raw}_{exp_idx + 1}"
+        )
         os.makedirs(exp_dir_path, exist_ok=True)
 
         dynamic_prefixes = []
 
         def get_dataset_root(txt_path):
-            if not txt_path: return ""
+            if not txt_path:
+                return ""
             # Goes from ".../CULane/list/train.txt" -> ".../CULane/"
             root = os.path.dirname(os.path.dirname(txt_path))
             return root + "/" if not root.endswith("/") else root
@@ -93,20 +97,20 @@ def process_json_file(json_path, base_path=None):
                             break  # Stop checking after the first matching prefix is found
 
                     # Remove any leftover leading slash so it's a true relative path
-                    p = p.lstrip('/')
+                    p = p.lstrip("/")
                     clean_paths.append(p)
 
                 # 1. Write the individual run list file
                 run_file_path = os.path.join(exp_dir_path, f"Run_{run_id}.txt")
-                with open(run_file_path, 'w') as f:
+                with open(run_file_path, "w") as f:
                     for p in clean_paths:
                         f.write(f"{p}\n")
-                        concat_paths.add(p) # Add to the master set for this experiment
+                        concat_paths.add(p)  # Add to the master set for this experiment
 
         # 2. Write the concatenated list file for the experiment
         if concat_paths:
             concat_file_path = os.path.join(exp_dir_path, "full.txt")
-            with open(concat_file_path, 'w') as f:
+            with open(concat_file_path, "w") as f:
                 for p in sorted(concat_paths):
                     f.write(f"{p}\n")
 
@@ -125,9 +129,18 @@ def process_directory(base_path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Extract image lists into a nested directory structure.")
-    parser.add_argument("--dir", default=".", help="Directory containing the JSON files (default: current directory).")
-    parser.add_argument("--file", help="Process a single JSON file and write outputs alongside it (or under --dir if provided).")
+    parser = argparse.ArgumentParser(
+        description="Extract image lists into a nested directory structure."
+    )
+    parser.add_argument(
+        "--dir",
+        default=".",
+        help="Directory containing the JSON files (default: current directory).",
+    )
+    parser.add_argument(
+        "--file",
+        help="Process a single JSON file and write outputs alongside it (or under --dir if provided).",
+    )
 
     args = parser.parse_args()
 
