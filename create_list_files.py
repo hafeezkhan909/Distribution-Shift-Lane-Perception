@@ -6,11 +6,7 @@ import argparse
 def process_json_file(json_path, base_path=None):
     filename = os.path.basename(json_path)
 
-    # Skip cache or irrelevant files
-    if filename == "image_metrics_cache.json":
-        return
-
-    # The directory name for this JSON file (e.g., '10sImageNet128d')
+    # The directory name for this JSON file
     json_dir_name = os.path.splitext(filename)[0]
 
     # If base_path is provided, output goes under that directory; otherwise alongside the file
@@ -43,11 +39,8 @@ def process_json_file(json_path, base_path=None):
         source_raw = arg_block.get("source_list_path", "")
         target_raw = arg_block.get("target_list_path", "")
 
-        source = source_raw.replace("/home1/adoyle2025/Datasets/Datasets/", "").replace("/", "_").replace(".txt", "")
-        target = target_raw.replace("/home1/adoyle2025/Datasets/Datasets/", "").replace("/", "_").replace(".txt", "")
-
         # 1-based indexing for folder names (Experiment_1, Experiment_2, etc.)
-        exp_dir_path = os.path.join(json_dir_path, f"{source}_to_{target}_{exp_idx + 1}")
+        exp_dir_path = os.path.join(json_dir_path, f"{source_raw}_to_{target_raw}_{exp_idx + 1}")
         os.makedirs(exp_dir_path, exist_ok=True)
 
         dynamic_prefixes = []
@@ -65,11 +58,6 @@ def process_json_file(json_path, base_path=None):
             dynamic_prefixes.append(source_root)
         if target_root and target_root not in dynamic_prefixes:
             dynamic_prefixes.append(target_root)
-
-        # Add hardcoded failsafe for your cluster
-        failsafe_root = "/home1/adoyle2025/Datasets/Datasets/CULane/"
-        if failsafe_root not in dynamic_prefixes:
-            dynamic_prefixes.append(failsafe_root)
 
         # Use a set to store unique paths for the Concat file
         concat_paths = set()
@@ -103,10 +91,6 @@ def process_json_file(json_path, base_path=None):
                         if p.startswith(prefix):
                             p = p.replace(prefix, "", 1)
                             break  # Stop checking after the first matching prefix is found
-
-                    # Extra failsafe in case the path in JSON was missing the leading slash
-                    if p.startswith("home1/adoyle2025/Datasets/Datasets/CULane/"):
-                        p = p.replace("home1/adoyle2025/Datasets/Datasets/CULane/", "", 1)
 
                     # Remove any leftover leading slash so it's a true relative path
                     p = p.lstrip('/')
