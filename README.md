@@ -2,11 +2,21 @@
 
 ## Table of Contents
 
-
+- [Overview](#overview)
+- [Setup](#setup)
+  - [Environment](#environment)
+  - [Dataset Structure](#dataset-structure)
+- [🚀 How to Run `experiment.py` (New Pipeline)](#-how-to-run-experimentpy-new-pipeline)
+  - [Modes: `custom_weights` vs `imagenet_weights`](#modes-custom_weights-vs-imagenet_weights)
+  - [Basic Usage](#basic-usage)
+  - [Required Arguments](#required-arguments)
+  - [Optional Configuration](#optional-configuration)
+  - [Outputs](#outputs)
+- [Other Scripts](#other-scripts)
 
 ## Overview
 
-The pipeline estimates an empirical threshold (`τ`) using *same-domain calibration*, and then tests whether samples from another dataset (or perturbed version of the same dataset) come from a statistically different distribution.
+The pipeline estimates an empirical threshold (`τ`) using *same-domain calibration*, and then tests whether samples from another dataset (or a perturbed version of the same dataset) come from a statistically different distribution.
 
 The pipeline consists of:
 
@@ -14,17 +24,19 @@ The pipeline consists of:
 
 ![Extract Features](figures/readMeGraphics/Extract%20Features.svg)
 
-3. **Calibration:** We form a "null distribution" of statistical values by extracting the embeddings of the fixed source features and randomly sampled target features (we set it to 100 iterations in our experiments). Then, we select the threshold `τ` (tau) as the 95th (\(\alpha = 0.05\)) percentile to be determined as shift detection.
+2. **Calibration:** Forms a null distribution of test statistics by comparing a fixed source reference set against many randomly sampled sets from the *same source domain*. `τ` is set as the `(1 - α)` percentile of this null distribution.
 
 ![Calibration Diagram](figures/readMeGraphics/Calibration.svg)
 
-5. **Data Shift Test (New Domain or Shifted Same Domain):** Compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset. If the statistic exceeds `τ`, a significant distribution shift is detected.
+3. **Data Shift Test:** Compares the source reference features with samples from a target domain (e.g., CULane → Curvelanes) and reports the shift detection rate across runs.
 
 ![Data Shift Test Diagram](figures/readMeGraphics/Data%20Shift%20Test.svg)
 
+---
+
 ## Setup
 
-### Enviroment
+### Environment
 
 #### Python 3 and Required Packages
 
@@ -34,7 +46,7 @@ The pipeline consists of:
 
 1. Conda Environment Setup
 ```
-# Instally everything using the environment.yml file
+# Install everything using the environment.yml file
 conda env create -f environment.yml
 
 # Activate the environment
@@ -58,221 +70,141 @@ cd torch_two_sample
 python setup.py install
 ```
 
-#### Dataset Structure
+### Dataset Structure
+
 All datasets must adhere to a simple file-list structure for our data loaders:
 
 **Root Directory (root_dir):** The absolute path to the base folder containing all image files.
 
-**List File (list_path):** A text file (e.g., train.txt) containing paths to images, one per line.
+**List File (list_path):** A text file (e.g., `train.txt`) containing paths to images, one per line.
 
-The paths listed inside the List File must be relative to the root_dir.
+The paths listed inside the List File must be relative to the `root_dir`.
 
 **Example**
-Given the root directory is datasets/MyProject:
 
-|    File Path in System    |   Path in `train.txt`  |
-| --------------------------------- | -------------- |
+Given the root directory is `datasets/MyProject`:
+
+| File Path in System | Path in `train.txt` |
+| --- | --- |
 | `datasets/MyProject/data/001.jpg` | `data/001.jpg` |
 | `datasets/MyProject/data/002.jpg` | `data/002.jpg` |
 
-## 🚀 How to Run `shift_experiment.py`
+---
 
-Execute the script via the command line. The experiment performs feature extraction, MMD calibration, a sanity check, and finally the data shift test.
+## 🚀 How to Run `experiment.py` (New Pipeline)
 
-### 1. Basic Usage
+`experiment.py` is the updated experiment runner. It:
 
-You must explicitly provide the source and target directories and list files.
+- Extracts and **caches** latent encodings to disk (to avoid re-encoding on repeated runs).
+- Runs the statistical tests **sequentially** (calibration → sanity check → shift test) to avoid PyTorch/JAX GPU memory collisions.
+- Supports multiple two-sample tests:
+  - **MMD**
+  - **MMD_Agg**
+  - **Energy**
+  - **BKS**
 
-> **Checkout our [Command Generator](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/) that will auto-populate your command line args!**
-[![Image of the Command Generator](figures/readMeGraphics/Distribution-Shift-Lane-Perception-Command-Generator.png)
+### Modes: `custom_weights` vs `imagenet_weights`
+
+`experiment.py` has two subcommands:
+
+- `custom_weights`: uses a local weights directory for the autoencoder.
+- `imagenet_weights`: uses ImageNet weights (no custom weights directory required).
+
+### Basic Usage
+
+> Tip: If you are on a 1-GPU machine, the script automatically forces **JAX to CPU** and keeps PyTorch on the GPU to prevent contention.
+
+#### Example (ImageNet weights)
 
 ```bash
-python shift_experiment.py \
+python experiment.py \
   --source_dir ./datasets/CULane \
   --target_dir ./datasets/Curvelanes \
   --source_list_path ./datasets/CULane/list/train.txt \
-  --target_list_path ./datasets/Curvelane/train/train.txt
+  --target_list_path ./datasets/Curvelanes/list/train.txt \
+  imagenet_weights
 ```
 
-### 2. Required Arguments
+#### Example (Custom weights)
 
-The following arguments are strictly required to run the script:
+```bash
+python experiment.py \
+  --source_dir ./datasets/CULane \
+  --target_dir ./datasets/Curvelanes \
+  --source_list_path ./datasets/CULane/list/train.txt \
+  --target_list_path ./datasets/Curvelanes/list/train.txt \
+  custom_weights \
+  --model_weights_path ./weights/my_autoencoder_weights_dir
+```
+
+### Required Arguments
+
+These are required regardless of mode:
 
 | Argument | Description |
 | :--- | :--- |
 | `--source_dir` | Root directory for the Source dataset. |
 | `--target_dir` | Root directory for the Target dataset. |
-| `--source_list_path` | Path to the text file containing source image paths. |
 | `--target_list_path` | Path to the text file containing target image paths. |
 
-### 3. Shift Scenarios
+> `--source_list_path` defaults to `./datasets/CULane/list/train.txt`, but you will almost always want to set it explicitly.
 
-To apply a specific synthetic shift, add `--shift <TYPE>` and the corresponding parameter flag.
+Mode-specific required args:
 
-| Shift Type | Required Parameter | Default | Example Command Snippet |
-| :--- | :--- | :--- | :--- |
-| **Gaussian Noise** | `--std` | `0.0` | `--shift gaussian --std 1.5` |
-| **Rotation** | `--rotation_angle` | `0.0` | `--shift rotation_shift --rotation_angle 30` |
-| **Translation** | `--width_shift_frac`<br>`--height_shift_frac` | `0.2`<br>`0.2` | `--shift translation_shift --width_shift_frac 0.3` |
-| **Shear** | `--shear_angle` | `0.0` | `--shift shear_shift --shear_angle 15` |
-| **Zoom** | `--zoom_factor` | `1.0` | `--shift zoom_shift --zoom_factor 1.3` |
-| **Flips** | *(None)* | N/A | `--shift horizontal_flip_shift` |
+| Mode | Required Argument | Description |
+| :--- | :--- | :--- |
+| `custom_weights` | `--model_weights_path` | Path to the **directory** containing the custom weights. |
+| `imagenet_weights` | *(none)* | Uses ImageNet weights. |
 
-### 4. Optional Configuration
-
-You can customize the experiment parameters using these flags:
+### Optional Configuration
 
 | Flag | Default | Description |
 | :--- | :--- | :--- |
-| `--src_samples` | `1000` | Number of images to sample from the source. |
-| `--tgt_samples` | `100` | Number of images to sample from the target. |
-| `--image_size` | `512` | Target size (H & W) to resize images to. |
-| `--batch_size` | `16` | Batch size for the dataloader. |
-| `--num_runs` | `10` | Number of experiment repetitions. |
-| `--num_calib` | `100` | Number of calibration runs. |
-| `--cropImg` | `False` | If set (e.g. `--cropImg True`), crops images to bottom half. |
-| `--block_idx` | `0` | Index for data blocking/pagination. |
-| `--seed_base` | `42` | Base seed for random operations. |
-| `--alpha` | `0.05` | Significance level for the test. |
-| `--file_location` | `logs` | Directory to save output logs. |
-| `--file_name` | `sanity_check.json` | Filename for the output JSON log. |
+| `--sample_size` | `1000` | Number of samples per run (source + each sampled target/calibration set). |
+| `--num_runs` | `100` | Number of target runs used to compute detection rate. |
+| `--batch_size` | `128` | Batch size for feature extraction. |
+| `--image_size` | `512` | Resize images to `image_size x image_size`. |
+| `--alpha` | `0.05` | Significance level; `τ` is set at the `(1-α)` percentile. |
+| `--seed_base` | `42` | Base seed for all random sampling. |
+| `--permutation_test_iterations` | `1000` | Number of permutations used for MMD/MMD_Agg/Energy p-values. Set to `0` to skip p-values. |
+| `--latent_dim` | `32` | Latent dimension used by the autoencoder encoder. |
+| `--file_location` | `logs` | Directory to write the JSON log. (Must exist.) |
+| `--file_name` | `experiment.json` | Log file name. |
 
-## 🚀 How to Run `run_experiment.py`
+### Outputs
 
-The script `run_experiment.py` is configured to run from the command line.
+#### 1) Encodings Cache
 
-### Basic Execution
-
-To run the experiment with all default settings (comparing 1000 samples of `Curvelanes` to 100 samples of `Curvelanes`):
+Encodings are cached under:
 
 ```
-python run_experiment.py
-
-
+Encodings/
+  dim_<latent_dim>/
+    <list_path>_n<sample_size>_seed<seed>.npy
 ```
 
-### Checking All Arguments
+This caching is handled automatically by `_get_or_extract_features()` in `ShiftExperiment`.
 
-To see a full list of all available commands, their defaults, and their descriptions:
+#### 2) JSON Log
 
-```
-python run_experiment.py -h
-
+A JSON log is written to:
 
 ```
-
-### Example: Cross-Domain Test
-
-Here is a more practical example. Let's test for a shift between the `Curvelanes` **training set** and the `CULane` **test set**.
-
-We will use:
-
-* `Curvelanes` as the source (`-s`)
-
-* `CULane` as the target (`-t`)
-
-* `train` split for the source (`-p`)
-
-* `test` split for the target (`-g`)
-
-* `5000` source samples (`-r`)
-
-* `500` target/calibration samples (`-a`)
-
-* A different seed (`--seed_base`)
-
-```
-python run_experiment.py \
-    -s Curvelanes \
-    -t CULane \
-    -p train \
-    -g test \
-    -r 5000 \
-    -a 500 \
-    --seed_base 123
-
-
+<file_location>/<file_name>
 ```
 
-## ⚙️ Command-Line Arguments
+The log includes:
 
-Here is a detailed list of all available arguments, based on the script's `argparse` setup.
+- calibration τ for each test
+- sanity check results
+- per-run target shift stats + detection decisions
+- summary TPR for each statistical test
 
-### Dataset Arguments
+---
 
-| Flag (Short) | Flag (Long) | Default | Description | 
- | ----- | ----- | ----- | ----- | 
-| `-s` | `--source` | `"Curvelanes"` | Source dataset name (e.g., `Curvelanes`, `CULane`). | 
-| `-t` | `--target` | `"Curvelanes"` | Target dataset name for the sanity check. | 
-| `-p` | `--src_split` | `"train"` | Source dataset split (e.g., `train`, `test`). | 
-| `-g` | `--tgt_split` | `"train"` | Target dataset split. | 
+## Other Scripts
 
-### Sampling Arguments
+- `run_experiment.py`: older wrapper / experiment driver (kept for backward compatibility).
+- `shift_experiment.py`: older CLI entrypoint referenced by the command generator.
 
-| Flag (Short) | Flag (Long) | Default | Description | 
- | ----- | ----- | ----- | ----- | 
-| `-r` | `--src_samples` | `1000` | Number of samples for the source reference. | 
-| `-a` | `--tgt_samples` | `100` | Number of samples for each target test run. | 
-| `-b` | `--block_idx` | `0` | Block index for chunked source loading (e.g., `0` for samples 0-999, `1` for 1000-1999). | 
-
-### Model & MMD Test Arguments
-
-| Flag (Short) | Flag (Long) | Default | Description | 
- | ----- | ----- | ----- | ----- | 
-| `-i` | `--batch_size` | `16` | Batch size for feature extraction. | 
-| `-z` | `--image_size` | `512` | Image resize dimension (e.g., 512x512). | 
-| `-e` | `--num_calib` | `100` | Number of calibration runs to build the null distribution. | 
-| `-n` | `--alpha` | `0.05` | Significance level for the test (e.g., 0.05 for 95% confidence). | 
-
-### Reproducibility
-
-| Flag (Short) | Flag (Long) | Default | Description | 
- | ----- | ----- | ----- | ----- | 
-| (None) | `--seed_base` | `42` | Base seed for all random sampling. | 
-
-## Outputs
-
-All feature and result files are stored in the `features/` directory:
-
-```
-features/
- ├─ Curvelanes_train_1000_0.npy   (Cached features for the source)
- ├─ calibration_null_mmd.npy      (MMD values from calibration runs)
- ├─ mmd_curvelanes_100runs.npy    (MMD values from cross-domain test runs)
- └─ tpr_curvelanes_100runs.npy    (Detection results (0 or 1) for each test run)
-```
-
-## Files
-
-### `run_experiment.py`
-
-Main experiment pipeline.
-
-* Loads a pretrained (ResNet-18) convolutional autoencoder (`ConvAutoencoderFC`) for feature extraction. You can add different types of encoders as you wish (ResNet-50, DLA, etc), but make sure to keep the latent dim as 512. Soon we will release code for more models including ViTs.
-
-* Calibrates MMD threshold using same-domain (e.g., Curvelanes → Curvelanes) comparisons.
-
-* Tests cross-domain shifts (e.g., Curvelanes → CULane) using the calibrated threshold.
-
-* Saves extracted features, calibration results, and per-run statistics in the `features/` directory.
-
-### `mmd_test.py`
-
-Implements the **Maximum Mean Discrepancy (MMD)** test using `torch_two_sample`.
-It computes both the MMD statistic and bootstrap-based p-value between two feature distributions.
-
-```
-def mmd_test(X_src, X_tgt):
-    """
-    Args:
-        X_src (np.ndarray): Source domain features, shape (N, D)
-        X_tgt (np.ndarray): Target domain features, shape (M, D)
-    Returns:
-        (mmd_statistic, p_value)
-    """
-
-
-```
-
-The kernel bandwidth is set using the median pairwise distance heuristic (1 / median_dist), consistent with prior works.
-
+If you are starting fresh, use **`experiment.py`**.
