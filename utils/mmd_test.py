@@ -5,7 +5,7 @@ from scipy.spatial import distance
 from torch_two_sample import MMDStatistic
 
 
-def mmd_test(X_src, X_tgt):
+def mmd_test(X_src, X_tgt, iterations=None):
     """
     Paper-style MMD test (using torch_two_sample).
     Matches ShiftTester.multi_dimensional_test() in the paper code.
@@ -35,10 +35,17 @@ def mmd_test(X_src, X_tgt):
     mmd = MMDStatistic(len(X_src_t), len(X_tgt_t))
 
     # Compute MMD statistic and kernel matrix
-    t_stat, _ = mmd(X_src_t, X_tgt_t, alphas=[alpha], ret_matrix=True)
+    t_stat, kernel_matrix = mmd(X_src_t, X_tgt_t, alphas=[alpha], ret_matrix=True)
+
+    if iterations == 0:
+        # If no permutation test, return statistic and None for p-value
+        return t_stat.item(), None
+
+    # Compute p-value via permutation test
+    p_value = mmd.pval(kernel_matrix, n_permutations=iterations)
 
     # Return test statistic
-    return t_stat.item()
+    return t_stat.item(), p_value
 
 
 if __name__ == "__main__":

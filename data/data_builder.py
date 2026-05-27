@@ -1,10 +1,10 @@
 import os
 import random
 import warnings
-from typing import Any, List, Optional, Tuple
+from typing import Any, List, Optional
 
 from PIL import Image
-from torch.utils.data import DataLoader, Dataset, Subset
+from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset
 from torchvision import transforms
 
 from data.data_utils import DataShift, apply_shift
@@ -205,7 +205,7 @@ def get_dataloader(
     batch_size: int,
     image_size: int,
     num_samples: int,
-    cropImg: bool,
+    cropImg: bool = False,
     block_idx: int = 0,
 ):
 
@@ -234,7 +234,13 @@ def get_dataloader(
 
     return [
         DataLoader(
-            subset, batch_size=batch_size, shuffle=False, num_workers=12, pin_memory=True, persistent_workers=True
+            subset,
+            batch_size=batch_size,
+            shuffle=False,
+            num_workers=16,
+            pin_memory=True,
+            persistent_workers=True,
+            prefetch_factor=2,
         ),
         image_paths,
     ]
@@ -247,8 +253,8 @@ def get_seeded_random_dataloader(
     image_size: int,
     num_samples: int,
     seed: int,
-    cropImg: bool,
-    shift: Optional[DataShift],
+    cropImg: bool = False,
+    shift: Optional[DataShift] = None,
 ):
 
     ds = ImageDataset(
@@ -259,17 +265,112 @@ def get_seeded_random_dataloader(
         dataShift=shift,
     )
 
+    # Set the random seed for reproducibility
     random.seed(seed)
+
+    # Randomly sample indices without replacement
     chosen_indices = random.sample(range(len(ds)), min(num_samples, len(ds)))
 
     # Extract the full paths for these specific indices using the class method
     image_paths = [ds.get_image_path(i) for i in chosen_indices]
 
+    # Generate the subset
     subset = Subset(ds, chosen_indices)
 
     return [
         DataLoader(
-            subset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True
+            subset,
+            batch_size=batch_size,
+            shuffle=False,
+            num_workers=4,
+            pin_memory=True,
+            prefetch_factor=2,
         ),
         image_paths,
     ]
+
+
+def get_concat_dataloader(
+    root_dirs: List[str],
+    list_paths: List[str],
+    batch_sizes: List[int],
+    image_sizes: List[int],
+    num_samples: List[int],
+    cropImg: List[bool] = None,
+    block_idx: List[int] = None,
+    seeds: List[int] = None,
+):
+    """Creates a single combined dataloader from multiple datasets.
+
+    Returns:
+        A list containing:
+            - A single DataLoader with all datasets combined
+            - List of all image paths across datasets
+    """
+    # Ensure all input lists have the same length
+    assert (
+        len(root_dirs)
+        == len(list_paths)
+        == len(batch_sizes)
+        == len(image_sizes)
+        == len(num_samples)
+        == len(cropImg)
+        == len(block_idx)
+    ), "All input lists must have the same length."
+
+    subsets = []
+    all_image_paths = []
+
+    print("[INFO] Mixed Dataloader Configuration:")
+
+    # Instantiate the specific dataset classes
+    for i in range(len(root_dirs)):
+        ds = ImageDataset(
+            root_dir=root_dirs[i],
+            list_path=list_paths[i],
+            image_size=image_sizes[i],
+            cropImg=cropImg[i],
+        )
+
+        start = block_idx[i] * num_samples[i]
+        end = min((block_idx[i] + 1) * num_samples[i], len(ds))
+
+        # Validate indices
+        if start >= len(ds):
+            raise ValueError(
+                f"Block index {block_idx[i]} is out of range for dataset size {len(ds)}"
+            )
+
+        # Set seed unique to this dataset index for reproducibility
+        random.seed(seeds[i])
+
+        # Randomly sample indices without replacement
+        chosen_indices = random.sample(range(len(ds)), min(num_samples[i], len(ds)))
+
+        # Extract the full paths for these specific indices
+        image_paths = [ds.get_image_path(j) for j in chosen_indices]
+        all_image_paths.extend(image_paths)  # Flatten into single list
+
+        subset = Subset(ds, chosen_indices)
+        subsets.append(subset)
+        print(f"[INFO] ({root_dirs[i]}) → [{start}:{end}] ({len(subset)} samples)")
+
+    # Concatenate all subsets into one dataset
+    combined_dataset = ConcatDataset(subsets)
+
+    print(f"[INFO] Total combined samples: {len(combined_dataset)}")
+
+    # Use the first batch_size (or make batch_size a single int parameter)
+    batch_size = batch_sizes[0]
+
+    combined_dataloader = DataLoader(
+        combined_dataset,
+        batch_size=batch_size,
+        shuffle=False,
+        num_workers=16,
+        pin_memory=True,
+        persistent_workers=True,
+        prefetch_factor=2,
+    )
+
+    return [combined_dataloader, all_image_paths]

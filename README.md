@@ -8,15 +8,15 @@ The pipeline consists of:
 
 1. **Extract Features:** Encodes features from the source and target data and generates MMD statistics from the features.
 
-![Extract Features](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/55cdb24adb325f13e72e69dfaf63fa1bfc64c617/Extract%20Features.svg)
+![Extract Features](figures/readMeGraphics/Extract%20Features.svg)
 
 3. **Calibration:** We form a "null distribution" of MMD values by extracting the embeddings of the fixed source features and randomly sampled target features (we set it to 100 iterations in our experiments). Then, we select the threshold `τ` (tau) as the 95th (\(\alpha = 0.05\)) percentile to be determined as shift detection.
 
-![Calibration Diagram](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/55cdb24adb325f13e72e69dfaf63fa1bfc64c617/Calibration.svg)
+![Calibration Diagram](figures/readMeGraphics/Calibration.svg)
 
 5. **Data Shift Test (New Domain or Shifted Same Domain):** Compares the reference features with samples from another dataset (e.g., CULane) or a synthetically shifted version of the same dataset. If the MMD statistic exceeds `τ`, a significant distribution shift is detected.
 
-![Data Shift Test Diagram](https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/a506fb0058852d54292d289fcdcb714868d91daa/Data%20Shift%20Test.svg)
+![Data Shift Test Diagram](figures/readMeGraphics/Data%20Shift%20Test.svg)
 
 ## Setup
 
@@ -80,7 +80,7 @@ Execute the script via the command line. The experiment performs feature extract
 You must explicitly provide the source and target directories and list files.
 
 > **Checkout our [Command Generator](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/) that will auto-populate your command line args!**
-[![Image of the Command Generator](Distribution-Shift-Lane-Perception-Command-Generator.png)](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/)
+[![Image of the Command Generator](figures/readMeGraphics/Distribution-Shift-Lane-Perception-Command-Generator.png)
 
 ```bash
 python shift_experiment.py \
