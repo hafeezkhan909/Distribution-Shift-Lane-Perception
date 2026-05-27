@@ -4,8 +4,6 @@
 
 - [Overview](#overview)
 - [Setup](#setup)
-  - [Environment](#environment)
-  - [Dataset Structure](#dataset-structure)
 - [Command Generator Tool](#command-generator-tool)
 - [🚀 How to Run `experiment.py` (New Pipeline)](#-how-to-run-experimentpy-new-pipeline)
   - [Modes: `custom_weights` vs `imagenet_weights`](#modes-custom_weights-vs-imagenet_weights)
@@ -13,7 +11,7 @@
   - [Required Arguments](#required-arguments)
   - [Optional Configuration](#optional-configuration)
   - [Outputs](#outputs)
-- [Other Scripts](#other-scripts)
+- [Other Scripts (eg. training script)](#other-scripts)
 
 ## Overview
 
