@@ -5,13 +5,13 @@ from torchvision import models
 from models import autoencoderConfigs
 
 
-class Conf2ConvAutoencoderFC(nn.Module):
+class ConfP2ConvAutoencoderFC(nn.Module):
     def __init__(
-        self, latent_dim=512, configs=autoencoderConfigs.AutoEncoderWeights.IMAGE_NET
+        self, latent_dim=32, configs=autoencoderConfigs.AutoEncoderWeights.IMAGE_NET
     ):
         super().__init__()
 
-        print("[Autoencoder] - Training Trial 1 - 3.19.26")
+        print(f"[Autoencoder] - Latent Dim: {latent_dim}")
 
         # We will store the path here and load it AT THE END
         checkpoint_path = None
@@ -26,16 +26,19 @@ class Conf2ConvAutoencoderFC(nn.Module):
         elif configs == autoencoderConfigs.AutoEncoderWeights.CU_LANE:
             # Load empty backbone, will populate at the end
             backbone = models.resnet18()
-            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/CULane/autoencoder_CULane_epoch_50.pth"
+            checkpoint_path = "checkpoints/Phase2/CULane/P2autoencoder_CULane_epoch_50.pth"
         elif configs == autoencoderConfigs.AutoEncoderWeights.CURVELANES:
             # Load empty backbone, will populate at the end
             backbone = models.resnet18()
-            checkpoint_path = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/checkpoints/Curvelanes/autoencoder_Curvelanes_epoch_50.pth"
+            checkpoint_path = "checkpoints/Phase2/Curvelanes/P2autoencoder_Curvelanes_epoch_50.pth"
         elif configs == autoencoderConfigs.AutoEncoderWeights.ASSIST_TAXI:
             # Load empty backbone, will populate at the end
-            # TODO: Find the best checkpoint for this one
             backbone = models.resnet18()
-            checkpoint_path = "path_to_assist_taxi_weights.pth"
+            checkpoint_path = "checkpoints/Phase2/AssistTaxi/P2autoencoder_AssistTaxi_epoch_50.pth"
+        elif configs == autoencoderConfigs.AutoEncoderWeights.DISTILL:
+            # Load empty backbone, will populate at the end
+            backbone = models.resnet18()
+            checkpoint_path = "checkpoints/Distillation/CULane/Distill_AE_CULane_epoch_50.pth"
         else:
             raise ValueError(f"Unsupported config: {configs}")
 
@@ -50,29 +53,31 @@ class Conf2ConvAutoencoderFC(nn.Module):
                 m.eval()
                 m.requires_grad_(False)
 
-        self.flatten_dim = 512 * 16 * 16  # for 512×512 input (ResNet downscales by /32)
+        # New: Spatial Reduction Layer
+        # 16x16 -> 4x4 (Factor of 16 reduction)
+        self.spatial_pool = nn.AvgPool2d(kernel_size=4, stride=4)
 
-        # -------- Fully Connected Encoder --------
+        self.flatten_dim = 512 * 4 * 4  # 8192
+
+        # -------- Fully Connected Encoder (2 Layers) --------
         self.fc_encoder = nn.Sequential(
-            nn.Linear(self.flatten_dim, 4096),
-            nn.BatchNorm1d(4096),
+            nn.Linear(self.flatten_dim, 512),
+            nn.BatchNorm1d(512),
             nn.ReLU(inplace=True),
-            nn.Linear(4096, 1024),
-            nn.BatchNorm1d(1024),
-            nn.ReLU(inplace=True),
-            nn.Linear(1024, 256),
+            nn.Linear(512, latent_dim),  # Latent dim = 32
         )
 
+        # -------- Fully Connected Decoder (Symmetric) --------
         self.fc_decoder = nn.Sequential(
-            nn.Linear(256, 1024),
-            nn.BatchNorm1d(1024),
+            nn.Linear(latent_dim, 512),
+            nn.BatchNorm1d(512),
             nn.ReLU(inplace=True),
-            nn.Linear(1024, 4096),
-            nn.BatchNorm1d(4096),
-            nn.ReLU(inplace=True),
-            nn.Linear(4096, self.flatten_dim),
+            nn.Linear(512, self.flatten_dim),
             nn.ReLU(inplace=True),
         )
+
+        # New: Upsample back to 16x16 before ConvTranspose starts
+        self.spatial_upsample = nn.Upsample(scale_factor=4, mode="nearest")
 
         # -------- Decoder (ConvTranspose) --------
         self.decoder_conv = nn.Sequential(
@@ -102,29 +107,27 @@ class Conf2ConvAutoencoderFC(nn.Module):
             )
 
     def encode(self, x):
-        """Encode image → latent vector"""
         h = self.encoder_conv(x)  # (B, 512, 16, 16)
-        h_flat = h.view(h.size(0), -1)
-        z = self.fc_encoder(h_flat)
+        h = self.spatial_pool(h)  # (B, 512, 4, 4)
+        h_flat = h.reshape(h.size(0), -1)  # (B, 8192)
+        z = self.fc_encoder(h_flat)  # (B, 32)
         return z
 
     def decode(self, z):
-        """Decode latent vector → reconstructed image"""
-        h_flat = self.fc_decoder(z)
-        h = h_flat.view(z.size(0), 512, 16, 16)
-        out = self.decoder_conv(h)
+        h_flat = self.fc_decoder(z)  # (B, 8192)
+        h = h_flat.view(z.size(0), 512, 4, 4)
+        h = self.spatial_upsample(h)  # (B, 512, 16, 16)
+        out = self.decoder_conv(h)  # (B, 3, 512, 512)
         return out
 
     def forward(self, x, return_encoding=False):
+        # 1. Pass through encoder
         z = self.encode(x)
+
+        # 2. Stop early if we just want the features
         if return_encoding:
             return z
+
+        # 3. Otherwise, finish the forward pass (decoder)
         out = self.decode(z)
-        return out, z
-
-
-if __name__ == "__main__":
-    model = Conf2ConvAutoencoderFC(latent_dim=512)
-    x = torch.randn(2, 3, 512, 512)
-    out, z = model(x)
-    print(f"[ResNet-AE] input: {x.shape}, latent: {z.shape}, recon: {out.shape}")
+        return out
