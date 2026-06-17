@@ -28,6 +28,12 @@ The pipeline consists of:
 
 ## ⚡️ Setup
 
+### Clone the Repository
+
+```bash
+git clone https://github.com/hafeezkhan909/Distribution-Shift-Lane-Perception.git
+```
+
 > Notice: Python 3.8 and above required
 
 ### Conda Environment Setup
