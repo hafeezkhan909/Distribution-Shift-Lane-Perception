@@ -37,28 +37,45 @@ git clone https://github.com/hafeezkhan909/Distribution-Shift-Lane-Perception.gi
 > Notice: Python 3.8 and above required
 
 ### Conda Environment Setup
+
+#### 1. Install everything using the environment.yml file
 ```
-# Install everything using the environment.yml file
 conda env create -f environment.yml
+```
 
-# Activate the environment
+#### 2. Activate the environment
+```
 conda activate distribution_shift_perception
+```
 
-# Install the torch_two_sample dependency
+#### 3. Install the torch_two_sample dependency
+```
 git clone https://github.com/josipd/torch-two-sample.git
-cd torch_two_sample
+```
+```
+cd torch-two-sample/
+```
+```
 python setup.py install
 ```
 
 ### Pip Setup
+#### 1. Install dependencies
 ```
-# Install dependencies
 pip install scipy torch torchvision tqdm Pillow
+```
+```
 pip install "numpy<2.0"
+```
 
-# Install the torch_two_sample dependency
+#### 2. Install the torch_two_sample dependency
+```
 git clone https://github.com/josipd/torch-two-sample.git
-cd torch_two_sample
+```
+```
+cd torch-two-sample/
+```
+```
 python setup.py install
 ```
 
