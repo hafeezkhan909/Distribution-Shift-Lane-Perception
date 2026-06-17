@@ -79,7 +79,8 @@ The paths listed inside the List File must be relative to the `root_dir`.
 
 > Click here to go to the command generation GUI: [https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/)
 
-![Picture of Command Generator](figures/readMeGraphics/Distribution-Shift-Lane-Perception-Command-Generator.png)
+<img width="1515" height="636" alt="Picture of Command Generator" src="https://github.com/user-attachments/assets/07c201e8-e561-44b7-bfa3-920d26c2c597" />
+
 
 ## 🔨 Manual `experiment.py` Configuration
 
