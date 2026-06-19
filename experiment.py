@@ -23,7 +23,6 @@ import argparse
 
 from models.configurableAutoencoder import Autoencoder
 
-from models import autoencoderConfigs
 from utils.mmd_test import mmd_test
 from utils.energy_test import energy_test
 from utils.bks import bks_distance_test
@@ -189,14 +188,17 @@ class ShiftExperiment:
         print("\nInitializing autoencoder...")
 
         # Define model parameters based on config
-        if self.imagenet_weights:
+        if self.imagenet_weights and self.weights_path is None:
             base_model = Autoencoder(
-                latent_dim=self.latent_dim, imagenet_weights=True
-            ).to(self.device)
-        else:
+                latent_dim=self.latent_dim, imagenet_weights=True).to(self.device)
+        elif self.weights_path is not None and not self.imagenet_weights:
             base_model = Autoencoder(
                 latent_dim=self.latent_dim, weights_path=self.weights_path
             ).to(self.device)
+        else:
+            raise ValueError(
+                "Invalid model configuration: Must specify either imagenet_weights=True or a valid model_weights_path."
+            )
 
         if num_gpus > 2:
             self.model = torch.nn.DataParallel(

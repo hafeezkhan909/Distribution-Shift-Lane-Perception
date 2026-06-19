@@ -2,12 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
-from models import autoencoderConfigs
 
 
 class ConfP2ConvAutoencoderFC(nn.Module):
     def __init__(
-        self, latent_dim=32, configs=autoencoderConfigs.AutoEncoderWeights.IMAGE_NET
+        self, latent_dim=32, weights_path=None
     ):
         super().__init__()
 
@@ -17,28 +16,24 @@ class ConfP2ConvAutoencoderFC(nn.Module):
         checkpoint_path = None
 
         # -------- Pretrained ResNet encoder --------
-        if configs == autoencoderConfigs.AutoEncoderWeights.IMAGE_NET:
+        if configs == "image_net":
             # Load ImageNet pretrained weights (UAE setting)
             backbone = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
-        elif configs == autoencoderConfigs.AutoEncoderWeights.RANDOM_WEIGHTS:
+        elif configs == "random_weights":
             # Load random weights (untrained ResNet)
             backbone = models.resnet18()
-        elif configs == autoencoderConfigs.AutoEncoderWeights.CU_LANE:
+        elif configs == "cu_lane":
             # Load empty backbone, will populate at the end
             backbone = models.resnet18()
             checkpoint_path = "checkpoints/Phase2/CULane/P2autoencoder_CULane_epoch_50.pth"
-        elif configs == autoencoderConfigs.AutoEncoderWeights.CURVELANES:
+        elif configs == "curvelanes":
             # Load empty backbone, will populate at the end
             backbone = models.resnet18()
             checkpoint_path = "checkpoints/Phase2/Curvelanes/P2autoencoder_Curvelanes_epoch_50.pth"
-        elif configs == autoencoderConfigs.AutoEncoderWeights.ASSIST_TAXI:
+        elif configs == "assist_taxi":
             # Load empty backbone, will populate at the end
             backbone = models.resnet18()
             checkpoint_path = "checkpoints/Phase2/AssistTaxi/P2autoencoder_AssistTaxi_epoch_50.pth"
-        elif configs == autoencoderConfigs.AutoEncoderWeights.DISTILL:
-            # Load empty backbone, will populate at the end
-            backbone = models.resnet18()
-            checkpoint_path = "checkpoints/Distillation/CULane/Distill_AE_CULane_epoch_50.pth"
         else:
             raise ValueError(f"Unsupported config: {configs}")
 
