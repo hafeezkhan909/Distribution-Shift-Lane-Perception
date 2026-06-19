@@ -7,7 +7,7 @@ from PIL import Image
 from torch.utils.data import ConcatDataset, DataLoader, Dataset, Subset
 from torchvision import transforms
 
-from data.data_utils import DataShift, apply_shift
+from data.data_utils import apply_shift
 
 
 class ImageDataset(Dataset):
@@ -32,7 +32,14 @@ class ImageDataset(Dataset):
         list_path: str,
         image_size: int = 512,
         cropImg: bool = False,
-        dataShift: DataShift = None,
+        gaussian_sigma: float = 0.0,
+        rotation_angle: float = 0,
+        width_shift_frac: float = 0,
+        height_shift_frac: float = 0,
+        shear_angle: float = 0,
+        zoom_factor: float = 1.0,
+        horizontal_flip: bool = False,
+        vertical_flip: bool = False,
     ) -> None:
         """Initializes the ImageDataset.
 
@@ -50,10 +57,17 @@ class ImageDataset(Dataset):
         Raises:
             FileNotFoundError: If the list file specified by `list_path` is not found.
         """
-        self.shift: DataShift = dataShift
-        self.cropImg: bool = cropImg
-        self.root_dir: str = root_dir
-        self.image_size: int = image_size
+        self.gaussian_sigma = gaussian_sigma
+        self.rotation_angle = rotation_angle
+        self.width_shift_frac = width_shift_frac
+        self.height_shift_frac = height_shift_frac
+        self.shear_angle = shear_angle
+        self.zoom_factor = zoom_factor
+        self.horizontal_flip = horizontal_flip
+        self.vertical_flip = vertical_flip
+        self.cropImg = cropImg
+        self.root_dir = root_dir
+        self.image_size = image_size
 
         if not os.path.exists(list_path):
             raise FileNotFoundError(f"List file not found: {list_path}")
@@ -137,8 +151,17 @@ class ImageDataset(Dataset):
             raise e
 
         # 3. Apply optional shift
-        if self.shift is not None:
-            img = apply_shift(img, self.shift)
+        img = apply_shift(
+            img,
+            gaussian_sigma=self.gaussian_sigma,
+            rotation_angle=self.rotation_angle,
+            width_shift_frac=self.width_shift_frac,
+            height_shift_frac=self.height_shift_frac,
+            shear_angle=self.shear_angle,
+            zoom_factor=self.zoom_factor,
+            horizontal_flip=self.horizontal_flip,
+            vertical_flip=self.vertical_flip,
+        )
 
         # 4. Apply optional crop to the bottom half
         if self.cropImg:
@@ -148,52 +171,6 @@ class ImageDataset(Dataset):
 
         # 5. Apply the standard transformation pipeline
         return self.transform(img)
-
-
-class LaneImageDataset(Dataset):
-    """Generic dataset for lane images given a root path and list file."""
-
-    def __init__(
-        self,
-        root_dir: str,
-        split: str = "train",
-        image_size: int = 512,
-        cropImg: bool = False,
-        dataShift: DataShift = None,
-    ):
-        warnings.warn(
-            "LaneImageDataset is pending deprecation. Use ImageDataset directly.",
-            PendingDeprecationWarning,
-            stacklevel=2,
-        )
-
-        # Determine list_path based on dataset name
-        if "Curvelanes" in root_dir:
-            list_path = os.path.join(root_dir, split, f"{split}.txt")
-            self._is_curvelanes = True
-        else:
-            list_path = os.path.join(root_dir, "list", f"{split}.txt")
-            self._is_curvelanes = False
-
-        self.split = split
-
-        # Initialize parent class
-        super().__init__(
-            root_dir=root_dir,
-            list_path=list_path,
-            image_size=image_size,
-            cropImg=cropImg,
-            dataShift=dataShift,
-        )
-
-    def get_image_path(self, idx: int) -> str:
-        """Overrides the parent path logic to handle dataset specific structures."""
-        rel_path = self.image_paths[idx].lstrip("/")
-
-        if self._is_curvelanes:
-            return os.path.join(self.root_dir, self.split, rel_path)
-        else:
-            return os.path.join(self.root_dir, rel_path)
 
 
 # --- Dataloader Helpers ---
@@ -254,7 +231,14 @@ def get_seeded_random_dataloader(
     num_samples: int,
     seed: int,
     cropImg: bool = False,
-    shift: Optional[DataShift] = None,
+    gaussian_sigma: float = 0.0,
+    rotation_angle: float = 0,
+    width_shift_frac: float = 0,
+    height_shift_frac: float = 0,
+    shear_angle: float = 0,
+    zoom_factor: float = 1.0,
+    horizontal_flip: bool = False,
+    vertical_flip: bool = False,
 ):
 
     ds = ImageDataset(
@@ -262,7 +246,14 @@ def get_seeded_random_dataloader(
         list_path=list_path,
         image_size=image_size,
         cropImg=cropImg,
-        dataShift=shift,
+        gaussian_sigma=gaussian_sigma,
+        rotation_angle=rotation_angle,
+        width_shift_frac=width_shift_frac,
+        height_shift_frac=height_shift_frac,
+        shear_angle=shear_angle,
+        zoom_factor=zoom_factor,
+        horizontal_flip=horizontal_flip,
+        vertical_flip=vertical_flip,
     )
 
     # Set the random seed for reproducibility
@@ -296,9 +287,9 @@ def get_concat_dataloader(
     batch_sizes: List[int],
     image_sizes: List[int],
     num_samples: List[int],
-    cropImg: List[bool] = None,
-    block_idx: List[int] = None,
-    seeds: List[int] = None,
+    cropImg: List[bool],
+    block_idx: List[int],
+    seeds: List[int],
 ):
     """Creates a single combined dataloader from multiple datasets.
 

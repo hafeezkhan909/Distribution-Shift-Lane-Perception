@@ -63,10 +63,10 @@ def extract_features(model, loader, device):
 class ShiftExperiment:
     def __init__(
         self,
-        source_dir: str = "./datasets/CULane",
-        target_dir: str = "./datasets/CULane",
-        source_list_path: str = "./datasets/CULane/list/train.txt",
-        target_list_path: str = "./datasets/CULane/list/test.txt",
+        source_dir="./datasets/CULane",
+        target_dir="./datasets/CULane",
+        source_list_path="./datasets/CULane/list/train.txt",
+        target_list_path="./datasets/CULane/list/test.txt",
         sample_size: int = 1000,
         num_runs: int = 100,
         block_idx: int = 0,
@@ -75,39 +75,45 @@ class ShiftExperiment:
         alpha: float = 0.05,
         seed_base: int = 42,
         file_name: str = "testData.json",
-        file_location: str = "./",
+        file_location="./",
         file_style: JsonStyle = 4,
         permutation_test_iterations: int = 1000,
         latent_dim: int = 32,
-        model_weights_path: str = "",
+        model_weights_path=None,
         imagenet_weights: bool = False,
+        gaussian_sigma: float = 0.0,
+        crop_image: bool = False,
+        rotation_angle: float = 0,
+        width_shift_frac: float = 0,
+        height_shift_frac: float = 0,
+        shear_angle: float = 0,
+        zoom_factor: float = 1.0,
+        horizontal_flip: bool = False,
+        vertical_flip: bool = False,
     ):
-        # Assert well formed input
-        if not imagenet_weights:
-            assert (
-                model_weights_path := Path(model_weights_path).resolve()
-            ).is_dir(), (
-                f"For arg model_weights_path: \n{model_weights_path}\nIs not a valid directory"
-            )
-        else:
-            # keep a resolved placeholder path for logging consistency
-            model_weights_path = str(Path(model_weights_path).resolve())
+        # 1. Resolve all paths safely first
+        file_location = Path(file_location).resolve()
+        source_dir = Path(source_dir).resolve()
+        target_dir = Path(target_dir).resolve()
 
-        assert (
-            file_location := Path(file_location).resolve()
-        ).is_dir(), (
-            f"For arg file_location: \n{file_location}\nIs not a valid directory"
-        )
+        # 2. Validate standard directories
+        for name, path in [
+            ("file_location", file_location),
+            ("source_dir", source_dir),
+            ("target_dir", target_dir),
+        ]:
+            if not path.is_dir():
+                raise NotADirectoryError(
+                    f"For arg {name}: \n{path}\nIs not a valid directory"
+                )
 
-        assert (
-            source_dir := Path(source_dir).resolve()
-        ).is_dir(), f"For arg source_dir: \n{source_dir}\nIs not a valid directory"
-
-        assert (
-            target_dir := Path(target_dir).resolve()
-        ).is_dir(), (
-            f"For arg target_dir: \n{target_dir}\nIs not a valid directory"
-        )
+        # 3. Handle model weights conditionally
+        if model_weights_path:
+            model_weights_path = Path(model_weights_path).resolve()
+            if not imagenet_weights and not model_weights_path.is_dir():
+                raise NotADirectoryError(
+                    f"For arg model_weights_path: \n{model_weights_path}\nIs not a valid directory"
+                )
 
         self.source_dir = source_dir
         self.target_dir = target_dir
@@ -125,6 +131,15 @@ class ShiftExperiment:
         self.latent_dim = latent_dim
         self.weights_path = model_weights_path
         self.imagenet_weights = imagenet_weights
+        self.gaussian_sigma = float(gaussian_sigma)
+        self.crop_image = bool(crop_image)
+        self.rotation_angle = float(rotation_angle)
+        self.width_shift_frac = float(width_shift_frac)
+        self.height_shift_frac = float(height_shift_frac)
+        self.shear_angle = float(shear_angle)
+        self.zoom_factor = float(zoom_factor)
+        self.horizontal_flip = bool(horizontal_flip)
+        self.vertical_flip = bool(vertical_flip)
 
         self.test_types = ["MMD", "MMD_Agg", "Energy", "BKS"]
 
@@ -139,7 +154,7 @@ class ShiftExperiment:
         self.tau = {}
 
         self.datalogger = JsonExperimentManager(
-            file_location=file_location, file_name=file_name, style=file_style
+            file_location=str(file_location), file_name=file_name, style=file_style
         )
 
         self.loggerArgs: JsonDict = {
@@ -162,6 +177,15 @@ class ShiftExperiment:
             "test_types": self.test_types,
             "imagenet_weights": bool(imagenet_weights),
             "model_weights_path": str(model_weights_path),
+            "gaussian_sigma": self.gaussian_sigma,
+            "crop_image": self.crop_image,
+            "rotation_angle": self.rotation_angle,
+            "width_shift_frac": self.width_shift_frac,
+            "height_shift_frac": self.height_shift_frac,
+            "shear_angle": self.shear_angle,
+            "zoom_factor": self.zoom_factor,
+            "horizontal_flip": self.horizontal_flip,
+            "vertical_flip": self.vertical_flip,
         }
 
         self.loggerExperimentalData: JsonDict = {}
@@ -190,18 +214,20 @@ class ShiftExperiment:
         # Define model parameters based on config
         if self.imagenet_weights and self.weights_path is None:
             # Image Net
-            base_model = Autoencoder(
-                image_net=True, latent_dim=self.latent_dim
-            ).to(self.device)
+            base_model = Autoencoder(image_net=True, latent_dim=self.latent_dim).to(
+                self.device
+            )
         elif not self.imagenet_weights and self.weights_path is None:
             # Random Weights
-            base_model = Autoencoder(
-                image_net=False, latent_dim=self.latent_dim
-            ).to(self.device)
+            base_model = Autoencoder(image_net=False, latent_dim=self.latent_dim).to(
+                self.device
+            )
         elif self.weights_path is not None and not self.imagenet_weights:
             # Custom Weights
             base_model = Autoencoder(
-                image_net=False, latent_dim=self.latent_dim, weights_path=self.weights_path
+                image_net=False,
+                latent_dim=self.latent_dim,
+                weights_path=str(self.weights_path),
             ).to(self.device)
         else:
             raise ValueError(
@@ -224,7 +250,9 @@ class ShiftExperiment:
             print("Using CPU for everything.")
 
     # --- LATENT CACHING HELPER ---
-    def _get_or_extract_features(self, loader, list_path, num_samples, seed):
+    def _get_or_extract_features(
+        self, loader, list_path, num_samples, seed, applyShift=False
+    ):
         cache_base = "Encodings"
         cache_dir = os.path.join(cache_base, f"dim_{self.latent_dim}")
 
@@ -270,7 +298,7 @@ class ShiftExperiment:
 
         # 0A: Source Features
         loaderReturn = get_dataloader(
-            root_dir=self.source_dir,
+            root_dir=str(self.source_dir),
             list_path=self.source_list_dir,
             batch_size=self.batch_size,
             image_size=self.image_size,
@@ -293,7 +321,7 @@ class ShiftExperiment:
         for i in tqdm(range(self.num_calib), desc="Preloading Calibration Sets"):
             seed = self.seed_base + i
             loaderReturn = get_seeded_random_dataloader(
-                root_dir=self.source_dir,
+                root_dir=str(self.source_dir),
                 list_path=self.source_list_dir,
                 batch_size=self.batch_size,
                 image_size=self.image_size,
@@ -310,13 +338,12 @@ class ShiftExperiment:
         # 0C: Sanity Check Features
         sanity_seed = int(self.seed_base + self.num_calib)
         loaderReturn = get_seeded_random_dataloader(
-            root_dir=self.source_dir,
-            list_path=self.source_list_dir,
+            root_dir=str(self.source_dir),
+            list_path=str(self.source_list_dir),
             batch_size=self.batch_size,
             image_size=self.image_size,
             num_samples=self.sample_size,
             seed=sanity_seed,
-            shift=None,
         )
         sanity_feats = self._get_or_extract_features(
             loaderReturn[0], self.source_list_dir, self.sample_size, sanity_seed
@@ -332,12 +359,21 @@ class ShiftExperiment:
         for i in tqdm(range(self.num_runs), desc="Preloading Target Sets"):
             seed = self.seed_base + self.num_calib + i
             loaderReturn = get_seeded_random_dataloader(
-                root_dir=self.target_dir,
-                list_path=self.target_list_dir,
+                root_dir=str(self.target_dir),
+                list_path=str(self.target_list_dir),
                 batch_size=self.batch_size,
                 image_size=self.image_size,
                 num_samples=self.sample_size,
                 seed=seed,
+                gaussian_sigma=self.gaussian_sigma,
+                cropImg=self.crop_image,
+                rotation_angle=self.rotation_angle,
+                width_shift_frac=self.width_shift_frac,
+                height_shift_frac=self.height_shift_frac,
+                shear_angle=self.shear_angle,
+                zoom_factor=self.zoom_factor,
+                horizontal_flip=self.horizontal_flip,
+                vertical_flip=self.vertical_flip,
             )
             feats = self._get_or_extract_features(
                 loaderReturn[0], self.target_list_dir, self.sample_size, seed
@@ -445,6 +481,39 @@ class ShiftExperiment:
     def data_shift_test(self):
         dataShiftTestData: JsonDict = {}
         print(f"[STEP 3] Data Shift Test: {self.source_dir} to {self.target_dir}\n")
+
+        # Log Shift Parameters if not default
+        if self.gaussian_sigma != 0.0:
+            print(f"  Applying Gaussian Noise with σ={self.gaussian_sigma}")
+        if self.crop_image != False:
+            print(f"  Cropping images")
+        if self.rotation_angle != 0:
+            print(f"  Rotating images by {self.rotation_angle} degrees")
+        if self.width_shift_frac != 0:
+            print(f"  Shifting images width by {self.width_shift_frac}")
+        if self.height_shift_frac != 0:
+            print(f"  Shifting images height by {self.height_shift_frac}")
+        if self.shear_angle != 0:
+            print(f"  Shearing images by {self.shear_angle}")
+        if self.zoom_factor != 1.0:
+            print(f"  Zooming images by {self.zoom_factor}")
+        if self.horizontal_flip:
+            print("  Flipping images Horizontally")
+        if self.vertical_flip:
+            print("  Flipping images vertically")
+
+        # Log Shift Parameters for experiment record in JSON
+        dataShiftTestData["Shift Parameters"] = {
+            "Gaussian Noise": self.gaussian_sigma,
+            "Crop Image": self.crop_image,
+            "Rotation Angle": self.rotation_angle,
+            "Width Shift Fraction": self.width_shift_frac,
+            "Height Shift Fraction": self.height_shift_frac,
+            "Shear Angle": self.shear_angle,
+            "Zoom Factor": self.zoom_factor,
+            "horizontal_flip": self.horizontal_flip,
+            "vertical_flip": self.vertical_flip,
+        }
 
         dataShiftTestData["Data Shift Test Definition"] = (
             f"{self.source_dir} to {self.target_dir}"
@@ -562,6 +631,16 @@ if __name__ == "__main__":
         help="Name of the log file.",
     )
 
+    parser.add_argument("--gaussian_sigma", type=float, default=0.0)
+    parser.add_argument("--crop_image", action="store_true")
+    parser.add_argument("--rotation_angle", type=float, default=0)
+    parser.add_argument("--width_shift_frac", type=float, default=0)
+    parser.add_argument("--height_shift_frac", type=float, default=0)
+    parser.add_argument("--shear_angle", type=float, default=0)
+    parser.add_argument("--zoom_factor", type=float, default=1.0)
+    parser.add_argument("--horizontal_flip", action="store_true")
+    parser.add_argument("--vertical_flip", action="store_true")
+
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # Use custom weights directory
@@ -599,6 +678,15 @@ if __name__ == "__main__":
         file_location=args.file_location,
         permutation_test_iterations=args.permutation_test_iterations,
         latent_dim=args.latent_dim,
+        gaussian_sigma=args.gaussian_sigma,
+        crop_image=args.crop_image,
+        rotation_angle=args.rotation_angle,
+        width_shift_frac=args.width_shift_frac,
+        height_shift_frac=args.height_shift_frac,
+        shear_angle=args.shear_angle,
+        zoom_factor=args.zoom_factor,
+        horizontal_flip=args.horizontal_flip,
+        vertical_flip=args.vertical_flip,
     )
 
     if args.command == "custom_weights":

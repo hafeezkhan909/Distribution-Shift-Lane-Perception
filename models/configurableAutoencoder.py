@@ -5,7 +5,9 @@ from torchvision import models
 
 
 class Autoencoder(nn.Module):
-    def __init__(self, image_net: bool, latent_dim: int = 32, weights_path: str | None = None):
+    def __init__(
+        self, image_net: bool, latent_dim: int = 32, weights_path: str | None = None
+    ):
         super().__init__()
 
         print(f"[Autoencoder] - Latent Dim: {latent_dim}")

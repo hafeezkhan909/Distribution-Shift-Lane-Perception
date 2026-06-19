@@ -3,156 +3,26 @@
 # -------------------------------------------------
 
 import numpy as np
-from enum import Enum
 from PIL import Image
 from torchvision.transforms import functional as F
 import os
-from abc import ABC, abstractmethod
-
-
-# -------------------------------------------------
-# SHIFT TYPES
-# -------------------------------------------------
-class ShiftTypes(Enum):
-    """Enumeration of the available deterministic data shift types."""
-
-    GAUSSIAN = "Gaussian"
-    ROTATION = "Rotation"
-    TRANSLATION = "Translation"
-    SHEAR = "Shear"
-    ZOOM = "Zoom"
-    FLIP_HORIZ = "Flip Horizontally"
-    FLIP_VERT = "Flip Vertically"
-
-
-# =========================================================
-# Data Shift Definitions
-# =========================================================
-class DataShift(ABC):
-    """Abstract base class for a data shift operation."""
-
-    def __init__(self):
-        self.type = None
-
-    @abstractmethod
-    def __str__(self):
-        pass
-
-
-class GaussianShift(DataShift):
-    """Defines a data shift by adding Gaussian noise.
-
-    Attributes:
-        std (float): The standard deviation of the Gaussian distribution.
-        mean (float): The mean of the Gaussian distribution.
-    """
-
-    def __init__(self, std: float = 0, mean: float = 0):
-        self.type = ShiftTypes.GAUSSIAN
-        self.std = std
-        self.mean = mean
-
-    def __str__(self):
-        return (
-            f"DataShift: (Type: {self.type.value}, Std: {self.std}, Mean: {self.mean})"
-        )
-
-
-class RotationShift(DataShift):
-    """Defines a deterministic rotation.
-
-    Attributes:
-        angle (float): The angle in degrees to rotate the image.
-    """
-
-    def __init__(self, angle: float = 0):
-        self.type = ShiftTypes.ROTATION
-        self.angle = angle
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type.value}, Angle: {self.angle})"
-
-
-class TranslationShift(DataShift):
-    """
-    Defines a deterministic horizontal and vertical shift based on fractions
-    of the image dimensions.
-
-    Attributes:
-        width_shift_frac (float): Fraction of total width to shift.
-                                  Positive values shift right, negative shift left.
-        height_shift_frac (float): Fraction of total height to shift.
-                                   Positive values shift down, negative shift up.
-    """
-
-    def __init__(self, width_shift_frac: float = 0, height_shift_frac: float = 0):
-        self.type = ShiftTypes.TRANSLATION
-        self.height_shift_frac = height_shift_frac
-        self.width_shift_frac = width_shift_frac
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type.value}, H-Shift: {self.height_shift_frac}, W-Shift: {self.width_shift_frac})"
-
-
-class ShearShift(DataShift):
-    """
-    Defines a deterministic shear by a specific angle.
-
-    Attributes:
-        angle (float): The angle in degrees to shear the image.
-    """
-
-    def __init__(self, angle: float = 0):
-        self.type = ShiftTypes.SHEAR
-        self.angle = angle
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type.value}, Angle: {self.angle})"
-
-
-class ZoomShift(DataShift):
-    """
-    Defines a deterministic zoom by a specific factor.
-
-    Attributes:
-        zoom_factor (float): The scaling factor. 1.0 is no zoom.
-                             > 1.0 zooms in, < 1.0 zooms out.
-    """
-
-    def __init__(self, zoom_factor: float = 1.0):
-        self.type = ShiftTypes.ZOOM
-        self.zoom_factor = zoom_factor
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type.value}, Factor: {self.zoom_factor})"
-
-
-class HorizontalFlipShift(DataShift):
-    """Defines a deterministic horizontal flip."""
-
-    def __init__(self):
-        self.type = ShiftTypes.FLIP_HORIZ
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type.value})"
-
-
-class VerticalFlipShift(DataShift):
-    """Defines a deterministic vertical flip."""
-
-    def __init__(self):
-        self.type = ShiftTypes.FLIP_VERT
-
-    def __str__(self):
-        return f"DataShift: (Type: {self.type.value})"
-
 
 # -------------------------------------------------
 # SHIFT APPLICATOR
 # -------------------------------------------------
 
 
-def apply_shift(image: Image.Image, dataShift: DataShift) -> Image.Image:
+def apply_shift(
+    image: Image.Image,
+    gaussian_sigma: float = 0.0,
+    rotation_angle: float = 0,
+    width_shift_frac: float = 0,
+    height_shift_frac: float = 0,
+    shear_angle: float = 0,
+    zoom_factor: float = 1.0,
+    horizontal_flip: bool = False,
+    vertical_flip: bool = False,
+) -> Image.Image:
     """
     Dispatcher function that applies a specific DataShift to a PIL image.
 
@@ -164,38 +34,38 @@ def apply_shift(image: Image.Image, dataShift: DataShift) -> Image.Image:
     Returns:
         Image.Image: The transformed PIL image.
     """
-    # print(f"Applying: {dataShift}")
 
-    if dataShift.type == ShiftTypes.GAUSSIAN:
-        return add_gaussian_noise(image, mean=dataShift.mean, std=dataShift.std)
-
-    elif dataShift.type == ShiftTypes.ROTATION:
-        return apply_rotation(image, angle=dataShift.angle)
-
-    elif dataShift.type == ShiftTypes.TRANSLATION:
-        return apply_translation(
+    if gaussian_sigma != 0.0:
+        image = add_gaussian_noise(image, mean=0, std=gaussian_sigma)
+    if rotation_angle != 0:
+        image = apply_rotation(image, angle=rotation_angle)
+    if width_shift_frac != 0 and height_shift_frac != 0:
+        image = apply_translation(
             image,
-            width_shift_frac=dataShift.width_shift_frac,
-            height_shift_frac=dataShift.height_shift_frac,
+            width_shift_frac=width_shift_frac,
+            height_shift_frac=height_shift_frac,
         )
-
-    elif dataShift.type == ShiftTypes.SHEAR:
-        return apply_shear(image, angle=dataShift.angle)
-
-    elif dataShift.type == ShiftTypes.ZOOM:
-        return apply_zoom(image, zoom_factor=dataShift.zoom_factor)
-
-    elif dataShift.type == ShiftTypes.FLIP_HORIZ:
-        return apply_horizontal_flip(image)
-
-    elif dataShift.type == ShiftTypes.FLIP_VERT:
-        return apply_vertical_flip(image)
-
-    else:
-        print(
-            f"Warning: Shift type '{dataShift.type}' not recognized. Returning original image."
+    elif width_shift_frac != 0:
+        image = apply_translation(
+            image,
+            width_shift_frac=width_shift_frac,
+            height_shift_frac=0,
         )
-        return image
+    elif height_shift_frac != 0:
+        image = apply_translation(
+            image,
+            width_shift_frac=0,
+            height_shift_frac=height_shift_frac,
+        )
+    if shear_angle != 0:
+        image = apply_shear(image, angle=shear_angle)
+    if zoom_factor != 1.0:
+        image = apply_zoom(image, zoom_factor=zoom_factor)
+    if horizontal_flip:
+        image = apply_horizontal_flip(image)
+    if vertical_flip:
+        image = apply_vertical_flip(image)
+    return image
 
 
 # -------------------------------------------------
@@ -351,27 +221,31 @@ def add_gaussian_noise(
 
 
 def main():
-    """
-    Main function to load an image, apply a series of individual
+    """Main function to load an image, apply a series of individual
+
     perturbations, save the results, and save a combined version.
     """
     # --- Configuration ---
-    IMAGE_PATH = "/home1/adoyle2025/Distribution-Shift-Lane-Perception/datasets/CULane/driver_23_30frame/05151643_0420.MP4/00000.jpg"
+    IMAGE_PATH = "/home1/adoyle2025/Datasets/Datasets/CULane/driver_100_30frame/05251312_0398.MP4/01770.jpg"
     OUTPUT_DIR = "perturbation_examples"
 
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     print(f"Saving all perturbation examples to: {OUTPUT_DIR}/")
 
-    # --- Define all shifts to apply ---
+    # --- Define all shifts to apply as dictionaries (kwargs for apply_shift) ---
     shifts_to_apply = [
-        GaussianShift(std=50.0, mean=0.0),
-        RotationShift(angle=45.0),
-        TranslationShift(width_shift_frac=0.2, height_shift_frac=0.2),
-        ShearShift(angle=20.0),
-        ZoomShift(zoom_factor=1.3),  # 30% zoom in
-        HorizontalFlipShift(),
-        VerticalFlipShift(),
-        ZoomShift(zoom_factor=0.7),  # 30% zoom out
+        {"name": "gaussian_blur", "gaussian_sigma": 50.0},
+        {"name": "rotation", "rotation_angle": 45.0},
+        {
+            "name": "translation",
+            "width_shift_frac": 0.2,
+            "height_shift_frac": 0.2,
+        },
+        {"name": "shear", "shear_angle": 20.0},
+        {"name": "zoom_in", "zoom_factor": 1.3},
+        {"name": "horizontal_flip", "horizontal_flip": True},
+        {"name": "vertical_flip", "vertical_flip": True},
+        {"name": "zoom_out", "zoom_factor": 0.7},
     ]
 
     # --- Main Logic ---
@@ -384,33 +258,35 @@ def main():
 
             # --- 1. Apply and save each shift individually ---
             print("\n--- Applying Individual Shifts ---")
-            for i, shift in enumerate(shifts_to_apply):
+            for i, shift_config in enumerate(shifts_to_apply):
 
-                # Apply the shift to the *original* image
-                shifted_img = apply_shift(im, shift)
+                # Copy to avoid modifying our original list
+                kwargs = shift_config.copy()
+                display_name = kwargs.pop("name")
 
-                # Create a filename
-                filename = f"{i+1}_{shift.type.value.lower().replace(' ', '_')}.png"
+                # **kwargs unpacks the dictionary directly into apply_shift parameters
+                shifted_img = apply_shift(im, **kwargs)
 
+                # Create a clean filename
+                filename = f"{i+1}_{display_name}.png"
                 shifted_img.save(os.path.join(OUTPUT_DIR, filename))
                 print(f"Saved {filename}")
 
             # --- 2. Apply and save a combined version ---
             print("\n--- Applying Combined Shift ---")
             combined_img = im
-            for shift in shifts_to_apply:
-                combined_img = apply_shift(combined_img, shift)
+            for shift_config in shifts_to_apply:
+                kwargs = shift_config.copy()
+                kwargs.pop("name")
+                combined_img = apply_shift(combined_img, **kwargs)
 
             combined_img.save(os.path.join(OUTPUT_DIR, "9_combined.png"))
             print("Saved 9_combined.png")
 
     except FileNotFoundError:
         print(f"ERROR: Could not find image file at {IMAGE_PATH}")
-    except ImportError:
-        print("\n--- PyTorch/Torchvision not found. ---")
     except Exception as e:
         print(f"\nAn error occurred: {e}")
-
 
 if __name__ == "__main__":
     main()
