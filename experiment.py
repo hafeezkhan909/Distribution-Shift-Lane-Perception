@@ -189,11 +189,19 @@ class ShiftExperiment:
 
         # Define model parameters based on config
         if self.imagenet_weights and self.weights_path is None:
+            # Image Net
             base_model = Autoencoder(
-                latent_dim=self.latent_dim, imagenet_weights=True).to(self.device)
+                image_net=True, latent_dim=self.latent_dim
+            ).to(self.device)
+        elif not self.imagenet_weights and self.weights_path is None:
+            # Random Weights
+            base_model = Autoencoder(
+                image_net=False, latent_dim=self.latent_dim
+            ).to(self.device)
         elif self.weights_path is not None and not self.imagenet_weights:
+            # Custom Weights
             base_model = Autoencoder(
-                latent_dim=self.latent_dim, weights_path=self.weights_path
+                image_net=False, latent_dim=self.latent_dim, weights_path=self.weights_path
             ).to(self.device)
         else:
             raise ValueError(

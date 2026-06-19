@@ -4,10 +4,8 @@ import torch.nn.functional as F
 from torchvision import models
 
 
-class ConfP2ConvAutoencoderFC(nn.Module):
-    def __init__(
-        self, latent_dim=32, weights_path=None
-    ):
+class Autoencoder(nn.Module):
+    def __init__(self, image_net: bool, latent_dim: int = 32, weights_path: str | None = None):
         super().__init__()
 
         print(f"[Autoencoder] - Latent Dim: {latent_dim}")
@@ -16,26 +14,16 @@ class ConfP2ConvAutoencoderFC(nn.Module):
         checkpoint_path = None
 
         # -------- Pretrained ResNet encoder --------
-        if configs == "image_net":
-            # Load ImageNet pretrained weights (UAE setting)
-            backbone = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
-        elif configs == "random_weights":
+        if not image_net and weights_path is None:
             # Load random weights (untrained ResNet)
             backbone = models.resnet18()
-        elif configs == "cu_lane":
-            # Load empty backbone, will populate at the end
-            backbone = models.resnet18()
-            checkpoint_path = "checkpoints/Phase2/CULane/P2autoencoder_CULane_epoch_50.pth"
-        elif configs == "curvelanes":
-            # Load empty backbone, will populate at the end
-            backbone = models.resnet18()
-            checkpoint_path = "checkpoints/Phase2/Curvelanes/P2autoencoder_Curvelanes_epoch_50.pth"
-        elif configs == "assist_taxi":
-            # Load empty backbone, will populate at the end
-            backbone = models.resnet18()
-            checkpoint_path = "checkpoints/Phase2/AssistTaxi/P2autoencoder_AssistTaxi_epoch_50.pth"
+        elif image_net:
+            # Load ImageNet pretrained weights (UAE setting)
+            backbone = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
         else:
-            raise ValueError(f"Unsupported config: {configs}")
+            # Load custom weights
+            backbone = models.resnet18()
+            checkpoint_path = weights_path
 
         layers = list(backbone.children())[
             :-2
