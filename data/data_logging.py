@@ -3,6 +3,7 @@ import os
 from typing import Any, Dict, List, Union
 import argparse
 import sys
+from pathlib import PurePath
 
 # Define type aliases for clarity in type hinting
 JsonDict = Dict[str, Any]
@@ -129,10 +130,18 @@ class JsonExperimentManager:
         """
         try:
             with open(self._file_path, "w") as f:
-                json.dump(self._data, f, indent=self._style)
+                # Added default handler to gracefully catch and convert Path objects
+                json.dump(self._data, f, indent=self._style, default=self._json_default_encoder)
         except (IOError, TypeError) as e:
             print(f"Error: Could not write to file {self._file_path}. {e}")
             raise
+
+    @staticmethod
+    def _json_default_encoder(obj: Any) -> Any:
+        """Helper to serialize types that standard JSON encoder cannot handle."""
+        if isinstance(obj, PurePath):
+            return str(obj)
+        raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
 
     # --- Public Methods ---
 

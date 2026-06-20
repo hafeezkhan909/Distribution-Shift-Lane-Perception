@@ -7,14 +7,8 @@ import jax
 num_gpus_available = torch.cuda.device_count()
 if num_gpus_available <= 1:
     jax.config.update("jax_platform_name", "cpu")
-    print(
-        f"Hardware Arbitration: {num_gpus_available} GPU(s) found. JAX forced to CPU."
-    )
 else:
     jax.config.update("jax_platform_name", "gpu")
-    print(
-        f"Hardware Arbitration: {num_gpus_available} GPUs found. JAX assigned to GPU 0."
-    )
 
 import numpy as np
 from tqdm import tqdm, trange
@@ -702,9 +696,7 @@ if __name__ == "__main__":
         exp_kwargs["model_weights_path"] = args.model_weights_path
     elif args.command == "imagenet_weights":
         exp_kwargs["imagenet_weights"] = True
-        exp_kwargs["model_weights_path"] = ""  # unused in this mode
     elif args.command == "random_weights":
         exp_kwargs["imagenet_weights"] = False
-        exp_kwargs["model_weights_path"] = ""  # unused in this mode
 
     ShiftExperiment(**exp_kwargs).run()
