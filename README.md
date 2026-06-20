@@ -6,9 +6,9 @@ The pipeline estimates a threshold `τ` calibrating on a source dataset, and the
 
 ### 1. **Extract Source Features**
 
-a. Selects a fixed set of images from the source dataset and encodes the images into features using a ResNet-18 autoencoder.
+a. Selects a fixed set of images from the source dataset and encodes the images into features using a ResNet-18 encoder.
 
-b. Randomly samples sets of images from the source dataset and encodes the images into features using the same ResNet-18 autoencoder.
+b. Randomly samples sets of images from the source dataset and encodes the images into features using the same ResNet-18 encoder.
 
 c. Compares the fixed source feature set with the randomly sampled feature sets using statistical tests (Such as MMD, Energy, etc.).
 
@@ -26,7 +26,7 @@ b. Determines the `τ` threshold by selecting the `(1 - α)`th percentile of the
 
 a. Retrives the original fixed source feature set from the feature extraction step.
 
-b. Randomly samples sets of images from the target dataset and encodes the images into features using the ResNet-18 autoencoder.
+b. Randomly samples sets of images from the target dataset and encodes the images into features using the ResNet-18 encoder.
 
 c. Compares the fixed source feature set with the randomly sampled feature sets using statistical tests (Such as MMD, Energy, etc.).
 
@@ -143,11 +143,11 @@ Step 3: Paste Command in Terminal
 
 ## `experiment.py` Configuration
 
-`experiment.py` is the experiment runner.
+`experiment.py` is the main experiment runner.
 
-### Basic Usage
+### Quick Start Examples
 
-#### Example (ImageNet weights)
+#### 1. Minimal Example (ImageNet Weights)
 
 ```bash
 python experiment.py \
@@ -159,7 +159,39 @@ python experiment.py \
 
 ```
 
-### Required Arguments
+#### 2. Minimal Example (Custom Weights)
+
+```bash
+python experiment.py \
+  --source_dir ./datasets/CULane \
+  --target_dir ./datasets/Curvelanes \
+  --source_list_path ./datasets/CULane/list/train.txt \
+  --target_list_path ./datasets/Curvelanes/list/train.txt \
+  custom_weights \
+  --model_weights_path ./weights/ASSIST_TAXI.pth
+
+```
+
+#### 3. Advanced Example (Using Optional & Perturbation Arguments)
+
+To modify hyperparameters and artificially induce a domain shift on your target dataset, append the optional arguments **before** or **after** the subcommand as needed:
+
+```bash
+python experiment.py \
+  --source_dir ./datasets/CULane \
+  --target_dir ./datasets/Curvelanes \
+  --sample_size 500 \
+  --batch_size 64 \
+  --gaussian_sigma 1.5 \
+  --crop_image \
+  --horizontal_flip \
+  imagenet_weights
+
+```
+
+### Core Arguments Reference
+
+#### Required Configuration
 
 | Argument | Description |
 | --- | --- |
@@ -169,85 +201,67 @@ python experiment.py \
 
 > `--source_list_path` defaults to `./datasets/CULane/list/train.txt`, but you will almost always want to set it explicitly.
 
-### Optional Arguments
+#### Optional Execution Hyperparameters
 
-| Flag | Default | Description |
-| --- | --- | --- |
-| `--sample_size` | `1000` | Number of samples per run (source + each sampled target/calibration set). |
-| `--num_runs` | `100` | Number of target runs used to compute detection rate. |
-| `--batch_size` | `128` | Batch size for feature extraction. |
-| `--image_size` | `512` | Resize images to `image_size x image_size`. |
-| `--alpha` | `0.05` | Significance level; `τ` is set at the `(1-α)` percentile. |
-| `--seed_base` | `42` | Base seed for all random sampling. |
-| `--permutation_test_iterations` | `1000` | Number of permutations used for MMD/MMD_Agg/Energy p-values. Set to `0` to skip p-values. |
-| `--latent_dim` | `32` | Latent dimension used by the autoencoder. |
-| `--file_location` | `logs` | Directory to write the JSON log. **(Must exist)** |
-| `--file_name` | `experiment.json` | Log file name. |
+These tweak the runner's behavior, logging, and statistical thresholds.
 
-### Data Perturbation & Shift Arguments
+| Flag | Default | Type | Description |
+| --- | --- | --- | --- |
+| `--sample_size` | `1000` | `int` | Number of samples per run (source + each sampled target/calibration set). |
+| `--num_runs` | `100` | `int` | Number of target runs used to compute detection rate. |
+| `--batch_size` | `128` | `int` | Batch size for feature extraction. |
+| `--image_size` | `512` | `int` | Resize images to `image_size x image_size`. |
+| `--alpha` | `0.05` | `float` | Significance level; $\tau$ is set at the $(1-\alpha)$ percentile. |
+| `--seed_base` | `42` | `int` | Base seed for all random sampling. |
+| `--permutation_test_iterations` | `1000` | `int` | Number of permutations for MMD/Energy p-values. Set to `0` to skip. |
+| `--latent_dim` | `32` | `int` | Latent dimensions the ResNet-18 encoder ends with. |
+| `--file_location` | `logs` | `str` | Directory to write the JSON log. **(Must exist)** |
+| `--file_name` | `experiment.json` | `str` | Log file name. |
 
-Use these parameters to artificially induce domain shifts on the target dataset pipeline:
+#### Data Perturbation & Shift Arguments
+
+Use these parameters to artificially induce domain shifts on the target dataset pipeline.
+
+* **Valued Arguments** require a number after them (e.g., `--rotation_angle 45`).
+* **Flags** just need to be named to activate (e.g., `--crop_image`).
 
 | Flag / Parameter | Default | Type | Description |
 | --- | --- | --- | --- |
 | `--gaussian_sigma` | `0.0` | `float` | Standard deviation of Gaussian noise added to target images. |
-| `--crop_image` | `False` | `flag` | Include this flag to crop target images. |
 | `--rotation_angle` | `0` | `float` | Rotation angle in degrees applied to target images. |
 | `--width_shift_frac` | `0` | `float` | Fraction of total width to shift target images horizontally. |
 | `--height_shift_frac` | `0` | `float` | Fraction of total height to shift target images vertically. |
 | `--shear_angle` | `0` | `float` | Shear angle in degrees applied to target images. |
 | `--zoom_factor` | `1.0` | `float` | Rescaling multiplier for zooming target images. |
-| `--horizontal_flip` | `False` | `flag` | Include this flag to flip target images horizontally. |
-| `--vertical_flip` | `False` | `flag` | Include this flag to flip target images vertically. |
+| `--crop_image` | *Disabled* | **Flag** | Include this flag to crop target images. |
+| `--horizontal_flip` | *Disabled* | **Flag** | Include this flag to flip target images horizontally. |
+| `--vertical_flip` | *Disabled* | **Flag** | Include this flag to flip target images vertically. |
+
+### Weight Modes: `custom_weights` vs `imagenet_weights` vs `random_weights`
+
+The backend encoder behavior is determined by the subcommand you append to the end of your execution string.
+
+| Mode Subcommand | Required Extra Arguments | Description |
+| --- | --- | --- |
+| `imagenet_weights` | *(none)* | Uses pre-trained `ImageNet1K_V1` weights. |
+| `random_weights` | *(none)* | Uses randomly initialized weights. |
+| `custom_weights` | `--model_weights_path` | Uses custom ResNet-18 weights (e.g., from `train.py`). |
+
+---
 
 ### Results Logs
 
-A JSON log is written to:
+A JSON log is written to `<file_location>/<file_name>` containing:
 
-```
-<file_location>/<file_name>
-
-```
-
-The log includes:
-
-* calibration τ for each test
-* per-run target shift stats + detection decisions
-* summary TPR for each statistical test
-
-### Modes: `custom_weights` vs `imagenet_weights vs `random_weights`
-
-The weights you choose determine the behavior of the autoencoder. You can use the pre-trained `ImageNet1K_V1` autoencoder weights, randomly generated weights, or custom weights. The `custom_weights` mode for `experiment.py` allows you to use custom ResNet-18 weights as the autoencoder backbone. _See documentation for `models/trainingScripts/train.py` to learn more about generating your custom weights_
-
-`experiment.py` has two subcommands:
-
-* `imagenet_weights`: uses ImageNet weights (no custom weights directory required).
-* `custom_weights`: uses a local weights directory for the ResNet-18 autoencoder. _Click here for more details on generating custom weights_
-
-Mode-specific required args:
-
-| Mode | Required Argument | Description |
-| --- | --- | --- |
-| `custom_weights` | `--model_weights_path` | Path to your custom ResNet-18 weights. |
-| `imagenet_weights` | *(none)* | Uses ImageNet weights. |
-| `random_weights` | *(none)* | Uses Randomly generated weights. |
-
-This is the minimum required arguments to use custom weights:
-```bash
-python experiment.py \
-  --source_dir ./datasets/CULane \
-  --target_dir ./datasets/Curvelanes \
-  --source_list_path ./datasets/CULane/list/train.txt \
-  --target_list_path ./datasets/Curvelanes/list/train.txt \
-  custom_weights \
-  --model_weights_path ./weights/ASSIST_TAXI.pth
-```
+* Calibration $\tau$ for each test.
+* Per-run target shift stats + detection decisions.
+* Summary TPR (True Positive Rate) for each statistical test.
 
 ## Other Scripts
 
 ### Autoencoder Training Script: `models/trainingScripts/train.py`
 
-This script trains the **Configurable Autoencoder** used in Phase 2 and **automatically resumes** from the most recent checkpoint found in:
+This script trains the **Encoder** used in Phase 2 and **automatically resumes** from the most recent checkpoint found in:
 
 `checkpoints/Phase2/<dataset_name>/`
 
