@@ -641,7 +641,7 @@ if __name__ == "__main__":
     parser.add_argument("--horizontal_flip", action="store_true")
     parser.add_argument("--vertical_flip", action="store_true")
 
-    subparsers = parser.add_subparsers(dest="command", required=True)
+    subparsers = parser.add_subparsers(dest="command")
 
     # Use custom weights directory
     custom_weights = subparsers.add_parser(
@@ -655,11 +655,19 @@ if __name__ == "__main__":
     )
 
     # Use ImageNet weights
-    imagenet = subparsers.add_parser(
+    subparsers.add_parser(
         "imagenet_weights", help="Run the experiment using ImageNet weights."
+    )
+    
+    # Use random weights
+    subparsers.add_parser(
+        "random_weights", help="Run the experiment using random weights."
     )
 
     args = parser.parse_args()
+
+    if args.command is None:
+        args.command = "imagenet_weights"
 
     # Build kwargs that ShiftExperiment actually accepts
     exp_kwargs = dict(
@@ -694,6 +702,9 @@ if __name__ == "__main__":
         exp_kwargs["model_weights_path"] = args.model_weights_path
     elif args.command == "imagenet_weights":
         exp_kwargs["imagenet_weights"] = True
+        exp_kwargs["model_weights_path"] = ""  # unused in this mode
+    elif args.command == "random_weights":
+        exp_kwargs["imagenet_weights"] = False
         exp_kwargs["model_weights_path"] = ""  # unused in this mode
 
     ShiftExperiment(**exp_kwargs).run()
