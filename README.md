@@ -6,31 +6,31 @@ The pipeline estimates a threshold `τ` calibrating on a source dataset, and the
 
 ### 1. **Extract Source Features**
 
-a. Selects a fixed set of images from the source dataset and encodes the images into features using a ResNet-18 encoder.
+a. Selects a fixed set of images as the **_Source Set_** of images from _**Dataset A**_. Then the pipeline randomly samples sets of images from _**Dataset A**_ as _**Target Sets**_ to compare with the _**Source Set**_ later.
 
-b. Randomly samples sets of images from the source dataset and encodes the images into features using the same ResNet-18 encoder.
+b. Reduces the dimensions of the **_Source Set_** images and the _**Target Sets**_ images using a ResNet-18 encoder using ImageNet1K_V1, Randomly Generated, or Custom Weights. This generates a _**Source Feature Set**_ and _**Target Feature Sets**_.
 
-c. Compares the fixed source feature set with the randomly sampled feature sets using statistical tests (Such as MMD, Energy, etc.).
+c. Compares the **_Source Feature Set_** with the _**Target Feature Sets**_ using a two sample statistical tests (Such as MMD, Energy, BKS, etc.). These tests quantify the distributional distance between the feature sets within their high-dimensional embedding space.
 
 ![Extract Features](figures/readMeGraphics/a.svg)
 
-2. **Source Calibration**
+### 2. **Source Calibration**
 
-a. Sorts each set of statistical results in ascending order as a null distribution.
+a. Sorts each set of statistical two sample test results (Such as MMD, etc.) in ascending order to act as a set of null distributions.
 
-b. Determines the `τ` threshold by selecting the `(1 - α)`th percentile of the null distribution.
+b. Determines the `τ` threshold for each two sample test by selecting the `(1 - α)`th percentile of each of the null distributions.
 
 ![Calibration Diagram](figures/readMeGraphics/b.svg)
 
-3. **Data Shift Test** Compares the original fixed source feature set against many randomly sampled sets from the target dataset (e.g., Source: CULane → Target: Curvelanes) and reports the shift detection rate across runs.
+### 3. **Data Shift Test**
 
-a. Retrives the original fixed source feature set from the feature extraction step.
+a. Retrives the original _**Source Set**_ of images from the first step. Then randomly samples sets of images from _**Dataset B**_ that will now act as the new _**Target Set**_.
 
-b. Randomly samples sets of images from the target dataset and encodes the images into features using the ResNet-18 encoder.
+b. Encodes the images from both the _**Source Set**_ and _**Target Set**_ into features using the ResNet-18 encoder using the same weights from the first step. This generates a _**Source Feature Set**_ (_which is the exact same as the Source Feature Set from the first step_) and new _**Target Feature Sets**_.
 
-c. Compares the fixed source feature set with the randomly sampled feature sets using statistical tests (Such as MMD, Energy, etc.).
+c. Compares the **_Source Feature Set_** with the _**Target Feature Sets**_ using a two sample statistical tests (Such as MMD, Energy, BKS, etc.).
 
-d. Determines if a shift is detected for each randomly sampled set of images from the target distribution by comparing the statistical test results to the `τ` threshold. If the statistical test value is larger than the `τ` threshold then a shift is detected.
+d. Determines if a shift is detected for each set of _**Target Features**_ by comparing the two sample test results with the `τ` threshold. If the statistical test value is larger than the `τ` threshold then a shift is detected.
 
 ![Data Shift Test Diagram](figures/readMeGraphics/c.svg)
 
