@@ -104,10 +104,6 @@ class ShiftExperiment:
         # 3. Handle model weights conditionally
         if model_weights_path:
             model_weights_path = Path(model_weights_path).resolve()
-            if not imagenet_weights and not model_weights_path.is_dir():
-                raise NotADirectoryError(
-                    f"For arg model_weights_path: \n{model_weights_path}\nIs not a valid directory"
-                )
 
         self.source_dir = source_dir
         self.target_dir = target_dir
