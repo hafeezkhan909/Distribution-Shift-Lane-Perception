@@ -104,17 +104,6 @@
     .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.55); }
     .btn-outline:hover { background: rgba(255,255,255,.15); border-color: #fff; }
 
-    /* ─── ABSTRACT ──────────────────────────────────────────────── */
-    #abstract .box {
-      background: #fff;
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius);
-      padding: 2rem 2.5rem;
-      max-width: 860px; margin: 0 auto;
-      box-shadow: var(--shadow);
-      font-size: 1rem; color: var(--text-sec); line-height: 1.85;
-    }
-
     /* ─── PIPELINE ──────────────────────────────────────────────── */
     .steps {
       display: grid;
@@ -262,7 +251,6 @@
       section { padding: 3rem 0; }
       h2 { font-size: 1.6rem; }
       #hero { padding: 4rem 1rem; }
-      #abstract .box { padding: 1.5rem; }
     }
   </style>
 </head>
@@ -272,7 +260,6 @@
 <nav>
   <span class="nav-brand">Distribution-Shift-Lane-Perception</span>
   <div class="nav-links">
-    <a href="#abstract">Abstract</a>
     <a href="#pipeline">Pipeline</a>
     <a href="#results">Results</a>
     <a href="#gallery">Gallery</a>
@@ -304,17 +291,6 @@
   </div>
 </section>
 
-<!-- ══════════════════════ ABSTRACT ══════════════════════ -->
-<section id="abstract">
-  <div class="container">
-    <div class="section-label">Overview</div>
-    <h2>Abstract</h2>
-    <div class="box">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </div>
-  </div>
-</section>
-
 <!-- ══════════════════════ PIPELINE ══════════════════════ -->
 <section id="pipeline">
   <div class="container">
@@ -327,15 +303,19 @@
     <div class="steps">
 
       <div class="step-card">
-        <div class="step-head">Step 1 &mdash; Feature Extraction</div>
+        <div class="step-head">Step 1 &mdash; Extract Source Features</div>
         <div class="step-img">
           <img src="https://raw.githubusercontent.com/hafeezkhan909/Distribution-Shift-Lane-Perception/master/figures/readMeGraphics/Extract%20Features.svg"
                alt="Feature Extraction Diagram" loading="lazy">
         </div>
         <div class="step-body">
-          Source and target images are encoded into compact latent vectors by a
-          configurable autoencoder.  Encodings are cached to disk under
-          <code>Encodings/dim_&lt;N&gt;/</code> so repeated experiments are instant.
+          A fixed <em>Source Set</em> and many randomly-sampled calibration sets are drawn
+          from the source domain and encoded into compact latent vectors by a
+          <strong>ResNet-18 encoder</strong> — using ImageNet, randomly initialized, or
+          custom-trained weights.  Two-sample statistical tests (MMD, Energy, BKS,
+          MMD-Agg) are then computed between the source and each calibration set.
+          Encodings are cached to disk under <code>Encodings/dim_&lt;N&gt;/</code>
+          so repeated experiments are instant.
         </div>
       </div>
 
@@ -346,9 +326,10 @@
                alt="Calibration Diagram" loading="lazy">
         </div>
         <div class="step-body">
-          A null distribution is built by comparing the fixed source reference set
-          against many randomly sampled sets from the <em>same source domain</em>.
-          τ is set at the (1&minus;α) percentile, controlling the false-positive rate.
+          The statistical test results from the calibration sets are sorted to form a
+          null distribution for each test.  The threshold τ is set at the
+          (1&minus;α) percentile of that null distribution — e.g., α&nbsp;=&nbsp;0.05
+          keeps the false-positive rate at 5 % on same-domain data.
         </div>
       </div>
 
@@ -359,9 +340,10 @@
                alt="Data Shift Test Diagram" loading="lazy">
         </div>
         <div class="step-body">
-          Source features are compared against target-domain samples.  A test statistic
-          exceeding τ flags a shift.  The True Positive Rate (TPR) is reported over
-          many independent runs.
+          The same <em>Source Feature Set</em> from Step 1 is compared against randomly
+          sampled sets from the <em>target domain</em> using the same statistical tests.
+          If a test statistic exceeds τ, a shift is detected for that run.
+          The True Positive Rate (TPR) is reported across all independent runs.
         </div>
       </div>
 
