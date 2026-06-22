@@ -9,7 +9,7 @@ import torch.nn as nn
 import torch.optim as optim
 from tqdm import tqdm
 
-from models.configurableAutoencoder import Autoencoder
+from configurableAutoencoder import Autoencoder
 from data.data_builder import get_dataloader
 
 # Configure logging style for clean terminal reporting
@@ -73,7 +73,7 @@ def train(args):
     logging.info("Initializing Configurable Autoencoder...")
     model = Autoencoder(
         latent_dim=args.latent_dim,
-        imagenet_weights=init_imagenet,
+        image_net=init_imagenet,
         weights_path=init_weights_path,
     ).to(device)
 

@@ -44,11 +44,10 @@ d. Determines if a shift is detected for each set of _**Target Features**_ by co
 │   └── data_utils.py                   # Data Perturbation tools (eg. Flip Vertically)
 ├── figures/                            # Directory for generated figures
 ├── models/                             # Model architectures and training
-│   ├── trainingScripts/                #
-|   |   └── train.py                    # Training script for a custom Autoencoder
-│   └── configurableAutoencoder.py      # 
+│   ├── train.py                        # Training script for a custom Autoencoder
+│   └── configurableAutoencoder.py      # ResNet-18 Autoencoder used for encoding of images
 ├── utils/                              # Statistical tests and utilities
-├── create_list_files.py                # 
+├── create_list_files.py                # Tool that generates image dataset list files
 ├── environment.yml                     # Conda environment configuration
 └── experiment.py                       # Main experiment runner
 ```
@@ -259,7 +258,7 @@ A JSON log is written to `<file_location>/<file_name>` containing:
 
 ## Other Scripts
 
-### Autoencoder Training Script: `models/trainingScripts/train.py`
+### Autoencoder Training Script: `models/train.py`
 
 This script trains the **Encoder** used in Phase 2 and **automatically resumes** from the most recent checkpoint found in:
 
@@ -273,7 +272,7 @@ This script trains the **Encoder** used in Phase 2 and **automatically resumes**
 #### Basic usage
 
 ```bash
-python models/trainingScripts/train.py \
+python models/train.py \
   --dataset_name <NAME> \
   --dataset_dir <PATH_TO_DATA_ROOT> \
   --dataset_list <PATH_TO_TRAIN_SPLIT_LIST>
