@@ -128,6 +128,10 @@ python setup.py install
 
 > Click here to go to the command generation GUI: [https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/)
 
+Here is the link to the tutorial video on how to use the Command Generator Tool:
+
+[![Lane Perception Command Generator Tutorial](https://img.youtube.com/vi/ovT6UFNmc84/0.jpg)](https://youtu.be/ovT6UFNmc84)
+
 Due to `experiment.py` having many arguments, we created the Command Generator Tool to make designing experiments quicker and easier!
 
 Step 1: Generate Command with the [Command Generator GUI](https://suave101.github.io/Distribution-Shift-Lane-Perception-Command-Generator/)
