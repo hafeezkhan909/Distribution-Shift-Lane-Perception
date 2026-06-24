@@ -130,7 +130,7 @@ python setup.py install
 
 Here is the link to the tutorial video on how to use the Command Generator Tool:
 
-[![Lane Perception Command Generator Tutorial](https://img.youtube.com/vi/ovT6UFNmc84/0.jpg)](https://youtu.be/ovT6UFNmc84)
+[https://youtu.be/ovT6UFNmc84](https://youtu.be/ovT6UFNmc84)
 
 Due to `experiment.py` having many arguments, we created the Command Generator Tool to make designing experiments quicker and easier!
 
