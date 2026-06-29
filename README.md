@@ -260,6 +260,14 @@ A JSON log is written to `<file_location>/<file_name>` containing:
 * Per-run target shift stats + detection decisions.
 * Summary TPR (True Positive Rate) for each statistical test.
 
+## Acknowledgements
+
+We would like to extend our sincere gratitude to the authors of the paper *[Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift](https://arxiv.org/abs/1810.11953)* for their foundational research. Thank you for your excellent work and for making your resources open to the community!
+
+This repository serves as a PyTorch implementation of their original framework ([view their official GitHub repository here](https://github.com/steverab/failing-loudly)). We have additionally built on top of their methodology, adapting and extending the pipeline to primarily study distribution shift in the specific context of lane perception datasets.
+
+---
+
 ## Other Scripts
 
 ### Autoencoder Training Script: `models/train.py`
